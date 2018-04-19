@@ -18,7 +18,7 @@ public class AdminController {
 	private static final Logger logger = LoggerFactory.getLogger(AdminController.class);
 	@Autowired Command cmd;
 	@Autowired Customer custom;
-	@RequestMapping(value="/login",method=RequestMethod.POST)
+	@RequestMapping(value="/login",method=RequestMethod.GET)
 	public String custMana() {
 		logger.info("어드민 컨트롤러 custMana() =============================");
 		custom.setCustomPass("1");
