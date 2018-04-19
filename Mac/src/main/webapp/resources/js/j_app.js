@@ -1,6 +1,7 @@
 var app = app || {};
 app = (()=>{
 	var init = x =>{
+		app.route.init(x);
 	    $.getScript(x+'/resources/js/router.js',()=>{
 	        $.extend(new Router(x));
 	        app.main.onCreate();
@@ -1185,17 +1186,12 @@ app.login=(()=>{
    		 })).attr('style','color:white;font-size: 20px; padding:10px;')
    		 .appendTo('#div-second')
    		 .on('click',e=>{
-				e.preventDefault();
-				$.ajax({
-				url: context+"admin/login",
-				dataType: 'text',
-				contentType: 'application/json',
-				method: 'POST',
-				});
-				alert('작동함');
+   			 alert('관리자클릭');
+   			 location.href=app.route.$()+"/admin/login";
+			 alert('관리자이동작동');
 			});
          });
-		 //*** 관리자 클릭시 admin폴더의 b_home으로 이동하게!
+		 //*** 아직 작업중
 		 
 	 };
 	 var mainItems=x=>{
@@ -1390,7 +1386,29 @@ app.login=(()=>{
 	 }
 		 return{onCreate:onCreate,content:content}
 	 })();
-		 
+app.route =(()=>{
+	return {
+		init : x => 
+		{
+			console.log('context is '+x);
+			sessionStorage.setItem('x', x);
+		}, 
+		$ : ()=>{
+			return sessionStorage.getItem('x');
+		},
+		$j : ()=>{
+			return sessionStorage.getItem('x')+'/resources/js';
+		},
+		$c : ()=>{
+			return sessionStorage.getItem('x')+'/resources/css';
+		},
+		$i : ()=>{
+			return sessionStorage.getItem('x')+'/resources/img';
+		}
+		
+	};
+	
+})();		 
 app.router = (()=>{
 	  var onCreate=x=>{
 	  $.getScript(x+'resources/js/router.js',()=>{ 
