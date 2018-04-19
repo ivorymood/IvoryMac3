@@ -1,0 +1,126 @@
+.order-grid-container {
+  display: grid;
+  grid-template-columns: auto auto auto auto;
+  grid-gap: 10px;
+  padding: 10px;
+}
+.order-grid-container > div {
+  text-align: center;
+  font-size: 30px;
+}
+.order-grid-container1 {
+  display: grid;
+  grid-template-columns: auto auto auto auto auto;
+  grid-gap: 10px;
+  padding: 10px;
+}
+.order-grid-container1 > div {
+  text-align: center;
+  font-size: 30px;
+}
+.order-grid-container2 {
+  display: grid;
+  grid-template-columns: auto auto auto auto;
+  grid-gap: 10px;
+  padding: 10px;
+}
+.order-grid-container2 > div {
+  text-align: center;
+  font-size: 30px;
+}
+.order-grid-container3 {
+  width: 70%;
+  display: grid;
+  grid-template-columns: auto auto auto auto auto auto auto auto;
+  grid-gap: 0;
+  padding: 0;
+}
+.order-grid-container3 > div {
+  text-align: center;
+  font-size: 15px;
+}
+.order-grid-container4 {
+  width: 70%;
+  display: grid;
+  grid-template-columns: auto auto auto auto auto;
+  grid-gap: 0;
+  padding: 0;
+}
+.order-grid-container4 > div {
+  text-align: center;
+  font-size: 15px;
+}
+
+.order-grid-container5 {
+  margin: 0 auto;	
+     width: 1500px;
+    height: 5px;
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
+  grid-gap: 0;
+  padding: 0;
+}
+.order-grid-container5 > div {
+  text-align: center;
+  font-size: 15px;
+  margin-right:300px;
+}
+
+.order-grid-container6 {
+  margin: 0 auto;	
+     width: 1500px;
+    height: 5px;
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr;
+  grid-gap: 0;
+  padding: 0;
+}
+.order-grid-container6 > div {
+  text-align: center;
+  font-size: 15px;
+}
+
+
+.grid-container-row {
+  display: grid;
+  grid-template-row: auto auto auto auto auto auto auto;
+  grid-gap: 50px;
+  padding: 30px;
+}
+.grid-container-row > div {
+  text-align: center;
+  font-size: 30px;
+}
+
+.grid-container-row1 {
+  display: grid;
+  grid-template-row: auto auto auto auto;
+  grid-gap: 50px;
+  padding: 30px;
+}
+.grid-container-row1 > div {
+  text-align: center;
+  font-size: 30px;
+}
+.grid-container-row1 {
+  display: grid;
+  grid-template-row: auto auto auto auto auto auto auto;
+  grid-gap: 50px;
+  padding: 30px;
+}
+.grid-container-row1 > div {
+  text-align: center;
+  font-size: 30px;
+}
+
+
+.grid-container-row1 {
+  display: grid;
+  grid-template-row: auto auto auto auto ;
+  grid-gap: 5px;
+  padding: ;
+}
+.grid-container-row1 > div {
+  text-align: center;
+  font-size: 13px;
+}
