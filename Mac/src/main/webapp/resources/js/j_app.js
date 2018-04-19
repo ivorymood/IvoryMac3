@@ -1188,7 +1188,7 @@ app.login=(()=>{
    		 .on('click',e=>{
    			 alert('관리자클릭');
    			 location.href=app.route.$()+"/admin/login";
-			 alert('관리자이동작동');
+			 alert('관리자이동작동');//
 			});
          });
 		 //*** 아직 작업중
