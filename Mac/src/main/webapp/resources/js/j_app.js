@@ -1072,7 +1072,20 @@ app.login=(()=>{
 		alert('알러트 작동');
 		$.getScript(view,()=>{
 			$('#content').empty();
-			$(createTab({
+			$('#content').append($(createDiv({id:'',clazz:''}))
+				.append($(createDiv({id:'',clazz:''})
+							))
+					.append($(createATag({id:'',clazz:'',val:'쇼핑 계속하기'}))
+						.attr('style','font-size:15px;margin-top:15px;')))
+				.append($(createDiv({id:'',clazz:''}))
+						.append($(createHTag({num:'3',id:'',val:'장바구니'}))
+							.attr('style','text-align:center;')))
+				.append($(createDiv({id:'',clazz:''}))
+						.attr('style','text-align: center;')
+						.append($(createButton({id:'',clazz:'',val:'구매하기'}))
+							.attr('style','font-size: 20px; font-weight: bold;text-align: center; width:250px; height: 65px; background: black; color:white;')))
+					
+			/*$(createTab({
 				id:'tab-order',
 				clazz:''
 			})).appendTo('#content');
@@ -1112,10 +1125,9 @@ app.login=(()=>{
 				})).attr('style','border-radius: 0; height:60px; width:300px; margin-left:550px; background: black; color: white;')
 				.appendTo('#div-order-buy-now')
 				.on('click',e=>{
-				});	
-			 
-			 
-			 $('#div-order-buy-now')
+				});	*/
+ 
+			/* $('#div-order-buy-now')
 			 .append($(createDiv({
 				 id:'div-order-item-title',
 				 clazz:''
@@ -1169,7 +1181,7 @@ app.login=(()=>{
 			 $(createGridDivContent({
 				 val:'1'
 			 })).attr('style','font-size: 15px;width: 100px;margin-top:50px;')
-			 .appendTo('#div-order-grid1');
+			 .appendTo('#div-order-grid1');*/
 
 		});
 		} 
