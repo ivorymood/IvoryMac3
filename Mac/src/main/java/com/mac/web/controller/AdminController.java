@@ -25,10 +25,10 @@ public class AdminController {
 		int a = 1;
 		if(a==1) {
 			logger.info("어드민 컨트롤러 custMana111111111() =============================");
-			return "login.tiles";
+			return "login:login.tiles";
 		}else {
 			return "redirect:/admin";
-		}		
+		}		//
 	}
 	@RequestMapping(value="/member",method=RequestMethod.GET)
 	public String member() {
