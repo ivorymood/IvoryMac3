@@ -22,7 +22,7 @@
         <context:annotation-config/>
     <mvc:annotation-driven />
     <mvc:resources mapping="/resources/**" location="/resources/" />
-    <mybatis-spring:scan base-package="com.mac.web.controller.mapper"/>
+    <mybatis-spring:scan base-package="com.mac.web.mapper"/>
     <context:property-placeholder location="classpath:config/jdbc.properties"/>
     <bean class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer"/>
     <bean id="dataSource" 
