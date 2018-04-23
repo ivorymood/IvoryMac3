@@ -24,6 +24,6 @@ public interface Br_service {
 	public void updateCustomer(Command cmd);
 	
 	public boolean count(Command cmd);
-	//
+	
 	
 }
