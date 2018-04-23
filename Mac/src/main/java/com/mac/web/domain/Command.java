@@ -17,6 +17,6 @@ public class Command {
 	protected Item item;
 	protected Order order;
 	protected Path path;
-	//
+	
 }
 
