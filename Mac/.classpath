@@ -33,7 +33,11 @@
 			<attribute name="owner.project.facets" value="jst.web"/>
 		</attributes>
 	</classpathentry>
+<<<<<<< HEAD
+	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/JavaSE-1.8">
+=======
 	<classpathentry exported="true" kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER">
+>>>>>>> branch 'BoRam' of https://github.com/ivorymood/IvoryMac3.git
 		<attributes>
 			<attribute name="owner.project.facets" value="java"/>
 		</attributes>

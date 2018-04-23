@@ -77,7 +77,7 @@ public class Br_ServiceImpl implements Br_Service{
 	}
 	@Override
 	public boolean count(Command cmd) {
-		map
+		
 		return false;
 	}
 	
