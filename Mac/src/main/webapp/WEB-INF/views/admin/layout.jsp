@@ -284,6 +284,9 @@
 	    	  <button id="b-button-custMana-addItem">상품 등록</button>
 	     </div>
 	     <div>
+	    	  <button id="b-button-custMana-addCate">카테고리 등록</button> 
+	     </div>
+	     <div>
 	    	  <button id="b-button-custMana-itemList">상품 리스트</button> 
 	     </div>
 	  </div>

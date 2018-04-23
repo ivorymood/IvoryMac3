@@ -8,11 +8,11 @@ import lombok.Data;
 @Data
 public class Customer {
 	private String customId
-				  ,customPass
-				  ,name
-				  ,email
-				  ,phoneNum				  
-				  ,profile
-				  ,joinDate;
+				   ,customPass
+				   ,name
+				   ,email
+				   ,phoneNum				  
+				   ,profile
+				   ,joinDate;
 
 }
