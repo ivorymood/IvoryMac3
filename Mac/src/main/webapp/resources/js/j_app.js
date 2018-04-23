@@ -56,6 +56,13 @@ var createNavSpan=x=>{
 var createHTag=x=>{
     return '<h'+x.num+'>'+x.val+'</h'+x.num+'>';
 }
+var createSelect=()=>{
+	return '<select style="width: 350px; height: 50px;">  </select>';
+}
+
+var createOption=x=>{
+	return '<option>'+x.val+'</option>'
+}
 
 
 var createDiv=x=>{
@@ -201,6 +208,105 @@ app.cash=(()=>{
 			 $.getScript(view,()=>{ 
 				 alert('작동함');
 				 $('#content').empty();
+				 $('#content').append($(createDiv({id:'',clazz:''}))
+					 .append($(createDiv({id:'',clazz:''}))
+						 .append($(createDiv({id:'',clazz:''}))
+							 .attr('style','text-align: center;')
+						 	 .append($(createHTag({num:'1',val:'배송정보 입력'})))))
+				 	 .append($(createDiv({id:'',clazz:''}))
+			 			 .attr('style','float: left; margin-left: 50px;')
+			 			.append($(createDiv({id:'',clazz:''}))
+		 					.attr('style','margin-left: 620px; background: black; color: white;   height: 50px; padding: 4px;     text-align: center;     width: 250px;')
+		 					.append($(createHTag({num:'4',val:'결제 계속 하기'}))))
+	 					.append($(createDiv({id:'',clazz:''}))
+ 							.attr('style','margin-left: 130px; margin-top: 50px;')
+ 							.append($(createHTag({num:'3',val:'배송지 주소'}))))
+						.append($(createDiv({id:'',clazz:''}))
+							.attr('style','margin-left: 130px; color: #b84947;')
+							.append($(createHTag({num:'4',val:'배송지 리스트에 고객님 주소가 없습니다. 주소를 입력해 주세요'}))))
+						.append($(createDiv({id:'',clazz:''}))
+							.attr('style','margin-top: 50px; margin-left: 130px;')
+							.append('<p>* 표시는 필수 입력 항목입니다</p>'))
+						.append($(createDiv({id:'',clazz:''}))
+							.attr('style','margin-top: 10px; margin-left: 130px;')
+							.append($(createInput({id:'',val:'*이름',type:'text'}))
+								.attr('style','width: 700px; height: 50px;')))
+						.append($(createDiv({id:'',clazz:''}))
+							.attr('style','margin-top: 15px; margin-left: 130px;')
+							.append($(createInput({id:'',val:'동(읍/면)을 입력하세요',type:'text'}))
+								.attr('style','width: 300px; height: 50px;'))
+							.append($(createDiv({id:'',clazz:''}))
+								.attr('style','display: inline-block;'))
+								.append($(createButton({id:'',clazz:'',val:'주소찾기'}))
+									.attr('style','background: black;color: white;width: 100px;height: 50px; margin-left: 20px;')))
+						.append($(createDiv({id:'',clazz:''}))
+							.attr('style','margin-top: 15px; margin-left: 130px;')
+							.append($(createInput({id:'',val:'주소입력1',type:'text'}))
+								.attr('style','width: 350px; height: 50px;'))
+							.append($(createInput({id:'',val:'주소입력2',type:'text'}))
+								.attr('style','width: 350px; height: 50px; margin-left:10px;'))
+							.append($(createDiv({id:'',clazz:''}))
+								.attr('style','margin-top: 15px;')
+								.append($(createInput({id:'',val:'상세주소',type:'text'}))
+									.attr('style','width: 350px; height: 50px;'))))
+						.append($(createDiv({id:'',clazz:''}))
+							.attr('style','margin-left: 130px; height: 50px; margin-top: 10px;')
+							.append($(createDiv({id:'',clazz:''}))
+								.append($(createSpan({id:'',clazz:'',val:''}))
+									.append($(createDiv({id:'',clazz:''}))
+										.append($(createSelect({}))
+											.append($(createOption({val:'선택'})))
+											.append($(createOption({val:'010'})))
+											.append($(createOption({val:'011'})))
+											.append($(createOption({val:'016'})))
+											.append($(createOption({val:'017'})))
+											.append($(createOption({val:'019'}))))
+									.append($(createDiv({id:'',clazz:''}))
+									.attr('style','margin-top: 15px; display: inline-block;')
+										.append($(createInput({id:'',val:'핸드폰번호',type:'text'}))
+											.attr('style','width: 350px; height: 50px; margin-left:10px;'))))))
+							.append($(createDiv({id:'',clazz:''}))
+								.attr('style','margin-top: 10px;'))
+								.append($(createInput({id:'',val:'핸드폰번호',type:'text'}))
+									.attr('style','width: 350px; height: 50px;')))
+									
+						.append($(createDiv({id:'',clazz:''}))
+							.attr('style','margin-left: 130px; height: 50px; margin-top: 80px;')
+							.append($(createDiv({id:'',clazz:''}))
+								.append($(createSpan({id:'',clazz:'',val:''}))
+									.append($(createDiv({id:'',clazz:''}))
+										.append($(createSelect({}))
+											.append($(createOption({val:'선택'})))
+											.append($(createOption({val:'02'})))
+											.append($(createOption({val:'041'})))
+											.append($(createOption({val:'031'})))
+											.append($(createOption({val:'032'})))
+											.append($(createOption({val:'051'}))))
+									.append($(createDiv({id:'',clazz:''}))
+									.attr('style','margin-top: 15px; display: inline-block;')
+										.append($(createInput({id:'',val:'연락처',type:'text'}))
+											.attr('style','width: 350px; height: 50px; margin-left:10px;'))))))
+							.append($(createDiv({id:'',clazz:''}))
+								.attr('style','margin-top: 10px;'))
+								.append($(createInput({id:'',val:'연락처',type:'text'}))
+									.attr('style','width: 350px; height: 50px;')))
+						.append($(createDiv({id:'',clazz:''}))
+							.attr('style','margin-top: 100px; margin-left: 130px;')
+							.append($(createDiv({id:'',clazz:''}))
+								.append($(createHTag({num:'3',val:'배송시 요청 사항'}))))
+							.append($(createDiv({id:'',clazz:''}))
+								.append($(createInput({id:'',val:'배송시 요청사항',type:'text'}))
+									.attr('style','width: 700px; height: 70px;')))
+							.append($(createDiv({id:'',clazz:''}))
+								.append('<p>배송정보</p>'))
+							.append($(createDiv({id:'',clazz:''}))
+								.append($(createDiv({id:'',clazz})))))
+											
+						
+				 	 
+				 	 )
+										
+			 			 )
 		
 			 });
 		 };
@@ -221,8 +327,7 @@ app.mainItems=(()=>{
 	 };
 	 var mainNavItems=()=>{
 		 $.getScript(view,()=>{
-			 $('#content').empty();
-			 $('#content').append($(createDiv({id:'',clazz:''})))
+			
 		 });
 	 }
 	 return{mainNavItems:mainNavItems}
