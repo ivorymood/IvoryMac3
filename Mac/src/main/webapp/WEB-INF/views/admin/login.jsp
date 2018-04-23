@@ -26,11 +26,21 @@
 	</table>
 </form>	
 <script>
-		$('#btn-login').on('click',function(){
-			alert("로그인 클릭");
-			$('#form-login')
-			.attr('action','${path.context}/admin/login')
-			.attr('method','post')
-			.submit();
-		});
+	$('#btn-login').on('click',function(){
+	    $('#form-login')
+	    .attr('action', '${path.context}/admin/custMana')
+	    .attr('method','post')
+	    .submit();
+	}); 
+		
+	/* 	$('#btn-login').on('click', function(){
+			alert("로그인버튼 클릭");
+			var id = $('#inp-login-customId').val();
+			var pass = $('#inp-login-customPass').val();
+			location.href="${path.context}/custMana/"+id+"/"+pass;
+			alert("${path.context}/custMana/"+id+"/"+pass);
+		}); */
 </script>
+
+
+
