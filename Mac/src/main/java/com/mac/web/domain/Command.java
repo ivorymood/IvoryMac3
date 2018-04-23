@@ -9,5 +9,5 @@ import lombok.Data;
 public class Command {
 	protected String cmd;
 	protected Customer custom;
-	protected Common com;
+	protected Common com;//
 }
