@@ -1,8 +1,8 @@
-package com.mac.web.serviceImpl;
+package com.mac.web.boram;
 
 import org.springframework.stereotype.Service;
 
 @Service
-public class ServiceImpl {
+public class Br_ServiceImpl {
 
 }
