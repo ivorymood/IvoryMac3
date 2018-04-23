@@ -1,3 +1,16 @@
+.dropdown-submenu {
+    position: relative;
+}
+
+.dropdown-submenu .dropdown-menu {
+    top: 0;
+    top: 40px;
+    width: 200px;
+    height:250px;
+
+    margin-top: -1px;
+}
+
 .order-grid-container {
   display: grid;
   grid-template-columns: auto auto auto auto;
