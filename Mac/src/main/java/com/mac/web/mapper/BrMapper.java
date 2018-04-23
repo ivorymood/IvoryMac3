@@ -6,6 +6,6 @@ import com.mac.web.domain.Command;
 import com.mac.web.domain.Customer;
 
 @Component
-public interface Br_Mapper {
+public interface BrMapper {
 	
 }

@@ -9,10 +9,11 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.SessionAttributes;
+
+import com.mac.web.boram.BrService;
 import com.mac.web.domain.Command;
 import com.mac.web.domain.Customer;
 import com.mac.web.factory.ContextFactory;
-import com.mac.web.service.Br_Service;
 
 @SessionAttributes("loginUser")
 /*@RequestMapping("/admin")*/
@@ -22,7 +23,7 @@ public class AdminController {
 	@Autowired Command cmd;
 	@Autowired Customer custom;
 	@Autowired ContextFactory ctx;
-	@Autowired Br_Service brService;
+	@Autowired BrService brService;
 	
 	@RequestMapping(value="/admin/login",method=RequestMethod.GET)
 	public String login(Model model) {
@@ -45,7 +46,7 @@ public class AdminController {
 		model.addAttribute("path", ctx.ptx());
 		custom.setCustomId(customId);
 		custom.setCustomPass(customPass);
-		cmd.setCustom(custom);
+		cmd.setCustomer(custom);
 		brService.count(cmd);
 		
 		String a = "";

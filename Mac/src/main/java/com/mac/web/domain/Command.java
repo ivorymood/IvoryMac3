@@ -7,10 +7,6 @@ import lombok.Data;
 @Component
 @Data
 public class Command {
-<<<<<<< HEAD
-	protected Customer custom;
-}
-=======
 
 	protected String type, col1, col2, data1, data2;
 	protected Address address;
@@ -24,4 +20,4 @@ public class Command {
 	//
 }
 
->>>>>>> branch 'BoRam' of https://github.com/ivorymood/IvoryMac3.git
+

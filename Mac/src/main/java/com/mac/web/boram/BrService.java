@@ -1,4 +1,4 @@
-package com.mac.web.service;
+package com.mac.web.boram;
 
 import java.util.List;
 import org.springframework.stereotype.Component;
@@ -6,7 +6,7 @@ import com.mac.web.domain.Command;
 import com.mac.web.domain.Customer;
 
 @Component
-public interface Br_Service {
+public interface BrService {
 	
 	public List<Customer> list();
 	public List<Customer> findByName(Command cmd);
