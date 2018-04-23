@@ -32,6 +32,6 @@ public interface Br_Service {
 	public void updateItem(Command cmd);
 	
 	public boolean count(Command cmd);
-	
+	//get메소드는 필요한대로. 단 네이밍규칙은 findBy###
 	
 }
