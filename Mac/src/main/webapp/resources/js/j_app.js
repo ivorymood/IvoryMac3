@@ -4,12 +4,32 @@ app = (()=>{
 	var init = x =>{
 	    $.getScript(x+'/resources/js/router.js',()=>{
 	        $.extend(new Router(x));
+	        app.route.init(x);
 	        app.main.onCreate();
 	    })
 	};
 	return {init:init};
 })();
-
+app.route = (()=>{
+	return {
+				init : x => 
+				{
+					sessionStorage.setItem('x', x);
+				}, 
+				$ : ()=>{
+					return sessionStorage.getItem('x');
+				},
+				$j : ()=>{
+					return sessionStorage.getItem('x')+'/resources/js';
+				},
+				$c : ()=>{
+					return sessionStorage.getItem('x')+'/resources/css';
+				},
+				$i : ()=>{
+					return sessionStorage.getItem('x')+'/resources/img';
+				}
+			};
+})();
 var createNavgation=x=>{
 	return+'<div class="btn-group">'
 	  +'<button type="button" class="btn btn-danger">Action</button>'
@@ -972,6 +992,10 @@ app.login=(()=>{
 		 $.getScript(view,()=>{
 			 $(createButton({id:'',clazz:'btn btn-default dropdown-toggle',val:'관리자'}))
 			 .attr('style','font-size:20px; width: 150px;background: black; border: black; color: white;')
+			  .on('click',e=>{
+   			 alert(app.route.$()+'/admin/login');
+				location.href=app.route.$()+'/admin/login';
+			})
 			 .appendTo('#container');
 			 
 		$('#container').append('<!-- Trigger the modal with a button -->'
@@ -1070,16 +1094,7 @@ app.login=(()=>{
    			 val:'관리자'
    		 })).attr('style','color:white;font-size: 20px; padding:10px;')
    		 .appendTo('#div-second')
-   		 .on('click',e=>{
-				e.preventDefault();
-				$.ajax({
-				url: context+"admin/login",
-				dataType: 'text',
-				contentType: 'application/json',
-				method: 'POST',
-				});
-				alert('작동함');
-			});
+   		
          });
 		 //*** 관리자 클릭시 admin폴더의 b_home으로 이동하게!
 		 

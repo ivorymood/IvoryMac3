@@ -25,7 +25,7 @@ public class AdminController {
 		int a = 1;
 		if(a==1) {
 			logger.info("어드민 컨트롤러 custMana111111111() =============================");
-			return "login:login.tiles";
+			return "login.login";
 		}else {
 			return "redirect:/admin";
 		}		//
