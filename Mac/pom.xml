@@ -24,7 +24,7 @@
         <tiles-version>3.0.7</tiles-version>
 	</properties>
 	<dependencies>
-		<!-- tiles 
+		<!-- tiles -->
 		<dependency>
 		    <groupId>org.apache.tiles</groupId>
 		    <artifactId>tiles-extras</artifactId>
@@ -50,7 +50,7 @@
 		    <artifactId>tiles-el</artifactId>
 		    <version>${tiles-version}</version>
 		</dependency>
-		-->
+		
 		<!-- mysql -->
         <dependency>
             <groupId>mysql</groupId>

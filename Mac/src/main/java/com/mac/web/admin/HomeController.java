@@ -1,4 +1,4 @@
-package com.mac.web.controller;
+package com.mac.web.admin;
 
 import java.text.DateFormat;
 import java.util.Date;

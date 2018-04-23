@@ -1,4 +1,4 @@
-package com.mac.web.controller;
+package com.mac.web.admin;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -10,20 +10,18 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.SessionAttributes;
 
-import com.mac.web.boram.BrService;
 import com.mac.web.domain.Command;
 import com.mac.web.domain.Customer;
 import com.mac.web.factory.ContextFactory;
 
 @SessionAttributes("loginUser")
-/*@RequestMapping("/admin")*/
 @Controller
 public class AdminController {
 	private static final Logger logger = LoggerFactory.getLogger(AdminController.class);
 	@Autowired Command cmd;
 	@Autowired Customer custom;
 	@Autowired ContextFactory ctx;
-	@Autowired BrService brService;
+	@Autowired AdminService brService;
 	
 	@RequestMapping(value="/admin/login",method=RequestMethod.GET)
 	public String login(Model model) {

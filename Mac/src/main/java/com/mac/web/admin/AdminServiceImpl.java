@@ -1,4 +1,4 @@
-package com.mac.web.boram;
+package com.mac.web.admin;
 
 import java.util.List;
 
@@ -8,7 +8,7 @@ import com.mac.web.domain.Command;
 import com.mac.web.domain.Customer;
 
 @Service
-public class BrServiceImpl implements BrService{
+public class AdminServiceImpl implements AdminService{
 
 	@Override
 	public List<Customer> list() {
