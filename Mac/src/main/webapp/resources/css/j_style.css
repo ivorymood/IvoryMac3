@@ -137,3 +137,22 @@
   text-align: center;
   font-size: 13px;
 }
+
+.grid-container-catallog {
+  display: grid;
+  grid-template-columns: auto auto auto auto;
+  background-color: #white;
+  padding: 10px;
+}
+.grid-item-catallog {
+ 
+  text-align: center;
+}
+.grid-container {
+  display: grid;
+  grid-template-columns: auto auto;
+  padding: 10px;
+}
+.grid-item {
+  text-align: center;
+}

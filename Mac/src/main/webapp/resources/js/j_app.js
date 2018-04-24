@@ -194,6 +194,323 @@ var createMainImg=()=>{
     +'</ol>'
 ;
 }
+var itemsCatallog=()=>{
+	return '<div>'
+	 +'<div class="grid-container-catallog" style="width: 1300px; margin: 0 auto; margin-bottom: 50px;">'
+	  +'<div class="grid-item-catallog" style="border-top: 1px solid #c7c7c7;">'
+	    +'<div style="display: inline-block; ">'
+	      +'<div>'
+	          +'<div><h4>아이섀도우</h4></div>'
+	      +'</div>'
+	      +'<div>'
+	          +'<h4>EYE SHADOW</h4>'
+	      +'</div>'
+	    +'</div>'
+	    +'<div style="display: inline-block; margin-left: 50px;">'
+	        +'<h4>★★★★★</h4>'
+	        +'<div style="margin-left: 70px;">'
+	        +'<h4>♡</h4>'
+	        +'</div>'
+	    +'</div>'
+	    +'<div>'
+	        +'<img src="'+$.image()+'/mainitem11.jpg" alt="Matte Lipstick" title="Matte Lipstick">'
+	    +'</div>'
+	    +'<div  style="border-top: 1px solid #c7c7c7;">'
+	        +'<div style="display: inline-block;"><h4>₩ 27,000</h4></div>'
+	        +'<div style="display: inline-block; margin-left: 50px; background: black;width: 130px;">'
+	            +'<a style="color: white; font-size: 15px;" href="">70개 색상 더보기</a>'
+	        +'</div>'
+	    +'</div>'
+	  +'</div>'
+	  +'<div class="grid-item-catallog" style="background: black;  margin-left: 20px;">'
+	    +'<div style="margin-top: 100px;">'
+	      +'<div>'
+	        +'<h3 style="color: white;">쉐이드별 섀도우 구매하기</h3>'
+	      +'</div>'
+	       +'<div style="padding: 5px;">'
+	        +'<a style="color: white;" href="">베이지+브라운</a>'
+	      +'</div>'
+	       +'<div style="padding: 5px;">'
+	        +'<a style="color: white;" href="">블루+그린</a>'
+	      +'</div>'
+	       +'<div style="padding: 5px;">'
+	        +'<a style="color: white;" href="">그레이+블랙</a>'
+	      +'</div>'
+	       +'<div style="padding: 5px;">'
+	        +'<a style="color: white;" href="">오렌지+퍼플</a>'
+	      +'</div>'
+	    +'</div>'
+	  +'</div>'
+	  +'<div class="grid-item-catallog" style="border-top: 1px solid #c7c7c7; margin-left: 30px;">'
+	       +'<div style="display: inline-block; ">'
+	      +'<div>'
+	          +'<div><h4>아이섀도우</h4></div>'
+	      +'</div>'
+	      +'<div>'
+	          +'<h4>EYE SHADOW</h4>'
+	      +'</div>'
+	    +'</div>'
+	    +'<div style="display: inline-block; margin-left: 50px;">'
+	        +'<h4>★★★★★</h4>'
+	         +'<div style="margin-left: 70px;">'
+	        +'<h4>♡</h4>'
+	        +'</div>'
+	    +'</div>'
+	    +'<div>'
+	    +'<img src="'+$.image()+'/mainitem1.jpg" alt="Matte Lipstick" title="Matte Lipstick">'
+	    +'</div>'
+	    +'<div >'
+	        +'<div style="display: inline-block;"><h4>₩ 27,000</h4></div>'
+	        +'<div style="display: inline-block; margin-left: 50px; background: black;width: 130px;">'
+	            +'<a style="color: white; font-size: 15px;" href="">장바구니 담기</a>'
+	        +'</div>'
+	    +'</div>'
+	  +'</div> '
+	  +'<div class="grid-item-catallog" style="border-top: 1px solid #c7c7c7; margin-left: 30px;">'
+	       +'<div style="display: inline-block; ">'
+	      +'<div>'
+	          +'<div><h4>아이섀도우</h4></div>'
+	      +'</div>'
+	      +'<div>'
+	          +'<h4>EYE SHADOW</h4>'
+	      +'</div>'
+	    +'</div>'
+	    +'<div style="display: inline-block; margin-left: 50px;">'
+	        +'<h4>★★★★★</h4>'
+	         +'<div style="margin-left: 70px;">'
+	        +'<h4>♡</h4>'
+	        +'</div>'
+	    +'</div>'
+	    +'<div>'
+	    +'<img src="'+$.image()+'/mainitem1.jpg" alt="Matte Lipstick" title="Matte Lipstick">'
+	    +'</div>'
+	    +'<div>'
+	        +'<div style="display: inline-block;"><h4>₩ 27,000</h4></div>'
+	        +'<div style="display: inline-block; margin-left: 50px; background: black;width: 130px;">'
+	            +'<a style="color: white; font-size: 15px;" href="">장바구니 담기</a>'
+	        +'</div>'
+	    +'</div>'
+	  +'</div> '
+	+'</div>'
+	+''
+	 +'<div class="grid-container-catallog" style="margin-top: 80px; width: 1300px; margin: 0 auto; margin-bottom: 50px;">  '
+	  +'<div class="grid-item-catallog" style="background: black; ">'
+	    +'<div style="margin-top: 100px;">'
+	      +'<div>'
+	        +'<h3 style="color: white;">쉐이드별 섀도우 구매하기</h3>'
+	      +'</div>'
+	       +'<div style="padding: 5px;">'
+	        +'<a style="color: white;" href="">베이지+브라운</a>'
+	      +'</div>'
+	       +'<div style="padding: 5px;">'
+	        +'<a style="color: white;" href="">블루+그린</a>'
+	      +'</div>'
+	       +'<div style="padding: 5px;">'
+	        +'<a style="color: white;" href="">그레이+블랙</a>'
+	      +'</div>'
+	       +'<div style="padding: 5px;">'
+	        +'<a style="color: white;" href="">오렌지+퍼플</a>'
+	      +'</div>'
+	    +'</div>'
+	  +'</div>'
+	  +'<div class="grid-item-catallog" style="border-top: 1px solid #c7c7c7; margin-left: 30px;">'
+	    +'<div style="display: inline-block; ">'
+	      +'<div>'
+	          +'<div><h4>아이섀도우</h4></div>'
+	      +'</div>'
+	      +'<div>'
+	          +'<h4>EYE SHADOW</h4>'
+	      +'</div>'
+	    +'</div>'
+	    +'<div style="display: inline-block; margin-left: 50px;">'
+	        +'<h4>★★★★★</h4>'
+	         +'<div style="margin-left: 70px;">'
+	        +'<h4>♡</h4>'
+	        +'</div>'
+	    +'</div>'
+	    +'<div>'
+	    +'<img src="'+$.image()+'/mainitem3.jpg" alt="Matte Lipstick" title="Matte Lipstick">'
+	    +'</div>'
+	    +'<div  style="border-top: 1px solid #c7c7c7;">'
+	        +'<div style="display: inline-block;"><h4>₩ 27,000</h4></div>'
+	        +'<div style="display: inline-block; margin-left: 50px; background: black;width: 130px;">'
+	            +'<a style="color: white; font-size: 15px; href="">장바구니 담기</a>'
+	        +'</div>'
+	    +'</div>'
+	  +'</div>'
+	  +'<div class="grid-item-catallog" style="border-top: 1px solid #c7c7c7;    margin-left: 30px;">'
+	       +'<div style="display: inline-block; ">'
+	      +'<div>'
+	          +'<div><h4>아이섀도우</h4></div>'
+	      +'</div>'
+	      +'<div>'
+	          +'<h4>EYE SHADOW</h4>'
+	      +'</div>'
+	    +'</div>'
+	    +'<div style="display: inline-block; margin-left: 50px;">'
+	        +'<h4>★★★★★</h4>'
+	         +'<div style="margin-left: 70px;">'
+	        +'<h4>♡</h4>'
+	        +'</div>'
+	    +'</div>'
+	    +'<div>'
+	    +'<img src="'+$.image()+'/mainitem13.jpg" alt="Matte Lipstick" title="Matte Lipstick">'
+	    +'</div>'
+	    +'<div  style="border-top: 1px solid #c7c7c7;">'
+	        +'<div style="display: inline-block;"><h4>₩ 27,000</h4></div>'
+	        +'<div style="display: inline-block; margin-left: 50px; background: black;width: 130px;">'
+	            +'<a style="color: white; font-size: 15px;" href="">장바구니 담기</a>'
+	        +'</div>'
+	    +'</div>'
+	  +'</div> '
+	  +'<div class="grid-item-catallog" style="border-top: 1px solid #c7c7c7;    margin-left: 30px;">'
+	       +'<div style="display: inline-block; ">'
+	      +'<div>'
+	          +'<div><h4>아이섀도우</h4></div>'
+	      +'</div>'
+	      +'<div>'
+	          +'<h4>EYE SHADOW</h4>'
+	      +'</div>'
+	    +'</div>'
+	    +'<div style="display: inline-block; margin-left: 50px;">'
+	        +'<h4>★★★★★</h4>'
+	         +'<div style="margin-left: 70px;">'
+	        +'<h4>♡</h4>'
+	        +'</div>'
+	    +'</div>'
+	    +'<div>'
+	    +'<img src="'+$.image()+'/mainitem14.jpg" alt="Matte Lipstick" title="Matte Lipstick">'
+	    +'</div>'
+	    +'<div  style="border-top: 1px solid #c7c7c7;">'
+	        +'<div style="display: inline-block;"><h4>₩ 27,000</h4></div>'
+	        +'<div style="display: inline-block; margin-left: 50px; background: black;width: 130px;">'
+	            +'<a style="color: white; font-size: 15px;"  href="">장바구니 담기</a>'
+	        +'</div>'
+	    +'</div>'
+	  +'</div> '
+	+'</div>'
+	 +'<div class="grid-container-catallog" style=" width: 1300px; margin: 0 auto;">  '
+	  +'<div class="grid-item-catallog" style="border-top: 1px solid #c7c7c7; margin-left: 30px;">'
+	    +'<div style="display: inline-block; ">'
+	      +'<div>'
+	          +'<div><h4>아이섀도우</h4></div>'
+	      +'</div>'
+	      +'<div>'
+	          +'<h4>EYE SHADOW</h4>'
+	      +'</div>'
+	    +'</div>'
+	    +'<div style="display: inline-block; margin-left: 50px;">'
+	        +'<h4>★★★★★</h4>'
+	         +'<div style="margin-left: 70px;">'
+	        +'<h4>♡</h4>'
+	        +'</div>'
+	    +'</div>'
+	    +'<div>'
+	    +'<img src="'+$.image()+'/mainitem15.jpg" alt="Matte Lipstick" title="Matte Lipstick">'
+	    +'</div>'
+	    +'<div  style="border-top: 1px solid #c7c7c7;">'
+	        +'<div style="display: inline-block;"><h4>₩ 27,000</h4></div>'
+	        +'<div style="display: inline-block; margin-left: 50px; background: black;width: 130px;">'
+	            +'<a style="color: white; font-size: 15px; href="">장바구니 담기</a>'
+	        +'</div>'
+	    +'</div>'
+	  +'</div>'
+	  +'<div class="grid-item-catallog" style="border-top: 1px solid #c7c7c7;    margin-left: 30px;">'
+	       +'<div style="display: inline-block; ">'
+	      +'<div>'
+	          +'<div><h4>아이섀도우</h4></div>'
+	      +'</div>'
+	      +'<div>'
+	          +'<h4>EYE SHADOW</h4>'
+	      +'</div>'
+	    +'</div>'
+	    +'<div style="display: inline-block; margin-left: 50px;">'
+	        +'<h4>★★★★★</h4>'
+	         +'<div style="margin-left: 70px;">'
+	        +'<h4>♡</h4>'
+	        +'</div>'
+	    +'</div>'
+	    +'<div>'
+	    +'<img src="'+$.image()+'/mainitem13.jpg" alt="Matte Lipstick" title="Matte Lipstick">'
+	    +'</div>'
+	    +'<div  style="border-top: 1px solid #c7c7c7;">'
+	        +'<div style="display: inline-block;"><h4>₩ 27,000</h4></div>'
+	        +'<div style="display: inline-block; margin-left: 50px; background: black;width: 130px;">'
+	            +'<a style="color: white; font-size: 15px;" href="">장바구니 담기</a>'
+	        +'</div>'
+	    +'</div>'
+	  +'</div> '
+	  +'<div class="grid-item-catallog" style="border-top: 1px solid #c7c7c7;    margin-left: 30px;">'
+	       +'<div style="display: inline-block; ">'
+	      +'<div>'
+	          +'<div><h4>아이섀도우</h4></div>'
+	      +'</div>'
+	      +'<div>'
+	          +'<h4>EYE SHADOW</h4>'
+	      +'</div>'
+	    +'</div>'
+	    +'<div style="display: inline-block; margin-left: 50px;">'
+	        +'<h4>★★★★★</h4>'
+	         +'<div style="margin-left: 70px;">'
+	        +'<h4>♡</h4>'
+	        +'</div>'
+	    +'</div>'
+	    +'<div>'
+	    +'<img src="'+$.image()+'/mainitem12.jpg" alt="Matte Lipstick" title="Matte Lipstick">'
+	    +'</div>'
+	    +'<div  style="border-top: 1px solid #c7c7c7;">'
+	        +'<div style="display: inline-block;"><h4>₩ 27,000</h4></div>'
+	        +'<div style="display: inline-block; margin-left: 50px; background: black;width: 130px;">'
+	            +'<a style="color: white; font-size: 15px;"  href="">장바구니 담기</a>'
+	        +'</div>'
+	    +'</div>'
+	  +'</div>'
+	    +'<div class="grid-item-catallog" style="background: black; ">'
+	    +'<div style="margin-top: 100px;">'
+	      +'<div>'
+	        +'<h3 style="color: white;">피니쉬별 섀도우 구매하기</h3>'
+	      +'</div>'
+	       +'<div style="padding: 5px;">'
+	        +'<a style="color: white;" href="">프로스트</a>'
+	      +'</div>'
+	       +'<div style="padding: 5px;">'
+	        +'<a style="color: white;" href="">러스터</a>'
+	      +'</div>'
+	       +'<div style="padding: 5px;">'
+	        +'<a style="color: white;" href="">매트</a>'
+	      +'</div>'
+	       +'<div style="padding: 5px;">'
+	        +'<a style="color: white;" href="">새틴</a>'
+	      +'</div>'
+	    +'</div>'
+	  +'</div> '
+	+'</div>  '
+	+'</div>';
+}
+app.items=(()=>{
+	var $wrapper,context,view,image;
+	var onCreate=()=>{
+		 $wrapper = $('#wrapper');
+		 $content = $('#content');
+		 context = $.context();
+		 image = $.image();
+	     view = $.javascript()+'/j_app.js';
+	     setContentView();
+	 };
+	 var setContentView=()=>{		
+			 $.getScript(view,()=>{ 
+				 alert('작동함');
+				 $('#content').empty();
+				 $('#footer').attr('style','margin-top:100px;')
+				 $('#content').append($(createDiv({id:'',clazz:''}))
+					 .append($(createHTag({num:4,val:'아이 > 섀도우'}))
+						 .attr('style','margin-top: 30px; border-bottom: 1px solid #c7c7c7; margin-bottom: 20px; text-align: center')))
+				$('#content').append($(itemsCatallog()))
+		
+			 });
+		 };
+		 return{onCreate:onCreate}
+	 })();
 app.cash=(()=>{
 	var $wrapper,context,view,image;
 	var onCreate=()=>{
@@ -300,13 +617,92 @@ app.cash=(()=>{
 							.append($(createDiv({id:'',clazz:''}))
 								.append('<p>배송정보</p>'))
 							.append($(createDiv({id:'',clazz:''}))
-								.append($(createDiv({id:'',clazz})))))
-											
-						
-				 	 
-				 	 )
-										
-			 			 )
+								.append($(createDiv({id:'',clazz:''}))
+									.attr('style','display: inline-block;')	
+									.append($(createInput({id:'',val:'',type:'radio'}))))
+								.append($(createDiv({id:'',clazz:''}))
+									.attr('style','display: inline-block;')
+									.append($(createHTag({num:'3',val:'선물포장 옵션'}))))))
+						.append($(createDiv({id:'',clazz:''}))
+							.append($(createDiv({id:'',clazz:''}))
+								.attr('style','margin-left: 680px;')
+								.append($(createInput({id:'',text:'',type:'summit'}))
+									.attr('value','결제하기')
+									.attr('style','background: black; color: white; text-align: center; width: 200px;  height:60px;')))))
+						.append($(createDiv({id:'',clazz:''}))
+							.attr('style','float: right; margin-right: 200px; ')
+							.append($(createDiv({id:'',clazz:''}))
+								.append($(createHTag({num:'3',val:'고객 관리 지원팀'})))
+								.append('<p>맥 웹사이트 이용 중 문의 사항이 있으시면 고객롼리 지원팀</br>(02-3440-2702)으로 연락 주시기 바랍니다</p>'))
+							.append($(createDiv({id:'',clazz:''}))
+								.attr('style','background: #f0f0f0; padding: 5px; margin-top: 15px;')
+								.append($(createDiv({id:'',clazz:''}))
+									.append($(createHTag({num:'3',val:'내 주문 요약'}))))
+								.append($(createDiv({id:'',clazz:''}))
+									.append('<p>장바구니에 담겨진 수량</p>'))
+								.append($(createDiv({id:'',clazz:''}))
+									.append($(createDiv({id:'',clazz:''}))
+										.attr('style','display: inline-block;')
+										.append($(createHTag({num:'4',val:'합계'}))))
+									.append($(createDiv({id:'',clazz:''}))
+										.attr('style','display: inline-block; margin-left: 82px;')
+										.append($(createHTag({num:'4',val:'₩ 126,000'})))))
+							.append($(createDiv({id:'',clazz:''}))
+									.append($(createDiv({id:'',clazz:''}))
+										.attr('style','display: inline-block;')
+										.append($(createHTag({num:'4',val:'선물포장'}))))
+									.append($(createDiv({id:'',clazz:''}))
+										.attr('style','display: inline-block; margin-left: 45px;')
+										.append($(createHTag({num:'4',val:'₩ 0'})))))
+								.append($(createDiv({id:'',clazz:''}))
+									.append($(createDiv({id:'',clazz:''}))
+										.attr('style','display: inline-block;')
+										.append($(createHTag({num:'4',val:'배송비'}))))
+									.append($(createDiv({id:'',clazz:''}))
+										.attr('style','display: inline-block; margin-left: 65px;')
+										.append($(createHTag({num:'4',val:'₩ 0'})))))
+							.append($(createDiv({id:'',clazz:''}))
+									.append($(createDiv({id:'',clazz:''}))
+										.attr('style','display: inline-block;')
+										.append($(createHTag({num:'4',val:'할인금액'}))))
+									.append($(createDiv({id:'',clazz:''}))
+										.attr('style','display: inline-block; margin-left: 47px;')
+										.append($(createHTag({num:'4',val:'₩ -18,900'})))))
+								.append($(createDiv({id:'',clazz:''}))
+									.append($(createDiv({id:'',clazz:''}))
+										.attr('style','display: inline-block;')
+										.append($(createHTag({num:'4',val:'총 합계'}))))
+									.append($(createDiv({id:'',clazz:''}))
+										.attr('style','display: inline-block; margin-left: 60px;')
+										.append($(createHTag({num:'4',val:'₩ 107,100'}))))))
+						.append($(createDiv({id:'',clazz:''}))
+								.attr('style','margin-top: 10px; background: #f0f0f0; padding: 5px;')
+								.append($(createDiv({id:'',clazz:''}))
+									.append($(createHTag({num:'3',val:'쿠폰 코드 입력'}))))
+								.append($(createDiv({id:'',clazz:''}))
+									.append($(createInput({id:'',val:'*주문당 하나의 쿠폰 코드만 사용 가능합니다',type:'text'}))
+										.attr('style','width: 300px; height: 50px;')))
+								.append($(createDiv({id:'',clazz:''}))
+									.append('<p>*쿠폰 코드는 1인 1회 적용되며, 적용 주문건 </br>취소 후 쿠폰 코드 재적용 불가합니다.</p>'))
+								.append($(createDiv({id:'',clazz:''}))
+									.attr('style','text-align: center; padding: 10px;')
+									.append($(createInput({id:'',val:'',type:'submit'}))
+										.attr('value','적용하기')
+										.attr('style','background: black; color: white; width: 150px; height: 50px;'))))
+						.append($(createDiv({id:'',clazz:''}))
+							.attr('style','background: black; padding: 10px;')
+							.append($(createDiv({id:'',clazz:''}))
+								.attr('style','color:white;')
+								.append($(createHTag({num:'3',val:'추가정보'}))))
+							.append($(createDiv({id:'',clazz:''}))
+								.append($(createATag({id:'',clazz:'',val:'배송정보'}))
+									.attr('style','color:white;')))
+							.append($(createDiv({id:'',clazz:''}))
+								.append($(createATag({id:'',clazz:'',val:'반품 및 교환정핵'}))
+									.attr('style','color:white;')))
+							.append($(createDiv({id:'',clazz:''}))
+								.append($(createATag({id:'',clazz:'',val:'최대 구매수량 정책'}))
+									.attr('style','color:white;'))))))
 		
 			 });
 		 };
@@ -354,7 +750,7 @@ app.main=(()=>{
 	    		 .attr('style','background: black; width:100%; height:60px; padding: 15px;')
 	    		 .append($(createDiv({id:'',clazz:'dropdown'}))
 	    				 .attr('style','display: inline-block;')	    			
-		 .append($(createButton({id:'',clazz:'btn btn-default dropdown-toggle',val:'M A C'}))
+		 .append($(createButton({id:'',clazz:'btn btn-default dropdown-toggle',val:'M·A·C'}))
 				 .attr('style','margin-left: 100px;font-size:20px; width: 120px;background: black; border: black; color: white;'))		 
 		 .append($(createButton({id:'',clazz:'btn btn-default dropdown-toggle',val:'신 제 품'}))
 			 .attr('style','font-size:20px;width: 120px;background: black; border: black; color: white;')
@@ -397,6 +793,10 @@ app.main=(()=>{
 					.attr('style','top:53px;')
 					.append($(createLI({id:'',clazz:'',val:''}))
 						.append($(createATag({id:'',clazz:'',val:'프레그런스 키트'}))
+								.on('click',e=>{
+									e.preventDefault();
+									app.items.onCreate();
+								})
 						.attr('style','color:black; font-size:15px; font-weight: bold;')
 						.append('</br>'))
 					.append($(createLI({id:'',clazz:'',val:''}))
@@ -578,60 +978,6 @@ app.main=(()=>{
 					 			 })	 
 				 .attr('style','font-size:20px; width: 120px;background: black; border: black; color: white;'))	
 	    		 .appendTo($wrapper);
-
-				
-	 			$(createATag({
-	 				id:'a-basket-update',
-	 				val:'수정'
-	 			})).appendTo('#div-modal');
-				$(createDiv({
-					id:'div-item1',
-					clazz:''
-				})).appendTo('#div-basket');
-				$(createImg({
-					img:'item0.jpg'
-				})).attr('style','margin-left:50px;')
-				.appendTo('#div-item1');
-				$(createATag({
-					id:'a-item-name2',
-					val:'매트립스틱'
-				})).attr('style','margin-left:100px;')
-				.appendTo('#div-item1');
-				$(createATag({
-					id:'a-item-name2',
-					val:'MATTELIPSTICK'
-				})).attr('style','margin-left:20px;')
-				.appendTo('#div-item1');
-				$(createDiv({
-					id:'div-item2',
-					clazz:''
-				})).appendTo('#div-item1');
-				$(createHTag({
-					num:'',
-					val:'수량:1'
-				})).attr('style','margin-left:60px; font-size: 15px;')
-				.appendTo('#div-item2');
-				$(createHTag({
-					num:'',
-					val:'가격:30000'
-				})).attr('style','margin-left:30px; font-size: 15px;')
-				.appendTo('#div-item2');
-				$('#div-item1').append($(createDiv({
-					id:'div-checkout',
-					clazz:''
-				})));
-				$(createSpan({
-					id:'',
-					clazz:'',
-					val:'총금액:'
-				})).attr('style','margin-left:20px; font-size: 25px;')
-				.appendTo('#div-checkout');
-				$(createSpan({
-					id:'',
-					clazz:'',
-					val:'81600'		
-				})).attr('style','font-size: 25px;')
-				.appendTo('#div-checkout');
 				$(createDiv({
 					id:'div-container',
 					clazz:'container-fluid'
@@ -1077,117 +1423,70 @@ app.login=(()=>{
 		 $.getScript(view,()=>{
 			 $(createButton({id:'',clazz:'btn btn-default dropdown-toggle',val:'관리자'}))
 			 .attr('style','font-size:20px; width: 150px;background: black; border: black; color: white;')
-			 .appendTo('#container');
+			 .appendTo('#container')
+			 .click(()=>{
+				 alert('작동함');
+			 });
+			 $('#container').append($(createATag({id:'',clazz:'',val:'장바구니'}))
+				 .attr('style','background: black; height: 50px; color:white; font-size:20px;')
+				 .attr('data-toggle','modal')
+				 .attr('data-target','#myModal'))
+			 .append($(createDiv({id:'myModal',clazz:'modal fade'}))
+				 .attr('role','dialog')
+				 .append($(createDiv({id:'',clazz:'modal-dialog'}))
+					 .append($(createDiv({id:'',clazz:'modal-content'}))
+						 .attr('style','width: 500px;')
+						 .append($(createDiv({id:'',clazz:'modal-header'}))
+							 .append($(createDiv({id:'',clazz:'grid-container'}))
+								 .append($(createDiv({id:'grid-item',clazz:''}))
+									 .append('장바구니'))
+								 .append($(createDiv({id:'',clazz:'grid-item'}))
+									 .append($(createATag({id:'',clazz:'',val:'수정'}))))))
+							 .append($(createDiv({id:'',clazz:'modal-body'}))
+								 .append($(createDiv({id:'',clazz:'grid-container'}))
+									 .append($(createDiv({id:'',clazz:'grid-item'}))
+										 .append($(createImg({img:'basket1.jpg'}))))
+									 .append($(createDiv({id:'',clazz:'grid-item'}))
+										 .append($(createDiv({id:'',clazz:''}))
+									 .append($(createHTag({num:'4',val:'롤러휠 리퀴드 라이너'}))))										 
+									 .append($(createDiv({id:'',clazz:''}))
+										 .append($(createHTag({num:'5',val:'Rollerwheel Liquid Liner'}))))
+									 .append($(createDiv({id:'',clazz:''}))
+										 .append($(createHTag({num:'5',val:'수량:1'}))))
+									  .append($(createDiv({id:'',clazz:''}))
+										 .append($(createHTag({num:'5',val:'₩ 30,000'}))))))
+								 .append($(createDiv({id:'',clazz:'grid-container'}))
+									 .append($(createDiv({id:'',clazz:'grid-item'}))
+										 .append($(createImg({img:'basket2.jpg'}))))
+									 .append($(createDiv({id:'',clazz:'grid-item'}))
+										 .append($(createDiv({id:'',clazz:''}))
+									 .append($(createHTag({num:'4',val:'대즐 섀도우'}))))										 
+									 .append($(createDiv({id:'',clazz:''}))
+										 .append($(createHTag({num:'5',val:'Dazzleshadow'}))))
+									 .append($(createDiv({id:'',clazz:''}))
+										 .append($(createHTag({num:'5',val:'수량:1'}))))
+									  .append($(createDiv({id:'',clazz:''}))
+										 .append($(createHTag({num:'5',val:'₩ 32,000'})))))))
+								 .append($(createDiv({id:'',clazz:'modal-footer'}))
+									 .append($(createDiv({id:'',clazz:'grid-container'}))
+										 .append($(createDiv({id:'',clazz:'grid-item'}))
+											 .append($(createHTag({num:'4',val:'총금액'}))))
+										 .append($(createDiv({id:'',clazz:'grid-item'}))
+											 .append($(createHTag({num:'4',val:'₩ 62,000'}))))
+										 .append($(createDiv({id:'',clazz:'grid-item'}))
+											 .append($(createButton({id:'',clazz:'btn btn-default',val:'주문하기'}))
+												 .on('click',e=>{
+															order(e);
+														})
+												 .attr('data-dismiss','modal')
+												 .attr('style','background: black; color: white; width: 100px; height: 40px; font-weight: bold; border: solid 1px;')))
+										 .append($(createDiv({id:'',clazz:'grid-item'}))
+												 .append($(createButton({id:'',clazz:'btn btn-default',val:'취소하기'}))
+													 .attr('data-dismiss','modal')
+													 .attr('style','background: black; color: white; width: 100px; height: 40px; font-weight: bold; border: solid 1px;'))))))))
 			 
-		$('#container').append('<!-- Trigger the modal with a button -->'
-  				  +'<a style="height:30px; background:black; color:white; font-size:20px;"  data-toggle="modal" data-target="#myModal">장바구니</a>'
-  				+''
-  				  +'<!-- Modal -->'
-  				  +'<div class="modal fade" id="myModal" role="dialog">'
-  				    +'<div class="modal-dialog">'
-  				+'    '
-  				      +'<!-- Modal content-->'
-  				      +'<div class="modal-content">'
-  				        +'<div class="modal-header" id="div-modal">'
-  				          +'<button type="button" class="close" data-dismiss="modal">&times;</button>'
-  				          +'<h4 class="modal-title">장바구니</h4>'
-  				        +'</div>'
-  				        +'<div class="modal-body" id="div-basket">'	         
-  				        +'</div>'
-  				        +'<div id="div-modal-footer" class="modal-footer">'  				         
-  				        +'</div>'
-  				      +'</div>'
-  				+'      '
-  				    +'</div>'
-  				  +'</div>'
-  				+'  '
-  				);
-			$(createATag({
-				id:'a-basket-update',
-				val:'수정'
-			})).appendTo('#div-modal');
-			$(createDiv({
-				id:'div-item1',
-				clazz:''
-			})).appendTo('#div-basket');
-			$(createImg({
-				img:'item0.jpg'
-			})).attr('style','margin-left:50px;')
-			.appendTo('#div-item1');
-			$(createATag({
-				id:'a-item-name2',
-				val:'매트립스틱'
-			})).attr('style','margin-left:100px;')
-			.appendTo('#div-item1');
-			$(createATag({
-				id:'a-item-name2',
-				val:'MATTELIPSTICK'
-			})).attr('style','margin-left:20px;')
-			.appendTo('#div-item1');
-			$(createDiv({
-				id:'div-item2',
-				clazz:''
-			})).appendTo('#div-item1');
-			$(createHTag({
-				num:'',
-				val:'수량:1'
-			})).attr('style','margin-left:60px; font-size: 15px;')
-			.appendTo('#div-item2');
-			$(createHTag({
-				num:'',
-				val:'가격:30000'
-			})).attr('style','margin-left:30px; font-size: 15px;')
-			.appendTo('#div-item2');
-			$('#div-item1')
-			.append($(createDiv({
-				id:'div-checkout',
-				clazz:''
-			})));
-			$(createSpan({
-				id:'',
-				clazz:'',
-				val:'총금액:'
-			})).attr('style','margin-left:20px; font-size: 25px;')
-			.appendTo('#div-checkout');
-			$(createSpan({
-				id:'',
-				clazz:'',
-				val:'81600'		
-			})).attr('style','font-size: 25px;')
-			.appendTo('#div-checkout');
-			$(createButton({
-				id:'btn-close',
-				clazz:'btn btn-default',
-				val:'close'
-			})).attr('data-dismiss','modal')
-			.appendTo('#div-modal-footer');
-			$(createButton({
-				id:'btn-order',
-				clazz:'btn btn-default',
-				val:'주문하기'
-			})).attr('data-dismiss','modal')
-			.appendTo('#div-modal-footer')
-			.on('click',e=>{
-				order(e);
-			});
-			$(createATag({
-   			 id:'a-find-store',
-   			 val:'관리자'
-   		 })).attr('style','color:white;font-size: 20px; padding:10px;')
-   		 .appendTo('#div-second')
-   		 .on('click',e=>{
-				e.preventDefault();
-				$.ajax({
-				url: context+"admin/login",
-				dataType: 'text',
-				contentType: 'application/json',
-				method: 'POST',
-				});
-				alert('작동함');
-			});
-         });
-		 //*** 관리자 클릭시 admin폴더의 b_home으로 이동하게!
-		 
+		
+         });	 
 	 };
 	 var mainItems=x=>{
 		 alert('알러트 작동');
@@ -1236,7 +1535,7 @@ app.login=(()=>{
 									.append($(createDiv({id:'',clazz:''}))
 										.attr('style','display: inline-block; margin-left: 30px;')
 										.append($(createDiv({id:'',clazz:''}))
-											.append($(createHTag({num:'2',val:'롤러휠 리퀴드 라이너'}))))
+											.append($(createHTag({num:'3',val:'롤러휠 리퀴드 라이너'}))))
 										.append($(createDiv({id:'',clazz:''}))
 											.append('<p>ROLLERWHEEL LIQUID LINER</p>'))
 										.append($(createDiv({id:'',clazz:''}))
@@ -1251,12 +1550,12 @@ app.login=(()=>{
 											.attr('style','display: inline-block;')
 											.append($(createDiv({id:'',clazz:''}))
 												.attr('style','margin-left: 70px;')
-												.append($(createHTag({num:'2',val:'1pcs'})))))
+												.append($(createHTag({num:'3',val:'1pcs'})))))
 						.append($(createDiv({id:'',clazz:''}))
 							.attr('style','display: inline-block;')
 							.append($(createDiv({id:'',clazz:''}))
 								.attr('style','margin-left: 80px;')
-								.append($(createHTag({num:'2',val:'₩ 25,500'}))))))//
+								.append($(createHTag({num:'3',val:'₩ 25,500'}))))))//
 								.append($(createDiv({id:'',clazz:''}))
 										.append($(createDiv({id:'',clazz:''}))
 											.attr('style','display: inline-block; float: left;')
@@ -1264,7 +1563,7 @@ app.login=(()=>{
 										.append($(createDiv({id:'',clazz:''}))
 											.attr('style','display: inline-block; margin-left: 30px;')
 											.append($(createDiv({id:'',clazz:''}))
-												.append($(createHTag({num:'2',val:'롤러휠 리퀴드 라이너'}))))
+												.append($(createHTag({num:'3',val:'롤러휠 리퀴드 라이너'}))))
 											.append($(createDiv({id:'',clazz:''}))
 												.append('<p>ROLLERWHEEL LIQUID LINER</p>'))
 											.append($(createDiv({id:'',clazz:''}))
@@ -1279,12 +1578,12 @@ app.login=(()=>{
 												.attr('style','display: inline-block;')
 												.append($(createDiv({id:'',clazz:''}))
 													.attr('style','margin-left: 70px;')
-													.append($(createHTag({num:'2',val:'1pcs'})))))
+													.append($(createHTag({num:'3',val:'1pcs'})))))
 											.append($(createDiv({id:'',clazz:''}))
 												.attr('style','display: inline-block;')
 												.append($(createDiv({id:'',clazz:''}))
 													.attr('style','margin-left: 80px;')
-													.append($(createHTag({num:'2',val:'₩ 25,500'}))))))
+													.append($(createHTag({num:'3',val:'₩ 25,500'}))))))
 						.append($(createDiv({id:'',clazz:''}))
 									.append($(createDiv({id:'',clazz:''}))
 										.attr('style','display: inline-block; float: left;')
@@ -1292,7 +1591,7 @@ app.login=(()=>{
 									.append($(createDiv({id:'',clazz:''}))
 										.attr('style','display: inline-block; margin-left: 30px;')
 										.append($(createDiv({id:'',clazz:''}))
-											.append($(createHTag({num:'2',val:'롤러휠 리퀴드 라이너'}))))
+											.append($(createHTag({num:'3',val:'롤러휠 리퀴드 라이너'}))))
 										.append($(createDiv({id:'',clazz:''}))
 											.append('<p>ROLLERWHEEL LIQUID LINER</p>'))
 										.append($(createDiv({id:'',clazz:''}))
@@ -1307,36 +1606,36 @@ app.login=(()=>{
 											.attr('style','display: inline-block;')
 											.append($(createDiv({id:'',clazz:''}))
 												.attr('style','margin-left: 70px;')
-												.append($(createHTag({num:'2',val:'1pcs'})))))
+												.append($(createHTag({num:'3',val:'1pcs'})))))
 										.append($(createDiv({id:'',clazz:''}))
 											.attr('style','display: inline-block;')
 											.append($(createDiv({id:'',clazz:''}))
 												.attr('style','margin-left: 80px;')
-												.append($(createHTag({num:'2',val:'₩ 25,500'}))))))
+												.append($(createHTag({num:'3',val:'₩ 25,500'}))))))
 								.append($(createDiv({id:'',clazz:''}))
 									.append($(createDiv({id:'',clazz:''}))
-										.append($(createHTag({num:'1',val:'내주문요약'}))))
+										.append($(createHTag({num:'3',val:'내주문요약'}))))
 									.append($(createDiv({id:'',clazz:''}))
 										.append($(createDiv({id:'',clazz:''}))
 											.attr('style','float: left; margin-left: 250px;')
-											.append($(createHTag({num:'2',val:'합 계:'}))))
+											.append($(createHTag({num:'3',val:'합 계:'}))))
 										.append($(createDiv({id:'',clazz:''}))
 											.attr('style','margin-left: 350px; display: inline-block;')
-											.append($(createHTag({num:'2',val:'₩ 126,000'})))))
+											.append($(createHTag({num:'3',val:'₩ 126,000'})))))
 									.append($(createDiv({id:'',clazz:''}))
 										.append($(createDiv({id:'',clazz:''}))
 											.attr('style','float: left; margin-left: 250px;')
-											.append($(createHTag({num:'2',val:'배송비'}))))
+											.append($(createHTag({num:'3',val:'배송비'}))))
 										.append($(createDiv({id:'',clazz:''}))
 											.attr('style','margin-left: 350px; display: inline-block;')
-											.append($(createHTag({num:'2',val:'₩ 0'})))))
+											.append($(createHTag({num:'3',val:'₩ 0'})))))
 									.append($(createDiv({id:'',clazz:''}))
 										.append($(createDiv({id:'',clazz:''}))
 											.attr('style','float: left; margin-left: 250px;')
-											.append($(createHTag({num:'2',val:'할인금액'}))))
+											.append($(createHTag({num:'3',val:'할인금액'}))))
 										.append($(createDiv({id:'',clazz:''}))
 											.attr('style','margin-left: 300px; display: inline-block;')
-											.append($(createHTag({num:'2',val:'₩ 18,900'})))))
+											.append($(createHTag({num:'3',val:'₩ 18,900'})))))
 									.append($(createDiv({id:'',clazz:''}))
 										.append($(createDiv({id:'',clazz:''}))
 											.attr('style','float: left; margin-left: 250px;')
@@ -1367,15 +1666,15 @@ app.login=(()=>{
 								.attr('style','display: inline-block;  float: right; margin-right: 100px;')
 								.append($(createDiv({id:'',clazz:''}))
 									.attr('style','height: 50px; background: #f0f0f0;')
-									.append($(createHTag({num:'2',val:'위시 리스트'}))))
+									.append($(createHTag({num:'3',val:'위시 리스트'}))))
 								.append($(createDiv({id:'',clazz:''}))
 									.attr('style','height: 50px; background: #f0f0f0;')
-									.append($(createHTag({num:'2',val:'지난 구매내역'}))))
+									.append($(createHTag({num:'3',val:'지난 구매내역'}))))
 								.append($(createDiv({id:'',clazz:''}))
 									.attr('style','background: #f0f0f0;')
 									.append($(createDiv({id:'',clazz:''}))
 										.attr('style','height: 50px; background: #f0f0f0;')
-										.append($(createHTag({num:'2',val:'쿠폰 코드 입력'}))))
+										.append($(createHTag({num:'3',val:'쿠폰 코드 입력'}))))
 									.append($(createDiv({id:'',clazz:''}))
 										.attr('style','height: 50px; background: #f0f0f0;')
 										.append($(createInput({id:'',val:'*주문당 하나의 쿠폰코드만 사용 가능합니다',type:'text'}))
@@ -1389,120 +1688,20 @@ app.login=(()=>{
 									.append($(createDiv({id:'',clazz:''}))
 										.attr('style','margin-top:20px;')
 										.append($(createDiv({id:'',clazz:''}))
-											.append('<h2>도움이 필요 하세요?</h2>')
+											.append('<h3>도움이 필요 하세요?</h3>')
 											.append('p>고객 관리 지원팀(02-3440-2707)</p>')
 											.append($(createATag({id:'',clazz:'',val:'이메일 문의하기'}))))
 										.append($(createDiv({id:'',clazz:''}))
 											.attr('style','margin-top:30px;')
-											.append($(createHTag({num:'2',val:'추가정보'})))
+											.append($(createHTag({num:'3',val:'추가정보'})))
 											.append($(createDiv({id:'',clazz:''}))
 												.append($(createATag({id:'',clazz:'',val:'배송정보'}))))
 											.append($(createDiv({id:'',clazz:''}))
 												.append($(createATag({id:'',clazz:'',val:'교환및 환불 정책'}))))
 											.append($(createDiv({id:'',clazz:''}))
-												.append($(createATag({id:'',clazz:'',val:'최대 구매수량 정책'}))))))))
-						
-						)
-							
+												.append($(createATag({id:'',clazz:'',val:'최대 구매수량 정책'})))))))))
 							
 					
-			/*$(createTab({
-				id:'tab-order',
-				clazz:''
-			})).appendTo('#content');
-			$(createDiv({
-				id:'div-order-main',
-				clazz:''
-			})).appendTo('#tab-order');
-			//
-			$(createDiv({
-				id:'div-order-continue-shopping',
-				clazz:''
-			})).appendTo('#div-order-main');
-			$(createATag({
-				id:'a-order-continue-shopping',
-				val:'쇼핑계속하기'
-			})).attr('style','margin-top:40px;')
-			.appendTo('#div-order-continue-shopping');
-			$('#div-order-continue-shopping')
-			.append($(createDiv({
-				id:'div-order-basket',
-				clazz:''
-			})));
-			$(createHTag({
-				num:'2',
-				val:'장바구니'
-			})).attr('style','margin-left:650px;')
-			.appendTo('#div-order-basket')
-			$('#div-order-basket')
-			.append($(createDiv({
-				id:'div-order-buy-now',
-				clazz:''
-			})));
-			 $(createButton({
-					id : 'btn-order-buy-now',
-					 clazz : 'btn-order',
-					 val :'지금 구매하기'
-				})).attr('style','border-radius: 0; height:60px; width:300px; margin-left:550px; background: black; color: white;')
-				.appendTo('#div-order-buy-now')
-				.on('click',e=>{
-				});	*/
- 
-			/* $('#div-order-buy-now')
-			 .append($(createDiv({
-				 id:'div-order-item-title',
-				 clazz:''
-			 })));
-			 $(createGridDiv())
-			 .attr('style','margin-left:150px;')
-			 .appendTo('#div-order-item-title');
-			 $(createGridDivContent({
-				 val:'제품'
-			 })).attr('style','width: 200px; margin-right: 300px;')
-			 .appendTo('#div-order-grid');
-			 $(createGridDivContent({
-				 val:'가격'
-			 })).attr('style','width:150px; margin-left: 20;')
-			 .appendTo('#div-order-grid');
-			 $(createGridDivContent({
-				 val:'수량'
-			 })).attr('style','width:150px; margin-left: 20;')
-			 .appendTo('#div-order-grid');
-			 $(createGridDivContent({
-				 val:'총합계'
-			 })).attr('style','width:150px;')
-			 .appendTo('#div-order-grid');
-			 $('#div-order-item-title')
-			 .append($(createDiv({
-				 id:'div-order-item-basket'
-			 })));
-			 $(createGridDiv1())
-			 .appendTo('#div-order-item-basket');
-			 $(createGridDivContent({
-				 val:(createImg({img:'item0.jpg'}))
-			 })).attr('style','margin-left:130px;')
-			 .appendTo('#div-order-grid1');
-			 $(createGridDivRow({
-				 val:'대즐섀도우',
-				 eval:'DAZZLESHADOW',
-				 weight:'1g',
-				 color:'겟피지컬'
-			 })).attr('style','width:100px; font-size:15px; margin-top:40px;')
-			 .appendTo('#div-order-grid1');
-			 $(createGridDivRowPrice({
-				 prcie:'￦32,000',
-				 sprcie:'￦27,200',
-				 sale:'(15%)'
-			 })).attr('style','font-size: 15px;width: 50px;margin-left:230px; margin-top:50px;')
-			 .appendTo('#div-order-grid1');
-			 $(createGridDivContent({
-				 val:'1'
-			 })).attr('style','font-size: 15px;width: 100px;margin-top:50px; margin-left:60px;')
-			 .appendTo('#div-order-grid1');
-			 $(createGridDivContent({
-				 val:'1'
-			 })).attr('style','font-size: 15px;width: 100px;margin-top:50px;')
-			 .appendTo('#div-order-grid1');*/
 
 		});
 		} 
@@ -1584,13 +1783,46 @@ app.login=(()=>{
 				})).attr('style','border-radius: 0; height:60px; width:300px; margin-left:200px; background: black; color: white;')
 				.appendTo('#div-login-box')
 				.on('click',e=>{
-					
+					customerLogin(e);
 				});
 			 
 		 });
 		
 	 }
-		 return{onCreate:onCreate,content:content}
+ var customerLogin=x=>{
+	 x.preventDefault();
+	 console.log($('#input-login'));
+	 var jason={
+		 "id":$('#input-login').val(),
+		 "pass":$('#input-pass').val(),
+		 "type":'customer',
+			
+	 }
+	 console.log(jason);
+	 $.ajax({
+		 url:context+'/customer/login',
+		 method:'POST',
+		 data: JSON.stringify(jason),
+		 dataType:'json',
+		 contentType: 'application/json',
+			success: x=>{
+				console.log(x);
+				alert('로그인 성공 x='+x.success);
+				if(x.success==1){
+					oredr(e);
+				}else{
+					alert('로그인 성공X');
+				}
+			},
+			error: (x,h,m)=>{
+				console.log(x);
+				console.log(h);
+				console.log(m);
+				//alert('로그인에서 에러발생 x= '+x+' ,h= '+h+' ,m= '+m);
+			}
+	 });
+ };
+		 return{onCreate:onCreate,content:content,customerLogin:customerLogin}
 	 })();
 		 
 app.router = (()=>{
