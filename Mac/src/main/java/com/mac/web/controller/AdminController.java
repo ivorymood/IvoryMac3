@@ -28,7 +28,7 @@ public class AdminController {
 			return "login.login";
 		}else {
 			return "redirect:/admin";
-			//
+			
 		}		
 	}
 	@RequestMapping(value="/member",method=RequestMethod.GET)
