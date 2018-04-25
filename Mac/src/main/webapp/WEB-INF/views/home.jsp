@@ -18,7 +18,7 @@
 </div>
 <div id="content">	
 </div>
-<div id="footer">//
+<div id="footer">
 </div>
 </body>
 </html>
