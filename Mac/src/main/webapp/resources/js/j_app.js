@@ -487,6 +487,237 @@ var itemsCatallog=()=>{
 	+'</div>  '
 	+'</div>';
 }
+app.orders=(()=>{
+	var $wrapper,context,view,image;
+	var onCreate=()=>{
+		 $wrapper = $('#wrapper');
+		 $content = $('#content');
+		 context = $.context();
+		 image = $.image();
+	     view = $.javascript()+'/j_app.js';
+	     setContentView();
+	 };
+	 var setContentView=()=>{		
+		 $.getScript(view,()=>{
+			 	$('#a-basket').remove();
+			 	$('#btn-login-default').remove();
+			 	$('#btn-admin').remove();
+			
+			 	$(createButton({id:'btn-logout',clazz:'btn btn-default dropdown-toggle',val:'로그아웃'}))
+				 .attr('style','font-size:20px; width: 150px;background: black; border: black; color: white;')
+				 .appendTo('#container');
+				$('#content').empty();
+				$('#footer').attr('style','margin-top:1200px;');
+				$('#content').html($(createDiv({id:'',clazz:''}))
+					.append($(createDiv({id:'',clazz:''})
+								))
+						.append($(createATag({id:'',clazz:'',val:'쇼핑 계속하기'}))
+							.attr('style','font-size:15px;margin-top:15px;')))
+					.append($(createDiv({id:'',clazz:''}))
+							.append($(createHTag({num:'3',id:'',val:'장바구니'}))
+								.attr('style','text-align:center;')))
+					.append($(createDiv({id:'',clazz:''}))
+							.attr('style','text-align: center;')
+							.append($(createButton({id:'',clazz:'',val:'지금 구매하기'}))
+								.attr('style','font-size: 20px; font-weight: bold;text-align: center; width:250px; height: 65px; background: black; color:white;')))
+							.append($(createDiv({id:'',clazz:''}))
+								.attr('style','text-align: center;')
+								.append($(createHTag({num:'',val:'장바구니 제품을 확인해주세요. 지난 방문 시 장바구니에 담아 두었던 제품도 함계 확인하실수 있습니다.'}))
+								.attr('style','color:red; margin:0 auto;'))
+							.append($(createDiv({id:'',clazz:''}))
+								.append($(createDiv({id:'',clazz:''}))
+									.attr('style','float: left; margin-left: 100px;')
+									.append($(createDiv({id:'',clazz:''}))
+										.attr('style','display: inline-block;     padding: 10px;')
+										.append($(createHTag({num:'2',val:'제품'}))))
+									.append($(createDiv({id:'',clazz:''}))
+										.attr('style','display: inline-block;  margin-left: 400px;    padding: 10px;')
+										.append($(createHTag({num:'2',val:'가격'}))))
+									.append($(createDiv({id:'',clazz:''}))
+										.attr('style','display: inline-block;  margin-left: 100px;    padding: 10px;')
+										.append($(createHTag({num:'2',val:'수량'}))))
+									.append($(createDiv({id:'',clazz:''}))
+										.attr('style','display: inline-block; margin-left: 80px;    padding: 10px;')
+										.append($(createHTag({num:'2',val:'총합계'}))))
+									.append($(createDiv({id:'',clazz:''}))
+										.append($(createDiv({id:'',clazz:''}))
+											.attr('style','display: inline-block; float: left;')
+											.append($(createImg({img:'item0.jpg'}))))
+										.append($(createDiv({id:'',clazz:''}))
+											.attr('style','display: inline-block; margin-left: 30px;')
+											.append($(createDiv({id:'',clazz:''}))
+												.append($(createHTag({num:'3',val:'롤러휠 리퀴드 라이너'}))))
+											.append($(createDiv({id:'',clazz:''}))
+												.append('<p>ROLLERWHEEL LIQUID LINER</p>'))
+											.append($(createDiv({id:'',clazz:''}))
+												.append('<p>1 ml / 0.03 US oz</p>'))
+											.append($(createDiv({id:'',clazz:''}))
+												.append('<p>롤링 블랙 샤인</p>')))
+											.append($(createDiv({id:'',clazz:''}))
+												.attr('style','display: inline-block;  margin-left: 100px; ')
+												.append('<p>정상가:₩ 35,500</p>')
+												.append('<p>할인:₩ 25,500</p>'))
+											.append($(createDiv({id:'',clazz:''}))
+												.attr('style','display: inline-block;')
+												.append($(createDiv({id:'',clazz:''}))
+													.attr('style','margin-left: 70px;')
+													.append($(createHTag({num:'3',val:'1pcs'})))))
+							.append($(createDiv({id:'',clazz:''}))
+								.attr('style','display: inline-block;')
+								.append($(createDiv({id:'',clazz:''}))
+									.attr('style','margin-left: 80px;')
+									.append($(createHTag({num:'3',val:'₩ 25,500'}))))))//
+									.append($(createDiv({id:'',clazz:''}))
+											.append($(createDiv({id:'',clazz:''}))
+												.attr('style','display: inline-block; float: left;')
+												.append($(createImg({img:'item0.jpg'}))))
+											.append($(createDiv({id:'',clazz:''}))
+												.attr('style','display: inline-block; margin-left: 30px;')
+												.append($(createDiv({id:'',clazz:''}))
+													.append($(createHTag({num:'3',val:'롤러휠 리퀴드 라이너'}))))
+												.append($(createDiv({id:'',clazz:''}))
+													.append('<p>ROLLERWHEEL LIQUID LINER</p>'))
+												.append($(createDiv({id:'',clazz:''}))
+													.append('<p>1 ml / 0.03 US oz</p>'))
+												.append($(createDiv({id:'',clazz:''}))
+													.append('<p>롤링 블랙 샤인</p>')))
+												.append($(createDiv({id:'',clazz:''}))
+													.attr('style','display: inline-block;  margin-left: 100px; ')
+													.append('<p>정상가:₩ 35,500</p>')
+													.append('<p>할인:₩ 25,500</p>'))
+												.append($(createDiv({id:'',clazz:''}))
+													.attr('style','display: inline-block;')
+													.append($(createDiv({id:'',clazz:''}))
+														.attr('style','margin-left: 70px;')
+														.append($(createHTag({num:'3',val:'1pcs'})))))
+												.append($(createDiv({id:'',clazz:''}))
+													.attr('style','display: inline-block;')
+													.append($(createDiv({id:'',clazz:''}))
+														.attr('style','margin-left: 80px;')
+														.append($(createHTag({num:'3',val:'₩ 25,500'}))))))
+							.append($(createDiv({id:'',clazz:''}))
+										.append($(createDiv({id:'',clazz:''}))
+											.attr('style','display: inline-block; float: left;')
+											.append($(createImg({img:'item0.jpg'}))))
+										.append($(createDiv({id:'',clazz:''}))
+											.attr('style','display: inline-block; margin-left: 30px;')
+											.append($(createDiv({id:'',clazz:''}))
+												.append($(createHTag({num:'3',val:'롤러휠 리퀴드 라이너'}))))
+											.append($(createDiv({id:'',clazz:''}))
+												.append('<p>ROLLERWHEEL LIQUID LINER</p>'))
+											.append($(createDiv({id:'',clazz:''}))
+												.append('<p>1 ml / 0.03 US oz</p>'))
+											.append($(createDiv({id:'',clazz:''}))
+												.append('<p>롤링 블랙 샤인</p>')))
+											.append($(createDiv({id:'',clazz:''}))
+												.attr('style','display: inline-block;  margin-left: 100px; ')
+												.append('<p>정상가:₩ 35,500</p>')
+												.append('<p>할인:₩ 25,500</p>'))
+											.append($(createDiv({id:'',clazz:''}))
+												.attr('style','display: inline-block;')
+												.append($(createDiv({id:'',clazz:''}))
+													.attr('style','margin-left: 70px;')
+													.append($(createHTag({num:'3',val:'1pcs'})))))
+											.append($(createDiv({id:'',clazz:''}))
+												.attr('style','display: inline-block;')
+												.append($(createDiv({id:'',clazz:''}))
+													.attr('style','margin-left: 80px;')
+													.append($(createHTag({num:'3',val:'₩ 25,500'}))))))
+									.append($(createDiv({id:'',clazz:''}))
+										.append($(createDiv({id:'',clazz:''}))
+											.append($(createHTag({num:'3',val:'내주문요약'}))))
+										.append($(createDiv({id:'',clazz:''}))
+											.append($(createDiv({id:'',clazz:''}))
+												.attr('style','float: left; margin-left: 250px;')
+												.append($(createHTag({num:'3',val:'합 계:'}))))
+											.append($(createDiv({id:'',clazz:''}))
+												.attr('style','margin-left: 350px; display: inline-block;')
+												.append($(createHTag({num:'3',val:'₩ 126,000'})))))
+										.append($(createDiv({id:'',clazz:''}))
+											.append($(createDiv({id:'',clazz:''}))
+												.attr('style','float: left; margin-left: 250px;')
+												.append($(createHTag({num:'3',val:'배송비'}))))
+											.append($(createDiv({id:'',clazz:''}))
+												.attr('style','margin-left: 350px; display: inline-block;')
+												.append($(createHTag({num:'3',val:'₩ 0'})))))
+										.append($(createDiv({id:'',clazz:''}))
+											.append($(createDiv({id:'',clazz:''}))
+												.attr('style','float: left; margin-left: 250px;')
+												.append($(createHTag({num:'3',val:'할인금액'}))))
+											.append($(createDiv({id:'',clazz:''}))
+												.attr('style','margin-left: 300px; display: inline-block;')
+												.append($(createHTag({num:'3',val:'₩ 18,900'})))))
+										.append($(createDiv({id:'',clazz:''}))
+											.append($(createDiv({id:'',clazz:''}))
+												.attr('style','float: left; margin-left: 250px;')
+												.append($(createHTag({num:'2',val:'총 합 계'}))))
+											.append($(createDiv({id:'',clazz:''}))
+												.attr('style','margin-left: 320px; display: inline-block;')
+												.append($(createHTag({num:'2',val:'₩ 107,100	'})))))
+										.append($(createDiv({id:'',clazz:''}))
+											.append($(createDiv({id:'',clazz:''}))
+												.attr('style','text-align:  center; width: 150px;  background: black; height: 50px; margin: 0 auto; padding: 14px;')
+												.append($(createATag({id:'',clazz:'',val:'지금 구매하기'}))
+														.on('click',e=>{
+															e.preventDefault();
+															alert('작동함');
+															app.cash.onCreate();
+														})
+													.attr('style','color: white;font-size: 15px;'))))
+										.append($(createDiv({id:'',clazz:''}))
+											.attr('style','background: #f0f0f0; height: 120px; padding: 15px; margin-top: 20px;')
+											.append($(createDiv({id:'',clazz:''}))
+												.append($(createHTag({num:'2',val:'품질 보증'}))))
+											.append($(createDiv({id:'',clazz:''}))
+												.append('<p>공식 온라인 몰을 통해 구매한 MAC 제품에 만족하지 않으셨다면, 사용하지 않은 제품에 한해 반품 혹은 환불을 도와드리도록 하겠습니다</p>'))))
+										))
+								
+										
+										.append($(createDiv({id:'',clazz:''}))
+									.attr('style','display: inline-block;  float: right; margin-right: 100px;')
+									.append($(createDiv({id:'',clazz:''}))
+										.attr('style','height: 50px; background: #f0f0f0;')
+										.append($(createHTag({num:'3',val:'위시 리스트'}))))
+									.append($(createDiv({id:'',clazz:''}))
+										.attr('style','height: 50px; background: #f0f0f0;')
+										.append($(createHTag({num:'3',val:'지난 구매내역'}))))
+									.append($(createDiv({id:'',clazz:''}))
+										.attr('style','background: #f0f0f0;')
+										.append($(createDiv({id:'',clazz:''}))
+											.attr('style','height: 50px; background: #f0f0f0;')
+											.append($(createHTag({num:'3',val:'쿠폰 코드 입력'}))))
+										.append($(createDiv({id:'',clazz:''}))
+											.attr('style','height: 50px; background: #f0f0f0;')
+											.append($(createInput({id:'',val:'*주문당 하나의 쿠폰코드만 사용 가능합니다',type:'text'}))
+												.attr('style','width: 300px; height: 50px; background: #f0f0f0;')))
+										.append($(createDiv({id:'',clazz:''}))
+											.append(' <p style="color:red">*주문 코드는 1인 1회 적용되며 적용 주문건 </br>취소 후 쿠폰 코드 재적용이 불가 합니다</p>'))
+										.append($(createDiv({id:'',clazz:''}))
+											.append($(createInput({id:'',val:'',type:'sumbit'}))
+												.attr('style','text-align: center; background: black; color: white; height: 50px;')
+												.attr('value','적용하기')))
+										.append($(createDiv({id:'',clazz:''}))
+											.attr('style','margin-top:20px;')
+											.append($(createDiv({id:'',clazz:''}))
+												.append('<h3>도움이 필요 하세요?</h3>')
+												.append('p>고객 관리 지원팀(02-3440-2707)</p>')
+												.append($(createATag({id:'',clazz:'',val:'이메일 문의하기'}))))
+											.append($(createDiv({id:'',clazz:''}))
+												.attr('style','margin-top:30px;')
+												.append($(createHTag({num:'3',val:'추가정보'})))
+												.append($(createDiv({id:'',clazz:''}))
+													.append($(createATag({id:'',clazz:'',val:'배송정보'}))))
+												.append($(createDiv({id:'',clazz:''}))
+													.append($(createATag({id:'',clazz:'',val:'교환및 환불 정책'}))))
+												.append($(createDiv({id:'',clazz:''}))
+													.append($(createATag({id:'',clazz:'',val:'최대 구매수량 정책'})))))))))
+								
+						
+
+			});
+		 };
+		 return{onCreate:onCreate}
+})();
 app.items=(()=>{
 	var $wrapper,context,view,image;
 	var onCreate=()=>{
@@ -502,10 +733,10 @@ app.items=(()=>{
 				 alert('작동함');
 				 $('#content').empty();
 				 $('#footer').attr('style','margin-top:100px;')
-				 $('#content').append($(createDiv({id:'',clazz:''}))
+				 $('#content').html($(createDiv({id:'',clazz:''}))
 					 .append($(createHTag({num:4,val:'아이 > 섀도우'}))
 						 .attr('style','margin-top: 30px; border-bottom: 1px solid #c7c7c7; margin-bottom: 20px; text-align: center')))
-				$('#content').append($(itemsCatallog()))
+				$('#content').html($(itemsCatallog()))
 		
 			 });
 		 };
@@ -525,7 +756,7 @@ app.cash=(()=>{
 			 $.getScript(view,()=>{ 
 				 alert('작동함');
 				 $('#content').empty();
-				 $('#content').append($(createDiv({id:'',clazz:''}))
+				 $('#content').html($(createDiv({id:'',clazz:''}))
 					 .append($(createDiv({id:'',clazz:''}))
 						 .append($(createDiv({id:'',clazz:''}))
 							 .attr('style','text-align: center;')
@@ -533,7 +764,7 @@ app.cash=(()=>{
 				 	 .append($(createDiv({id:'',clazz:''}))
 			 			 .attr('style','float: left; margin-left: 50px;')
 			 			.append($(createDiv({id:'',clazz:''}))
-		 					.attr('style','margin-left: 620px; background: black; color: white;   height: 50px; padding: 4px;     text-align: center;     width: 250px;')
+		 					.attr('style','margin-left: 545px; background: black; color: white;   height: 50px; padding: 4px;     text-align: center;     width: 250px;')
 		 					.append($(createHTag({num:'4',val:'결제 계속 하기'}))))
 	 					.append($(createDiv({id:'',clazz:''}))
  							.attr('style','margin-left: 130px; margin-top: 50px;')
@@ -625,12 +856,12 @@ app.cash=(()=>{
 									.append($(createHTag({num:'3',val:'선물포장 옵션'}))))))
 						.append($(createDiv({id:'',clazz:''}))
 							.append($(createDiv({id:'',clazz:''}))
-								.attr('style','margin-left: 680px;')
+								.attr('style','margin-left: 600px;')
 								.append($(createInput({id:'',text:'',type:'summit'}))
 									.attr('value','결제하기')
 									.attr('style','background: black; color: white; text-align: center; width: 200px;  height:60px;')))))
 						.append($(createDiv({id:'',clazz:''}))
-							.attr('style','float: right; margin-right: 200px; ')
+							.attr('style','float: right; margin-right: 100px; ')
 							.append($(createDiv({id:'',clazz:''}))
 								.append($(createHTag({num:'3',val:'고객 관리 지원팀'})))
 								.append('<p>맥 웹사이트 이용 중 문의 사항이 있으시면 고객롼리 지원팀</br>(02-3440-2702)으로 연락 주시기 바랍니다</p>'))
@@ -741,20 +972,20 @@ app.main=(()=>{
 	     setContentView();
 	 };
 	 var setContentView=()=>{
-		
-			 $.getScript(view,()=>{ 
-				 $(createDiv({
+			 $.getScript(view,()=>{
+				 
+				 $('#wrapper').html($(createDiv({
 	    			 id : 'container',
 	    			 clazz : ''
 	    		 }))
 	    		 .attr('style','background: black; width:100%; height:60px; padding: 15px;')
 	    		 .append($(createDiv({id:'',clazz:'dropdown'}))
 	    				 .attr('style','display: inline-block;')	    			
-		 .append($(createButton({id:'',clazz:'btn btn-default dropdown-toggle',val:'M·A·C'}))
-				 .attr('style','margin-left: 100px;font-size:20px; width: 120px;background: black; border: black; color: white;'))		 
+		 .append($(createButton({id:'btn-main-go',clazz:'btn btn-default dropdown-toggle',val:'M·A·C'}))
+	     .attr('style','margin-left: 100px;font-size:20px; width: 120px;background: black; border: black; color: white;'))		 
 		 .append($(createButton({id:'',clazz:'btn btn-default dropdown-toggle',val:'신 제 품'}))
-			 .attr('style','font-size:20px;width: 120px;background: black; border: black; color: white;')
-			 .attr('data-toggle','dropdown'))
+		 .attr('style','font-size:20px;width: 120px;background: black; border: black; color: white;')
+		 .attr('data-toggle','dropdown'))
 				 .append($(createUL({id:'',clazz:'dropdown-menu'}))
 	 	.append($(createDiv({id:'',clazz:''}))
 			 			.attr('style','width: 1580px; padding:0; display: inline-block;')
@@ -970,25 +1201,32 @@ app.main=(()=>{
 				 .attr('style','margin-left: 10px; font-size:20px; width: 120px;background: black; border: black; color: white;'))
 				 	 .append($(createButton({id:'',clazz:'btn btn-default dropdown-toggle',val:'게 시 판'}))
 				 .attr('style','margin-left: 10px; font-size:20px; width: 120px;background: black; border: black; color: white;'))
-				 	 .append($(createButton({id:'',clazz:'btn btn-default dropdown-toggle',val:'로 그 인'}))
+				 	 .append($(createButton({id:'btn-login-default',clazz:'btn btn-default dropdown-toggle',val:'로 그 인'}))
 				 			.click(()=>{
 					 			alert('로그인');
-					 			app.login.onCreate();
+					 			app.login.onCreate();	
 					 			$('#content').empty();
+					 			
 					 			 })	 
-				 .attr('style','font-size:20px; width: 120px;background: black; border: black; color: white;'))	
-	    		 .appendTo($wrapper);
-				$(createDiv({
+				 .attr('style','font-size:20px; width: 120px;background: black; border: black; color: white;')));	 
+				 $('#btn-main-go').on('click',()=>{
+					 alert('작동함');
+						app.main.onCreate();
+					});
+				 
+				$('#content').html($(createDiv({
 					id:'div-container',
 					clazz:'container-fluid'
-				})).attr('style','padding:0;')
-				.appendTo($content);
+				})).attr('style','padding:0;'));
+				$('#div-container').append($(createDiv({id:'div-carousel',clazz:''})));
+				$('#div-container').append($(createDiv({id:'div-main-items-home',clazz:''})));
+				$('#div-container').append($(createDiv({id:'div-main-items-middle',clazz:''})));
 				$(createDiv({
 					id:'myCarousel',
 					clazz:'carousel slide'
 				})).attr('style','')
 				.attr('data-ride','carousel')
-				.appendTo('#div-container');
+				.appendTo('#div-carousel');
 				$(createDiv({
 					id:'div-inner',
 					clazz:'carousel-inner'
@@ -1020,11 +1258,51 @@ app.main=(()=>{
 				.appendTo('#div-item-active2');
 				$('#div-inner')
 				.append($(createMainImg()));
-				$('#div-container')
-				.append($(createDiv({
-					id:'div-main-item-manu1',
-					clazz:'tabbed-block js-tabbed-block--v1 tabbed-with-carousel'
-				})));
+				var temp = ['Matte Lipstick','Retro Matte Lipstick','EYE SHADOW','Mineralize Blush']
+				$.getJSON(context+'/search/', d=>{					
+				for(i=0;i<4;i++){
+					$(createDiv({id:'',clazz:''}))
+					.attr('style','margin-top:30px;display: inline-block;margin-left: 50px;border-top: 1px solid #c7c7c7;')
+					.append($(createDiv({id:'',clazz:''}))
+						.attr('style','display: inline-block;')
+						.append($(createDiv({id:'',clazz:''}))
+							.append($(createHTag({num:'5',val:''}))
+								.attr('id','HTag-main-korName-'+i+'')))
+						.append($(createDiv({id:'',clazz:''}))
+								.append($(createHTag({num:'5',val:temp[i]}))
+										.attr('id','HTag-main-engName-'+i+'')))
+						.append($(createDiv({id:'',clazz:''}))
+								.append($(createHTag({num:'5',val:''}))
+									.attr('id','HTag-main-color-'+i+'')))
+						.append($(createDiv({id:'',clazz:''}))
+								.append($(createHTag({num:'5',val:''}))
+									.attr('id','HTag-main-colorEng-'+i+''))))
+				 	.append($(createDiv({id:'',clazz:''}))
+			 			.attr('style','display: inline-block; margin-left: 100px;')
+			 			.append($(createDiv({id:'',clazz:''}))
+		 						.append($(createHTag({num:'5',val:'★★★★★'}))))
+						.append($(createDiv({id:'',clazz:''}))
+								.append($(createHTag({num:'5',val:'♡'})))))
+			 		.append($(createDiv({id:'',clazz:''}))
+		 				.append($(createDiv({id:'',clazz:''}))
+		 						.append($(createImg({img:'j-item'+i+'.jpg'})))))
+			 		.append($(createDiv({id:'',clazz:''}))
+		 				.attr('style','border-top: 1px solid #c7c7c7;')
+		 				.append($(createDiv({id:'',clazz:''}))
+		 						.attr('style','display: inline-block;margin-left: 10px; margin-top:10px;')
+	 							.append($(createHTag({num:'5',val:'₩ 30,000'}))
+ 									.attr('id','HTag-basket-'+i+'')))
+						.append($(createDiv({id:'',clazz:''}))
+								.attr('style','display: inline-block;margin-left: 90px;')
+								.append($(createButton({id:'btn-basket-'+i+'',clazz:'',val:'장바구니 담기'}))
+										.on('click',()=>{
+											alert('작동');
+										})
+									.attr('style','color:white; background:black;'))))
+									.appendTo('#div-main-items-home');
+				}
+				});
+		
 				
 				$(createATag({
 					id:'a-tabs-item1',
@@ -1054,93 +1332,7 @@ app.main=(()=>{
 				.click(()=>{
 		 			alert('HIT ITEM');
 		 			 });
-				$('#div-main-item-manu1')
-				.append($(createGridDiv2())
-						.attr('style','margin: 0 auto; width: 80%;'));
-				$(createGridDivRow1({
-					val:'<h3>매트 립스틱</h>',
-					eval:'MATTE LIPSTICK',
-					weight:'색상:칠리',
-					color:'[매트]'
-				})).appendTo('#div-order-grid2');
-				
-				$(createGridDivRow1({
-					val:'<h3>레트로 매트 립스틱</h>',
-					eval:'RETRO MATTE LIPSTICK',
-					weight:'색상:루비 우',
-					color:'[레트로 매트]'
-				})).appendTo('#div-order-grid2');
-				
-				$(createGridDivRow1({
-					val:'<h3>아이섀도우</h>',
-					eval:'EYE SHADOW',
-					weight:'색상:소바',
-					color:'[새틴]'
-				})).appendTo('#div-order-grid2');
-				
-				$(createGridDivRow1({
-					val:'<h3>미네랄라이즈 블러쉬</h>',
-					eval:'MINERALIZE BLUSH',
-					weight:'색상: 헤이, 코랄, 헤이…',
-					color:'[매트]'
-				})).appendTo('#div-order-grid2');
-				$('#div-main-item-manu1')
-				.append($(createDiv({
-					id:'div-main-item-image1',
-					clazz:''
-				})).attr('style','width:80%; margin:0 auto;'));
-				$(createImg({
-					img:'mainitem2.jpg'
-				})).attr('style','width: 280px;')
-				.appendTo('#div-main-item-image1');
-				$(createImg({
-					img:'mainitem2.jpg'
-				})).attr('style','width: 270px; margin-left:35px;')
-				.appendTo('#div-main-item-image1');
-				$(createImg({
-					img:'mainitem3.jpg'
-				})).attr('style','width: 300px; margin-left:35px;')
-				.appendTo('#div-main-item-image1');
-				$(createImg({
-					img:'mainitem3.jpg'
-				})).attr('style','width: 300px; margin-left:18px;')
-				.appendTo('#div-main-item-image1');
-				$('#div-main-item-manu1')
-				.append($(createGridDiv3())
-						.attr('style','margin: 0 auto; width: 80%;'));
-				$(createGridDivContent({
-					val:'￦30,000'
-				})).attr('style','font-size:18px; margin-top: 5px;')
-				.appendTo('#div-order-grid3');
-				$(createGridDivContent({
-					val:'<button style=" font-weight: bold; height: 40px; border: solid; color:white; background: black;" type:button>장바구니담기</button>'
-				})).attr('style','width: 62%;')
-				.appendTo('#div-order-grid3');
-				$(createGridDivContent({
-					val:'￦30,000'
-				})).attr('style','font-size:18px;  margin-top: 5px;')
-				.appendTo('#div-order-grid3');
-				$(createGridDivContent({
-					val:'<button style=" font-weight: bold; height: 40px; border: solid;  color:white; background: black;" type:button>장바구니담기</button>'
-				})).attr('style','width: 62%;').
-				appendTo('#div-order-grid3');
-				$(createGridDivContent({
-					val:'￦27,000'
-				})).attr('style','font-size:18px;  margin-top: 5px;')
-				.appendTo('#div-order-grid3');
-				$(createGridDivContent({
-					val:'<button style=" font-weight: bold; height: 40px; border: solid; color:white; background: black;" type:button>장바구니담기</button>'
-				})).attr('style','width: 62%;')
-				.appendTo('#div-order-grid3');
-				$(createGridDivContent({
-					val:'￦35,000'
-				})).attr('style','font-size:18px;  margin-top: 5px;')
-				.appendTo('#div-order-grid3');
-				$(createGridDivContent({
-					val:'<button style=" font-weight: bold; height: 40px; border: solid;background: black; color:white;" type:button>장바구니담기</button>'
-				})).attr('style','width: 62%;')
-				.appendTo('#div-order-grid3');
-				$('#div-main-item-manu1')
+				$('#div-main-items-middle')
 				.append($(createDiv({
 					id:'div-main-itme-manu2',
 					clazz:''
@@ -1157,7 +1349,7 @@ app.main=(()=>{
 				}))
 				.attr('style','font-size: 15px; text-align: center;')
 				.appendTo('#div-main-itme-manu2');
-				$('#div-main-item-manu1').append($(createDiv({
+				$('#div-main-items-middle').append($(createDiv({
 					id:'j-div-main-itme-manu3',
 					clazz:''
 				})));
@@ -1168,7 +1360,7 @@ app.main=(()=>{
 				 .click(()=>{
 		 				alert('화면 작동함');
 				 });
-				$('#div-main-item-manu1').append($(createDiv({
+				$('#div-main-items-middle').append($(createDiv({
 					id:'j-div-main-itme-manu4',
 					clazz:''
 				})));
@@ -1178,7 +1370,7 @@ app.main=(()=>{
 				}))
 				.attr('style','font-weight: bold; text-align: center;')
 				.appendTo('#j-div-main-itme-manu4');
-				$('#div-main-item-manu1').append($(createDiv({
+				$('#div-main-items-middle').append($(createDiv({
 					id:'j-div-main-itme-manu5',
 					clazz:''
 				})));
@@ -1189,7 +1381,7 @@ app.main=(()=>{
 				 .click(()=>{
 		 				alert('화면 작동함');
 				 });
-				$('#div-main-item-manu1').append($(createDiv({
+				$('#div-main-items-middle').append($(createDiv({
 					id:'j-div-main-itme-manu6',
 					clazz:''
 				})));
@@ -1199,7 +1391,7 @@ app.main=(()=>{
 				}))
 				.attr('style','font-weight: bold; text-align: center;')
 				.appendTo('#j-div-main-itme-manu6');
-				$('#div-main-item-manu1').append($(createDiv({
+				$('#div-main-items-middle').append($(createDiv({
 					id:'j-div-main-itme-manu7',
 					clazz:''
 				})));
@@ -1240,10 +1432,10 @@ app.main=(()=>{
 				 .click(()=>{
 		 				alert('화면 작동함4');
 				 });
-				$(createDiv({
+				$('#footer').html($(createDiv({
 					id:'j-div-footer1',
 					clazz:''
-				})).attr('style','background: #292929; height:35%; margin-top:20px;').appendTo('#footer');
+				})).attr('style','background: #292929; height:35%; margin-top:20px;'));
 				$(createDiv({
 					id:'j-div-footer2',
 					clazz:''
@@ -1403,9 +1595,12 @@ app.main=(()=>{
 				})).attr('style','color:white')
 				.attr('id','j-div-grid-5')
 				.appendTo('#div-order-grid4');
+				
 			 });
+		
 			
 		 };
+		
 		 return{onCreate:onCreate}
 	 })();
 app.login=(()=>{
@@ -1421,17 +1616,252 @@ app.login=(()=>{
 	 };
 	 var setContentView=()=>{
 		 $.getScript(view,()=>{
-			 $(createButton({id:'',clazz:'btn btn-default dropdown-toggle',val:'관리자'}))
-			 .attr('style','font-size:20px; width: 150px;background: black; border: black; color: white;')
-			 .appendTo('#container')
-			 .click(()=>{
+			 $('#wrapper').html($(createDiv({
+    			 id : 'container',
+    			 clazz : ''
+    		 }))
+    		 .attr('style','background: black; width:100%; height:60px; padding: 15px;')
+    		 .append($(createDiv({id:'',clazz:'dropdown'}))
+    				 .attr('style','display: inline-block;')	    			
+	 .append($(createButton({id:'btn-main-go',clazz:'btn btn-default dropdown-toggle',val:'M·A·C'}))
+     .attr('style','margin-left: 100px;font-size:20px; width: 120px;background: black; border: black; color: white;'))		 
+	 .append($(createButton({id:'',clazz:'btn btn-default dropdown-toggle',val:'신 제 품'}))
+	 .attr('style','font-size:20px;width: 120px;background: black; border: black; color: white;')
+	 .attr('data-toggle','dropdown'))
+			 .append($(createUL({id:'',clazz:'dropdown-menu'}))
+ 	.append($(createDiv({id:'',clazz:''}))
+		 			.attr('style','width: 1580px; padding:0; display: inline-block;')
+			.append($(createLI({id:'',clazz:'dropdown-submenu',val:''}))
+		.append($(createImg({img:'crush.jpg'})))
+		.append($(createImg({img:'crush2.jpg'})))
+		.append($(createImg({img:'crush3.jpg'})))
+		.append($(createImg({img:'crush4.jpg'})))
+		.append($(createImg({img:'crush5.jpg'})))
+				 			))
+		 		)
+    		 		)
+ 		.append($(createDiv({id:'',clazz:'dropdown'}))
+			 .attr('style','display: inline-block;')
+			 .append($(createButton({id:'',clazz:'btn btn-default dropdown-toggle',val:'제 품'}))
+			 .attr('style','font-size:20px; width: 120px; background: black; border: black; color: white;')
+			 .attr('data-toggle','dropdown'))
+			 .append($(createUL({id:'',clazz:'dropdown-menu'}))
+			 .attr('style','height: 70px; width: 800px;')
+			 .append($(createDiv({id:'',clazz:''}))			
+			 .attr('style','width:800px; height: 50px; text-align: center; padding: 5px;')
+			 
+			 
+		 .append($(createDiv({id:'',clazz:''})).
+				attr('style','display: inline-block; padding: 5px;')
+				.append($(createLI({id:'',clazz:'dropdown-submenu',val:''}))
+		.append($(createDiv({id:'',clazz:''}))
+			.attr('style','display: inline-block;')
+			.attr('style','font-size: 15px; padding:5px;  margin-left: 30px;')
+		
+			.append($(createATag({id:'test',clazz:'',val:'트 랜 딩 나 우'}))
+				.hover(e=>{$('#j-ul-toggle').toggle('show')}, e=>{$('#j-ul-toggle').toggle('hide')})
+				.attr('tabindex','-1')
+				.attr('style','color:black; font-size:15px; font-weight: bold;'))
+			.append($(createUL({id:'j-ul-toggle',clazz:'dropdown-menu'}))
+				.attr('style','top:53px;')
+				.append($(createLI({id:'',clazz:'',val:''}))
+					.append($(createATag({id:'',clazz:'',val:'프레그런스 키트'}))
+							.on('click',e=>{
+								e.preventDefault();
+								app.items.onCreate();
+							})
+					.attr('style','color:black; font-size:15px; font-weight: bold;')
+					.append('</br>'))
+				.append($(createLI({id:'',clazz:'',val:''}))
+					.append($(createATag({id:'',clazz:'',val:'레드의 정석'}))
+					.attr('style','color:black; font-size:15px; font-weight: bold;')		
+					.append('</br>')))
+				.append($(createLI({id:'',clazz:'',val:''}))
+					.append($(createATag({id:'',clazz:'',val:'엔티크 로즈'}))
+					.attr('style','color:black; font-size:15px; font-weight: bold;')
+					.append('</br>')))
+				.append($(createLI({id:'',clazz:'',val:''}))
+					.append($(createATag({id:'',clazz:'',val:'맥프로 아이팔레트'}))
+					.attr('style','color:black; font-size:15px; font-weight: bold;')
+					.append('</br>')))
+				)))
+				
+				))
+				 
+		.append($(createDiv({id:'',clazz:''})).
+				attr('style','display: inline-block; padding: 5px;')
+				.append($(createLI({id:'',clazz:'dropdown-submenu',val:''}))
+		.append($(createDiv({id:'',clazz:''}))
+			.attr('style','display: inline-block;')
+			.attr('style','font-size: 15px; padding:5px;  margin-left: 30px;')
+		
+			.append($(createATag({id:'test',clazz:'',val:'메이크업'}))
+				.hover(e=>{$('#j-ul-toggle1').toggle('show')}, e=>{$('#j-ul-toggle1').toggle('hide')})
+				.attr('tabindex','-1')
+				.attr('style','color:black; font-size:15px; font-weight: bold;'))
+			.append($(createUL({id:'j-ul-toggle1',clazz:'dropdown-menu'}))
+				.attr('style','top:53px;')
+				.append($(createLI({id:'',clazz:'',val:''}))
+					.append($(createATag({id:'',clazz:'',val:'아이섀도우'}))
+							.attr('style','color:black; font-size:15px; font-weight: bold;')
+					.append('</br>'))
+				.append($(createLI({id:'',clazz:'',val:''}))
+					.append($(createATag({id:'',clazz:'',val:'아이 팔레트+ 키트'}))
+							.attr('style','color:black; font-size:15px; font-weight: bold;')
+					.append('</br>')))
+				.append($(createLI({id:'',clazz:'',val:''}))
+					.append($(createATag({id:'',clazz:'',val:'라이너'}))
+							.attr('style','color:black; font-size:15px; font-weight: bold;')
+					.append('</br>')))
+				.append($(createLI({id:'',clazz:'',val:''}))
+					.append($(createATag({id:'',clazz:'',val:'마스카라'}))
+							.attr('style','color:black; font-size:15px; font-weight: bold;')
+					.append('</br>')))
+				.append($(createLI({id:'',clazz:'',val:''}))
+					.append($(createATag({id:'',clazz:'',val:'브로우'}))
+							.attr('style','color:black; font-size:15px; font-weight: bold;')
+					.append('</br>')))
+				.append($(createLI({id:'',clazz:'',val:''}))
+					.append($(createATag({id:'',clazz:'',val:'아이프라이머'}))
+							.attr('style','color:black; font-size:15px; font-weight: bold;')
+					.append('</br>')))
+				)))
+				
+				))
+				
+			.append($(createDiv({id:'',clazz:''})).
+				attr('style','display: inline-block; padding: 5px;')
+				.append($(createLI({id:'',clazz:'dropdown-submenu',val:''}))
+		.append($(createDiv({id:'',clazz:''}))
+			.attr('style','display: inline-block;')
+			.attr('style','font-size: 15px; padding:5px; margin-left: 30px;')
+			.append($(createATag({id:'test',clazz:'',val:'프라미어+스킨케어'}))
+				.hover(e=>{$('#j-ul-toggle2').toggle('show')}, e=>{$('#j-ul-toggle2').toggle('hide')})
+				.attr('tabindex','-1')
+				.attr('style','color:black; font-size:15px; font-weight: bold;'))
+			.append($(createUL({id:'j-ul-toggle2',clazz:'dropdown-menu'}))
+				.attr('style','top:53px;')
+				.append($(createLI({id:'',clazz:'',val:''}))
+					.append($(createATag({id:'',clazz:'',val:'프라이머'}))
+							.attr('style','color:black; font-size:15px; font-weight: bold;')
+					.append('</br>'))
+				.append($(createLI({id:'',clazz:'',val:''}))
+					.append($(createATag({id:'',clazz:'',val:'리무버'}))
+							.attr('style','color:black; font-size:15px; font-weight: bold;')
+					.append('</br>')))
+				.append($(createLI({id:'',clazz:'',val:''}))
+					.append($(createATag({id:'',clazz:'',val:'모이스처 라이저'}))
+							.attr('style','color:black; font-size:15px; font-weight: bold;')
+					.append('</br>')))
+				.append($(createLI({id:'',clazz:'',val:''}))
+					.append($(createATag({id:'',clazz:'',val:'BB+CC'}))
+							.attr('style','color:black; font-size:15px; font-weight: bold;')
+					.append('</br>')))
+				.append($(createLI({id:'',clazz:'',val:''}))
+					.append($(createATag({id:'',clazz:'',val:'여행용사이즈'}))
+							.attr('style','color:black; font-size:15px; font-weight: bold;')
+					.append('</br>')))
+				)))
+				))
+			.append($(createDiv({id:'',clazz:''})).
+				attr('style','display: inline-block; padding: 5px;')
+				.append($(createLI({id:'',clazz:'dropdown-submenu',val:''}))
+		.append($(createDiv({id:'',clazz:''}))
+			.attr('style','display: inline-block;')
+			.attr('style','font-size: 15px; padding:5px; margin-left: 30px;')
+			.append($(createATag({id:'test',clazz:'',val:'브러쉬+툴'}))
+				.hover(e=>{$('#j-ul-toggle3').toggle('show')}, e=>{$('#j-ul-toggle3').toggle('hide')})
+				.attr('tabindex','-1')
+				.attr('style','color:black; font-size:15px; font-weight: bold;'))
+			.append($(createUL({id:'j-ul-toggle3',clazz:'dropdown-menu'}))
+				.attr('style','top:53px;')
+				.append($(createLI({id:'',clazz:'',val:''}))
+					.append($(createATag({id:'',clazz:'',val:'브러쉬'}))
+							.attr('style','color:black; font-size:15px; font-weight: bold;')
+					.append('</br>'))
+				.append($(createLI({id:'',clazz:'',val:''}))
+					.append($(createATag({id:'',clazz:'',val:'아이 브러쉬'}))
+							.attr('style','color:black; font-size:15px; font-weight: bold;')
+					.append('</br>')))
+				.append($(createLI({id:'',clazz:'',val:''}))
+					.append($(createATag({id:'',clazz:'',val:'립 브러쉬'}))
+							.attr('style','color:black; font-size:15px; font-weight: bold;')
+					.append('</br>')))
+				.append($(createLI({id:'',clazz:'',val:''}))
+					.append($(createATag({id:'',clazz:'',val:'페이스 브러수;'}))
+							.attr('style','color:black; font-size:15px; font-weight: bold;')
+					.append('</br>')))
+				.append($(createLI({id:'',clazz:'',val:''}))
+					.append($(createATag({id:'',clazz:'',val:'모든 브러쉬'}))
+							.attr('style','color:black; font-size:15px; font-weight: bold;')
+					.append('</br>')))
+				)))
+				))
+			.append($(createDiv({id:'',clazz:''})).
+				attr('style','display: inline-block; padding: 5px;')
+				.append($(createLI({id:'',clazz:'dropdown-submenu',val:''}))
+		.append($(createDiv({id:'',clazz:''}))
+			.attr('style','display: inline-block;')
+			.attr('style','font-size: 15px; padding:5px; margin-left: 30px;')
+			.append($(createATag({id:'test',clazz:'',val:'향수'}))
+				.hover(e=>{$('#j-ul-toggle4').toggle('show')}, e=>{$('#j-ul-toggle4').toggle('hide')})
+				.attr('tabindex','-1')
+				.attr('style','color:black; font-size:15px; font-weight: bold;'))
+			.append($(createUL({id:'j-ul-toggle4',clazz:'dropdown-menu'}))
+				.attr('style','top:53px;')
+				.append($(createLI({id:'',clazz:'',val:''}))
+					.append($(createATag({id:'',clazz:'',val:'쉐이드센츠'}))
+							.attr('style','color:black; font-size:15px; font-weight: bold;')
+					.append('</br>'))
+				)))
+				))
+				
+				.append($(createDiv({id:'',clazz:''})).
+				attr('style','display: inline-block; padding: 5px;')
+				.append($(createLI({id:'',clazz:'dropdown-submenu',val:''}))
+		.append($(createDiv({id:'',clazz:''}))
+			.attr('style','display: inline-block;')
+			.attr('style','font-size: 15px; padding:5px; margin-left: 30px;')
+			.append($(createATag({id:'test',clazz:'',val:'주요 라인업'}))
+				.hover(e=>{$('#j-ul-toggle4').toggle('show')}, e=>{$('#j-ul-toggle4').toggle('hide')})
+				.attr('tabindex','-1')
+				.attr('style','color:black; font-size:15px; font-weight: bold;'))
+			.append($(createUL({id:'j-ul-toggle4',clazz:'dropdown-menu'}))
+				.attr('style','top:53px;')
+				.append($(createLI({id:'',clazz:'',val:''}))
+					.append($(createATag({id:'',clazz:'',val:'쉐이드센츠'}))
+							.attr('style','color:black; font-size:15px; font-weight: bold;')
+					.append('</br>'))
+				)))
+				))		
+		 )))
+		 	 	 .append($(createButton({id:'',clazz:'btn btn-default dropdown-toggle',val:'굿 바 이 즈'}))
+			 .attr('style','font-size:20px; width: 120px;background: black; border: black; color: white;'))	
+		 	 	 .append($(createButton({id:'',clazz:'btn btn-default dropdown-toggle',val:'맥 셀 렉 트'}))
+			 .attr('style',' margin-left: 20px;font-size:20px; width: 120px;background: black; border: black; color: white;'))
+		 	 	 .append($(createButton({id:'',clazz:'btn btn-default dropdown-toggle',val:'매 장 안 내'}))
+			 .attr('style','margin-left: 10px; font-size:20px; width: 120px;background: black; border: black; color: white;'))
+			 	 .append($(createButton({id:'',clazz:'btn btn-default dropdown-toggle',val:'게 시 판'}))
+			 .attr('style','margin-left: 10px; font-size:20px; width: 120px;background: black; border: black; color: white;'))
+			 	 .append($(createButton({id:'btn-login-default',clazz:'btn btn-default dropdown-toggle',val:'로 그 인'}))
+			 			.click(()=>{
+				 			alert('로그인');
+				 			app.login.onCreate();	
+				 			$('#content').empty();
+				 			
+				 			 })	 
+			 .attr('style','font-size:20px; width: 120px;background: black; border: black; color: white;'))
+			 .append($(createButton({id:'',clazz:'btn btn-default dropdown-toggle',val:'관리자'}))
+					 .attr('style','margin-left: 10px; font-size:20px; width: 120px;background: black; border: black; color: white;'))
+					 .append($(createButton({id:'a-basket',clazz:'btn btn-default dropdown-toggle',val:'장바구니'}))
+							 .attr('data-toggle','modal')
+							 .attr('data-target','#myModal')
+							 .attr('style','margin-left: 10px; font-size:20px; width: 120px;background: black; border: black; color: white;')));	
+			 $('#btn-main-go').on('click',()=>{
 				 alert('작동함');
-			 });
-			 $('#container').append($(createATag({id:'',clazz:'',val:'장바구니'}))
-				 .attr('style','background: black; height: 50px; color:white; font-size:20px;')
-				 .attr('data-toggle','modal')
-				 .attr('data-target','#myModal'))
-			 .append($(createDiv({id:'myModal',clazz:'modal fade'}))
+					app.main.onCreate();
+				});
+			 $('#container').append($(createDiv({id:'myModal',clazz:'modal fade'}))
 				 .attr('role','dialog')
 				 .append($(createDiv({id:'',clazz:'modal-dialog'}))
 					 .append($(createDiv({id:'',clazz:'modal-content'}))
@@ -1476,7 +1906,7 @@ app.login=(()=>{
 										 .append($(createDiv({id:'',clazz:'grid-item'}))
 											 .append($(createButton({id:'',clazz:'btn btn-default',val:'주문하기'}))
 												 .on('click',e=>{
-															order(e);
+															
 														})
 												 .attr('data-dismiss','modal')
 												 .attr('style','background: black; color: white; width: 100px; height: 40px; font-weight: bold; border: solid 1px;')))
@@ -1491,226 +1921,13 @@ app.login=(()=>{
 	 var mainItems=x=>{
 		 alert('알러트 작동');
 	 }
-	 var order=x=>{
-		 x.preventDefault();
-		alert('알러트 작동');
-		$.getScript(view,()=>{
-			$('#content').empty();
-			$('#footer').attr('style','margin-top:1200px;');
-			$('#content').append($(createDiv({id:'',clazz:''}))
-				.append($(createDiv({id:'',clazz:''})
-							))
-					.append($(createATag({id:'',clazz:'',val:'쇼핑 계속하기'}))
-						.attr('style','font-size:15px;margin-top:15px;')))
-				.append($(createDiv({id:'',clazz:''}))
-						.append($(createHTag({num:'3',id:'',val:'장바구니'}))
-							.attr('style','text-align:center;')))
-				.append($(createDiv({id:'',clazz:''}))
-						.attr('style','text-align: center;')
-						.append($(createButton({id:'',clazz:'',val:'지금 구매하기'}))
-							.attr('style','font-size: 20px; font-weight: bold;text-align: center; width:250px; height: 65px; background: black; color:white;')))
-						.append($(createDiv({id:'',clazz:''}))
-							.attr('style','text-align: center;')
-							.append($(createHTag({num:'',val:'장바구니 제품을 확인해주세요. 지난 방문 시 장바구니에 담아 두었던 제품도 함계 확인하실수 있습니다.'}))
-							.attr('style','color:red; margin:0 auto;'))
-						.append($(createDiv({id:'',clazz:''}))
-							.append($(createDiv({id:'',clazz:''}))
-								.attr('style','float: left; margin-left: 100px;')
-								.append($(createDiv({id:'',clazz:''}))
-									.attr('style','display: inline-block;     padding: 10px;')
-									.append($(createHTag({num:'2',val:'제품'}))))
-								.append($(createDiv({id:'',clazz:''}))
-									.attr('style','display: inline-block;  margin-left: 400px;    padding: 10px;')
-									.append($(createHTag({num:'2',val:'가격'}))))
-								.append($(createDiv({id:'',clazz:''}))
-									.attr('style','display: inline-block;  margin-left: 100px;    padding: 10px;')
-									.append($(createHTag({num:'2',val:'수량'}))))
-								.append($(createDiv({id:'',clazz:''}))
-									.attr('style','display: inline-block; margin-left: 80px;    padding: 10px;')
-									.append($(createHTag({num:'2',val:'총합계'}))))
-								.append($(createDiv({id:'',clazz:''}))
-									.append($(createDiv({id:'',clazz:''}))
-										.attr('style','display: inline-block; float: left;')
-										.append($(createImg({img:'item0.jpg'}))))
-									.append($(createDiv({id:'',clazz:''}))
-										.attr('style','display: inline-block; margin-left: 30px;')
-										.append($(createDiv({id:'',clazz:''}))
-											.append($(createHTag({num:'3',val:'롤러휠 리퀴드 라이너'}))))
-										.append($(createDiv({id:'',clazz:''}))
-											.append('<p>ROLLERWHEEL LIQUID LINER</p>'))
-										.append($(createDiv({id:'',clazz:''}))
-											.append('<p>1 ml / 0.03 US oz</p>'))
-										.append($(createDiv({id:'',clazz:''}))
-											.append('<p>롤링 블랙 샤인</p>')))
-										.append($(createDiv({id:'',clazz:''}))
-											.attr('style','display: inline-block;  margin-left: 100px; ')
-											.append('<p>정상가:₩ 35,500</p>')
-											.append('<p>할인:₩ 25,500</p>'))
-										.append($(createDiv({id:'',clazz:''}))
-											.attr('style','display: inline-block;')
-											.append($(createDiv({id:'',clazz:''}))
-												.attr('style','margin-left: 70px;')
-												.append($(createHTag({num:'3',val:'1pcs'})))))
-						.append($(createDiv({id:'',clazz:''}))
-							.attr('style','display: inline-block;')
-							.append($(createDiv({id:'',clazz:''}))
-								.attr('style','margin-left: 80px;')
-								.append($(createHTag({num:'3',val:'₩ 25,500'}))))))//
-								.append($(createDiv({id:'',clazz:''}))
-										.append($(createDiv({id:'',clazz:''}))
-											.attr('style','display: inline-block; float: left;')
-											.append($(createImg({img:'item0.jpg'}))))
-										.append($(createDiv({id:'',clazz:''}))
-											.attr('style','display: inline-block; margin-left: 30px;')
-											.append($(createDiv({id:'',clazz:''}))
-												.append($(createHTag({num:'3',val:'롤러휠 리퀴드 라이너'}))))
-											.append($(createDiv({id:'',clazz:''}))
-												.append('<p>ROLLERWHEEL LIQUID LINER</p>'))
-											.append($(createDiv({id:'',clazz:''}))
-												.append('<p>1 ml / 0.03 US oz</p>'))
-											.append($(createDiv({id:'',clazz:''}))
-												.append('<p>롤링 블랙 샤인</p>')))
-											.append($(createDiv({id:'',clazz:''}))
-												.attr('style','display: inline-block;  margin-left: 100px; ')
-												.append('<p>정상가:₩ 35,500</p>')
-												.append('<p>할인:₩ 25,500</p>'))
-											.append($(createDiv({id:'',clazz:''}))
-												.attr('style','display: inline-block;')
-												.append($(createDiv({id:'',clazz:''}))
-													.attr('style','margin-left: 70px;')
-													.append($(createHTag({num:'3',val:'1pcs'})))))
-											.append($(createDiv({id:'',clazz:''}))
-												.attr('style','display: inline-block;')
-												.append($(createDiv({id:'',clazz:''}))
-													.attr('style','margin-left: 80px;')
-													.append($(createHTag({num:'3',val:'₩ 25,500'}))))))
-						.append($(createDiv({id:'',clazz:''}))
-									.append($(createDiv({id:'',clazz:''}))
-										.attr('style','display: inline-block; float: left;')
-										.append($(createImg({img:'item0.jpg'}))))
-									.append($(createDiv({id:'',clazz:''}))
-										.attr('style','display: inline-block; margin-left: 30px;')
-										.append($(createDiv({id:'',clazz:''}))
-											.append($(createHTag({num:'3',val:'롤러휠 리퀴드 라이너'}))))
-										.append($(createDiv({id:'',clazz:''}))
-											.append('<p>ROLLERWHEEL LIQUID LINER</p>'))
-										.append($(createDiv({id:'',clazz:''}))
-											.append('<p>1 ml / 0.03 US oz</p>'))
-										.append($(createDiv({id:'',clazz:''}))
-											.append('<p>롤링 블랙 샤인</p>')))
-										.append($(createDiv({id:'',clazz:''}))
-											.attr('style','display: inline-block;  margin-left: 100px; ')
-											.append('<p>정상가:₩ 35,500</p>')
-											.append('<p>할인:₩ 25,500</p>'))
-										.append($(createDiv({id:'',clazz:''}))
-											.attr('style','display: inline-block;')
-											.append($(createDiv({id:'',clazz:''}))
-												.attr('style','margin-left: 70px;')
-												.append($(createHTag({num:'3',val:'1pcs'})))))
-										.append($(createDiv({id:'',clazz:''}))
-											.attr('style','display: inline-block;')
-											.append($(createDiv({id:'',clazz:''}))
-												.attr('style','margin-left: 80px;')
-												.append($(createHTag({num:'3',val:'₩ 25,500'}))))))
-								.append($(createDiv({id:'',clazz:''}))
-									.append($(createDiv({id:'',clazz:''}))
-										.append($(createHTag({num:'3',val:'내주문요약'}))))
-									.append($(createDiv({id:'',clazz:''}))
-										.append($(createDiv({id:'',clazz:''}))
-											.attr('style','float: left; margin-left: 250px;')
-											.append($(createHTag({num:'3',val:'합 계:'}))))
-										.append($(createDiv({id:'',clazz:''}))
-											.attr('style','margin-left: 350px; display: inline-block;')
-											.append($(createHTag({num:'3',val:'₩ 126,000'})))))
-									.append($(createDiv({id:'',clazz:''}))
-										.append($(createDiv({id:'',clazz:''}))
-											.attr('style','float: left; margin-left: 250px;')
-											.append($(createHTag({num:'3',val:'배송비'}))))
-										.append($(createDiv({id:'',clazz:''}))
-											.attr('style','margin-left: 350px; display: inline-block;')
-											.append($(createHTag({num:'3',val:'₩ 0'})))))
-									.append($(createDiv({id:'',clazz:''}))
-										.append($(createDiv({id:'',clazz:''}))
-											.attr('style','float: left; margin-left: 250px;')
-											.append($(createHTag({num:'3',val:'할인금액'}))))
-										.append($(createDiv({id:'',clazz:''}))
-											.attr('style','margin-left: 300px; display: inline-block;')
-											.append($(createHTag({num:'3',val:'₩ 18,900'})))))
-									.append($(createDiv({id:'',clazz:''}))
-										.append($(createDiv({id:'',clazz:''}))
-											.attr('style','float: left; margin-left: 250px;')
-											.append($(createHTag({num:'2',val:'총 합 계'}))))
-										.append($(createDiv({id:'',clazz:''}))
-											.attr('style','margin-left: 320px; display: inline-block;')
-											.append($(createHTag({num:'2',val:'₩ 107,100	'})))))
-									.append($(createDiv({id:'',clazz:''}))
-										.append($(createDiv({id:'',clazz:''}))
-											.attr('style','text-align:  center; width: 150px;  background: black; height: 50px; margin: 0 auto; padding: 14px;')
-											.append($(createATag({id:'',clazz:'',val:'지금 구매하기'}))
-													.on('click',e=>{
-														e.preventDefault();
-														alert('작동함');
-														app.cash.onCreate();
-													})
-												.attr('style','color: white;font-size: 15px;'))))
-									.append($(createDiv({id:'',clazz:''}))
-										.attr('style','background: #f0f0f0; height: 120px; padding: 15px; margin-top: 20px;')
-										.append($(createDiv({id:'',clazz:''}))
-											.append($(createHTag({num:'2',val:'품질 보증'}))))
-										.append($(createDiv({id:'',clazz:''}))
-											.append('<p>공식 온라인 몰을 통해 구매한 MAC 제품에 만족하지 않으셨다면, 사용하지 않은 제품에 한해 반품 혹은 환불을 도와드리도록 하겠습니다</p>'))))
-									))
-							
-									
-									.append($(createDiv({id:'',clazz:''}))
-								.attr('style','display: inline-block;  float: right; margin-right: 100px;')
-								.append($(createDiv({id:'',clazz:''}))
-									.attr('style','height: 50px; background: #f0f0f0;')
-									.append($(createHTag({num:'3',val:'위시 리스트'}))))
-								.append($(createDiv({id:'',clazz:''}))
-									.attr('style','height: 50px; background: #f0f0f0;')
-									.append($(createHTag({num:'3',val:'지난 구매내역'}))))
-								.append($(createDiv({id:'',clazz:''}))
-									.attr('style','background: #f0f0f0;')
-									.append($(createDiv({id:'',clazz:''}))
-										.attr('style','height: 50px; background: #f0f0f0;')
-										.append($(createHTag({num:'3',val:'쿠폰 코드 입력'}))))
-									.append($(createDiv({id:'',clazz:''}))
-										.attr('style','height: 50px; background: #f0f0f0;')
-										.append($(createInput({id:'',val:'*주문당 하나의 쿠폰코드만 사용 가능합니다',type:'text'}))
-											.attr('style','width: 300px; height: 50px; background: #f0f0f0;')))
-									.append($(createDiv({id:'',clazz:''}))
-										.append(' <p style="color:red">*주문 코드는 1인 1회 적용되며 적용 주문건 </br>취소 후 쿠폰 코드 재적용이 불가 합니다</p>'))
-									.append($(createDiv({id:'',clazz:''}))
-										.append($(createInput({id:'',val:'',type:'sumbit'}))
-											.attr('style','text-align: center; background: black; color: white; height: 50px;')
-											.attr('value','적용하기')))
-									.append($(createDiv({id:'',clazz:''}))
-										.attr('style','margin-top:20px;')
-										.append($(createDiv({id:'',clazz:''}))
-											.append('<h3>도움이 필요 하세요?</h3>')
-											.append('p>고객 관리 지원팀(02-3440-2707)</p>')
-											.append($(createATag({id:'',clazz:'',val:'이메일 문의하기'}))))
-										.append($(createDiv({id:'',clazz:''}))
-											.attr('style','margin-top:30px;')
-											.append($(createHTag({num:'3',val:'추가정보'})))
-											.append($(createDiv({id:'',clazz:''}))
-												.append($(createATag({id:'',clazz:'',val:'배송정보'}))))
-											.append($(createDiv({id:'',clazz:''}))
-												.append($(createATag({id:'',clazz:'',val:'교환및 환불 정책'}))))
-											.append($(createDiv({id:'',clazz:''}))
-												.append($(createATag({id:'',clazz:'',val:'최대 구매수량 정책'})))))))))
-							
-					
-
-		});
-		} 
 	 var content=()=>{
 		 $.getScript(view,()=>{
-			 $(createDiv({
+			 $('#btn-login-default').html();
+			 $('#content').html($(createDiv({
 					id : 'mac-store',
 					clazz : 'field-container field-container--grid'
-				})).appendTo($content);
+				})));
 			 $(createTab({
 				 id:'tab-login',
 				 clazz:'table-condensed'
@@ -1793,9 +2010,9 @@ app.login=(()=>{
 	 x.preventDefault();
 	 console.log($('#input-login'));
 	 var jason={
-		 "id":$('#input-login').val(),
-		 "pass":$('#input-pass').val(),
-		 "type":'customer',
+		 'customId':$('#input-login').val(),
+		 'customPass':$('#input-pass').val(),
+		 
 			
 	 }
 	 console.log(jason);
@@ -1809,9 +2026,9 @@ app.login=(()=>{
 				console.log(x);
 				alert('로그인 성공 x='+x.success);
 				if(x.success==1){
-					oredr(e);
+					app.orders.onCreate(x);
 				}else{
-					alert('로그인 성공X');
+					alert('로그인 실패');
 				}
 			},
 			error: (x,h,m)=>{
