@@ -502,7 +502,7 @@ app.orders=(()=>{
 			 	$('#a-basket').remove();
 			 	$('#btn-login-default').remove();
 			 	$('#btn-admin').remove();
-			//
+			////
 			 	$(createButton({id:'btn-logout',clazz:'btn btn-default dropdown-toggle',val:'로그아웃'}))
 				 .attr('style','font-size:20px; width: 150px;background: black; border: black; color: white;')
 				 .appendTo('#container');
