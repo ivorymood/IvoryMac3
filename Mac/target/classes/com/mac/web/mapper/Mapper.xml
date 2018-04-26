@@ -3,5 +3,14 @@
   PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.mac.web.mapper.Mapper">
-
+ 	<select id="serachCustomerById" resultType="com.mac.web.domain.Customer" parameterType="com.mac.web.domain.Command">
+ 	SELECT * FROM ${data1} WHERE custom_id LIKE #{col1}
+ 	</select>
+ 	<select id="exist" resultType="int" parameterType="com.mac.web.domain.Command">
+	SELECT COUNT(*)
+	FROM ${data1} where custom_id LIKE #{col1}
+	</select>
+	<select id="macDate" resultType="map" parameterType="hashMap">
+	SELECT * FROM item
+	</select>
 </mapper>
