@@ -30,5 +30,12 @@ public class HomeController {
 		
 		return "home";
 	}
+
+	@RequestMapping(value = "/galary", method = RequestMethod.GET)
+	public String galary() {
+		logger.info("HomeController galary() {}.", "ENTER");
+
+		return "hyunyu/galary";
+	}
 	
 }

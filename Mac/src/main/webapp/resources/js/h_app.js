@@ -204,409 +204,88 @@ app.mainitem=(()=>{
 		);
 		
 		$('#item-div1')
-		.append($(createDiv({clazz:'grid-container-catalog'})).attr('style', 'width: 1281px; padding-top:40px; padding-right:15px; padding-left: 15px; margin-left: 151px; margin-right: 151px;')	
-				.append($(createDiv({clazz:'grid-row-catalog'})).attr('style', 'position: relative; height: 540px; margin-bottom: 20px;')
-						.append($(createDiv({clazz:''})).attr('style', 'position: absolute; top: 0px; width: 312.75px; padding-left: 10px; padding-right: 10px; margin-bottom: 45px; display: inline-block; vertical-align: super;')	
-								.append($(createDiv({clazz:'grid-item-catalog'})).attr('style', 'padding-top: 15px; height: 479px; border-top:1px solid #c7c7c7;')
-										.append($(createDiv({id:''}))
-												.append($(createDiv({id:''}))
-														.append($(createHTag({num:'4', val:'프렙+프라임 24-아워 익스텐드 아이 베이스'})).attr('style', 'margin:0;'))
-												).append($(createDiv({id:''}))
-														.append($(createPTag({val:'PREP + PRIME 24-HOUR EXTEND EYE BASE'})))
-												)
-										).append($(createDiv({id:''})).attr('style','margin-left: 50px; float: right;')
-												.append($(createDiv({id:''}))
-														.append($(createHTag({num:'4', val:'★★★★★'})))
-												).append($(createDiv({id:''})).attr('style','float: right;')
-														.append($(createHTag({num:'4', val:'♡'})))
-												)
-										).append($(createDiv({id:''}))
-												.append($(createImg({src:$.image()+'/mainitem3.jpg', alt:'altaltalt', title:'titletitle'})))
-										).append($(createDiv({id:''})).attr('style', 'border-top: 1px solid #c7c7c7;')
-												.append($(createDiv({id:''})).attr('style','display: inline-block;')
-														.append($(createHTag({num:'4', val:'₩nn,nnn'})).attr('style', 'margin-bottom: 0; margin-top: 16px;'))
-												).append($(createDiv({id:''})).attr('style', 'margin-top: 8.5px; display: inline-block; float: right;')
-														.append($(createButton({val:'장바구니 담기'})).attr('style','border: 0; margin: 0; paddig: 0; width:130px; height:25px; background-color: black; color: white; font-size: 15px;'))
-												)
-										)
-								)		
-						).append($(createDiv({id:'test', clazz:''})).attr('style', 'position: absolute; top: 0px; left: 312.75px; width: 312.75px; padding-left: 10px; padding-right: 10px; margin-bottom: 45px; display: inline-block; ')	
-								.append($(createDiv({clazz:'grid-item-catalog'})).attr('style', 'padding-top: 15px; height: 479px; border-top:1px solid black; background-color: black;')
-										.append($(createDiv({id:''})).attr('style','margin-top:100px;')
-												.append($(createDiv({id:''})).attr('style','margin-bottom: 12px;')
-														.append($(createHTag({num:'3', val:'쉐이드별 섀도우 구매하기'})).attr('style','color: white; text-align: center;'))
-												).append($(createDiv({id:''})).attr('style','margin-bottom: 18px;')
-														.append($(createHTag({num:'4', val:'베이지+브라운'})).attr('style','color: white; text-align: center;'))
-												).append($(createDiv({id:''})).attr('style','margin-bottom: 18px;')
-														.append($(createHTag({num:'4', val:'블루+그린'})).attr('style','color: white; text-align: center;'))
-												).append($(createDiv({id:''})).attr('style','margin-bottom: 18px;')
-														.append($(createHTag({num:'4', val:'그레이+블랙'})).attr('style','color: white; text-align: center;'))
-												).append($(createDiv({id:''})).attr('style','margin-bottom: 18px;')
-														.append($(createHTag({num:'4', val:'오렌지+퍼플'})).attr('style','color: white; text-align: center;'))
-												)
-										)
-								)		
-						).append($(createDiv({clazz:''})).attr('style', 'position: absolute; top: 0px; left: 625.5px; width: 312.75px; padding-left: 10px; padding-right: 10px; margin-bottom: 45px; display: inline-block; vertical-align: super;')	
-								.append($(createDiv({clazz:'grid-item-catalog'})).attr('style', 'padding-top: 15px; height: 479px; border-top:1px solid #c7c7c7;')
-										.append($(createDiv({id:''}))
-												.append($(createDiv({id:''}))
-														.append($(createHTag({num:'4', val:'프렙+프라임 24-아워 익스텐드 아이 베이스'})).attr('style', 'margin:0;'))
-												).append($(createDiv({id:''}))
-														.append($(createPTag({val:'PREP + PRIME 24-HOUR EXTEND EYE BASE'})))
-												)
-										).append($(createDiv({id:''})).attr('style','margin-left: 50px; float: right;')
-												.append($(createDiv({id:''}))
-														.append($(createHTag({num:'4', val:'★★★★★'})))
-												).append($(createDiv({id:''})).attr('style','float: right;')
-														.append($(createHTag({num:'4', val:'♡'})))
-												)
-										).append($(createDiv({id:''}))
-												.append($(createImg({src:$.image()+'/mainitem3.jpg', alt:'altaltalt', title:'titletitle'})))
-										).append($(createDiv({id:''})).attr('style', 'border-top: 1px solid #c7c7c7;')
-												.append($(createDiv({id:''})).attr('style','display: inline-block;')
-														.append($(createHTag({num:'4', val:'₩nn,nnn'})).attr('style', 'margin-bottom: 0; margin-top: 16px;'))
-												).append($(createDiv({id:''})).attr('style', 'margin-top: 8.5px; display: inline-block; float: right;')
-														.append($(createButton({val:'장바구니 담기'})).attr('style','border: 0; margin: 0; paddig: 0; width:130px; height:25px; background-color: black; color: white; font-size: 15px;'))
-												)
-										)
-								)		
-						).append($(createDiv({clazz:''})).attr('style', 'position: absolute; top: 0px; left: 938.25px; width: 312.75px; padding-left: 10px; padding-right: 10px; margin-bottom: 45px; display: inline-block; vertical-align: super;')	
-								.append($(createDiv({clazz:'grid-item-catalog'})).attr('style', 'padding-top: 15px; height: 479px; border-top:1px solid #c7c7c7;')
-										.append($(createDiv({id:''}))
-												.append($(createDiv({id:''}))
-														.append($(createHTag({num:'4', val:'프렙+프라임 24-아워 익스텐드 아이 베이스'})).attr('style', 'margin:0;'))
-												).append($(createDiv({id:''}))
-														.append($(createPTag({val:'PREP + PRIME 24-HOUR EXTEND EYE BASE'})))
-												)
-										).append($(createDiv({id:''})).attr('style','margin-left: 50px; float: right;')
-												.append($(createDiv({id:''}))
-														.append($(createHTag({num:'4', val:'★★★★★'})))
-												).append($(createDiv({id:''})).attr('style','float: right;')
-														.append($(createHTag({num:'4', val:'♡'})))
-												)
-										).append($(createDiv({id:''}))
-												.append($(createImg({src:$.image()+'/mainitem3.jpg', alt:'altaltalt', title:'titletitle'})))
-										).append($(createDiv({id:''})).attr('style', 'border-top: 1px solid #c7c7c7;')
-												.append($(createDiv({id:''})).attr('style','display: inline-block;')
-														.append($(createHTag({num:'4', val:'₩nn,nnn'})).attr('style', 'margin-bottom: 0; margin-top: 16px;'))
-												).append($(createDiv({id:''})).attr('style', 'margin-top: 8.5px; display: inline-block; float: right;')
-														.append($(createButton({val:'장바구니 담기'})).attr('style','border: 0; margin: 0; paddig: 0; width:130px; height:25px; background-color: black; color: white; font-size: 15px;'))
-												)
-										)
-								)		
-						)
-				).append($(createDiv({clazz:'grid-row-catalog'})).attr('style', 'position: relative; height: 540px; margin-bottom: 20px;')
-						.append($(createDiv({clazz:''})).attr('style', 'position: absolute; top: 0px; width: 312.75px; padding-left: 10px; padding-right: 10px; margin-bottom: 45px; display: inline-block; vertical-align: super;')	
-								.append($(createDiv({clazz:'grid-item-catalog'})).attr('style', 'padding-top: 15px; height: 479px; border-top:1px solid #c7c7c7;')
-										.append($(createDiv({id:''}))
-												.append($(createDiv({id:''}))
-														.append($(createHTag({num:'4', val:'프렙+프라임 24-아워 익스텐드 아이 베이스'})).attr('style', 'margin:0;'))
-												).append($(createDiv({id:''}))
-														.append($(createPTag({val:'PREP + PRIME 24-HOUR EXTEND EYE BASE'})))
-												)
-										).append($(createDiv({id:''})).attr('style','margin-left: 50px; float: right;')
-												.append($(createDiv({id:''}))
-														.append($(createHTag({num:'4', val:'★★★★★'})))
-												).append($(createDiv({id:''})).attr('style','float: right;')
-														.append($(createHTag({num:'4', val:'♡'})))
-												)
-										).append($(createDiv({id:''}))
-												.append($(createImg({src:$.image()+'/mainitem3.jpg', alt:'altaltalt', title:'titletitle'})))
-										).append($(createDiv({id:''})).attr('style', 'border-top: 1px solid #c7c7c7;')
-												.append($(createDiv({id:''})).attr('style','display: inline-block;')
-														.append($(createHTag({num:'4', val:'₩nn,nnn'})).attr('style', 'margin-bottom: 0; margin-top: 16px;'))
-												).append($(createDiv({id:''})).attr('style', 'margin-top: 8.5px; display: inline-block; float: right;')
-														.append($(createButton({val:'장바구니 담기'})).attr('style','border: 0; margin: 0; paddig: 0; width:130px; height:25px; background-color: black; color: white; font-size: 15px;'))
-												)
-										)
-								)		
-						).append($(createDiv({clazz:''})).attr('style', 'position: absolute; top: 0px; left: 312.75px; width: 312.75px; padding-left: 10px; padding-right: 10px; margin-bottom: 45px; display: inline-block; vertical-align: super;')	
-								.append($(createDiv({clazz:'grid-item-catalog'})).attr('style', 'padding-top: 15px; height: 479px; border-top:1px solid #c7c7c7;')
-										.append($(createDiv({id:''}))
-												.append($(createDiv({id:''}))
-														.append($(createHTag({num:'4', val:'프렙+프라임 24-아워 익스텐드 아이 베이스'})).attr('style', 'margin:0;'))
-												).append($(createDiv({id:''}))
-														.append($(createPTag({val:'PREP + PRIME 24-HOUR EXTEND EYE BASE'})))
-												)
-										).append($(createDiv({id:''})).attr('style','margin-left: 50px; float: right;')
-												.append($(createDiv({id:''}))
-														.append($(createHTag({num:'4', val:'★★★★★'})))
-												).append($(createDiv({id:''})).attr('style','float: right;')
-														.append($(createHTag({num:'4', val:'♡'})))
-												)
-										).append($(createDiv({id:''}))
-												.append($(createImg({src:$.image()+'/mainitem3.jpg', alt:'altaltalt', title:'titletitle'})))
-										).append($(createDiv({id:''})).attr('style', 'border-top: 1px solid #c7c7c7;')
-												.append($(createDiv({id:''})).attr('style','display: inline-block;')
-														.append($(createHTag({num:'4', val:'₩nn,nnn'})).attr('style', 'margin-bottom: 0; margin-top: 16px;'))
-												).append($(createDiv({id:''})).attr('style', 'margin-top: 8.5px; display: inline-block; float: right;')
-														.append($(createButton({val:'장바구니 담기'})).attr('style','border: 0; margin: 0; paddig: 0; width:130px; height:25px; background-color: black; color: white; font-size: 15px;'))
-												)
-										)
-								)		
-						).append($(createDiv({id:'test', clazz:''})).attr('style', 'position: absolute; top: 0px; left: 625.5px; width: 312.75px; padding-left: 10px; padding-right: 10px; margin-bottom: 45px; display: inline-block; ')	
-								.append($(createDiv({clazz:'grid-item-catalog'})).attr('style', 'padding-top: 15px; height: 479px; border-top:1px solid black; background-color: black;')
-										.append($(createDiv({id:''})).attr('style','margin-top:100px;')
-												.append($(createDiv({id:''})).attr('style','margin-bottom: 12px;')
-														.append($(createHTag({num:'3', val:'쉐이드별 섀도우 구매하기'})).attr('style','color: white; text-align: center;'))
-												).append($(createDiv({id:''})).attr('style','margin-bottom: 18px;')
-														.append($(createHTag({num:'4', val:'베이지+브라운'})).attr('style','color: white; text-align: center;'))
-												).append($(createDiv({id:''})).attr('style','margin-bottom: 18px;')
-														.append($(createHTag({num:'4', val:'블루+그린'})).attr('style','color: white; text-align: center;'))
-												).append($(createDiv({id:''})).attr('style','margin-bottom: 18px;')
-														.append($(createHTag({num:'4', val:'그레이+블랙'})).attr('style','color: white; text-align: center;'))
-												).append($(createDiv({id:''})).attr('style','margin-bottom: 18px;')
-														.append($(createHTag({num:'4', val:'오렌지+퍼플'})).attr('style','color: white; text-align: center;'))
-												)
-										)
-								)		
-						).append($(createDiv({clazz:''})).attr('style', 'position: absolute; top: 0px; left: 938.25px; width: 312.75px; padding-left: 10px; padding-right: 10px; margin-bottom: 45px; display: inline-block; vertical-align: super;')	
-								.append($(createDiv({clazz:'grid-item-catalog'})).attr('style', 'padding-top: 15px; height: 479px; border-top:1px solid #c7c7c7;')
-										.append($(createDiv({id:''}))
-												.append($(createDiv({id:''}))
-														.append($(createHTag({num:'4', val:'프렙+프라임 24-아워 익스텐드 아이 베이스'})).attr('style', 'margin:0;'))
-												).append($(createDiv({id:''}))
-														.append($(createPTag({val:'PREP + PRIME 24-HOUR EXTEND EYE BASE'})))
-												)
-										).append($(createDiv({id:''})).attr('style','margin-left: 50px; float: right;')
-												.append($(createDiv({id:''}))
-														.append($(createHTag({num:'4', val:'★★★★★'})))
-												).append($(createDiv({id:''})).attr('style','float: right;')
-														.append($(createHTag({num:'4', val:'♡'})))
-												)
-										).append($(createDiv({id:''}))
-												.append($(createImg({src:$.image()+'/mainitem3.jpg', alt:'altaltalt', title:'titletitle'})))
-										).append($(createDiv({id:''})).attr('style', 'border-top: 1px solid #c7c7c7;')
-												.append($(createDiv({id:''})).attr('style','display: inline-block;')
-														.append($(createHTag({num:'4', val:'₩nn,nnn'})).attr('style', 'margin-bottom: 0; margin-top: 16px;'))
-												).append($(createDiv({id:''})).attr('style', 'margin-top: 8.5px; display: inline-block; float: right;')
-														.append($(createButton({val:'장바구니 담기'})).attr('style','border: 0; margin: 0; paddig: 0; width:130px; height:25px; background-color: black; color: white; font-size: 15px;'))
-												)
-										)
-								)		
-						)
-				).append($(createDiv({clazz:'grid-row-catalog'})).attr('style', 'position: relative; height: 540px; margin-bottom: 20px;')
-						.append($(createDiv({clazz:''})).attr('style', 'position: absolute; top: 0px; width: 312.75px; padding-left: 10px; padding-right: 10px; margin-bottom: 45px; display: inline-block; vertical-align: super;')	
-								.append($(createDiv({clazz:'grid-item-catalog'})).attr('style', 'padding-top: 15px; height: 479px; border-top:1px solid #c7c7c7;')
-										.append($(createDiv({id:''}))
-												.append($(createDiv({id:''}))
-														.append($(createHTag({num:'4', val:'프렙+프라임 24-아워 익스텐드 아이 베이스'})).attr('style', 'margin:0;'))
-												).append($(createDiv({id:''}))
-														.append($(createPTag({val:'PREP + PRIME 24-HOUR EXTEND EYE BASE'})))
-												)
-										).append($(createDiv({id:''})).attr('style','margin-left: 50px; float: right;')
-												.append($(createDiv({id:''}))
-														.append($(createHTag({num:'4', val:'★★★★★'})))
-												).append($(createDiv({id:''})).attr('style','float: right;')
-														.append($(createHTag({num:'4', val:'♡'})))
-												)
-										).append($(createDiv({id:''}))
-												.append($(createImg({src:$.image()+'/mainitem3.jpg', alt:'altaltalt', title:'titletitle'})))
-										).append($(createDiv({id:''})).attr('style', 'border-top: 1px solid #c7c7c7;')
-												.append($(createDiv({id:''})).attr('style','display: inline-block;')
-														.append($(createHTag({num:'4', val:'₩nn,nnn'})).attr('style', 'margin-bottom: 0; margin-top: 16px;'))
-												).append($(createDiv({id:''})).attr('style', 'margin-top: 8.5px; display: inline-block; float: right;')
-														.append($(createButton({val:'장바구니 담기'})).attr('style','border: 0; margin: 0; paddig: 0; width:130px; height:25px; background-color: black; color: white; font-size: 15px;'))
-												)
-										)
-								)		
-						).append($(createDiv({id:'test', clazz:''})).attr('style', 'position: absolute; top: 0px; left: 938.25px; width: 312.75px; padding-left: 10px; padding-right: 10px; margin-bottom: 45px; display: inline-block; ')	
-								.append($(createDiv({clazz:'grid-item-catalog'})).attr('style', 'padding-top: 15px; height: 479px; border-top:1px solid black; background-color: black;')
-										.append($(createDiv({id:''})).attr('style','margin-top:100px;')
-												.append($(createDiv({id:''})).attr('style','margin-bottom: 12px;')
-														.append($(createHTag({num:'3', val:'쉐이드별 섀도우 구매하기'})).attr('style','color: white; text-align: center;'))
-												).append($(createDiv({id:''})).attr('style','margin-bottom: 18px;')
-														.append($(createHTag({num:'4', val:'베이지+브라운'})).attr('style','color: white; text-align: center;'))
-												).append($(createDiv({id:''})).attr('style','margin-bottom: 18px;')
-														.append($(createHTag({num:'4', val:'블루+그린'})).attr('style','color: white; text-align: center;'))
-												).append($(createDiv({id:''})).attr('style','margin-bottom: 18px;')
-														.append($(createHTag({num:'4', val:'그레이+블랙'})).attr('style','color: white; text-align: center;'))
-												).append($(createDiv({id:''})).attr('style','margin-bottom: 18px;')
-														.append($(createHTag({num:'4', val:'오렌지+퍼플'})).attr('style','color: white; text-align: center;'))
-												)
-										)
-								)		
-						).append($(createDiv({clazz:''})).attr('style', 'position: absolute; top: 0px; left: 625.5px; width: 312.75px; padding-left: 10px; padding-right: 10px; margin-bottom: 45px; display: inline-block; vertical-align: super;')	
-								.append($(createDiv({clazz:'grid-item-catalog'})).attr('style', 'padding-top: 15px; height: 479px; border-top:1px solid #c7c7c7;')
-										.append($(createDiv({id:''}))
-												.append($(createDiv({id:''}))
-														.append($(createHTag({num:'4', val:'프렙+프라임 24-아워 익스텐드 아이 베이스'})).attr('style', 'margin:0;'))
-												).append($(createDiv({id:''}))
-														.append($(createPTag({val:'PREP + PRIME 24-HOUR EXTEND EYE BASE'})))
-												)
-										).append($(createDiv({id:''})).attr('style','margin-left: 50px; float: right;')
-												.append($(createDiv({id:''}))
-														.append($(createHTag({num:'4', val:'★★★★★'})))
-												).append($(createDiv({id:''})).attr('style','float: right;')
-														.append($(createHTag({num:'4', val:'♡'})))
-												)
-										).append($(createDiv({id:''}))
-												.append($(createImg({src:$.image()+'/mainitem3.jpg', alt:'altaltalt', title:'titletitle'})))
-										).append($(createDiv({id:''})).attr('style', 'border-top: 1px solid #c7c7c7;')
-												.append($(createDiv({id:''})).attr('style','display: inline-block;')
-														.append($(createHTag({num:'4', val:'₩nn,nnn'})).attr('style', 'margin-bottom: 0; margin-top: 16px;'))
-												).append($(createDiv({id:''})).attr('style', 'margin-top: 8.5px; display: inline-block; float: right;')
-														.append($(createButton({val:'장바구니 담기'})).attr('style','border: 0; margin: 0; paddig: 0; width:130px; height:25px; background-color: black; color: white; font-size: 15px;'))
-												)
-										)
-								)		
-						).append($(createDiv({clazz:''})).attr('style', 'position: absolute; top: 0px; left: 312.75px; width: 312.75px; padding-left: 10px; padding-right: 10px; margin-bottom: 45px; display: inline-block; vertical-align: super;')	
-								.append($(createDiv({clazz:'grid-item-catalog'})).attr('style', 'padding-top: 15px; height: 479px; border-top:1px solid #c7c7c7;')
-										.append($(createDiv({id:''}))
-												.append($(createDiv({id:''}))
-														.append($(createHTag({num:'4', val:'프렙+프라임 24-아워 익스텐드 아이 베이스'})).attr('style', 'margin:0;'))
-												).append($(createDiv({id:''}))
-														.append($(createPTag({val:'PREP + PRIME 24-HOUR EXTEND EYE BASE'})))
-												)
-										).append($(createDiv({id:''})).attr('style','margin-left: 50px; float: right;')
-												.append($(createDiv({id:''}))
-														.append($(createHTag({num:'4', val:'★★★★★'})))
-												).append($(createDiv({id:''})).attr('style','float: right;')
-														.append($(createHTag({num:'4', val:'♡'})))
-												)
-										).append($(createDiv({id:''}))
-												.append($(createImg({src:$.image()+'/mainitem3.jpg', alt:'altaltalt', title:'titletitle'})))
-										).append($(createDiv({id:''})).attr('style', 'border-top: 1px solid #c7c7c7;')
-												.append($(createDiv({id:''})).attr('style','display: inline-block;')
-														.append($(createHTag({num:'4', val:'₩nn,nnn'})).attr('style', 'margin-bottom: 0; margin-top: 16px;'))
-												).append($(createDiv({id:''})).attr('style', 'margin-top: 8.5px; display: inline-block; float: right;')
-														.append($(createButton({val:'장바구니 담기'})).attr('style','border: 0; margin: 0; paddig: 0; width:130px; height:25px; background-color: black; color: white; font-size: 15px;'))
-												)
-										)
-								)		
-						)
-				).append($(createDiv({clazz:'grid-row-catalog'})).attr('style', 'position: relative; height: 540px; margin-bottom: 20px;')
-						.append($(createDiv({clazz:''})).attr('style', 'position: absolute; top: 0px; width: 312.75px; padding-left: 10px; padding-right: 10px; margin-bottom: 45px; display: inline-block; vertical-align: super;')	
-								.append($(createDiv({clazz:'grid-item-catalog'})).attr('style', 'padding-top: 15px; height: 479px; border-top:1px solid #c7c7c7;')
-										.append($(createDiv({id:''}))
-												.append($(createDiv({id:''}))
-														.append($(createHTag({num:'4', val:'프렙+프라임 24-아워 익스텐드 아이 베이스'})).attr('style', 'margin:0;'))
-												).append($(createDiv({id:''}))
-														.append($(createPTag({val:'PREP + PRIME 24-HOUR EXTEND EYE BASE'})))
-												)
-										).append($(createDiv({id:''})).attr('style','margin-left: 50px; float: right;')
-												.append($(createDiv({id:''}))
-														.append($(createHTag({num:'4', val:'★★★★★'})))
-												).append($(createDiv({id:''})).attr('style','float: right;')
-														.append($(createHTag({num:'4', val:'♡'})))
-												)
-										).append($(createDiv({id:''}))
-												.append($(createImg({src:$.image()+'/mainitem3.jpg', alt:'altaltalt', title:'titletitle'})))
-										).append($(createDiv({id:''})).attr('style', 'border-top: 1px solid #c7c7c7;')
-												.append($(createDiv({id:''})).attr('style','display: inline-block;')
-														.append($(createHTag({num:'4', val:'₩nn,nnn'})).attr('style', 'margin-bottom: 0; margin-top: 16px;'))
-												).append($(createDiv({id:''})).attr('style', 'margin-top: 8.5px; display: inline-block; float: right;')
-														.append($(createButton({val:'장바구니 담기'})).attr('style','border: 0; margin: 0; paddig: 0; width:130px; height:25px; background-color: black; color: white; font-size: 15px;'))
-												)
-										)
-								)		
-						).append($(createDiv({id:'test', clazz:''})).attr('style', 'position: absolute; top: 0px; left: 312.75px; width: 312.75px; padding-left: 10px; padding-right: 10px; margin-bottom: 45px; display: inline-block; ')	
-								.append($(createDiv({clazz:'grid-item-catalog'})).attr('style', 'padding-top: 15px; height: 479px; border-top:1px solid black; background-color: black;')
-										.append($(createDiv({id:''})).attr('style','margin-top:100px;')
-												.append($(createDiv({id:''})).attr('style','margin-bottom: 12px;')
-														.append($(createHTag({num:'3', val:'쉐이드별 섀도우 구매하기'})).attr('style','color: white; text-align: center;'))
-												).append($(createDiv({id:''})).attr('style','margin-bottom: 18px;')
-														.append($(createHTag({num:'4', val:'베이지+브라운'})).attr('style','color: white; text-align: center;'))
-												).append($(createDiv({id:''})).attr('style','margin-bottom: 18px;')
-														.append($(createHTag({num:'4', val:'블루+그린'})).attr('style','color: white; text-align: center;'))
-												).append($(createDiv({id:''})).attr('style','margin-bottom: 18px;')
-														.append($(createHTag({num:'4', val:'그레이+블랙'})).attr('style','color: white; text-align: center;'))
-												).append($(createDiv({id:''})).attr('style','margin-bottom: 18px;')
-														.append($(createHTag({num:'4', val:'오렌지+퍼플'})).attr('style','color: white; text-align: center;'))
-												)
-										)
-								)		
-						).append($(createDiv({clazz:''})).attr('style', 'position: absolute; top: 0px; left: 625.5px; width: 312.75px; padding-left: 10px; padding-right: 10px; margin-bottom: 45px; display: inline-block; vertical-align: super;')	
-								.append($(createDiv({clazz:'grid-item-catalog'})).attr('style', 'padding-top: 15px; height: 479px; border-top:1px solid #c7c7c7;')
-										.append($(createDiv({id:''}))
-												.append($(createDiv({id:''}))
-														.append($(createHTag({num:'4', val:'프렙+프라임 24-아워 익스텐드 아이 베이스'})).attr('style', 'margin:0;'))
-												).append($(createDiv({id:''}))
-														.append($(createPTag({val:'PREP + PRIME 24-HOUR EXTEND EYE BASE'})))
-												)
-										).append($(createDiv({id:''})).attr('style','margin-left: 50px; float: right;')
-												.append($(createDiv({id:''}))
-														.append($(createHTag({num:'4', val:'★★★★★'})))
-												).append($(createDiv({id:''})).attr('style','float: right;')
-														.append($(createHTag({num:'4', val:'♡'})))
-												)
-										).append($(createDiv({id:''}))
-												.append($(createImg({src:$.image()+'/mainitem3.jpg', alt:'altaltalt', title:'titletitle'})))
-										).append($(createDiv({id:''})).attr('style', 'border-top: 1px solid #c7c7c7;')
-												.append($(createDiv({id:''})).attr('style','display: inline-block;')
-														.append($(createHTag({num:'4', val:'₩nn,nnn'})).attr('style', 'margin-bottom: 0; margin-top: 16px;'))
-												).append($(createDiv({id:''})).attr('style', 'margin-top: 8.5px; display: inline-block; float: right;')
-														.append($(createButton({val:'장바구니 담기'})).attr('style','border: 0; margin: 0; paddig: 0; width:130px; height:25px; background-color: black; color: white; font-size: 15px;'))
-												)
-										)
-								)		
-						).append($(createDiv({clazz:''})).attr('style', 'position: absolute; top: 0px; left: 938.25px; width: 312.75px; padding-left: 10px; padding-right: 10px; margin-bottom: 45px; display: inline-block; vertical-align: super;')	
-								.append($(createDiv({clazz:'grid-item-catalog'})).attr('style', 'padding-top: 15px; height: 479px; border-top:1px solid #c7c7c7;')
-										.append($(createDiv({id:''}))
-												.append($(createDiv({id:''}))
-														.append($(createHTag({num:'4', val:'프렙+프라임 24-아워 익스텐드 아이 베이스'})).attr('style', 'margin:0;'))
-												).append($(createDiv({id:''}))
-														.append($(createPTag({val:'PREP + PRIME 24-HOUR EXTEND EYE BASE'})))
-												)
-										).append($(createDiv({id:''})).attr('style','margin-left: 50px; float: right;')
-												.append($(createDiv({id:''}))
-														.append($(createHTag({num:'4', val:'★★★★★'})))
-												).append($(createDiv({id:''})).attr('style','float: right;')
-														.append($(createHTag({num:'4', val:'♡'})))
-												)
-										).append($(createDiv({id:''}))
-												.append($(createImg({src:$.image()+'/mainitem3.jpg', alt:'altaltalt', title:'titletitle'})))
-										).append($(createDiv({id:''})).attr('style', 'border-top: 1px solid #c7c7c7;')
-												.append($(createDiv({id:''})).attr('style','display: inline-block;')
-														.append($(createHTag({num:'4', val:'₩nn,nnn'})).attr('style', 'margin-bottom: 0; margin-top: 16px;'))
-												).append($(createDiv({id:''})).attr('style', 'margin-top: 8.5px; display: inline-block; float: right;')
-														.append($(createButton({val:'장바구니 담기'})).attr('style','border: 0; margin: 0; paddig: 0; width:130px; height:25px; background-color: black; color: white; font-size: 15px;'))
-												)
-										)
-								)		
-						)
-				)
-				
-				
+		.append($(createDiv({id:'grid-container-catalog', clazz:'grid-container-catalog'})).attr('style', 'width: 1281px; padding-top:40px; padding-right:15px; padding-left: 15px; margin-left: 151px; margin-right: 151px;')	
+				.append($(createDiv({id:'grid-row-catalog1', clazz:'grid-row-catalog'})).attr('style', 'position: relative; height: 540px; margin-bottom: 20px;'))
+				.append($(createDiv({id:'grid-row-catalog2', clazz:'grid-row-catalog'})).attr('style', 'position: relative; height: 540px; margin-bottom: 20px;'))
+				.append($(createDiv({id:'grid-row-catalog3', clazz:'grid-row-catalog'})).attr('style', 'position: relative; height: 540px; margin-bottom: 20px;'))
 		);
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-	};
+		for(var i=1; i<4; i++){
+				
+				for(var j=0; j<4; j++){
+						if(j==i){
+								$('#grid-row-catalog'+i)
+								.append($(createDiv({id:'test', clazz:''})).attr('style', 'position: absolute; top: 0px; left: '+(312.75*i)+'px; width: 312.75px; padding-left: 10px; padding-right: 10px; margin-bottom: 45px; display: inline-block; ')	
+										.append($(createDiv({clazz:'grid-item-catalog'})).attr('style', 'padding-top: 15px; height: 479px; border-top:1px solid black; background-color: black;')
+												.append($(createDiv({id:''})).attr('style','margin-top:100px;')
+														.append($(createDiv({id:''})).attr('style','margin-bottom: 12px;')
+																.append($(createHTag({num:'3', val:'쉐이드별 섀도우 구매하기'})).attr('style','color: white; text-align: center;'))
+														).append($(createDiv({id:''})).attr('style','margin-bottom: 18px;')
+																.append($(createHTag({num:'4', val:'베이지+브라운'})).attr('style','color: white; text-align: center;'))
+														).append($(createDiv({id:''})).attr('style','margin-bottom: 18px;')
+																.append($(createHTag({num:'4', val:'블루+그린'})).attr('style','color: white; text-align: center;'))
+														).append($(createDiv({id:''})).attr('style','margin-bottom: 18px;')
+																.append($(createHTag({num:'4', val:'그레이+블랙'})).attr('style','color: white; text-align: center;'))
+														).append($(createDiv({id:''})).attr('style','margin-bottom: 18px;')
+																.append($(createHTag({num:'4', val:'오렌지+퍼플'})).attr('style','color: white; text-align: center;'))
+														)
+												)
+										)		
+								);
+								
+						}else{
+								$('#grid-row-catalog'+i)
+								.append($(createDiv({clazz:''})).attr('style', 'position: absolute; top: 0px; left:'+(312.75*j)+'px; width: 312.75px; padding-left: 10px; padding-right: 10px; margin-bottom: 45px; display: inline-block; vertical-align: super;')	
+										.append($(createDiv({clazz:'grid-item-catalog'})).attr('style', 'padding-top: 15px; height: 479px; border-top:1px solid #c7c7c7;')
+												.append($(createDiv({id:''}))
+														.append($(createDiv({id:''}))
+																.append($(createHTag({num:'4', val:'아이섀도우', clazz:'pnt'})).attr('style', 'margin:0;')
+																		.on('click', ()=>{
+																			app.item.onCreate({itemSeq:'2', itemCode:'3000'});
+																		}))
+														).append($(createDiv({id:''}))
+																.append($(createPTag({val:'EYE SHADOW'})))
+														)
+												).append($(createDiv({id:''})).attr('style','margin-left: 50px; float: right;')
+														.append($(createDiv({id:''}))
+																.append($(createHTag({num:'4', val:'★★★★★'})))
+														).append($(createDiv({id:''})).attr('style','float: right;')
+																.append($(createHTag({num:'4', val:'♡'})))
+														)
+												).append($(createDiv({id:''}))
+														.append($(createImg({src:$.image()+'/mainitem3.jpg', alt:'EYE SHADOW', title:'EYE SHADOW', clazz:'pnt'}))
+																.on('click', ()=>{
+																	app.item.onCreate({itemSeq:'2', itemCode:'3000'});
+																}))
+												).append($(createDiv({id:''})).attr('style', 'border-top: 1px solid #c7c7c7;')
+														.append($(createDiv({id:''})).attr('style','display: inline-block;')
+																.append($(createHTag({num:'4', val:'₩nn,nnn'})).attr('style', 'margin-bottom: 0; margin-top: 16px;'))
+														).append($(createDiv({id:''})).attr('style', 'margin-top: 8.5px; display: inline-block; float: right;')
+																.append($(createButton({val:'장바구니 담기'})).attr('style','border: 0; margin: 0; paddig: 0; width:130px; height:25px; background-color: black; color: white; font-size: 15px;'))
+														)
+												)
+										)		
+								);
+						};
+				};		
+		};		
+};
 	return {onCreate: onCreate};
 })();
 
 app.item=(()=>{
 	var $content, context, image;
-	var onCreate =()=>{
+	var onCreate =x=>{
 		$content = $('#content');
 		context = $.context();
-		setContentView();
+		setContentView(x);
 	};
-	var setContentView=()=>{
+	var setContentView=x=>{
+		$.getJSON(context+'/hyunyu/item/'+x.itemSeq+'/'+x.itemCode, d=>{
+			
+		
+		alert("000?");
+		});	
+		
 		$content.empty();
 		$content.html($(createDiv({id: 'item-container', clazz: 'h-item-container'})).attr('style', ''));
 		
@@ -645,7 +324,6 @@ app.item=(()=>{
 		;
 		$('#item-div1-2-2')
 		.append($(createDiv({id:'item-div1-2-2-1', clazz:''})).attr('style', 'height: 520px; padding:0px;'))
-		
 		;
 		
 		$('#item-div1-2-1-2')
@@ -655,6 +333,40 @@ app.item=(()=>{
 		.append($(createDiv({id:'item-div1-2-1-2-4', clazz:''})))
 		;
 		
+		
+		////////////////////////////////
+		/*$.ajax({
+			url: context+"/board/post/article",
+			data: JSON.stringify({
+				id: $('#input-id').val(),
+				title: $('#input-title').val(),
+				content: $('#input-content').val()
+			}),
+			dataType: 'text',
+			contentType: 'application/json',
+			method: 'POST',
+			beforeSubmit: function(){
+				alert("로딩화면!");
+			},
+			success: d=>{
+				alert("성공ㅇㅇㅇ");
+			
+			},
+			error: function(x,s,m){alert(m);}
+		});*/
+		/*$.ajax({
+			url: context+"/hyunyu/detailItem",
+			data: JSON.stringify({
+				itemSeq: x.itemSeq,
+				itemCode: x.itemCode
+			}),
+			contentType:"application/json",
+			method: 'post',
+			success: d=>{
+				
+			},
+			error: function(x,s,m){alert(m);}
+		});*/
 		
 		$('#item-div0')
 		.append($(createDiv({id:'',clazz:''})).attr('style','padding-left: 150px; padding-top: 20px;')
@@ -681,7 +393,7 @@ app.item=(()=>{
 				.append($(createDiv({clazz:'item active'}))
 						.append($(createImg({src:$.image()+'/zoomitem.jpg', alt:''}))))
 				.append($(createDiv({clazz:'item'}))
-						.append($(createImg({src:$.image()+'/zoomitem2.JPG', alt:''}))))
+						.append($(createImg({src:$.image()+'/zoomitem2.jpg', alt:''}))))
 		);
 		$('.carousel').carousel({interval: false});
 	
@@ -777,10 +489,8 @@ app.item=(()=>{
 		;
 
 		
-
-		
-		
-		
+		$('#item-div2-2')
+		.load(context+'/galary');
 		
 		
 		$('#item-div2-3')
@@ -796,107 +506,47 @@ app.item=(()=>{
 		);
 		$('#item-div3-2').attr('style','width: 1281px; margin-left: 151px; margin-right: 151px; height: 480px; margin-bottom: 15px;')
 		.append($(createDiv({clazz:'grid-container-catalog'})).attr('sytle', 'width:100%; margin: 0 auto;')	
-				.append($(createDiv({clazz:'grid-row-catalog'})).attr('style', 'position: relative; height: 540px; margin-bottom: 20px;')
-						.append($(createDiv({clazz:''})).attr('style', 'position: absolute; top: 0px; width: 312.75px; padding-left: 10px; padding-right: 10px; margin-bottom: 45px; display: inline-block; vertical-align: super;')	
-								.append($(createDiv({clazz:'grid-item-catalog'})).attr('style', 'padding-top: 15px; height: 479px; border-top:1px solid #c7c7c7;')
-										.append($(createDiv({id:''}))
-												.append($(createDiv({id:''}))
-														.append($(createHTag({num:'4', val:'프렙+프라임 24-아워 익스텐드 아이 베이스'})).attr('style', 'margin:0;'))
-												).append($(createDiv({id:''}))
-														.append($(createPTag({val:'PREP + PRIME 24-HOUR EXTEND EYE BASE'})))
-												)
-										).append($(createDiv({id:''})).attr('style','margin-left: 50px; float: right;')
-												.append($(createDiv({id:''}))
-														.append($(createHTag({num:'4', val:'★★★★★'})))
-												).append($(createDiv({id:''})).attr('style','float: right;')
-														.append($(createHTag({num:'4', val:'♡'})))
-												)
-										).append($(createDiv({id:''}))
-												.append($(createImg({src:$.image()+'/mainitem3.jpg', alt:'altaltalt', title:'titletitle'})))
-										).append($(createDiv({id:''})).attr('style', 'border-top: 1px solid #c7c7c7;')
-												.append($(createDiv({id:''})).attr('style','display: inline-block;')
-														.append($(createHTag({num:'4', val:'₩nn,nnn'})).attr('style', 'margin-bottom: 0; margin-top: 16px;'))
-												).append($(createDiv({id:''})).attr('style', 'margin-top: 8.5px; display: inline-block; float: right;')
-														.append($(createButton({val:'장바구니 담기'})).attr('style','border: 0; margin: 0; paddig: 0; width:130px; height:25px; background-color: black; color: white; font-size: 15px;'))
-												)
-										)
-								)		
-						).append($(createDiv({clazz:''})).attr('style', 'position: absolute; top: 0px; left: 312.75px; width: 312.75px; padding-left: 10px; padding-right: 10px; margin-bottom: 45px; display: inline-block; vertical-align: super;')	
-								.append($(createDiv({clazz:'grid-item-catalog'})).attr('style', 'padding-top: 15px; height: 479px; border-top:1px solid #c7c7c7;')
-										.append($(createDiv({id:''}))
-												.append($(createDiv({id:''}))
-														.append($(createHTag({num:'4', val:'프렙+프라임 24-아워 익스텐드 아이 베이스'})).attr('style', 'margin:0;'))
-												).append($(createDiv({id:''}))
-														.append($(createPTag({val:'PREP + PRIME 24-HOUR EXTEND EYE BASE'})))
-												)
-										).append($(createDiv({id:''})).attr('style','margin-left: 50px; float: right;')
-												.append($(createDiv({id:''}))
-														.append($(createHTag({num:'4', val:'★★★★★'})))
-												).append($(createDiv({id:''})).attr('style','float: right;')
-														.append($(createHTag({num:'4', val:'♡'})))
-												)
-										).append($(createDiv({id:''}))
-												.append($(createImg({src:$.image()+'/mainitem3.jpg', alt:'altaltalt', title:'titletitle'})))
-										).append($(createDiv({id:''})).attr('style', 'border-top: 1px solid #c7c7c7;')
-												.append($(createDiv({id:''})).attr('style','display: inline-block;')
-														.append($(createHTag({num:'4', val:'₩nn,nnn'})).attr('style', 'margin-bottom: 0; margin-top: 16px;'))
-												).append($(createDiv({id:''})).attr('style', 'margin-top: 8.5px; display: inline-block; float: right;')
-														.append($(createButton({val:'장바구니 담기'})).attr('style','border: 0; margin: 0; paddig: 0; width:130px; height:25px; background-color: black; color: white; font-size: 15px;'))
-												)
-										)
-								)		
-						).append($(createDiv({clazz:''})).attr('style', 'position: absolute; top: 0px; left: 625.5px; width: 312.75px; padding-left: 10px; padding-right: 10px; margin-bottom: 45px; display: inline-block; vertical-align: super;')	
-								.append($(createDiv({clazz:'grid-item-catalog'})).attr('style', 'padding-top: 15px; height: 479px; border-top:1px solid #c7c7c7;')
-										.append($(createDiv({id:''}))
-												.append($(createDiv({id:''}))
-														.append($(createHTag({num:'4', val:'프렙+프라임 24-아워 익스텐드 아이 베이스'})).attr('style', 'margin:0;'))
-												).append($(createDiv({id:''}))
-														.append($(createPTag({val:'PREP + PRIME 24-HOUR EXTEND EYE BASE'})))
-												)
-										).append($(createDiv({id:''})).attr('style','margin-left: 50px; float: right;')
-												.append($(createDiv({id:''}))
-														.append($(createHTag({num:'4', val:'★★★★★'})))
-												).append($(createDiv({id:''})).attr('style','float: right;')
-														.append($(createHTag({num:'4', val:'♡'})))
-												)
-										).append($(createDiv({id:''}))
-												.append($(createImg({src:$.image()+'/mainitem3.jpg', alt:'altaltalt', title:'titletitle'})))
-										).append($(createDiv({id:''})).attr('style', 'border-top: 1px solid #c7c7c7;')
-												.append($(createDiv({id:''})).attr('style','display: inline-block;')
-														.append($(createHTag({num:'4', val:'₩nn,nnn'})).attr('style', 'margin-bottom: 0; margin-top: 16px;'))
-												).append($(createDiv({id:''})).attr('style', 'margin-top: 8.5px; display: inline-block; float: right;')
-														.append($(createButton({val:'장바구니 담기'})).attr('style','border: 0; margin: 0; paddig: 0; width:130px; height:25px; background-color: black; color: white; font-size: 15px;'))
-												)
-										)
-								)		
-						).append($(createDiv({clazz:''})).attr('style', 'position: absolute; top: 0px; left: 938.25px; width: 312.75px; padding-left: 10px; padding-right: 10px; margin-bottom: 45px; display: inline-block; vertical-align: super;')	
-								.append($(createDiv({clazz:'grid-item-catalog'})).attr('style', 'padding-top: 15px; height: 479px; border-top:1px solid #c7c7c7;')
-										.append($(createDiv({id:''}))
-												.append($(createDiv({id:''}))
-														.append($(createHTag({num:'4', val:'프렙+프라임 24-아워 익스텐드 아이 베이스'})).attr('style', 'margin:0;'))
-												).append($(createDiv({id:''}))
-														.append($(createPTag({val:'PREP + PRIME 24-HOUR EXTEND EYE BASE'})))
-												)
-										).append($(createDiv({id:''})).attr('style','margin-left: 50px; float: right;')
-												.append($(createDiv({id:''}))
-														.append($(createHTag({num:'4', val:'★★★★★'})))
-												).append($(createDiv({id:''})).attr('style','float: right;')
-														.append($(createHTag({num:'4', val:'♡'})))
-												)
-										).append($(createDiv({id:''}))
-												.append($(createImg({src:$.image()+'/mainitem3.jpg', alt:'altaltalt', title:'titletitle'})))
-										).append($(createDiv({id:''})).attr('style', 'border-top: 1px solid #c7c7c7;')
-												.append($(createDiv({id:''})).attr('style','display: inline-block;')
-														.append($(createHTag({num:'4', val:'₩nn,nnn'})).attr('style', 'margin-bottom: 0; margin-top: 16px;'))
-												).append($(createDiv({id:''})).attr('style', 'margin-top: 8.5px; display: inline-block; float: right;')
-														.append($(createButton({val:'장바구니 담기'})).attr('style','border: 0; margin: 0; paddig: 0; width:130px; height:25px; background-color: black; color: white; font-size: 15px;'))
-												)
-										)
-								)		
-						)
-				)
-		);
+				.append($(createDiv({id:'grid-row-catalog', clazz:'grid-row-catalog'})).attr('style', 'position: relative; height: 540px; margin-bottom: 20px;')));
 	
+	
+		for(var j=0; j<4; j++){
+				$('#grid-row-catalog')
+				.append($(createDiv({clazz:''})).attr('style', 'position: absolute; top: 0px; left:'+(312.75*j)+'px; width: 312.75px; padding-left: 10px; padding-right: 10px; margin-bottom: 45px; display: inline-block; vertical-align: super;')	
+						.append($(createDiv({clazz:'grid-item-catalog'})).attr('style', 'padding-top: 15px; height: 479px; border-top:1px solid #c7c7c7;')
+								.append($(createDiv({id:''}))
+										.append($(createDiv({id:''}))
+												.append($(createHTag({num:'4', val:'아이섀도우', clazz:'pnt'})).attr('style', 'margin:0;')
+														.on('click', ()=>{
+															app.item.onCreate({itemSeq:'2', itemCode:'3000'});
+														}))
+										).append($(createDiv({id:''}))
+												.append($(createPTag({val:'EYE SHADOW'})))
+										)
+								).append($(createDiv({id:''})).attr('style','margin-left: 50px; float: right;')
+										.append($(createDiv({id:''}))
+												.append($(createHTag({num:'4', val:'★★★★★'})))
+										).append($(createDiv({id:''})).attr('style','float: right;')
+												.append($(createHTag({num:'4', val:'♡'})))
+										)
+								).append($(createDiv({id:''}))
+										.append($(createImg({src:$.image()+'/mainitem3.jpg', alt:'EYE SHADOW', title:'EYE SHADOW', clazz:'pnt'}))
+												.on('click', ()=>{
+													app.item.onCreate({itemSeq:'2', itemCode:'3000'});
+												}))
+								).append($(createDiv({id:''})).attr('style', 'border-top: 1px solid #c7c7c7;')
+										.append($(createDiv({id:''})).attr('style','display: inline-block;')
+												.append($(createHTag({num:'4', val:'₩nn,nnn'})).attr('style', 'margin-bottom: 0; margin-top: 16px;'))
+										).append($(createDiv({id:''})).attr('style', 'margin-top: 8.5px; display: inline-block; float: right;')
+												.append($(createButton({val:'장바구니 담기'})).attr('style','border: 0; margin: 0; paddig: 0; width:130px; height:25px; background-color: black; color: white; font-size: 15px;'))
+										)
+								)
+						)		
+				);
+	};
+		
+		
+		
+		
 		
 	};
 	return {onCreate: onCreate};

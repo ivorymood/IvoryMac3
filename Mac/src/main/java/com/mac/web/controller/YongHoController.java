@@ -18,7 +18,7 @@ import com.mac.web.domain.Common;
 import com.mac.web.domain.Customer;
 import com.mac.web.mapper.Mapper;
 import com.mac.web.service.ICountService;
-import com.mac.web.service.IGetHashMapService;
+import com.mac.web.service.IGetHashService;
 import com.mac.web.service.IGetService;
 
 @RestController
@@ -82,7 +82,7 @@ public class YongHoController {
 	public Map<?,?> itemSearch() {
 		System.out.println("컨트롤러는 들어옴");
 		Map<String,Object> map = new HashMap<>();
-		map.put("main", new IGetHashMapService() {
+		map.put("main", new IGetHashService() {
 			
 			@Override
 			public Object execute(HashMap<?, ?> param) {

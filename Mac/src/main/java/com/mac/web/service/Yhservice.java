@@ -1,9 +1,10 @@
-package com.mac.web.yongho;
+package com.mac.web.service;
 
 import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Service;
 
 import com.mac.web.domain.Command;
-@Component
+@Service
 public interface Yhservice {
 	public void deleteBasketById(Command cmd);
 	public void deleteGrade(Command cmd);
