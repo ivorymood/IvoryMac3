@@ -11,6 +11,8 @@
 	FROM ${data1} where custom_id LIKE #{col1}
 	</select>
 	<select id="macDate" resultType="map" parameterType="hashMap">
-	SELECT * FROM item
+	SELECT item_name as itemName,
+	color_exp as colorExp,
+	pic_name as picName from item i join common_feature c on i.item_code like c.item_code
 	</select>
 </mapper>

@@ -18,12 +18,12 @@ import com.mac.web.domain.Common;
 import com.mac.web.domain.Customer;
 import com.mac.web.mapper.Mapper;
 import com.mac.web.service.ICountService;
-import com.mac.web.service.IGetHashMapService;
+import com.mac.web.service.IGetHashService;
 import com.mac.web.service.IGetService;
 
 @RestController
-public class YongHoController {
-	private static final Logger logger = LoggerFactory.getLogger(YongHoController.class);
+public class JController {
+	private static final Logger logger = LoggerFactory.getLogger(JController.class);
 	@Autowired Mapper mapper;
 	@Autowired Command cmd;
 	@Autowired Customer customer;
@@ -82,13 +82,14 @@ public class YongHoController {
 	public Map<?,?> itemSearch() {
 		System.out.println("컨트롤러는 들어옴");
 		Map<String,Object> map = new HashMap<>();
-		map.put("main", new IGetHashMapService() {
+		map.put("main", new IGetHashService() {
 			
 			@Override
 			public Object execute(HashMap<?, ?> param) {
 				return mapper.macDate(param);
 			}
-		}.execute((HashMap<?, ?>) map));		
+		}.execute((HashMap<?, ?>) map));	
+		System.out.println("넘어온 값은"+map.get("main"));
 		return map;
 	}
 	
