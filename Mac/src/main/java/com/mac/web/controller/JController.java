@@ -1,7 +1,6 @@
 package com.mac.web.controller;
 import java.util.HashMap;
 import java.util.Map;
-import javax.mail.Session;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import org.slf4j.Logger;
@@ -37,15 +36,14 @@ public class JController {
         cmd = new Command();
         cmd.setCol1(param.get("customId"));
         cmd.setCol2(param.get("customPass"));
-        cmd.setData1(type);
-        System.out.println(cmd.getData1()+"=data1의 값은");
+        System.out.println(cmd.getCol1()+"=getCol1의 값은");
+        System.out.println(cmd.getCol2()+"=getCol2의 값은");
         int count = 0;
         Map<String,Object> map = new HashMap<>();
         count = new ICountService() {
             
             @Override
             public int execute(Command cmd) {
-                // TODO Auto-generated method stub
                 return mapper.exist(cmd);
             }
         }.execute(cmd);
@@ -82,6 +80,22 @@ public class JController {
         
         return map;
     }
+    @RequestMapping("/mypage/")
+    public Map<?,?> mypage(HttpServletRequest request) {
+        System.out.println("마이 페이지 컨트롤러는 들어옴");
+        Map<String,Object> map = new HashMap<>();
+        HttpSession session = request.getSession();
+        map.put("customid",session.getAttribute("name"));
+        map.put("mypage", new IGetHashService() {
+            
+            @Override
+            public Object execute(HashMap<?, ?> param) {
+                return mapper.selectMypage(param);
+            }
+        }.execute((HashMap<?, ?>) map));  
+        System.out.println("넘어온 값은"+map.get("mypage"));
+        return map;
+    }
     @RequestMapping("/search/")
     public Map<?,?> itemSearch() {
         System.out.println("컨트롤러는 들어옴");
@@ -114,12 +128,11 @@ public class JController {
     }
     @RequestMapping("/basket/totalPrice")
     public Map<?,?> basketTotalPrice(HttpServletRequest request) {
-        System.out.println("/basket/search컨트롤러는 들어옴");
+        System.out.println("/basket/totalPrice컨트롤러는 들어옴");
         Map<String,Object> map = new HashMap<>();
         HttpSession session = request.getSession();
         map.put("customid",session.getAttribute("name"));
-        map.put("basketTotalPrice", new IGetHashService() {
-            
+        map.put("basketTotalPrice", new IGetHashService() { 
             @Override
             public Object execute(HashMap<?, ?> param) {
                 return mapper.macBasketTotalPrice(param);
@@ -136,11 +149,10 @@ public class JController {
         System.out.println(param.get("itemseq"));
         HttpSession session = request.getSession();
         map.put("customid",session.getAttribute("name"));
-        cmd.setCol1((String) session.getAttribute("name"));
-        map.put("basket_seq", "2");
         map.put("itemseq", param.get("itemseq"));
+        map.put("itemcode", param.get("itemcode"));
+        cmd.setCol1((String) session.getAttribute("name"));
         cmd.setCol2(param.get("itemseq"));
-        System.out.println(cmd.getCol2()+"getCol2");
         int count = 0;
         count = new ICountService() {
             

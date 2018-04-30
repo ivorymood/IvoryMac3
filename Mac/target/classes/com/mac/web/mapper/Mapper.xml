@@ -5,54 +5,63 @@
 <mapper namespace="com.mac.web.mapper.Mapper">
     <select id="serachCustomerById" resultType="com.mac.web.domain.Customer" parameterType="com.mac.web.domain.Command">
     SELECT *
-      FROM customer 
-     WHERE custom_id = #{col1}
+      FROM   customer 
+     WHERE   custom_id = #{col1}
+       AND   custom_pass = #{col2} 
+     	 
     </select>
     <select id="exist" resultType="int" parameterType="com.mac.web.domain.Command">
     SELECT COUNT(*)
       FROM customer 
      WHERE custom_id = #{col1}
+     AND   custom_pass = #{col2} 
     </select>
     
-    <select id="macBasketTotalPrice" resultType="map" parameterType="hashMap">
-  	SELECT sum(b.item_count*a.price) as total,
-  	  FROM basket b 
-  	  join item i 
-  	    on i.item_seq like b.item_seq 
-  	  join customer c 
-       on c.custom_id like b.custom_id
-     join common_feature a
-	   on a.item_code like i.item_code   
- 	WHERE i.item_seq = b.item_seq
-      AND b.custom_id = #{customid}
-      AND a.item_code = i.item_code
+	<select id="macBasketTotalPrice" resultType="map" parameterType="hashMap">
+  	SELECT  sum(b.item_count*a.price) as total
+  	  FROM  basket b 
+  	  join  item i 
+  	    on  i.item_seq like b.item_seq 
+  	  join  customer c 
+        on  c.custom_id like b.custom_id
+      join  common_feature a
+	    on  a.item_code like i.item_code   
+ 	 WHERE  i.item_seq = b.item_seq
+       AND  b.custom_id = #{customid}
+       AND  a.item_code = i.item_code
     </select>
     
     <select id="macDate" resultType="map" parameterType="hashMap">
-    SELECT item_name as itemName
-         , color_exp as colorExp
-         , item_seq as itemSeq
-         , pic_name as picName 
-      FROM item i 
-      join common_feature c 
-        on i.item_code like c.item_code
-    </select> 
+    SELECT  i.item_name as itemName
+          , i.color_exp as colorExp
+          , i.item_seq as itemSeq
+          , i.pic_name as picName 
+          , i.item_code as itemCode
+      FROM  item i 
+      join  common_feature c 
+        on  i.item_code like c.item_code
+    </select>
+     <select id="selectMypage" resultType="map" parameterType="hashMap">
+ 	SELECT *
+ 	  FROM customer
+ 	 WHERE custom_id = #{customid}
+    </select>  
      
-        <select id="macOrderBasket" resultType="map" parameterType="hashMap">
- 	SELECT item_name as itemName,
-   	  	   item_count as itemCount,
-   	       price,
-   	       pic_name as picName
-  	  FROM basket b 
-  	  join item i 
-  	    on i.item_seq like b.item_seq 
-  	  join customer c 
-       on c.custom_id like b.custom_id
-     join common_feature a
-	   on a.item_code like i.item_code   
- 	WHERE i.item_seq = b.item_seq
-      AND b.custom_id = #{customid}
-      AND a.item_code = i.item_code
+	<select id="macOrderBasket" resultType="map" parameterType="hashMap">
+ 	SELECT  item_name as itemName
+ 		  , item_count as itemCount
+   	  	  , price
+   	  	  , pic_name as picName
+  	  FROM  basket b 
+  	  join  item i 
+  	    on  i.item_seq like b.item_seq 
+  	  join  customer c 
+        on  c.custom_id like b.custom_id
+      join  common_feature a
+	    on  a.item_code like i.item_code   
+ 	 WHERE  i.item_seq = b.item_seq
+       AND  b.custom_id = #{customid}
+       AND  a.item_code = i.item_code
     </select> 
      
         <select id="selectBasket" resultType="int" parameterType="com.mac.web.domain.Command">
@@ -62,20 +71,20 @@
        AND item_seq  = #{col2}
     </select>
     <insert id="macBasket" parameterType="hashMap">
-        insert into basket(basket_seq
-                         , custom_id
+        insert into basket(custom_id
                          , item_seq
-                         , item_count  
-                          ) values(
-                          #{basket_seq}
-                          ,#{customid}
-                          ,#{itemseq}
-                          ,1 
-                    
+                         , item_count
+                         , item_code
+                          ) values(#{customid}
+                         , #{itemseq}
+                         , 1
+                         , #{itemcode} 
                           )
     </insert>
     <update id="macBasketUpdate" parameterType="hashMap" >
     	UPDATE basket 
     	   SET item_count = item_count+1
+    	 WHERE custom_id = #{customid}
+    	   AND item_seq = #{itemseq}
     </update>
 </mapper>

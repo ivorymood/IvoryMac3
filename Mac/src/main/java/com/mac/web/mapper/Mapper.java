@@ -16,6 +16,7 @@ public interface Mapper {
 	public int macBasket(Map<?, ?> param);
 	public int macBasketUpdate(Map<?, ?> param);
 	public List<?> macBasketTotalPrice(HashMap<?, ?> param);
+	public List<?> selectMypage(HashMap<?, ?> param);
 	public int exist(Command cmd);
 	public int selectBasket(Command cmd);
 	public Customer serachCustomerById(Command cmd);
