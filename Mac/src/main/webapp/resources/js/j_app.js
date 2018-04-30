@@ -168,6 +168,9 @@ var createGridDivRowPrice=x=>{
 var createImg=x=>{
 	return '<img src="'+$.image()+'/'+x.img+'" alt="Matte Lipstick" title="Matte Lipstick">';
 }
+var createBasketImg=x=>{
+	return '<img style="width: 150px;" src="'+$.image()+'/'+x.img+'" alt="Matte Lipstick" title="Matte Lipstick">';
+}
 var createNavImg=x=>{
 	return '<img id="'+x.id+'" src="'+$.image()+'/'+x.img+'" alt="Matte Lipstick" title="Matte Lipstick">';
 }
@@ -912,49 +915,79 @@ app.main=(()=>{
 				$('#div-inner')
 				.append($(createMainImg()));
 				var temp = ['Matte Lipstick','Retro Matte Lipstick','EYE SHADOW','Mineralize Blush']
-				$.getJSON(context+'/search/', d=>{	
-					
-				for(i=0;i<4;i++){
-					$(createDiv({id:'',clazz:''}))
-					.attr('style','margin-top:30px;display: inline-block;margin-left: 50px;border-top: 1px solid #c7c7c7;')
-					.append($(createDiv({id:'',clazz:''}))
-						.attr('style','display: inline-block;')
+				$.getJSON(context+'/search/', d=>{
+					var mainObj = d.main;
+					for(var i =0 ;  i <= mainObj.length ; i++){
+						if(i > 3){
+							return false;
+						}
+						console.log(mainObj[i]);
+						$(createDiv({id:'',clazz:''}))
+						.attr('style','margin-top:30px;display: inline-block;margin-left: 50px;border-top: 1px solid #c7c7c7;')
 						.append($(createDiv({id:'',clazz:''}))
-							.append($(createHTag({num:'5',val:d.main[i].itemName}))
-								.attr('id','HTag-main-korName-'+i)))
-						.append($(createDiv({id:'',clazz:''}))
-								.append($(createHTag({num:'5',val:temp[i]}))
-										.attr('id','HTag-main-engName-'+i)))
-						.append($(createDiv({id:'',clazz:''}))
-								.append($(createHTag({num:'5',val:d.main[i].colorExp}))
-									.attr('id','HTag-main-color-'+i)))
-						.append($(createDiv({id:'',clazz:''}))
-								.append($(createHTag({num:'5',val:''}))
-									.attr('id','HTag-main-colorEng-'+i))))
-				 	.append($(createDiv({id:'',clazz:''}))
-			 			.attr('style','display: inline-block; margin-left: 100px;')
-			 			.append($(createDiv({id:'',clazz:''}))
-		 						.append($(createHTag({num:'5',val:'★★★★★'}))))
-						.append($(createDiv({id:'',clazz:''}))
-								.append($(createHTag({num:'5',val:'♡'})))))
-			 		.append($(createDiv({id:'',clazz:''}))
-		 				.append($(createDiv({id:'',clazz:''}))
-		 						.append($(createImg({img:d.main[i].picName+'.jpg'})))))
-			 		.append($(createDiv({id:'',clazz:''}))
-		 				.attr('style','border-top: 1px solid #c7c7c7;')
-		 				.append($(createDiv({id:'',clazz:''}))
-		 						.attr('style','display: inline-block;margin-left: 10px; margin-top:10px;')
-	 							.append($(createHTag({num:'5',val:'₩ 30,000'}))
- 									.attr('id','HTag-basket-'+i+'')))
-						.append($(createDiv({id:'',clazz:''}))
-								.attr('style','display: inline-block;margin-left: 90px;')
-								.append($(createButton({id:'btn-basket-'+i+'',clazz:'',val:'장바구니 담기'}))
-										.on('click',()=>{
-											alert('작동');
-										})
-									.attr('style','color:white; background:black;'))))
-									.appendTo('#div-main-items-home');
-				}
+							.attr('style','display: inline-block;')
+							.append($(createDiv({id:'',clazz:''}))
+								.append($(createHTag({num:'5',val:d.main[i].itemName}))
+									.attr('id','HTag-main-korName-'+i)))
+							.append($(createDiv({id:'',clazz:''}))
+									.append($(createHTag({num:'5',val:temp[i]}))
+											.attr('id','HTag-main-engName-'+i)))
+							.append($(createDiv({id:'',clazz:''}))
+									.append($(createHTag({num:'5',val:d.main[i].colorExp}))
+										.attr('id','HTag-main-color-'+i)))
+							.append($(createDiv({id:'',clazz:''}))
+									.append($(createHTag({num:'5',val:''}))
+										.attr('id','HTag-main-colorEng-'+i))))
+					 	.append($(createDiv({id:'',clazz:''}))
+				 			.attr('style','display: inline-block; margin-left: 100px;')
+				 			.append($(createDiv({id:'',clazz:''}))
+			 						.append($(createHTag({num:'5',val:'★★★★★'}))))
+							.append($(createDiv({id:'',clazz:''}))
+									.append($(createHTag({num:'5',val:'♡'})))))
+				 		.append($(createDiv({id:'',clazz:''}))
+			 				.append($(createDiv({id:'',clazz:''}))
+			 						.append($(createImg({img:d.main[i].picName+'.jpg'})))))
+				 		.append($(createDiv({id:'',clazz:''}))
+			 				.attr('style','border-top: 1px solid #c7c7c7;')
+			 				.append($(createDiv({id:'',clazz:''}))
+			 						.attr('style','display: inline-block;margin-left: 10px; margin-top:10px;')
+		 							.append($(createHTag({num:'5',val:'₩ 30,000'}))
+	 									.attr('id','HTag-basket-'+i+'')))
+							.append($(createDiv({id:'',clazz:''}))
+									.attr('style','display: inline-block;margin-left: 90px;')
+									.append($(createButton({id:'btn-basket-'+i+'',clazz:'',val:'장바구니 담기'}))
+											.attr('colorexp',mainObj[i].colorExp)
+											.attr('itemname',mainObj[i].itemName)
+											.attr('picname',mainObj[i].picName)
+											.attr('itemseq',mainObj[i].itemSeq)
+											.on('click',function (){
+												
+												var jason = {
+														colorexp : $(this).attr("colorexp"),
+														itemname : $(this).attr("itemname"),
+														picname  : $(this).attr("picname"),
+														itemseq  : $(this).attr("itemseq")
+												
+												}
+												
+												$.ajax({
+													url:context+'/basket/order',
+													method:'POST',
+													 data: JSON.stringify(jason),
+													 dataType:'json',
+													 contentType: 'application/json'
+													
+												})
+												console.log($(this));
+												console.log("colorExp: ",$(this).attr("colorexp"));
+												console.log("itemName: ",$(this).attr("itemname"));
+												console.log("picName: ",$(this).attr("picname"));
+												console.log("itemseq: ",$(this).attr("itemseq"));
+												
+											})
+										.attr('style','color:white; background:black;'))))
+										.appendTo('#div-main-items-home');						
+					}
 				});
 		
 				
@@ -1439,42 +1472,62 @@ app.login=(()=>{
 						 .attr('style','color: white;'))))
 		 .appendTo('#div-my-page');		 
 		 $(createDiv({id:'',clazz:''}))
-		 .appendTo('#div-my-page');			
-		 for(var i=0;i<2;i++){
-				$(createDiv({id:'',clazz:'grid-container'}))
-				 .append($(createDiv({id:'',clazz:'grid-item'}))
-						 .append($(createImg({img:'basket1.jpg'}))))
+		 .appendTo('#div-my-page');
+		 $.getJSON(context+'/basket/search',e=>{
+			 var basketObj = e.basketOrder;
+			 console.log(e.basketOrder);
+			 for(var i =0 ;  i <= basketObj.length ; i++){
+					if(i > 1){
+						return false;
+					}
+					$(createDiv({id:'',clazz:'grid-container'}))
 					 .append($(createDiv({id:'',clazz:'grid-item'}))
+							 .append($(createBasketImg({img:e.basketOrder[i].picName+'.jpg'}))))
+						 .append($(createDiv({id:'',clazz:'grid-item'}))
+							 .append($(createDiv({id:'',clazz:''}))
+						 .append($(createHTag({num:'4',val:basketObj[i].itemName}))))										 
+						 .append($(createDiv({id:'',clazz:''})))
 						 .append($(createDiv({id:'',clazz:''}))
-					 .append($(createHTag({num:'4',val:'롤러휠 리퀴드 라이너'}))))										 
-					 .append($(createDiv({id:'',clazz:''}))
-						 .append($(createHTag({num:'5',val:'Rollerwheel Liquid Liner'}))))
-					 .append($(createDiv({id:'',clazz:''}))
-						 .append($(createHTag({num:'5',val:'수량:1'}))))
-					  .append($(createDiv({id:'',clazz:''}))
-						 .append($(createHTag({num:'5',val:'₩ 30,000'}))))).appendTo('#div-modal-body');	 
-		 };
-		 		
-							 
-					 $('#modal-content').append($(createDiv({id:'',clazz:'modal-footer'}))
-						 .append($(createDiv({id:'',clazz:'grid-container'}))
-							 .append($(createDiv({id:'',clazz:'grid-item'}))
-								 .append($(createHTag({num:'4',val:'총금액'}))))
-							 .append($(createDiv({id:'',clazz:'grid-item'}))
-								 .append($(createHTag({num:'4',val:'₩ 62,000'}))))
-							 .append($(createDiv({id:'',clazz:'grid-item'}))
-								 .append($(createButton({id:'',clazz:'btn btn-default',val:'주문하기'}))
-									 .on('click',()=>{
-												app.orders.onCreate();
-											})
+							 .append($(createButton({id:'',clazz:'',val:(createImg({img:'minus.jpg'}))}))
+									 .attr('count',basketObj[i].itemCount)
+									 .attr('style','background:white;')
+									 .on('click',function(){
+										 alert('마이너스버튼 작동');
+									 }))
+							 .append($(createInput({id:'',val:basketObj[i].itemCount,type:'text'}))
+									 .attr('style','    width: 30px; text-align:center;'))
+							 .append($(createButton({id:'',clazz:'',val:(createImg({img:'plus.jpg'}))}))
+									 .attr('count',basketObj[i].itemCount)
+									 .attr('style','background:white;')
+									 .on('click',function(){
+										 alert('플러스버튼 작동');
+									 })))
+						  .append($(createDiv({id:'',clazz:''}))
+							 .append($(createHTag({num:'5',val:'₩'+basketObj[i].price}))))).appendTo('#div-modal-body');
+			 };			 
+		 });
+		 $.getJSON(context+'/basket/totalPrice',e=>{
+			 var basketObjTotal = e.basketTotalPrice;
+			 console.log(basketObjTotal);
+			 $('#modal-content').append($(createDiv({id:'',clazz:'modal-footer'}))
+					 .append($(createDiv({id:'',clazz:'grid-container'}))
+						 .append($(createDiv({id:'',clazz:'grid-item'}))
+							 .append($(createHTag({num:'4',val:'총금액'}))))
+						 .append($(createDiv({id:'',clazz:'grid-item'}))
+							 .append($(createHTag({num:'4',val:'₩'+basketObjTotal[0].total}))))
+						 .append($(createDiv({id:'',clazz:'grid-item'}))
+							 .append($(createButton({id:'',clazz:'btn btn-default',val:'주문하기'}))
+								 .on('click',()=>{
+											app.orders.onCreate();
+										})
+								 .attr('data-dismiss','modal')
+								 .attr('style','background: black; color: white; width: 100px; height: 40px; font-weight: bold; border: solid 1px;')))
+						 .append($(createDiv({id:'',clazz:'grid-item'}))
+								 .append($(createButton({id:'',clazz:'btn btn-default',val:'취소하기'}))
 									 .attr('data-dismiss','modal')
-									 .attr('style','background: black; color: white; width: 100px; height: 40px; font-weight: bold; border: solid 1px;')))
-							 .append($(createDiv({id:'',clazz:'grid-item'}))
-									 .append($(createButton({id:'',clazz:'btn btn-default',val:'취소하기'}))
-										 .attr('data-dismiss','modal')
-										 .attr('style','background: black; color: white; width: 100px; height: 40px; font-weight: bold; border: solid 1px;')))));
-
-		 
+									 .attr('style','background: black; color: white; width: 100px; height: 40px; font-weight: bold; border: solid 1px;')))));
+		 });
+			  
 	 });
  };
  var customerLogin=x=>{
