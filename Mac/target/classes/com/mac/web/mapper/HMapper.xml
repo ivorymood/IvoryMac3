@@ -3,23 +3,56 @@
   PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.mac.web.mapper.HMapper">
-
-<!-- select i.item_seq as itemSeq,
-		i.item_name as itemName,
-		i.item_stock as itemStock,
-		i.color_exp as colorExp,
-		i.texture_exp as textureExp,
-		i.pic_name as picName,
-		c.item_code as itemCode,
-		c.common_name as commonName,
-		c.common_exp as commonExp,
+<resultMap type="java.util.HashMap" id="itemMap">
+	<id property="itemSeq" column="item_seq" />
+	<result property="itemName" column="item_name"/>
+	<result property="itemStock" column="item_stock"/>
+	<result property="colorExp" column="color_exp"/>
+	<result property="textureExp" column="texture_exp"/>
+	<result property="picName" column="pic_name"/>
+	<result property="itemCode" column="item_code"/>
+	<result property="commonName" column="common_name"/>
+	<result property="commonExp" column="common_exp"/>
+	<result property="price" column="price"/>
+	<result property="discount" column="discount"/>
+	<result property="detailInfo" column="detail_info"/>
+	<result property="ingredient" column="ingredient"/>
+	<result property="weight" column="weight"/>
+</resultMap>
+<resultMap type="java.util.HashMap" id="test">
+	<id property="itemSeq" column="item_seq" />
+	<result property="itemStock" column="item_stock"/>
+	<result property="colorExp" column="color_exp"/>
+	<result property="textureExp" column="texture_exp"/>
+	<result property="picName" column="pic_name"/>
+	<result property="itemCode" column="item_code"/>
+</resultMap>
+<select id="findByItemSeq" parameterType="hashMap" resultMap="test">
+	select * 
+	from item
+	where item_seq like ${itemSeq}; 
+</select>
+<select id="findByItemCodenItemSeq" parameterType="hashMap" resultMap="itemMap">
+	select i.item_seq,
+		i.item_name,
+		i.item_stock,
+		i.color_exp,
+		i.texture_exp,
+		i.pic_name,
+		c.item_code,
+		c.common_name,
+		c.common_exp,
 		c.price,
 		c.discount,
-		c.detail_info as detailInfo,
+		c.detail_info,
 		c.ingredient,
-		c.weight_g as weightG
-from item i, common_feature c
-where i.item_seq like '2'
-		and c.item_code like '3000'
-;  -->	
+		c.weight
+	from item i, common_feature c
+	where i.item_seq like ${itemSeq}
+		and c.item_code like #{itemCode};
+</select>
+<insert id="insertBasket" parameterType="HashMap">
+	insert into basket(custom_id, item_seq, item_code, item_count)
+	values('kim', ${itemSeq}, #{itemCode}, 1);
+</insert>
 </mapper>

@@ -4,7 +4,7 @@ import org.springframework.stereotype.Service;
 
 import com.mac.web.domain.Command;
 
-@Service
+@Service @FunctionalInterface
 public interface IGetService {
  public Object execute(Command cmd);
 }

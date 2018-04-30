@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.mac.web.mapper.HMapper;
 import com.mac.web.service.IGetHashService;
+import com.mac.web.service.IPostHashService;
 
 
 @RestController
@@ -25,23 +26,45 @@ public class HyunYuController {
 	@RequestMapping(value="/item/{code1}/{code2}", method=RequestMethod.GET )
 	public Map<?,?> getItem(@PathVariable("code1") String itemSeq, @PathVariable("code2") String itemCode){
 		Map<String, Object> map = new HashMap<>();
-		Map<String, String> param = new HashMap<>();
+		Map<String, Object> param = new HashMap<>();
 		logger.info("getItem {}", "ENTERED");
 		logger.info("itemSeq {}", itemSeq);
 		logger.info("itemCode {}", itemCode);
+		param.put("itemSeq", Integer.parseInt(itemSeq));
+		param.put("itemCode", itemCode);
 		
+	
 		map.put("item", new IGetHashService() {
 			
 			@Override
 			public Object execute(HashMap<?, ?> param) {
-				// TODO Auto-generated method stub
 				return hMapper.findByItemCodenItemSeq(param);
 			}
 		}.execute((HashMap<?, ?>) param));
 		
-		
+		System.out.println("map 결과: "+map);
 		return map;
 	}
-
+	@RequestMapping(value="/toBasket/{code1}/{code2}", method=RequestMethod.GET)
+	public  Map<?,?> pushItem(@PathVariable("code1") String itemSeq, @PathVariable("code2") String itemCode){
+		Map<String, Object> map = new HashMap<>();
+		Map<String, String> param = new HashMap<>();
+		logger.info("pushItem {}", "ENTERED");
+		logger.info("itemSeq {}", itemSeq);
+		logger.info("itemCode {}", itemCode);
+		
+		param.put("itemSeq", itemSeq);
+		param.put("itemCode", itemCode);
+		
+		new IPostHashService() {
+			
+			@Override
+			public void execute(HashMap<?, ?> param) {
+				hMapper.insertBasket(param);
+			}
+		}.execute((HashMap<?, ?>) param);
+		map.put("flag", "success");
+		return map;
+	}
 	
 }

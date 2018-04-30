@@ -15,3 +15,10 @@ function Router(x){
 	}
 	
 }
+function Cart(x){
+	sessionStorage.setItem('cart',x);
+	
+	return {
+		get: ()=>{return sessionStorage.getItem('cart');}
+	}
+}

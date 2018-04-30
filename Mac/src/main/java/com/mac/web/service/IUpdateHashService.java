@@ -4,7 +4,7 @@ import java.util.HashMap;
 
 import org.springframework.stereotype.Service;
 
-@Service
+@Service @FunctionalInterface
 public interface IUpdateHashService {
-	public Object execute(HashMap<?, ?> param);
+	public void execute(HashMap<?, ?> param);
 }
