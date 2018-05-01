@@ -14,8 +14,8 @@ import com.mac.web.domain.Customer;
 @SessionAttributes("loginUser")
 @RequestMapping("/admin")
 @Controller
-public class BoRamController {
-	private static final Logger logger = LoggerFactory.getLogger(BoRamController.class);
+public class BController {
+	private static final Logger logger = LoggerFactory.getLogger(BController.class);
 	@Autowired Command cmd;
 	@Autowired Customer custom;
 	@RequestMapping(value="/login",method=RequestMethod.GET)

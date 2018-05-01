@@ -8,6 +8,5 @@ import lombok.Data;
 @Component
 @Data @Lazy
 public class CommonFeature {
-	private String itemCode, commonName, commonExp, detailInfo, ingredient, weight;
-	private int price;
+	private String itemCode, commonName, commonExp, detailInfo, ingredient, price, discount, weight;
 }

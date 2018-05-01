@@ -9,7 +9,7 @@ import com.mac.web.domain.Customer;
 import com.mac.web.service.CommonService;
 
 @Service
-public class ServiceImpl implements CommonService{
+public class CommonServiceImpl implements CommonService{
 
 	@Override
 	public void addCustomer(Command cmd) {

@@ -18,8 +18,8 @@ import com.mac.web.service.IPostHashService;
 
 @RestController
 @RequestMapping(value="/hyunyu")
-public class HyunYuController {
-	private static final Logger logger = LoggerFactory.getLogger(HyunYuController.class);
+public class HController {
+	private static final Logger logger = LoggerFactory.getLogger(HController.class);
 	@Autowired HMapper hMapper;
 	
 	

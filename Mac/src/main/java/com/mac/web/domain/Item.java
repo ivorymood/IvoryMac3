@@ -8,6 +8,5 @@ import lombok.Data;
 @Component
 @Data @Lazy
 public class Item {
-	private String itemSeq, itemName, colorExp, textureExp, itemCode;
-	private int itemStock;
+	private String itemSeq, itemName, colorExp, textureExp, picName, itemCode, itemStock;
 }

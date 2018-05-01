@@ -8,6 +8,5 @@ import lombok.Data;
 @Component
 @Data @Lazy
 public class Basket {
-	private String basketSeq, customId, OrderDate, ItemSeq;
-	private int totalPrice;
+	private String basketSeq, customId, orderDate, itemSeq, itemCode, totalPrice;
 }

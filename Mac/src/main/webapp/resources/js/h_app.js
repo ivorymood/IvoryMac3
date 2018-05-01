@@ -189,6 +189,9 @@ app.mainitem=(()=>{
 	};
 	var setContentView=()=>{
 		$content.empty();
+		
+		alert('세션: '+sessionStorage.getItem('customer') );
+		
 		$content.html($(createDiv({id:'mainitem-container'})));
 		$('#mainitem-container')
 		.append($(createDiv({id:'item-div0'})))

@@ -8,6 +8,5 @@ import lombok.Data;
 @Component
 @Data @Lazy
 public class CustomerGrade {
-	private String gradeCode, customId, gradeName;
-	private int accumMoney;
+	private String gradeCode, gradeName, plusDiscount, accumMoney;
 }

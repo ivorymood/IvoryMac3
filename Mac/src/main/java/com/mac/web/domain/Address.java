@@ -8,6 +8,5 @@ import lombok.Data;
 @Component
 @Data @Lazy
 public class Address {
-	private String customId, addr, detailAddr;
-	private int zipCode;
+	private String customId, addr, detailAddr, zipCode;
 }

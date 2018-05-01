@@ -8,12 +8,14 @@ import lombok.Data;
 @Component
 @Data @Lazy
 public class Customer {
-	private String customId
-				  ,customPass
-				  ,name
-				  ,email
-				  ,phoneNum				  
-				  ,profile
-				  ,joinDate;
+	private String customId,
+				  customPass,
+				  name,
+				  email,
+				  phoneNum,			  
+				  profile,
+				  joinDate,
+				  gradeCode,
+				  consumption;
 
 }
