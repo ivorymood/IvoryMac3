@@ -13,13 +13,17 @@ import com.mac.web.domain.Customer;
 @Repository
 public interface Mapper {
 	public void insertMember(Command cmd);
+	public int insertAddr(Map<?, ?> param);
 	public int macBasket(Map<?, ?> param);
 	public int macBasketUpdate(Map<?, ?> param);
+	public int macBasketUpdateOrder(Map<?, ?> param);
 	public List<?> macBasketTotalPrice(HashMap<?, ?> param);
 	public List<?> selectMypage(HashMap<?, ?> param);
 	public int exist(Command cmd);
 	public int selectBasket(Command cmd);
+	public List<?> addrSearch(HashMap<?, ?> param);
 	public Customer serachCustomerById(Command cmd);
 	public List<?> macDate(HashMap<?, ?> param);
 	public List<?> macOrderBasket(HashMap<?, ?> param);
+	public List<?> searchOrderBasket(HashMap<?, ?> param);
 }

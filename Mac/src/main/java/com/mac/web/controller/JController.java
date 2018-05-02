@@ -1,8 +1,11 @@
 package com.mac.web.controller;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
+
 import com.mac.web.domain.Command;
 import com.mac.web.domain.Common;
 import com.mac.web.domain.Customer;
@@ -19,6 +23,7 @@ import com.mac.web.mapper.Mapper;
 import com.mac.web.service.ICountService;
 import com.mac.web.service.IGetHashService;
 import com.mac.web.service.IGetService;
+import com.mac.web.service.ITxService;
 @RestController
 public class JController {
     private static final Logger logger = LoggerFactory.getLogger(JController.class);
@@ -27,7 +32,13 @@ public class JController {
     @Autowired Customer customer;
     @Autowired Common common;
     @Autowired Item item; 
+    @Autowired ITxService tx;
     
+	@RequestMapping(value="/basket/update",method=RequestMethod.POST,consumes="application/json")
+    public String basketUpdate(@RequestBody List<Map<String, Object>> param
+    		, HttpServletRequest request) { 
+		return tx.execute(param);
+    	} 
     @RequestMapping(value="/{type}/login",method=RequestMethod.POST,consumes="application/json")
     public Map<?,?> login(@PathVariable String type
             , @RequestBody Map<String, String> param
@@ -115,6 +126,7 @@ public class JController {
         System.out.println("/basket/search컨트롤러는 들어옴");
         Map<String,Object> map = new HashMap<>();
         HttpSession session = request.getSession();
+       
         map.put("customid",session.getAttribute("name"));
         map.put("basketOrder", new IGetHashService() {
             
@@ -123,7 +135,24 @@ public class JController {
                 return mapper.macOrderBasket(param);
             }
         }.execute((HashMap<?, ?>) map));  
-        System.out.println("넘어온 값은"+map.get("basketOrder"));
+        System.out.println("넘어온 값은 basketOrder"+map.get("basketOrder"));
+        return map;
+    }
+    @RequestMapping("/order/search")
+    public Map<?,?> orderSearch(HttpServletRequest request) {
+        System.out.println("/order/search컨트롤러는 들어옴");
+        Map<String,Object> map = new HashMap<>();
+        HttpSession session = request.getSession();
+       
+        map.put("customid",session.getAttribute("name"));
+        map.put("orderSearch", new IGetHashService() {
+            
+            @Override
+            public Object execute(HashMap<?, ?> param) {
+                return mapper.searchOrderBasket(param);
+            }
+        }.execute((HashMap<?, ?>) map));  
+        System.out.println("넘어온 값은 orderSearch"+map.get("orderSearch"));
         return map;
     }
     @RequestMapping("/basket/totalPrice")
@@ -184,6 +213,42 @@ public class JController {
         }
         return map;
     }
+        @RequestMapping(value="/addr/search",method=RequestMethod.POST,consumes="application/json")
+        public Map<?,?> addrSearch(@RequestBody Map<String, String> param
+                ,HttpServletRequest request) {
+            Map<String,Object> map = new HashMap<>();
+            System.out.println("/addr/search 컨트롤러  들어옴");
+
     
+     
+            return map;
+     
+    }
+        @RequestMapping(value="/order/addr",method=RequestMethod.POST,consumes="application/json")
+        public void orderAddr(@RequestBody Map<String, String> param
+                ,HttpServletRequest request) {
+            Map<String,Object> map = new HashMap<>();
+            System.out.println("/order/addr 컨트롤러  들어옴");
+            HttpSession session = request.getSession();
+            map.put("customid",session.getAttribute("name"));
+            map.put("customname", param.get("customName"));
+            map.put("customaddr1", param.get("customAddr1"));
+            map.put("detailAddr", param.get("customAddr2")+"-"+param.get("customAddr3")+"-"+param.get("customAddr4"));
+            System.out.println(map.put("detailAddr", param.get("customAddr2")+"-"+param.get("customAddr3")+"-"+param.get("customAddr4")));
+            map.put("customphone1", param.get("customPhone1"));
+            map.put("customphone2", param.get("customPhone2"));
+            map.put("customtel1", param.get("customTel1"));
+            map.put("customtel2", param.get("customTel2"));
+            map.put("customtext", param.get("customText"));
+            new IGetHashService() {
+				
+				@Override
+				public Integer execute(HashMap<?, ?> param) {
+					
+					return mapper.insertAddr(param);
+				}
+			}.execute((HashMap<?, ?>) map);
+    }
     
+	
 }
