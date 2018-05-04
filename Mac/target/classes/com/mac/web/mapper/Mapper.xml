@@ -22,6 +22,11 @@
      WHERE custom_id = #{col1}
        AND custom_pass = #{col2} 
     </select>
+        <select id="selectAddr" resultType="int" parameterType="com.mac.web.domain.Command">
+    SELECT COUNT(*)
+      FROM address 
+     WHERE custom_id = #{col1}
+    </select>
     
 	<select id="macBasketTotalPrice" resultType="map" parameterType="hashMap">
   	SELECT  sum(a.price*b.item_count) as price 
@@ -91,7 +96,26 @@
 	    on  a.item_code like i.item_code   
  	 WHERE  i.item_seq = b.item_seq
        AND  b.custom_id = #{customid}
-    </select>  
+    </select>
+    
+       <select id="selectMypageItem" resultType="map" parameterType="hashMap">
+	SELECT  item_name as itemName
+   	  	  , pic_name as picName
+   	  	  , i.item_seq as itemSeq
+   	  	  , a.item_code as itemCode
+ 		  , item_count as itemCount
+ 		  , price 
+   	  	  , price-(a.price*(a.discount)) as discountPrice	  	  
+   	  	  , (price-(a.price*(a.discount)))*b.item_Count as total
+   	  	  , i.texture_exp as textureExp
+  	  FROM  basket b 
+  	  join  item i 
+  	    on  i.item_seq like b.item_seq 
+      join  common_feature a
+	    on  a.item_code like i.item_code   
+ 	 WHERE  i.item_seq = b.item_seq
+       AND  b.custom_id = #{customid}
+    </select>   
      
      <select id="selectBasket" resultType="int" parameterType="com.mac.web.domain.Command">
     SELECT count(1)
@@ -132,14 +156,18 @@
 	<insert id="basketAddr"  parameterType="hashMap">
         INSERT INTO address(
         				   custom_id
+                         , name
+                         , phone_num
                          , addr
                          , detail_addr
-                         , zip_code
+                         , board
                           ) values(
                            #{customid}
+                         , #{customname}
+                         , #{phoneNum}
                          , #{customaddr1}
                          , #{detailAddr}
-                         , 1
+                         , #{customtext}
                           )
     </insert>
     <insert id="insertAddr" parameterType="hashMap" >

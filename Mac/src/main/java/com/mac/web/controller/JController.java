@@ -48,6 +48,26 @@ public class JController {
     		, HttpServletRequest request) { 
 		return tx.execute(param);
     	} 
+    @RequestMapping(value="/addr/search")
+    public Map<?,?> addrSearch(HttpServletRequest request) {
+        Map<String,Object> map = new HashMap<>();
+        HttpSession session = request.getSession();
+        cmd.setCol1((String) session.getAttribute("name"));
+        System.out.println(cmd.getCol1());
+        int count= 0;
+        		count = new ICountService() {
+					
+					@Override
+					public int execute(Command cmd) {
+						// TODO Auto-generated method stub
+						return mapper.selectAddr(cmd);
+					}
+				}.execute(cmd);
+				System.out.println(count+"count의 값은");
+		map.put("success", count);
+        return map;
+ 
+}
     @RequestMapping(value="/{type}/login",method=RequestMethod.POST,consumes="application/json")
     public Map<?,?> login(@PathVariable String type
             , @RequestBody Map<String, String> param
@@ -245,15 +265,7 @@ public class JController {
         }
         return map;
     }
-        @RequestMapping(value="/addr/search",method=RequestMethod.POST,consumes="application/json")
-        public Map<?,?> addrSearch(@RequestBody Map<String, String> param
-                ,HttpServletRequest request) {
-            Map<String,Object> map = new HashMap<>();
-            System.out.println("/addr/search 컨트롤러  들어옴"); 
-            return map;
-     
-    }
-        @RequestMapping(value="/order/addr",method=RequestMethod.POST,consumes="application/json")
+       @RequestMapping(value="/order/addr",method=RequestMethod.POST,consumes="application/json")
         public void orderAddr(@RequestBody Map<String, String> param
                 ,HttpServletRequest request) {
             Map<String,Object> map = new HashMap<>();
@@ -264,10 +276,7 @@ public class JController {
             map.put("customaddr1", param.get("customAddr1"));
             map.put("detailAddr", param.get("customAddr2")+"-"+param.get("customAddr3")+"-"+param.get("customAddr4"));
             System.out.println(map.put("detailAddr", param.get("customAddr2")+"-"+param.get("customAddr3")+"-"+param.get("customAddr4")));
-            map.put("customphone1", param.get("customPhone1"));
-            map.put("customphone2", param.get("customPhone2"));
-            map.put("customtel1", param.get("customTel1"));
-            map.put("customtel2", param.get("customTel2"));
+            map.put("phoneNum", param.get("customPhone")+"-"+param.get("customPhone1")+"-"+param.get("customPhone2"));
             map.put("customtext", param.get("customText"));
             new IGetHashService() {
 				

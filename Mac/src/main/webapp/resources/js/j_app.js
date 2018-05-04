@@ -67,9 +67,6 @@ var createHTag=x=>{
 var createSelect=()=>{
 	return '<select style="width: 350px; height: 50px;">  </select>';
 }
-var createSelec1=x=>{
-	return '<select id="'+x.id+'" style="width: 350px; height: 50px;">  </select>';
-}
 
 var createOption=x=>{
 	return '<option id="option-join">'+x.val+'</option>'
@@ -225,7 +222,7 @@ app.orders=(()=>{
 			 	$('#a-basket').remove();
 			 	$('#btn-login-default').remove();
 			 	$('#btn-admin').remove();
-			 	$('#btn-main-go').on('click',()=>{app.login.loginAfterPage();})
+			 	$('#btn-main-go').on('click',()=>{app.loginAfter.onCreate();})
 				$('#content').empty();
 				$('#content').html($(createDiv({id:'div-orders',clazz:''}))
 					.attr('style','height:1200px;'));
@@ -384,28 +381,16 @@ app.orders=(()=>{
 												.attr('style','text-align:  center; width: 150px;  background: black; height: 50px; margin: 0 auto; padding: 14px;')
 												.append($(createATag({id:'',clazz:'',val:'지금 구매하기'}))
 														.on('click',e=>{
-															 var jason={
-																	 'customId':$('#input-login').val(),
-																	 'customPass':$('#input-pass').val(),	 		
-																 }
-															 $.ajax({
-																 url:context+'/addr/search',
-																 method:'POST',
-																 data: JSON.stringify(jason),
-																 dataType:'json',
-																 contentType: 'application/json',
-																 success: e=>{
-																		alert('주소찾기 성공 x='+e.success);
-																		if(e.success==null){
-																			alert('주소찾기 실패');
-																			app.cash.onCreate();
-																		}else{
-																			
-																			
-																		}
-																	}
-															 });
-															//app.cash.onCreate();
+															$.getJSON(context+'/addr/search',e=>{
+																var addr = e.success;
+																console.log(e.success);
+																if(addr==1){
+																	alert('기본배송지가 있습니다');
+																}else{
+																    alert('배송지를 입력해주세요');
+																	app.cash.onCreate();	
+																}
+															});
 														})
 													.attr('style','color: white;font-size: 15px;'))))
 										.append($(createDiv({id:'',clazz:''}))
@@ -446,6 +431,325 @@ app.items=(()=>{
 		 };
 		 return{onCreate:onCreate}
 	 })();
+app.loginAfter=(()=>{
+	var $wrapper,context,view,image;
+	var onCreate=()=>{
+		 $wrapper = $('#wrapper');
+		 $content = $('#content');
+		 context = $.context();
+		 image = $.image();
+	     view = $.javascript()+'/j_app.js';
+	     hview = $.javascript()+'/h_app.js';
+	     setContentView();
+	 };
+	 var setContentView=()=>{	
+		 $.getScript(view,()=>{	
+			 alert('로그인 에프터 페이지 들어옴')
+			 $('#btn-join-default').remove();
+			 $('#btn-login-default').remove();
+			$('#container').append($(createDiv({id:'div-btn-main-page',clazz:''}))
+				 .attr('style','    display: inline;'));
+			$('#div-btn-main-page').html($(createButton({id:'btn-mypage',clazz:'btn btn-default dropdown-toggle',val:'마이페이지'}))
+				 .attr('style','margin-left: 10px; font-size:20px; width: 120px;background: black; border: black; color: white;')
+				 .on('click',()=>{
+					 app.mypage.onCreate();
+				 }));
+			$('#div-btn-main-page').append($(createButton({id:'btn-logout',clazz:'btn btn-default dropdown-toggle',val:'로그아웃'}))
+					 .attr('style','margin-left: 10px; font-size:20px; width: 120px;background: black; border: black; color: white;')
+					 .on('click',()=>{
+						 
+					 }));
+		
+		 
+		 });
+	 };
+	 return{onCreate:onCreate}
+})()
+app.mypage=(()=>{
+	var $wrapper,context,view,image;
+	var onCreate=()=>{
+		 $wrapper = $('#wrapper');
+		 $content = $('#content');
+		 context = $.context();
+		 image = $.image();
+	     view = $.javascript()+'/j_app.js';
+	     hview = $.javascript()+'/h_app.js';
+	     setContentView();
+	 };
+	 var setContentView=()=>{		
+			 $.getScript(view,()=>{ 
+				 $('#div-btn-main-page').remove();
+				 $('#btn-login-default').remove();
+				 $('#btn-admin-default').remove();
+				 $('#btn-join-default').remove();
+				 $('#btn-main-go').on('click',()=>{app.loginAfter.onCreate();})
+				 $('#content').empty();
+				 $('#content').html($(createDiv({
+						id : 'div-my-page',
+						clazz : 'field-container field-container--grid'
+					})).attr('style','height:500px;'));
+				 $('#container').append($(createDiv({id:'div-btn-mypage',clazz:''}))
+						 .attr('style','    display: inline;'));
+				 $('#div-btn-mypage').html($(createButton({id:'btn-mypage',clazz:'btn btn-default dropdown-toggle',val:'마이페이지'}))
+						 .attr('style','margin-left: 10px; font-size:20px; width: 120px;background: black; border: black; color: white;'));
+				 
+				 $('#container').append($(createDiv({id:'div-btn-basket',clazz:''}))
+						 .attr('style','    display: inline;'))
+				 $('#div-btn-basket').html($(createButton({id:'btn-basket',clazz:'btn btn-default dropdown-toggle',val:'장바구니'}))
+						 .attr('data-toggle','modal')
+						 .attr('data-target','#myModal')
+						 .attr('style','margin-left: 10px; font-size:20px; width: 120px;background: black; border: black; color: white;'));
+				 $('#container').append($(createDiv({id:'div-btn-logout',clazz:''}))
+						 .attr('style','    display: inline;'));
+				 $('#div-btn-logout').html($(createButton({id:'btn-logout',clazz:'btn btn-default dropdown-toggle',val:'로그아웃'}))
+						 .attr('style','margin-left: 10px; font-size:20px; width: 120px;background: black; border: black; color: white;'));
+				 $('#container').append($(createDiv({id:'div-modal',clazz:''})));
+				 $('#div-modal').html($(createDiv({id:'myModal',clazz:'modal fade'}))
+					 .attr('role','dialog')
+					 .append($(createDiv({id:'',clazz:'modal-dialog'}))
+						 .append($(createDiv({id:'modal-content',clazz:'modal-content'}))
+							 .attr('style','width: 500px;')
+							 .append($(createDiv({id:'',clazz:'modal-header'}))
+								 .append($(createDiv({id:'',clazz:'grid-container'}))
+									 .append($(createDiv({id:'grid-item',clazz:''}))
+										 .append('장바구니'))
+									 .append($(createDiv({id:'',clazz:'grid-item'}))
+										 .append($(createATag({id:'',clazz:'',val:'수정'}))))))
+								 .append($(createDiv({id:'div-modal-body',clazz:'modal-body'}))))));
+				 $content = $('#content');
+				 $.getJSON(context+'/mypage/',e=>{
+					 var mypageObj = e.mypage;
+					 $content.html(createDiv({id : 'mypage-div' , clazz : ''}));
+			    $('#mypage-div').append($(createDiv({id : '', clazz : 'navbar navbar-inverse'}))
+			    		.attr('style', 'background-color: #1a1a1a; max-height: 250px; margin-bottom: 0px;')
+			    		.append($(createDiv({id : '', clazz : ''}))
+			    		.attr('style', 'width: 100%; min-height: 250px;')
+			    		
+		                .append($(createSection({id : '', clazz : 'navbar-header'}))
+		                    .attr('style', 'float: left; width: 25%; border-right: 1px solid #ffffff; min-height: 250px; padding: 15px; color: white;')
+		                    .append($(createDiv({id : '', clazz : ''}))
+		                            .append($(createHTag({ num : '5', val :mypageObj[0].name+'님 환영합니다'}))
+		                                    .attr('style','font-family: Sans-Serif; font-weight: bold;')
+		                                    )
+		                            ).append($(createDiv({ id : 'profile-wrapper-div', clazz : 'account-nav'}))
+		                                    .attr('style', 'float: none;   margin-left: 40%;')
+		                                    .append($(createDiv({id : 'mypage-image-div', clazz : ''}))
+		                                            .append($(createImg1({id : '', alt : '' ,src:'data:image/png;base64,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'}))
+		                                                    .attr('style', 'max-width: 125px;')
+		                                                    
+		                                                    )
+		                                            )
+		                                    .append($(createDiv({id : '', clazz : ''}))
+		                                            .append($(createATag({id : '', href : '', val : '사진 올리기'}))
+		                                                    .attr('style', 'color:#ffffff')
+		                                                    )
+		                                            )   
+		                                    )
+		                    )
+		                .append($(createSection({ id : 'navbar-header', clazz : ''}))
+		                        .attr('style', 'float: left; width: 50%; border-right: 1px solid #ffffff; min-height: 250px; padding: 15px;')
+		                        .append($(createUL({id : '', clazz : '' }))
+		                                .attr('style', 'list-style: none; width: 48%; padding-left: 0; padding-right: 2%; color: #ffffff; float: left;')
+		                                .append($(createLI({ id : '', clazz : '',val:''}))
+		                                        .attr('style', 'margin: 0 0 15px 0;')
+		                                        .append($(createHTag({num : '6', val : 'My M·A·C &nbsp;' + createATag({id : 'a-mypage-logout', href : '', val : '로그아웃'})}))
+		                                                .attr('style', 'font-weight: bold; margin: 0 0 15px 0; font-size: 14px;')
+		                                                )
+		                                        )
+		                                .append($(createLI({ id : '', clazz : '',val:''}))
+		                                        .attr('style', 'margin: 0 0 15px 0;')
+		                                        .append($(createATag({id : '', href : '', val : '마이페이지'}))
+		                                                .attr('style','color: #ffffff;')
+		                                                )
+		                                        )
+		                                .append($(createLI({ id : '', clazz : '',val:''}))
+		                                        .attr('style', 'margin: 0 0 15px 0;')
+		                                        .append($(createATag({id : '', href : '', val : '나의 맥 셀렉트'}))
+		                                                .attr('style','color: #ffffff;')
+		                                                )
+		                                        )
+		                                .append($(createLI({ id : '', clazz : '',val:''}))
+		                                        .attr('style', 'margin: 0 0 15px 0;')
+		                                        .append($(createATag({id : '', href : '', val : '내 정보 확인 및 수정'}))
+		                                                .attr('style','color: #ffffff;')
+		                                                )
+		                                        )
+		                                .append($(createLI({ id : '', clazz : '',val:''}))
+		                                        .attr('style', 'margin: 0 0 15px 0;')
+		                                        .append($(createATag({id : '', href : '', val : '주문 배송 조회'}))
+		                                                .attr('style','color: #ffffff;')
+		                                                )
+		                                        )
+		                                .append($(createLI({ id : '', clazz : '',val:''}))
+		                                        .attr('style', 'margin: 0 0 15px 0;')
+		                                        .append($(createATag({id : '', href : '', val : '배송지 리스트'}))
+		                                                .attr('style','color: #ffffff;')
+		                                                )
+		                                        )
+		                                )
+		                        .append($(createUL({id : '', clazz : '' }))
+		                                .attr('style', 'list-style: none; width: 48%; padding-left: 0; padding-right: 2%; color: #ffffff; float: left;')
+		                                .append($(createLI({ id : '', clazz : '',val:''}))
+		                                        .attr('style', 'margin: 0 0 15px 0;')
+		                                        .append($(createATag({id : '', href : '', val : '지난 구매 제품'}))
+		                                                .attr('style','color: #ffffff;')
+		                                                )
+		                                        )
+		                                .append($(createLI({ id : '', clazz : '',val:''}))
+		                                        .attr('style', 'margin: 0 0 15px 0;')
+		                                        .append($(createATag({id : '', href : '', val : '위시 리스트'}))
+		                                                .attr('style','color: #ffffff;')
+		                                                )
+		                                        )
+		                                )
+		                        )
+		                .append($(createSection({ id : 'navbar-header', clazz : ''}))
+		                        .attr('style', 'float: left; width: 25%; border-right: 1px solid #ffffff; min-height: 250px; padding: 15px;')
+		                        .append($(createDiv({ id : '', clazz : ''}))
+		                                .append($(createDiv({ id : '', clazz : ''}))
+		                                        .append($(createDiv({id : '', clazz : ''}))
+		                                                .append($(createHTag({ num : '4', val : createATag({ id : '', href : '#', val : createSpan({ id : 'customer-grade-span', clazz : '', val : '베이직(SEDUCED)'})})}))
+		                                                        )
+		                                                )
+		                                        )
+		                                )
+		                        )
+			                    )
+			            )
+		                $('#customer-grade-span').attr('style', 'color: #e95383; font-weight : bold;')
+		                $('#a-mypage-logout').attr('style', 'color: #ffffff;');
+				        $('#mypage-div').append($(createDiv({id : '', clazz : ''}))
+				                .append($(createDiv({id : '', clazz : ''}))
+				                        .append($(createDiv({id : '', clazz : ''}))
+				                                .attr('style', 'width:  100%; min-height: 200px;')
+				                                .append($(createDiv({id : '', clazz : ''}))
+				                                        .append($(createHTag({num : '3', val : '최근 주문 내역과 위시 리스트 '}))
+				                                                .attr('style', 'font-weight: bold; padding : 20px;')
+				                                                )
+				                                        )
+				                                .append($(createDiv({id : '', clazz : ''}))
+				                                        .attr('style', 'text-align : center; width : 100%; height : 30%;')
+				                                        .append('<p style="margin-top : 60px;" >최근 주문내역이나 위시 리스트가 없습니다.<p>')
+				                                        )
+				                                .append($(createDiv({id : '', clazz : 'text-center'}))
+				                                        .append(createButton({id : '', clazz : 'primary', val : '쇼핑하러 가기'}))
+				                                        )
+				                                )
+				                        )
+				                ) 
+				 });
+				
+				 console.log("test!");
+				 $.getJSON(context+'/basket/search',e=>{
+					 var basketObj = e.basketOrder;
+					 console.log(e.basketOrder);
+					 for(var i =0 ;  i < basketObj.length ; i++){
+							if(i > basketObj.length){
+								return false;
+							}
+							console.log(basketObj[i]);
+							$(createDiv({id:'',clazz:'grid-container'}))
+							 .append($(createDiv({id:'grid-item',clazz:'grid-item'}))
+									 .append($(createBasketImg({img:e.basketOrder[i].picName+'.jpg'}))))
+								 .append($(createDiv({id:'',clazz:'grid-item'}))
+									 .append($(createDiv({id:'',clazz:''}))
+								 .append($(createHTag({num:'4',val:basketObj[i].itemName}))))										 
+								 .append($(createDiv({id:'',clazz:''}))
+									 .append($(createHTag({num:'4',val:basketObj[i].textureExp}))))
+								 .append($(createDiv({id:'',clazz:''}))
+									 .append($(createButton({id:'',clazz:'',val:(createImg({img:'minus.jpg'}))}))
+											 .attr('style','background:white;')
+											 .attr('readonly','readonly')
+											 .on('click',function(){
+												 console.log($(this).parent().find("input").attr("count"));
+												 var countNumber = parseInt($(this).parent().find("input").attr("count")) - 1 ;
+												 countNumber = countNumber < 0 ? 0 : countNumber; 
+												 $(this).parent().find("input").attr("count", countNumber);
+												 $(this).parent().find("input").attr("placeholder", countNumber);
+											 }))
+									 .append($(createInput({id:'',val:basketObj[i].itemCount,type:'text'}))
+											 .attr('style','    width: 30px; text-align:center;')
+											 .attr('readonly','readonly')
+											 .addClass("basketInput")
+											 .attr('count',basketObj[i].itemCount)
+											 .attr('seq',basketObj[i].itemSeq))
+									 .append($(createButton({id:'',clazz:'',val:(createImg({img:'plus.jpg'}))}))
+											 .attr('style','background:white;')
+											 .attr('readonly','readonly')
+											 .on('click',function(){
+												 var countNumber = parseInt($(this).parent().find("input").attr("count")) + 1;
+												 $(this).parent().find("input").attr("count", countNumber);
+												 $(this).parent().find("input").attr("placeholder", countNumber);
+											})))
+								  .append($(createDiv({id:'',clazz:''}))
+									 .append($(createHTag({num:'5',val:'₩'+basketObj[i].total}))))
+								 .append($(createDiv({id:'',clazz:''}))
+									 .append($(createButton({id:'',clazz:'',val:'삭제'}))
+											 .attr('basketSeq',basketObj[i].basketSeq)
+										 .on('click',function(){
+											 var jason = {
+													 basketSeq : $(this).attr("basketSeq")
+											 }
+											$.ajax({
+												 url:context+'/basket/delete',
+												 method:'POST',
+												 data: JSON.stringify(jason),
+												 dataType:'json',
+												 contentType: 'application/json',
+											})
+											baskeUpdate();
+										 })
+										 .attr('style','background:black;color:white;')))).appendTo('#div-modal-body');
+					 };
+					 	
+					 
+				 });
+				 $.getJSON(context+'/basket/totalPrice',e=>{
+					 var basketObjTotal = e.basketTotalPrice;
+					 console.log(basketObjTotal);
+					$('#modal-content').append($(createDiv({id:'modal-footer',clazz:'modal-footer'}))
+							 .append($(createDiv({id:'',clazz:'grid-container'}))
+								 .append($(createDiv({id:'',clazz:'grid-item'}))
+									 .append($(createHTag({num:'4',val:'총금액'}))))
+								 .append($(createDiv({id:'',clazz:'grid-item'}))
+									 .append($(createHTag({num:'4',val:'₩'+basketObjTotal[0].total}))))
+								 .append($(createDiv({id:'',clazz:'grid-item'}))
+									 .append($(createButton({id:'',clazz:'btn btn-default',val:'주문하기'}))
+										 .attr('total',basketObjTotal[0].total)	 
+										 .on('click',()=>{
+											 	var returnJsonData = [];
+											 	$(".basketInput").each(function (){
+											 		objData = {
+											 				"seq" : $(this).attr("seq"),
+											 				"count" : $(this).attr("count")
+											 		}
+											 		returnJsonData.push(objData);
+											 	});
+											 	console.log("returnJsonData :" ,returnJsonData);
+												 $.ajax({
+													 url:context+'/basket/update',
+													 method:'POST',
+													 data: JSON.stringify(returnJsonData),
+													 dataType:'json',
+													 contentType: 'application/json',
+												 }).done(function (data){
+													 console.log(data);
+													 
+												 });
+												 app.orders.onCreate();
+												})
+										 .attr('data-dismiss','modal')							
+										 .attr('style','background: black; color: white; width: 100px; height: 40px; font-weight: bold; border: solid 1px;')))
+								 .append($(createDiv({id:'',clazz:'grid-item'}))
+										 .append($(createButton({id:'',clazz:'btn btn-default',val:'취소하기'}))
+											 .attr('data-dismiss','modal')
+											 .attr('style','background: black; color: white; width: 100px; height: 40px; font-weight: bold; border: solid 1px;')))));
+				 });
+				 
+			 });
+	 };
+	 return{onCreate:onCreate}
+})();
 app.cash=(()=>{
 	var $wrapper,context,view,image;
 	var onCreate=()=>{
@@ -460,7 +764,7 @@ app.cash=(()=>{
 	 var setContentView=()=>{		
 			 $.getScript(view,()=>{ 
 				 alert('작동함');
-				 $('#btn-main-go').on('click',()=>{app.login.loginAfterPage();})
+				 $('#btn-main-go').on('click',()=>{app.loginAfter.onCreate();})
 				 $('#content').empty();
 				 $('#content').html($(createDiv({id:'div_add',clazz:''}))
 					 .attr('style','height:1200px;')
@@ -568,27 +872,6 @@ app.cash=(()=>{
 								.attr('style','margin-top: 10px;'))
 								.append($(createInput({id:'input_addr_phone2',val:'핸드폰번호',type:'text'}))
 									.attr('style','width: 350px; height: 50px;')))
-									
-						.append($(createDiv({id:'',clazz:''}))
-							.attr('style','margin-left: 130px; height: 50px; margin-top: 80px;')
-							.append($(createDiv({id:'',clazz:''}))
-								.append($(createSpan({id:'',clazz:'',val:''}))
-									.append($(createDiv({id:'',clazz:''}))
-										.append($(createSelect({}))
-											.append($(createOption({val:'선택'})))
-											.append($(createOption({val:'02'})))
-											.append($(createOption({val:'041'})))
-											.append($(createOption({val:'031'})))
-											.append($(createOption({val:'032'})))
-											.append($(createOption({val:'051'}))))
-									.append($(createDiv({id:'',clazz:''}))
-									.attr('style','margin-top: 15px; display: inline-block;')
-										.append($(createInput({id:'input_addr_tel1',val:'연락처',type:'text'}))
-											.attr('style','width: 350px; height: 50px; margin-left:10px;'))))))
-							.append($(createDiv({id:'',clazz:''}))
-								.attr('style','margin-top: 10px;'))
-								.append($(createInput({id:'input_addr_tel2',val:'연락처',type:'text'}))
-									.attr('style','width: 350px; height: 50px;')))
 						.append($(createDiv({id:'',clazz:''}))
 							.attr('style','margin-top: 100px; margin-left: 130px;')
 							.append($(createDiv({id:'',clazz:''}))
@@ -597,14 +880,7 @@ app.cash=(()=>{
 								.append($(createInput({id:'input_addr_text',val:'배송시 요청사항',type:'text'}))
 									.attr('style','width: 700px; height: 70px;')))
 							.append($(createDiv({id:'',clazz:''}))
-								.append('<p>배송정보</p>'))
-							.append($(createDiv({id:'',clazz:''}))
-								.append($(createDiv({id:'',clazz:''}))
-									.attr('style','display: inline-block;')	
-									.append($(createInput({id:'',val:'',type:'radio'}))))
-								.append($(createDiv({id:'',clazz:''}))
-									.attr('style','display: inline-block;')
-									.append($(createHTag({num:'3',val:'선물포장 옵션'}))))))
+								.append('<p>배송정보</p>')))
 						.append($(createDiv({id:'',clazz:''}))
 							.append($(createDiv({id:'',clazz:''}))
 								.attr('style','margin-left: 600px;')
@@ -616,11 +892,10 @@ app.cash=(()=>{
 											customAddr2:$('#input_addr_2').val(),
 											customAddr3:$('#input_addr_3').val(),
 											customAddr4:$('#input_addr_4').val(),
+											customPhone:$('#option-join').val(),
 											customPhone1:$('#input_addr_phone1').val(),
 											customPhone2:$('#input_addr_phone2').val(),
-											customTel1:$('#input_addr_tel1').val(),
-											customTel2:$('#input_addr_tel2').val(),
-											customText:$('#input_addr_text').val(),
+											customText:$('#input_addr_text').val(),	
 										}
 										$.ajax({
 											url:context+'/order/addr',
@@ -629,8 +904,7 @@ app.cash=(()=>{
 											 dataType:'json',
 											 contentType: 'application/json'
 										});
-										app.main.onCreate();
-										
+										app.mypage.onCreate();
 									})	
 									.attr('value','결제하기')
 									.attr('style','background: black; color: white; text-align: center; width: 200px;  height:60px;'))))));
@@ -1684,301 +1958,6 @@ app.login=(()=>{
 		 });
 		
 	 }
- var loginAfterPage=()=>{
-	 $.getScript(view,()=>{	
-		 $('#btn-join-default').remove();
-		 $('#btn-login-default').remove();
-		$('#container').append($(createDiv({id:'div-btn-main-page',clazz:''}))
-			 .attr('style','    display: inline;'));
-		$('#div-btn-main-page').html($(createButton({id:'btn-mypage',clazz:'btn btn-default dropdown-toggle',val:'마이페이지'}))
-			 .attr('style','margin-left: 10px; font-size:20px; width: 120px;background: black; border: black; color: white;')
-			 .on('click',()=>{
-				 myPage();
-			 }));
-		$('#div-btn-main-page').append($(createButton({id:'btn-logout',clazz:'btn btn-default dropdown-toggle',val:'로그아웃'}))
-				 .attr('style','margin-left: 10px; font-size:20px; width: 120px;background: black; border: black; color: white;')
-				 .on('click',()=>{
-					 
-				 }));
-	
-	 
-	 });
- 
- };
- var myPage=x=>{
-	 alert('마이페이지 들어옴');
-	 $content = $('#content');
-	 $.getScript(view,()=>{	 
-		 $('#div-btn-main-page').remove();
-		 $('#btn-login-default').remove();
-		 $('#btn-admin-default').remove();
-		 $('#btn-join-default').remove();
-		 $('#content').empty();
-		 $('#content').html($(createDiv({
-				id : 'div-my-page',
-				clazz : 'field-container field-container--grid'
-			})).attr('style','height:500px;'));
-		 $('#btn-main-go').on('click',()=>{loginAfterPage()});
-		 $('#container').append($(createDiv({id:'div-btn-mypage',clazz:''}))
-				 .attr('style','    display: inline;'));
-		 $('#div-btn-mypage').html($(createButton({id:'btn-mypage',clazz:'btn btn-default dropdown-toggle',val:'마이페이지'}))
-				 .attr('style','margin-left: 10px; font-size:20px; width: 120px;background: black; border: black; color: white;'));
-		 
-		 $('#container').append($(createDiv({id:'div-btn-basket',clazz:''}))
-				 .attr('style','    display: inline;'))
-		 $('#div-btn-basket').html($(createButton({id:'btn-basket',clazz:'btn btn-default dropdown-toggle',val:'장바구니'}))
-				 .attr('data-toggle','modal')
-				 .attr('data-target','#myModal')
-				 .attr('style','margin-left: 10px; font-size:20px; width: 120px;background: black; border: black; color: white;'));
-		 $('#container').append($(createDiv({id:'div-btn-logout',clazz:''}))
-				 .attr('style','    display: inline;'));
-		 $('#div-btn-logout').html($(createButton({id:'btn-logout',clazz:'btn btn-default dropdown-toggle',val:'로그아웃'}))
-				 .attr('style','margin-left: 10px; font-size:20px; width: 120px;background: black; border: black; color: white;'));
-		 $('#container').append($(createDiv({id:'myModal',clazz:'modal fade'}))
-			 .attr('role','dialog')
-			 .append($(createDiv({id:'',clazz:'modal-dialog'}))
-				 .append($(createDiv({id:'modal-content',clazz:'modal-content'}))
-					 .attr('style','width: 500px;')
-					 .append($(createDiv({id:'',clazz:'modal-header'}))
-						 .append($(createDiv({id:'',clazz:'grid-container'}))
-							 .append($(createDiv({id:'grid-item',clazz:''}))
-								 .append('장바구니'))
-							 .append($(createDiv({id:'',clazz:'grid-item'}))
-								 .append($(createATag({id:'',clazz:'',val:'수정'}))))))
-						 .append($(createDiv({id:'div-modal-body',clazz:'modal-body'}))))));
-		 $content = $('#content');
-		 $.getJSON(context+'/mypage/',e=>{
-			 var mypageObj = e.mypage;
-			 $content.html(createDiv({id : 'mypage-div' , clazz : ''}));
-	    $('#mypage-div').append($(createDiv({id : '', clazz : 'navbar navbar-inverse'}))
-	    		.attr('style', 'background-color: #1a1a1a; max-height: 250px; margin-bottom: 0px;')
-	    		.append($(createDiv({id : '', clazz : ''}))
-	    		.attr('style', 'width: 100%; min-height: 250px;')
-	    		
-                .append($(createSection({id : '', clazz : 'navbar-header'}))
-                    .attr('style', 'float: left; width: 25%; border-right: 1px solid #ffffff; min-height: 250px; padding: 15px; color: white;')
-                    .append($(createDiv({id : '', clazz : ''}))
-                            .append($(createHTag({ num : '5', val :mypageObj[0].name+'님 환영합니다'}))
-                                    .attr('style','font-family: Sans-Serif; font-weight: bold;')
-                                    )
-                            ).append($(createDiv({ id : 'profile-wrapper-div', clazz : 'account-nav'}))
-                                    .attr('style', 'float: none;   margin-left: 40%;')
-                                    .append($(createDiv({id : 'mypage-image-div', clazz : ''}))
-                                            .append($(createImg1({id : '', alt : '' ,src:'data:image/png;base64,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'}))
-                                                    .attr('style', 'max-width: 125px;')
-                                                    
-                                                    )
-                                            )
-                                    .append($(createDiv({id : '', clazz : ''}))
-                                            .append($(createATag({id : '', href : '', val : '사진 올리기'}))
-                                                    .attr('style', 'color:#ffffff')
-                                                    )
-                                            )   
-                                    )
-                    )
-                .append($(createSection({ id : 'navbar-header', clazz : ''}))
-                        .attr('style', 'float: left; width: 50%; border-right: 1px solid #ffffff; min-height: 250px; padding: 15px;')
-                        .append($(createUL({id : '', clazz : '' }))
-                                .attr('style', 'list-style: none; width: 48%; padding-left: 0; padding-right: 2%; color: #ffffff; float: left;')
-                                .append($(createLI({ id : '', clazz : '',val:''}))
-                                        .attr('style', 'margin: 0 0 15px 0;')
-                                        .append($(createHTag({num : '6', val : 'My M·A·C &nbsp;' + createATag({id : 'a-mypage-logout', href : '', val : '로그아웃'})}))
-                                                .attr('style', 'font-weight: bold; margin: 0 0 15px 0; font-size: 14px;')
-                                                )
-                                        )
-                                .append($(createLI({ id : '', clazz : '',val:''}))
-                                        .attr('style', 'margin: 0 0 15px 0;')
-                                        .append($(createATag({id : '', href : '', val : '마이페이지'}))
-                                                .attr('style','color: #ffffff;')
-                                                )
-                                        )
-                                .append($(createLI({ id : '', clazz : '',val:''}))
-                                        .attr('style', 'margin: 0 0 15px 0;')
-                                        .append($(createATag({id : '', href : '', val : '나의 맥 셀렉트'}))
-                                                .attr('style','color: #ffffff;')
-                                                )
-                                        )
-                                .append($(createLI({ id : '', clazz : '',val:''}))
-                                        .attr('style', 'margin: 0 0 15px 0;')
-                                        .append($(createATag({id : '', href : '', val : '내 정보 확인 및 수정'}))
-                                                .attr('style','color: #ffffff;')
-                                                )
-                                        )
-                                .append($(createLI({ id : '', clazz : '',val:''}))
-                                        .attr('style', 'margin: 0 0 15px 0;')
-                                        .append($(createATag({id : '', href : '', val : '주문 배송 조회'}))
-                                                .attr('style','color: #ffffff;')
-                                                )
-                                        )
-                                .append($(createLI({ id : '', clazz : '',val:''}))
-                                        .attr('style', 'margin: 0 0 15px 0;')
-                                        .append($(createATag({id : '', href : '', val : '배송지 리스트'}))
-                                                .attr('style','color: #ffffff;')
-                                                )
-                                        )
-                                )
-                        .append($(createUL({id : '', clazz : '' }))
-                                .attr('style', 'list-style: none; width: 48%; padding-left: 0; padding-right: 2%; color: #ffffff; float: left;')
-                                .append($(createLI({ id : '', clazz : '',val:''}))
-                                        .attr('style', 'margin: 0 0 15px 0;')
-                                        .append($(createATag({id : '', href : '', val : '지난 구매 제품'}))
-                                                .attr('style','color: #ffffff;')
-                                                )
-                                        )
-                                .append($(createLI({ id : '', clazz : '',val:''}))
-                                        .attr('style', 'margin: 0 0 15px 0;')
-                                        .append($(createATag({id : '', href : '', val : '위시 리스트'}))
-                                                .attr('style','color: #ffffff;')
-                                                )
-                                        )
-                                )
-                        )
-                .append($(createSection({ id : 'navbar-header', clazz : ''}))
-                        .attr('style', 'float: left; width: 25%; border-right: 1px solid #ffffff; min-height: 250px; padding: 15px;')
-                        .append($(createDiv({ id : '', clazz : ''}))
-                                .append($(createDiv({ id : '', clazz : ''}))
-                                        .append($(createDiv({id : '', clazz : ''}))
-                                                .append($(createHTag({ num : '4', val : createATag({ id : '', href : '#', val : createSpan({ id : 'customer-grade-span', clazz : '', val : '베이직(SEDUCED)'})})}))
-                                                        )
-                                                )
-                                        )
-                                )
-                        )
-	                    )
-	            )
-                $('#customer-grade-span').attr('style', 'color: #e95383; font-weight : bold;')
-                $('#a-mypage-logout').attr('style', 'color: #ffffff;');
-		        $('#mypage-div').append($(createDiv({id : '', clazz : ''}))
-		                .append($(createDiv({id : '', clazz : ''}))
-		                        .append($(createDiv({id : '', clazz : ''}))
-		                                .attr('style', 'width:  100%; min-height: 200px;')
-		                                .append($(createDiv({id : '', clazz : ''}))
-		                                        .append($(createHTag({num : '3', val : '최근 주문 내역과 위시 리스트 '}))
-		                                                .attr('style', 'font-weight: bold; padding : 20px;')
-		                                                )
-		                                        )
-		                                .append($(createDiv({id : '', clazz : ''}))
-		                                        .attr('style', 'text-align : center; width : 100%; height : 30%;')
-		                                        .append('<p style="margin-top : 60px;" >최근 주문내역이나 위시 리스트가 없습니다.<p>')
-		                                        )
-		                                .append($(createDiv({id : '', clazz : 'text-center'}))
-		                                        .append(createButton({id : '', clazz : 'primary', val : '쇼핑하러 가기'}))
-		                                        )
-		                                )
-		                        )
-		                ) 
-		 });
-		
-		 console.log("test!");
-		 $.getJSON(context+'/basket/search',e=>{
-			 var basketObj = e.basketOrder;
-			 console.log(e.basketOrder);
-			 for(var i =0 ;  i < basketObj.length ; i++){
-					if(i > basketObj.length){
-						return false;
-					}
-					console.log(basketObj[i]);
-					$(createDiv({id:'',clazz:'grid-container'}))
-					 .append($(createDiv({id:'grid-item',clazz:'grid-item'}))
-							 .append($(createBasketImg({img:e.basketOrder[i].picName+'.jpg'}))))
-						 .append($(createDiv({id:'',clazz:'grid-item'}))
-							 .append($(createDiv({id:'',clazz:''}))
-						 .append($(createHTag({num:'4',val:basketObj[i].itemName}))))										 
-						 .append($(createDiv({id:'',clazz:''}))
-							 .append($(createHTag({num:'4',val:basketObj[i].textureExp}))))
-						 .append($(createDiv({id:'',clazz:''}))
-							 .append($(createButton({id:'',clazz:'',val:(createImg({img:'minus.jpg'}))}))
-									 .attr('style','background:white;')
-									 .attr('readonly','readonly')
-									 .on('click',function(){
-										 console.log($(this).parent().find("input").attr("count"));
-										 var countNumber = parseInt($(this).parent().find("input").attr("count")) - 1 ;
-										 countNumber = countNumber < 0 ? 0 : countNumber; 
-										 $(this).parent().find("input").attr("count", countNumber);
-										 $(this).parent().find("input").attr("placeholder", countNumber);
-									 }))
-							 .append($(createInput({id:'',val:basketObj[i].itemCount,type:'text'}))
-									 .attr('style','    width: 30px; text-align:center;')
-									 .attr('readonly','readonly')
-									 .addClass("basketInput")
-									 .attr('count',basketObj[i].itemCount)
-									 .attr('seq',basketObj[i].itemSeq))
-							 .append($(createButton({id:'',clazz:'',val:(createImg({img:'plus.jpg'}))}))
-									 .attr('style','background:white;')
-									 .attr('readonly','readonly')
-									 .on('click',function(){
-										 var countNumber = parseInt($(this).parent().find("input").attr("count")) + 1;
-										 $(this).parent().find("input").attr("count", countNumber);
-										 $(this).parent().find("input").attr("placeholder", countNumber);
-									})))
-						  .append($(createDiv({id:'',clazz:''}))
-							 .append($(createHTag({num:'5',val:'₩'+basketObj[i].total}))))
-						 .append($(createDiv({id:'',clazz:''}))
-							 .append($(createButton({id:'',clazz:'',val:'삭제'}))
-									 .attr('basketSeq',basketObj[i].basketSeq)
-								 .on('click',function(){
-									 var jason = {
-											 basketSeq : $(this).attr("basketSeq")
-									 }
-									$.ajax({
-										 url:context+'/basket/delete',
-										 method:'POST',
-										 data: JSON.stringify(jason),
-										 dataType:'json',
-										 contentType: 'application/json',
-									})
-									baskeUpdate();
-								 })
-								 .attr('style','background:black;color:white;')))).appendTo('#div-modal-body');
-			 };
-			 	
-			 
-		 });
-		 $.getJSON(context+'/basket/totalPrice',e=>{
-			 var basketObjTotal = e.basketTotalPrice;
-			 console.log(basketObjTotal);
-			$('#modal-content').append($(createDiv({id:'modal-footer',clazz:'modal-footer'}))
-					 .append($(createDiv({id:'',clazz:'grid-container'}))
-						 .append($(createDiv({id:'',clazz:'grid-item'}))
-							 .append($(createHTag({num:'4',val:'총금액'}))))
-						 .append($(createDiv({id:'',clazz:'grid-item'}))
-							 .append($(createHTag({num:'4',val:'₩'+basketObjTotal[0].total}))))
-						 .append($(createDiv({id:'',clazz:'grid-item'}))
-							 .append($(createButton({id:'',clazz:'btn btn-default',val:'주문하기'}))
-								 .attr('total',basketObjTotal[0].total)	 
-								 .on('click',()=>{
-									 	var returnJsonData = [];
-									 	$(".basketInput").each(function (){
-									 		objData = {
-									 				"seq" : $(this).attr("seq"),
-									 				"count" : $(this).attr("count")
-									 		}
-									 		returnJsonData.push(objData);
-									 	});
-									 	console.log("returnJsonData :" ,returnJsonData);
-										 $.ajax({
-											 url:context+'/basket/update',
-											 method:'POST',
-											 data: JSON.stringify(returnJsonData),
-											 dataType:'json',
-											 contentType: 'application/json',
-										 }).done(function (data){
-											 console.log(data);
-											 
-										 });
-										 app.orders.onCreate();
-										})
-								 .attr('data-dismiss','modal')							
-								 .attr('style','background: black; color: white; width: 100px; height: 40px; font-weight: bold; border: solid 1px;')))
-						 .append($(createDiv({id:'',clazz:'grid-item'}))
-								 .append($(createButton({id:'',clazz:'btn btn-default',val:'취소하기'}))
-									 .attr('data-dismiss','modal')
-									 .attr('style','background: black; color: white; width: 100px; height: 40px; font-weight: bold; border: solid 1px;')))));
-		 });
-		 
-			  
-	 });
- };
 
 var baskeUpdate=x=>{
 	alert('이동은 될까?')
@@ -2114,7 +2093,7 @@ var baskeUpdate=x=>{
 				console.log(x);
 				alert('로그인 성공 x='+x.success);
 				if(x.success==1){
-					myPage();
+					app.mypage.onCreate();
 				}else{
 					alert('로그인 실패');
 				}
@@ -2128,7 +2107,7 @@ var baskeUpdate=x=>{
 	 });
 	 
  };
-		 return{onCreate:onCreate,content:content,customerLogin:customerLogin,myPage:myPage,loginAfterPage:loginAfterPage,baskeUpdate:baskeUpdate}
+		 return{onCreate:onCreate,content:content,customerLogin:customerLogin,baskeUpdate:baskeUpdate}
 	 })();
 		 
 app.router = (()=>{

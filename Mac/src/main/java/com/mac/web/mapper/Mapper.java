@@ -17,10 +17,12 @@ public interface Mapper {
 	public int insertAddr(Map<?, ?> param);
 	public int basketAddr(Map<?, ?> param);
 	public int macBasket(Map<?, ?> param);
+	public int selectAddr(Command cmd);
 	public int macBasketUpdate(Map<?, ?> param);
 	public int macBasketUpdateOrder(Map<?, ?> param);
 	public List<?> macBasketTotalPrice(HashMap<?, ?> param);
 	public List<?> selectMypage(HashMap<?, ?> param);
+	public List<?> selectMypageItem(HashMap<?, ?> param);
 	public int exist(Command cmd);
 	public int selectBasket(Command cmd);
 	public List<?> addrSearch(HashMap<?, ?> param);
