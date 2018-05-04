@@ -31,7 +31,21 @@ public class TxService implements ITxService {
 		
 		return null;
 	}
-	
+	@Override @Transactional
+	public String delete(HashMap<?, ?> param) {
+		 Map<String,Object> map = new HashMap<>();
+		 map.put("basketSeq", param.get("basketSeq"));
+		 System.out.println(map.put("basketSeq", param.get("basketSeq")));
+		 new IGetHashService() {
+			
+			@Override
+			public Object execute(HashMap<?, ?> param) {
+				
+				return mapper.deleteBasket(param);
+			}
+		}.execute((HashMap<?, ?>) map);
+		return null;
+	}
 
 	
 

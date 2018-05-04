@@ -15,6 +15,9 @@ var createImg1=x=>{
 var createSection=x=>{
     return '<section id="'+x.id+'" class = "'+x.clazz+'"></section>';
 };
+var createBody=()=>{
+	return '<body onload="myFunction()"></body>';
+};
 var createNavgation=x=>{
 	return+'<div class="btn-group">'
 	  +'<button type="button" class="btn btn-danger">Action</button>'
@@ -64,9 +67,12 @@ var createHTag=x=>{
 var createSelect=()=>{
 	return '<select style="width: 350px; height: 50px;">  </select>';
 }
+var createSelec1=x=>{
+	return '<select id="'+x.id+'" style="width: 350px; height: 50px;">  </select>';
+}
 
 var createOption=x=>{
-	return '<option>'+x.val+'</option>'
+	return '<option id="option-join">'+x.val+'</option>'
 }
 
 
@@ -219,6 +225,7 @@ app.orders=(()=>{
 			 	$('#a-basket').remove();
 			 	$('#btn-login-default').remove();
 			 	$('#btn-admin').remove();
+			 	$('#btn-main-go').on('click',()=>{app.login.loginAfterPage();})
 				$('#content').empty();
 				$('#content').html($(createDiv({id:'div-orders',clazz:''}))
 					.attr('style','height:1200px;'));
@@ -453,6 +460,7 @@ app.cash=(()=>{
 	 var setContentView=()=>{		
 			 $.getScript(view,()=>{ 
 				 alert('작동함');
+				 $('#btn-main-go').on('click',()=>{app.login.loginAfterPage();})
 				 $('#content').empty();
 				 $('#content').html($(createDiv({id:'div_add',clazz:''}))
 					 .attr('style','height:1200px;')
@@ -960,22 +968,35 @@ app.main=(()=>{
 					)))
 					))		
 			 )))
-			 	 	 .append($(createButton({id:'',clazz:'btn btn-default dropdown-toggle',val:'굿 바 이 즈'}))
-				 .attr('style','font-size:20px; width: 120px;background: black; border: black; color: white;'))	
-			 	 	 .append($(createButton({id:'',clazz:'btn btn-default dropdown-toggle',val:'맥 셀 렉 트'}))
-				 .attr('style',' margin-left: 20px;font-size:20px; width: 120px;background: black; border: black; color: white;'))
-			 	 	 .append($(createButton({id:'',clazz:'btn btn-default dropdown-toggle',val:'매 장 안 내'}))
-				 .attr('style','margin-left: 10px; font-size:20px; width: 120px;background: black; border: black; color: white;'))
-				 	 .append($(createButton({id:'',clazz:'btn btn-default dropdown-toggle',val:'게 시 판'}))
-				 .attr('style','margin-left: 10px; font-size:20px; width: 120px;background: black; border: black; color: white;'))
-				 	 .append($(createButton({id:'btn-login-default',clazz:'btn btn-default dropdown-toggle',val:'로 그 인'}))
+			 	 	 
+			 	 .append($(createButton({id:'',clazz:'btn btn-default dropdown-toggle',val:'굿 바 이 즈'}))
+			 			 .attr('style','font-size:20px; width: 120px;background: black; border: black; color: white;'))	
+			 	 	 
+				 .append($(createButton({id:'',clazz:'btn btn-default dropdown-toggle',val:'맥 셀 렉 트'}))
+						 .attr('style',' margin-left: 20px;font-size:20px; width: 120px;background: black; border: black; color: white;'))
+			 	 	 
+				 .append($(createButton({id:'',clazz:'btn btn-default dropdown-toggle',val:'매 장 안 내'}))
+						 .attr('style','margin-left: 10px; font-size:20px; width: 120px;background: black; border: black; color: white;'))
+				 	 
+				 .append($(createButton({id:'',clazz:'btn btn-default dropdown-toggle',val:'게 시 판'}))
+						 .attr('style','margin-left: 10px; font-size:20px; width: 120px;background: black; border: black; color: white;'))
+				 	 
+	 			 .append($(createButton({id:'btn-join-default',clazz:'btn btn-default dropdown-toggle',val:'회원가입'}))
+	 					 .on('click',()=>{
+	 						 alert('회원가입');
+	 						 app.join.onCreate();
+	 					 })
+	 					 .attr('style','margin-left: 10px; font-size:20px; width: 120px;background: black; border: black; color: white;'))
+				 	 
+				 .append($(createButton({id:'btn-login-default',clazz:'btn btn-default dropdown-toggle',val:'로 그 인'}))
 				 			.click(()=>{
 					 			alert('로그인');
 					 			app.login.onCreate();	
 					 			$('#content').empty();
 					 			
 					 			 })	 
-				 .attr('style','font-size:20px; width: 120px;background: black; border: black; color: white;')));
+				 .attr('style','font-size:20px; width: 120px;background: black; border: black; color: white;')))
+				 ;
 				 
 				 $('#btn-main-go').on('click',()=>{
 					 alert('작동함');
@@ -1405,6 +1426,158 @@ app.main=(()=>{
 		
 		 return{onCreate:onCreate}
 	 })();
+app.join=(()=>{
+	var $wrapper,context,view,image;
+	var onCreate=()=>{
+		 $wrapper = $('#wrapper');
+		 $content = $('#content');
+		 context = $.context();
+		 image = $.image();
+	     view = $.javascript()+'/j_app.js';
+	     setContentView();
+	 };
+	 var setContentView=()=>{
+		$.getScript(view,()=>{
+			$('#content').empty();
+			$('#btn-join-default').remove();
+			$('#footer').attr('style','    margin-top: 100px;');
+			$('#content').html($(createDiv({id:'content-container',clazz:''})));
+			$('#content-container').append($(createDiv({id:'container-second',clazz:''}))
+				.append($(createHTag({num:'1',val:'회원가입'}))
+					.attr('style','text-align:center;')));
+			
+			$('#content-container').append($(createDiv({id:'',clazz:''}))
+				.append($(createHTag({num:'5',val:'이미 맥 공식 온라인몰 회원이신가요?'
+							+((createATag({id:'a-login',clazz:'',val:'로그인'})))}))
+								.attr('style','text-align:center; ')));
+			$('#content-container').append($(createDiv({id:'',clazz:''}))
+					.attr('style','margin-left: 418px; padding: 10px; margit-top:60px;')
+						.append($(createDiv({id:'',clazz:''}))
+						    .attr('style','display: inline-block;')
+								.append($(createInput({id:'input_join_id',val:'*아이디 입력하세요',type:'text'}))
+										.attr('style','width: 355px;height: 50px; ')))
+						.append($(createDiv({id:'',clazz:''}))
+							.attr('style','display: inline-block;')
+								.append($(createButton({id:'',clazz:'',val:'중복확인'}))
+									.on('click',x=>{
+										var jason = {
+											inputJoinId:$('#input_join_id').val()
+										}
+										console.log(jason);
+										$.ajax({
+											url:context+'/joinid/search',
+											method:'POST',
+											data:JSON.stringify(jason),
+											dataType:'json',
+											contentType:'application/json',
+											success:x=>{
+												console.log(x);
+												if(x.success==1){
+													alert('이미 중복된 아이디입니다 새로운 아이디를 입력하세요.')
+												}else{
+													alert('사용가능한 아이디 입니다.')
+												}	
+												
+											}
+										});
+									})
+									.attr('style','background:black;color:white ;margin-left:15px;'))));
+			$('#content-container').append($(createDiv({id:'',clazz:''}))
+					.attr('style','margin-left: 418px; padding: 10px;')
+						.append($(createInput({id:'input_join_pass',val:'*비밀번호를 입력하세요',type:'text'}))
+								.attr('style','width: 355px;height: 50px; ')));
+			$('#content-container').append($(createDiv({id:'',clazz:''}))
+					.attr('style','text-align:center;')
+						.append($(createDiv({id:'',clazz:''}))
+							.attr('style','text-align:center;     padding: 10px;   display: inline-block;')
+							.append($(createInput({id:'input_join_name',val:'*이름',type:'text'}))
+								.attr('style','width: 355px;height: 50px;'))
+						.append($(createDiv({id:'',clazz:''}))
+							.attr('style','text-align:center;     padding: 10px;   display: inline-block;')
+							.append($(createInput({id:'input_join_email',val:'*이메일',type:'text'}))
+								.attr('style','width: 355px;height: 50px;')))));
+			$('#content-container').append($(createDiv({id:'',clazz:''}))
+					.attr('style','text-align:center;')
+						.append($(createHTag({num:'5',val:'*비밀번호는 영문 대문자, 소문자, 숫자, 특수문자를 모두 조합하여 8자~12자로 구성해주세요.(ex. Mac1234@)'}))
+								.attr('style','color:red;')));
+			$('#content-container').append($(createDiv({id:'',clazz:''}))
+					.attr('style','margin-left: 415px;')
+						.append($(createDiv({id:'',clazz:''}))
+							.attr('style','text-align:center;     padding: 10px;   display: inline-block;')
+							.append($(createSelect({}))
+								.attr('style','width: 140px; height:50px; ')
+								.append($(createOption({val:'선택'})))
+								.append($(createOption({val:'010'})))
+								.append($(createOption({val:'011'})))
+								.append($(createOption({val:'016'})))
+								.append($(createOption({val:'019'})))))
+						.append($(createDiv({id:'',clazz:''}))
+							.attr('style','text-align:center;     padding: 10px;   display: inline-block;')
+							.append($(createInput({id:'input_join_phoneNum1',val:'핸드폰번호',type:'text'}))
+								.attr('style','width: 140px; height:50px; ')))
+						.append($(createDiv({id:'',clazz:''}))
+							.attr('style','text-align:center;     padding: 10px;   display: inline-block;')
+							.append($(createInput({id:'input_join_phoneNum2',val:'핸드폰번호',type:'text'}))
+								.attr('style','width: 140px; height:50px; '))));
+			$('#content-container').append($(createDiv({id:'',clazz:''}))
+					.attr('style','margin-left: 416px;')
+						.append($(createDiv({id:'',clazz:''}))
+							.attr('style','text-align:center;     padding: 10px;   display: inline-block;')
+							.append($(createInput({id:'input_join_email_check',val:'이메일 인증번호',tpye:'text'}))
+								.attr('style','width: 350px;height: 50px;')))
+						.append($(createDiv({id:'',clazz:''}))
+							.attr('style','text-align:center;padding: 10px;   display: inline-block;')
+							.append($(createButton({id:'',clazz:'',val:'인증번호'}))
+									.attr('style','background:black;color:white;'))));
+			$('#content-container').append($(createDiv({id:'',clazz:''}))
+					.attr('style','margin-left: 425px;')
+						.append($(createDiv({id:'',clazz:''}))
+							.append($(createHTag({num:'3',val:'프로필 사진 업로드'}))))
+						.append($(createDiv({id:'',clazz:''}))
+							.append($(createInput({id:'input_join_myFile',val:'프로필 사진을 선택해주세요',type:'file'}))
+										.attr('style','    background: white;color: black; margin-top:10px;')))
+						.append($(createDiv({id:'',clazz:''}))
+							.append($(createPtag({val:'프로필 사진 선택시 마이페이지 화면에 사진이 업로드 됩니다.'}))
+										.attr('style','margin-top:10px;')))
+						.append($(createDiv({id:'',clazz:''}))));
+			$('#content-container').append($(createDiv({id:'',clazz:''}))
+					.attr('style','text-align:center; margin-top:50px;')
+						.append($(createButton({id:'',clazz:'',val:'회원가입'}))
+							.on('click',()=>{
+								var jason={
+										inputJoinId:$('#input_join_id').val(),
+										inputJoinPass:$('#input_join_pass').val(),
+										inputJoinName:$('#input_join_name').val(),
+										inputJoinEmail:$('#input_join_email').val(),
+										inputJoinPhoneNum1:$('#input_join_phoneNum1').val(),
+										inputJoinPhoneNum2:$('#input_join_phoneNum2').val(),
+										inputJoinEmailCheck:$('#input_join_email_check').val(),
+										inputJoinMypageProfile:$('#input_join_myFile').val(),
+										optionjoin:$('#option-join').val()
+								}
+								$.ajax({
+									url:context+'/customer/join/',
+									method:'POST',
+									data:JSON.stringify(jason),
+									dataType:'json',
+									contentType:'application/json'
+									
+								});
+								alert('다시 로그인 해주시기 바랍니다')
+								app.main.onCreate();
+							})
+							.attr('style','background:black;color:white; width:150px; height:50px;')))
+			
+
+					
+
+			
+			
+			
+		});
+	 };
+	 return{onCreate:onCreate}
+})();
 app.login=(()=>{
 	var $wrapper,context,view,image;
 	var onCreate=()=>{
@@ -1419,6 +1592,7 @@ app.login=(()=>{
 	 var setContentView=()=>{
 		 $.getScript(view,()=>{
 			 $('#btn-login-default').remove();
+			 $('#footer').attr('style','    margin-top: 0px;')
 			 $('#container').append($(createButton({id:'btn-admin-default',clazz:'btn btn-default dropdown-toggle',val:'관리자'}))
 					 .attr('data-toggle','modal')
 					 .attr('data-target','#myModal')
@@ -1511,16 +1685,22 @@ app.login=(()=>{
 		
 	 }
  var loginAfterPage=()=>{
-	 $content = $('#content');
 	 $.getScript(view,()=>{	
-	 $('#btn-login-default').remove();
-	 $('#container').append($(createDiv({id:'div-btn-mypage',clazz:''}))
+		 $('#btn-join-default').remove();
+		 $('#btn-login-default').remove();
+		$('#container').append($(createDiv({id:'div-btn-main-page',clazz:''}))
 			 .attr('style','    display: inline;'));
-	 $('#div-btn-mypage').html($(createButton({id:'btn-mypage',clazz:'btn btn-default dropdown-toggle',val:'마이페이지'}))
+		$('#div-btn-main-page').html($(createButton({id:'btn-mypage',clazz:'btn btn-default dropdown-toggle',val:'마이페이지'}))
 			 .attr('style','margin-left: 10px; font-size:20px; width: 120px;background: black; border: black; color: white;')
 			 .on('click',()=>{
 				 myPage();
 			 }));
+		$('#div-btn-main-page').append($(createButton({id:'btn-logout',clazz:'btn btn-default dropdown-toggle',val:'로그아웃'}))
+				 .attr('style','margin-left: 10px; font-size:20px; width: 120px;background: black; border: black; color: white;')
+				 .on('click',()=>{
+					 
+				 }));
+	
 	 
 	 });
  
@@ -1529,7 +1709,10 @@ app.login=(()=>{
 	 alert('마이페이지 들어옴');
 	 $content = $('#content');
 	 $.getScript(view,()=>{	 
+		 $('#div-btn-main-page').remove();
+		 $('#btn-login-default').remove();
 		 $('#btn-admin-default').remove();
+		 $('#btn-join-default').remove();
 		 $('#content').empty();
 		 $('#content').html($(createDiv({
 				id : 'div-my-page',
@@ -1696,7 +1879,7 @@ app.login=(()=>{
 					}
 					console.log(basketObj[i]);
 					$(createDiv({id:'',clazz:'grid-container'}))
-					 .append($(createDiv({id:'',clazz:'grid-item'}))
+					 .append($(createDiv({id:'grid-item',clazz:'grid-item'}))
 							 .append($(createBasketImg({img:e.basketOrder[i].picName+'.jpg'}))))
 						 .append($(createDiv({id:'',clazz:'grid-item'}))
 							 .append($(createDiv({id:'',clazz:''}))
@@ -1729,7 +1912,24 @@ app.login=(()=>{
 										 $(this).parent().find("input").attr("placeholder", countNumber);
 									})))
 						  .append($(createDiv({id:'',clazz:''}))
-							 .append($(createHTag({num:'5',val:'₩'+basketObj[i].total}))))).appendTo('#div-modal-body');
+							 .append($(createHTag({num:'5',val:'₩'+basketObj[i].total}))))
+						 .append($(createDiv({id:'',clazz:''}))
+							 .append($(createButton({id:'',clazz:'',val:'삭제'}))
+									 .attr('basketSeq',basketObj[i].basketSeq)
+								 .on('click',function(){
+									 var jason = {
+											 basketSeq : $(this).attr("basketSeq")
+									 }
+									$.ajax({
+										 url:context+'/basket/delete',
+										 method:'POST',
+										 data: JSON.stringify(jason),
+										 dataType:'json',
+										 contentType: 'application/json',
+									})
+									baskeUpdate();
+								 })
+								 .attr('style','background:black;color:white;')))).appendTo('#div-modal-body');
 			 };
 			 	
 			 
@@ -1737,7 +1937,7 @@ app.login=(()=>{
 		 $.getJSON(context+'/basket/totalPrice',e=>{
 			 var basketObjTotal = e.basketTotalPrice;
 			 console.log(basketObjTotal);
-			$('#modal-content').append($(createDiv({id:'',clazz:'modal-footer'}))
+			$('#modal-content').append($(createDiv({id:'modal-footer',clazz:'modal-footer'}))
 					 .append($(createDiv({id:'',clazz:'grid-container'}))
 						 .append($(createDiv({id:'',clazz:'grid-item'}))
 							 .append($(createHTag({num:'4',val:'총금액'}))))
@@ -1780,7 +1980,121 @@ app.login=(()=>{
 	 });
  };
 
-
+var baskeUpdate=x=>{
+	alert('이동은 될까?')
+	$.getScript(view,()=>{	
+		$('#div-modal-body').empty();
+		$('#div-modal-body').html($(createDiv({id:'first_delete',clazz:''})));
+		$('#modal-footer').html($(createDiv({id:'second_delete',clazz:''})))
+		$.getJSON(context+'/basket/search',e=>{
+			 var basketObj = e.basketOrder;
+			 console.log(e.basketOrder);
+			 for(var i =0 ;  i < basketObj.length ; i++){
+					if(i > basketObj.length){
+						return false;
+					}
+					console.log(basketObj[i]);
+					$(createDiv({id:'',clazz:'grid-container'}))
+					 .append($(createDiv({id:'grid-item',clazz:'grid-item'}))
+							 .append($(createBasketImg({img:e.basketOrder[i].picName+'.jpg'}))))
+						 .append($(createDiv({id:'',clazz:'grid-item'}))
+							 .append($(createDiv({id:'',clazz:''}))
+						 .append($(createHTag({num:'4',val:basketObj[i].itemName}))))										 
+						 .append($(createDiv({id:'',clazz:''}))
+							 .append($(createHTag({num:'4',val:basketObj[i].textureExp}))))
+						 .append($(createDiv({id:'',clazz:''}))
+							 .append($(createButton({id:'',clazz:'',val:(createImg({img:'minus.jpg'}))}))
+									 .attr('style','background:white;')
+									 .attr('readonly','readonly')
+									 .on('click',function(){
+										 console.log($(this).parent().find("input").attr("count"));
+										 var countNumber = parseInt($(this).parent().find("input").attr("count")) - 1 ;
+										 countNumber = countNumber < 0 ? 0 : countNumber; 
+										 $(this).parent().find("input").attr("count", countNumber);
+										 $(this).parent().find("input").attr("placeholder", countNumber);
+									 }))
+							 .append($(createInput({id:'',val:basketObj[i].itemCount,type:'text'}))
+									 .attr('style','    width: 30px; text-align:center;')
+									 .attr('readonly','readonly')
+									 .addClass("basketInput")
+									 .attr('count',basketObj[i].itemCount)
+									 .attr('seq',basketObj[i].itemSeq))
+							 .append($(createButton({id:'',clazz:'',val:(createImg({img:'plus.jpg'}))}))
+									 .attr('style','background:white;')
+									 .attr('readonly','readonly')
+									 .on('click',function(){
+										 var countNumber = parseInt($(this).parent().find("input").attr("count")) + 1;
+										 $(this).parent().find("input").attr("count", countNumber);
+										 $(this).parent().find("input").attr("placeholder", countNumber);
+									})))
+						  .append($(createDiv({id:'',clazz:''}))
+							 .append($(createHTag({num:'5',val:'₩'+basketObj[i].total}))))
+						 .append($(createDiv({id:'',clazz:''}))
+							 .append($(createButton({id:'',clazz:'',val:'삭제'}))
+									 .attr('basketSeq',basketObj[i].basketSeq)
+								 .on('click',function(){
+									 var jason = {
+											 basketSeq : $(this).attr("basketSeq")
+									 }
+									$.ajax({
+										 url:context+'/basket/delete',
+										 method:'POST',
+										 data: JSON.stringify(jason),
+										 dataType:'json',
+										 contentType: 'application/json',
+									})
+									baskeUpdate();
+								 })
+								 .attr('style','background:black;color:white;')))).appendTo('#first_delete');
+			 };
+			 	
+			 
+		 });
+		 $.getJSON(context+'/basket/totalPrice',e=>{
+			 var basketObjTotal = e.basketTotalPrice;
+			 console.log(basketObjTotal);
+		$(createDiv({id:'modal-footer',clazz:'modal-footer'}))
+					 .append($(createDiv({id:'',clazz:'grid-container'}))
+						 .append($(createDiv({id:'',clazz:'grid-item'}))
+							 .append($(createHTag({num:'4',val:'총금액'}))))
+						 .append($(createDiv({id:'',clazz:'grid-item'}))
+							 .append($(createHTag({num:'4',val:'₩'+basketObjTotal[0].total}))))
+						 .append($(createDiv({id:'',clazz:'grid-item'}))
+							 .append($(createButton({id:'',clazz:'btn btn-default',val:'주문하기'}))
+								 .attr('total',basketObjTotal[0].total)	 
+								 .on('click',()=>{
+									 	var returnJsonData = [];
+									 	$(".basketInput").each(function (){
+									 		objData = {
+									 				"seq" : $(this).attr("seq"),
+									 				"count" : $(this).attr("count")
+									 		}
+									 		returnJsonData.push(objData);
+									 	});
+									 	console.log("returnJsonData :" ,returnJsonData);
+										 $.ajax({
+											 url:context+'/basket/update',
+											 method:'POST',
+											 data: JSON.stringify(returnJsonData),
+											 dataType:'json',
+											 contentType: 'application/json',
+										 }).done(function (data){
+											 console.log(data);
+											 
+										 });
+										 app.orders.onCreate();
+										})
+								 .attr('data-dismiss','modal')							
+								 .attr('style','background: black; color: white; width: 100px; height: 40px; font-weight: bold; border: solid 1px;')))
+						 .append($(createDiv({id:'',clazz:'grid-item'}))
+								 .append($(createButton({id:'',clazz:'btn btn-default',val:'취소하기'}))
+									 .attr('data-dismiss','modal')
+									 .attr('style','background: black; color: white; width: 100px; height: 40px; font-weight: bold; border: solid 1px;')))).appendTo('#second_delete');
+		 });
+		 
+	});
+	
+};
  
  var customerLogin=x=>{
 	 x.preventDefault();
@@ -1814,7 +2128,7 @@ app.login=(()=>{
 	 });
 	 
  };
-		 return{onCreate:onCreate,content:content,customerLogin:customerLogin,myPage:myPage,loginAfterPage:loginAfterPage}
+		 return{onCreate:onCreate,content:content,customerLogin:customerLogin,myPage:myPage,loginAfterPage:loginAfterPage,baskeUpdate:baskeUpdate}
 	 })();
 		 
 app.router = (()=>{

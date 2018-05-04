@@ -13,7 +13,9 @@ import com.mac.web.domain.Customer;
 @Repository
 public interface Mapper {
 	public void insertMember(Command cmd);
+	public int joinidSearch(Command cmd);
 	public int insertAddr(Map<?, ?> param);
+	public int basketAddr(Map<?, ?> param);
 	public int macBasket(Map<?, ?> param);
 	public int macBasketUpdate(Map<?, ?> param);
 	public int macBasketUpdateOrder(Map<?, ?> param);
@@ -24,6 +26,7 @@ public interface Mapper {
 	public List<?> addrSearch(HashMap<?, ?> param);
 	public Customer serachCustomerById(Command cmd);
 	public List<?> macDate(HashMap<?, ?> param);
+	public int deleteBasket(HashMap<?, ?> param);
 	public List<?> macOrderBasket(HashMap<?, ?> param);
 	public List<?> searchOrderBasket(HashMap<?, ?> param);
 }

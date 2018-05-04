@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+
 import org.springframework.web.bind.annotation.RestController;
 
 import com.mac.web.domain.Command;
@@ -34,6 +35,14 @@ public class JController {
     @Autowired Item item; 
     @Autowired ITxService tx;
     
+    @RequestMapping("/basket/delete")
+    public String basketdelete(@RequestBody Map<String,String> param
+    		, HttpServletRequest request) { 
+    	System.out.println("/basket/delete 들어옴");
+    	 Map<String,Object> map = new HashMap<>();
+    	 map.put("basketSeq", param.get("basketSeq"));
+		return tx.delete((HashMap<?, ?>) map);
+    }
 	@RequestMapping(value="/basket/update",method=RequestMethod.POST,consumes="application/json")
     public String basketUpdate(@RequestBody List<Map<String, Object>> param
     		, HttpServletRequest request) { 
@@ -47,8 +56,8 @@ public class JController {
         cmd = new Command();
         cmd.setCol1(param.get("customId"));
         cmd.setCol2(param.get("customPass"));
-        System.out.println(cmd.getCol1()+"=getCol1의 값은");
-        System.out.println(cmd.getCol2()+"=getCol2의 값은");
+        cmd.setData1(type);
+        System.out.println(cmd.getData1());
         int count = 0;
         Map<String,Object> map = new HashMap<>();
         count = new ICountService() {
@@ -76,20 +85,42 @@ public class JController {
         
         return map;
     }
-    
-    @RequestMapping(value="/{type}/basket",method=RequestMethod.POST,consumes="application/json")
-    public Map<?,?> itemsBasket(@PathVariable String type,
-            @RequestBody Map<String, String> param) {
-        System.out.println("컨트롤러는 들어옴");
-        System.out.println(type+"AAAAAAAAAAAAAAAA");
-        Map<String,Object> map = new HashMap<>();
-        cmd = new Command();
-        System.out.println(cmd.getData1()+"=data1의 값은");
-        cmd.setCol1(param.get("matte"));
-        System.out.println(cmd.getCol1()+"=setCol1의 값은");
+    @RequestMapping(value="/customer/join/",method=RequestMethod.POST,consumes="application/json")
+    public void customerJoind(@RequestBody Map<String,String> param){
+    	Map<String,Object> map = new HashMap<>();
+    	System.out.println("/customer/join/ 컨트롤러 들어옴" );
+    	map.put("inputJoinId", param.get("inputJoinId"));
+    	map.put("inputJoinPass", param.get("inputJoinPass"));
+    	map.put("inputJoinName", param.get("inputJoinName"));
+    	map.put("inputJoinEmail", param.get("inputJoinEmail"));
+    	map.put("inputJoinPhoneNum",param.get("optionjoin")+"-"+param.get("inputJoinPhoneNum1")+"-"+param.get("inputJoinPhoneNum2"));
+    	map.put("inputJoinEmailCheck", param.get("inputJoinEmailCheck"));
+    	map.put("inputJoinMypageProfile", param.get("inputJoinMypageProfile"));
+    	new IGetHashService() {
+			
+			@Override
+			public Integer execute(HashMap<?, ?> param) {
+				return mapper.insertAddr(param);
+			}
+		}.execute((HashMap<?, ?>) map);
+    	
+    }
+    @RequestMapping(value="/joinid/search",method=RequestMethod.POST,consumes="application/json")
+    public Map<?,?> joinIdSearch(@RequestBody Map<String,String> param){
+    	int count = 0;
+    	 Map<String,Object> map = new HashMap<>();
+    	 cmd.setCol1(param.get("inputJoinId"));
+        count = new ICountService() {
+            
+            @Override
+            public int execute(Command cmd) {
+                return mapper.joinidSearch(cmd);
+            }
+        }.execute(cmd);
+        map.put("success", count);
+        System.out.println("/joinid/search에서 count값은="+count);
         
-        
-        return map;
+    	return map;
     }
     @RequestMapping("/mypage/")
     public Map<?,?> mypage(HttpServletRequest request) {
@@ -121,6 +152,7 @@ public class JController {
         System.out.println("넘어온 값은"+map.get("main"));
         return map;
     }
+
     @RequestMapping("/basket/search")
     public Map<?,?> basketSearch(HttpServletRequest request) {
         System.out.println("/basket/search컨트롤러는 들어옴");
@@ -217,10 +249,7 @@ public class JController {
         public Map<?,?> addrSearch(@RequestBody Map<String, String> param
                 ,HttpServletRequest request) {
             Map<String,Object> map = new HashMap<>();
-            System.out.println("/addr/search 컨트롤러  들어옴");
-
-    
-     
+            System.out.println("/addr/search 컨트롤러  들어옴"); 
             return map;
      
     }
@@ -245,10 +274,11 @@ public class JController {
 				@Override
 				public Integer execute(HashMap<?, ?> param) {
 					
-					return mapper.insertAddr(param);
+					return mapper.basketAddr(param);
 				}
 			}.execute((HashMap<?, ?>) map);
     }
+        
     
 	
 }

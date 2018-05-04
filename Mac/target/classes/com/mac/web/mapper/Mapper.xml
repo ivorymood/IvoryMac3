@@ -3,6 +3,12 @@
   PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.mac.web.mapper.Mapper">
+ 	<select  id="joinidSearch" resultType="int" parameterType="com.mac.web.domain.Command">
+ 		SELECT COUNT(*)
+ 		  FROM customer
+ 		 WHERE custom_id = #{col1}
+ 		   AND custom_id is not null 
+ 	</select>
     <select id="serachCustomerById" resultType="com.mac.web.domain.Customer" parameterType="com.mac.web.domain.Command">
     SELECT *
       FROM   customer 
@@ -14,7 +20,7 @@
     SELECT COUNT(*)
       FROM customer 
      WHERE custom_id = #{col1}
-     AND   custom_pass = #{col2} 
+       AND custom_pass = #{col2} 
     </select>
     
 	<select id="macBasketTotalPrice" resultType="map" parameterType="hashMap">
@@ -51,6 +57,7 @@
      
 	<select id="macOrderBasket" resultType="map" parameterType="hashMap">
 	SELECT  item_name as itemName
+		  , basket_seq as basketSeq
    	  	  , pic_name as picName
    	  	  , i.item_seq as itemSeq
    	  	  , a.item_code as itemCode
@@ -122,7 +129,7 @@
     	   SET item_count = #{count}
     	 WHERE item_seq = #{seq} 
     </update>
-	<insert id="insertAddr"  parameterType="hashMap">
+	<insert id="basketAddr"  parameterType="hashMap">
         INSERT INTO address(
         				   custom_id
                          , addr
@@ -135,4 +142,32 @@
                          , 1
                           )
     </insert>
+    <insert id="insertAddr" parameterType="hashMap" >
+    	INSERT INTO customer(
+			   		   custom_id
+                     , custom_pass
+                     , name
+                     , email
+                     , phone_num
+                     , profile
+                     , join_date
+                     , consumption
+                     , grade_code
+                      ) values (
+                       #{inputJoinId}
+                     , #{inputJoinPass}
+                     , #{inputJoinName}
+                     , #{inputJoinEmail}
+                     , #{inputJoinPhoneNum}
+                     , #{inputJoinMypageProfile}
+                     , now()
+                     , 0
+                     , 1
+                      )
+    </insert>
+    <delete id="deleteBasket" parameterType="hashMap">
+    		DELETE
+  			  FROM basket
+  			 WHERE basket_seq = #{basketSeq}
+    </delete>
 </mapper>
