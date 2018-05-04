@@ -205,7 +205,135 @@ var createMainImg=()=>{
     +'</ol>'
 ;
 }
-
+app.basketUpdate=(()=>{
+	var $wrapper,context,view,image;
+	var onCreate=()=>{
+		 hview = $.javascript()+'/h_app.js';
+		 $wrapper = $('#wrapper');
+		 $content = $('#content');
+		 context = $.context();
+		 image = $.image();
+	     view = $.javascript()+'/j_app.js';
+	     setContentView();
+	 };
+	 var setContentView=()=>{		
+		 $.getScript(view,()=>{
+			$('#div-modal-body').empty();
+			$('#div-modal-body').html($(createDiv({id:'first_delete',clazz:''})));
+			$('#modal-footer').html($(createDiv({id:'second_delete',clazz:''})))
+			$.getJSON(context+'/basket/search',e=>{
+				 var basketObj = e.basketOrder;
+				 console.log(e.basketOrder);
+				 for(var i =0 ;  i < basketObj.length ; i++){
+						if(i > basketObj.length){
+							return false;
+						}
+						console.log(basketObj[i]);
+						$(createDiv({id:'',clazz:'grid-container'}))
+						 .append($(createDiv({id:'grid-item',clazz:'grid-item'}))
+								 .append($(createBasketImg({img:e.basketOrder[i].picName+'.jpg'}))))
+							 .append($(createDiv({id:'',clazz:'grid-item'}))
+								 .append($(createDiv({id:'',clazz:''}))
+							 .append($(createHTag({num:'4',val:basketObj[i].itemName}))))										 
+							 .append($(createDiv({id:'',clazz:''}))
+								 .append($(createHTag({num:'4',val:basketObj[i].textureExp}))))
+							 .append($(createDiv({id:'',clazz:''}))
+								 .append($(createButton({id:'',clazz:'',val:(createImg({img:'minus.jpg'}))}))
+										 .attr('style','background:white;')
+										 .attr('readonly','readonly')
+										 .on('click',function(){
+											 console.log($(this).parent().find("input").attr("count"));
+											 var countNumber = parseInt($(this).parent().find("input").attr("count")) - 1 ;
+											 countNumber = countNumber < 0 ? 0 : countNumber; 
+											 $(this).parent().find("input").attr("count", countNumber);
+											 $(this).parent().find("input").attr("placeholder", countNumber);
+										 }))
+								 .append($(createInput({id:'',val:basketObj[i].itemCount,type:'text'}))
+										 .attr('style','    width: 30px; text-align:center;')
+										 .attr('readonly','readonly')
+										 .addClass("basketInput")
+										 .attr('count',basketObj[i].itemCount)
+										 .attr('seq',basketObj[i].itemSeq))
+								 .append($(createButton({id:'',clazz:'',val:(createImg({img:'plus.jpg'}))}))
+										 .attr('style','background:white;')
+										 .attr('readonly','readonly')
+										 .on('click',function(){
+											 var countNumber = parseInt($(this).parent().find("input").attr("count")) + 1;
+											 $(this).parent().find("input").attr("count", countNumber);
+											 $(this).parent().find("input").attr("placeholder", countNumber);
+										})))
+							  .append($(createDiv({id:'',clazz:''}))
+								 .append($(createHTag({num:'5',val:'₩'+basketObj[i].total}))))
+							 .append($(createDiv({id:'',clazz:''}))
+								 .append($(createButton({id:'',clazz:'',val:'삭제'}))
+										 .attr('basketSeq',basketObj[i].basketSeq)
+									 .on('click',function(){
+										 var jason = {
+												 basketSeq : $(this).attr("basketSeq")
+										 }
+										$.ajax({
+											 url:context+'/basket/delete',
+											 method:'POST',
+											 data: JSON.stringify(jason),
+											 dataType:'json',
+											 contentType: 'application/json',
+										})
+										app.basketUpdate.onCreate();
+									 })
+									 .attr('style','background:black;color:white;')))).appendTo('#first_delete');
+				 };
+				 	
+				 
+			 });
+			 $.getJSON(context+'/basket/totalPrice',e=>{
+				 var basketObjTotal = e.basketTotalPrice;
+				 console.log(basketObjTotal);
+			$(createDiv({id:'modal-footer',clazz:'modal-footer'}))
+						 .append($(createDiv({id:'',clazz:'grid-container'}))
+							 .append($(createDiv({id:'',clazz:'grid-item'}))
+								 .append($(createHTag({num:'4',val:'총금액'}))))
+							 .append($(createDiv({id:'',clazz:'grid-item'}))
+								 .append($(createHTag({num:'4',val:'₩'+basketObjTotal[0].total}))))
+							 .append($(createDiv({id:'',clazz:'grid-item'}))
+								 .append($(createButton({id:'',clazz:'btn btn-default',val:'주문하기'}))
+									 .attr('total',basketObjTotal[0].total)	 
+									 .on('click',()=>{
+										 	var returnJsonData = [];
+										 	$(".basketInput").each(function (){
+										 		objData = {
+										 				"seq" : $(this).attr("seq"),
+										 				"count" : $(this).attr("count")
+										 		}
+										 		returnJsonData.push(objData);
+										 	});
+										 	console.log("returnJsonData :" ,returnJsonData);
+											 $.ajax({
+												 url:context+'/basket/update',
+												 method:'POST',
+												 data: JSON.stringify(returnJsonData),
+												 dataType:'json',
+												 contentType: 'application/json',
+											 }).done(function (data){
+												 console.log(data);
+												 
+											 });
+											 app.orders.onCreate();
+											})
+									 .attr('data-dismiss','modal')							
+									 .attr('style','background: black; color: white; width: 100px; height: 40px; font-weight: bold; border: solid 1px;')))
+							 .append($(createDiv({id:'',clazz:'grid-item'}))
+									 .append($(createButton({id:'',clazz:'btn btn-default',val:'취소하기'}))
+										 .attr('data-dismiss','modal')
+										 .attr('style','background: black; color: white; width: 100px; height: 40px; font-weight: bold; border: solid 1px;')))).appendTo('#second_delete');
+			 });
+			 
+		});
+		
+	};
+	
+	 
+	return{onCreate:onCreate}
+})();
 app.orders=(()=>{
 	var $wrapper,context,view,image;
 	var onCreate=()=>{
@@ -407,6 +535,28 @@ app.orders=(()=>{
 		 };
 		 return{onCreate:onCreate}
 })();
+app.chart=(()=>{
+	var $wrapper,context,view,image;
+	var onCreate=()=>{
+		 $wrapper = $('#wrapper');
+		 $content = $('#content');
+		 context = $.context();
+		 image = $.image();
+	     view = $.javascript()+'/j_app.js';
+	     setContentView();
+	 };
+	 var setContentView=()=>{		
+			 $.getScript(view,()=>{ 
+				 alert('작동함');
+				 $('#content').empty();
+				 $('#footer').attr('style','margin-top:100px;')
+				 $('#content').html($(createDiv({id:'chart_div',clazz:''}))
+					 .attr('style','width: 900px; height: 500px;'))
+		
+			 });
+		 };
+		 return{onCreate:onCreate}
+	 })();
 app.items=(()=>{
 	var $wrapper,context,view,image;
 	var onCreate=()=>{
@@ -601,6 +751,44 @@ app.mypage=(()=>{
 		                                                .attr('style','color: #ffffff;')
 		                                                )
 		                                        )
+                                        .append($(createLI({ id : '', clazz : '',val:''}))
+		                                        .attr('style', 'margin: 0 0 15px 0;')
+		                                        .append($(createATag({id : '', href : '', val : '판매 통계량'}))
+		                                        		.on('click',()=>{	                                        	
+		                                        			$.getJSON(context+'/chart/search',e=>{
+		                                        			      google.charts.load('current', {'packages':['bar']});
+		                                        			      google.charts.setOnLoadCallback(drawChart);
+		                                        			    	  var chartObj = e.chart;
+		                                        			    	  console.log(chartObj);
+		                                        			    	  
+		                                        			      function drawChart() {
+		   		                                        			  var data = google.visualization.arrayToDataTable([
+		                                        			          ['Year', '립스틱', '아이섀도우', '마스카라'],
+		                                        			          [chartObj[0].sellDate, chartObj[0].count, chartObj[1].count, chartObj[2].count],
+		                                        			          [chartObj[3].sellDate, chartObj[3].count, chartObj[4].count, chartObj[5].count],
+		                                        			          [chartObj[6].sellDate, chartObj[6].count, chartObj[7].count, chartObj[8].count],
+		                                        			          [chartObj[9].sellDate, chartObj[9].count, chartObj[10].count, chartObj[11].count],
+		                                        			        ]);
+		                                        			   
+		                                        			        var options = {
+		                                        			          chart: {
+		                                        			            title: 'Company Performance',
+		                                        			            subtitle: 'Sales, Expenses, and Profit: 2014-2017',
+		                                        			          },
+		                                        			          bars: 'horizontal' // Required for Material Bar Charts.
+		                                        			        };
+
+		                                        			        var chart = new google.charts.Bar(document.getElementById('chart_div'));
+
+		                                        			        chart.draw(data, google.charts.Bar.convertOptions(options));
+		                                        			      }
+		                                        			      });
+		                                        			      
+		                                        			      app.chart.onCreate();
+		                                        		})
+		                                                .attr('style','color: #ffffff;')
+		                                                )
+		                                        )
 		                                )
 		                        )
 		                .append($(createSection({ id : 'navbar-header', clazz : ''}))
@@ -697,7 +885,7 @@ app.mypage=(()=>{
 												 dataType:'json',
 												 contentType: 'application/json',
 											})
-											baskeUpdate();
+											app.basketUpdate.onCreate();
 										 })
 										 .attr('style','background:black;color:white;')))).appendTo('#div-modal-body');
 					 };
@@ -1959,122 +2147,7 @@ app.login=(()=>{
 		
 	 }
 
-var baskeUpdate=x=>{
-	alert('이동은 될까?')
-	$.getScript(view,()=>{	
-		$('#div-modal-body').empty();
-		$('#div-modal-body').html($(createDiv({id:'first_delete',clazz:''})));
-		$('#modal-footer').html($(createDiv({id:'second_delete',clazz:''})))
-		$.getJSON(context+'/basket/search',e=>{
-			 var basketObj = e.basketOrder;
-			 console.log(e.basketOrder);
-			 for(var i =0 ;  i < basketObj.length ; i++){
-					if(i > basketObj.length){
-						return false;
-					}
-					console.log(basketObj[i]);
-					$(createDiv({id:'',clazz:'grid-container'}))
-					 .append($(createDiv({id:'grid-item',clazz:'grid-item'}))
-							 .append($(createBasketImg({img:e.basketOrder[i].picName+'.jpg'}))))
-						 .append($(createDiv({id:'',clazz:'grid-item'}))
-							 .append($(createDiv({id:'',clazz:''}))
-						 .append($(createHTag({num:'4',val:basketObj[i].itemName}))))										 
-						 .append($(createDiv({id:'',clazz:''}))
-							 .append($(createHTag({num:'4',val:basketObj[i].textureExp}))))
-						 .append($(createDiv({id:'',clazz:''}))
-							 .append($(createButton({id:'',clazz:'',val:(createImg({img:'minus.jpg'}))}))
-									 .attr('style','background:white;')
-									 .attr('readonly','readonly')
-									 .on('click',function(){
-										 console.log($(this).parent().find("input").attr("count"));
-										 var countNumber = parseInt($(this).parent().find("input").attr("count")) - 1 ;
-										 countNumber = countNumber < 0 ? 0 : countNumber; 
-										 $(this).parent().find("input").attr("count", countNumber);
-										 $(this).parent().find("input").attr("placeholder", countNumber);
-									 }))
-							 .append($(createInput({id:'',val:basketObj[i].itemCount,type:'text'}))
-									 .attr('style','    width: 30px; text-align:center;')
-									 .attr('readonly','readonly')
-									 .addClass("basketInput")
-									 .attr('count',basketObj[i].itemCount)
-									 .attr('seq',basketObj[i].itemSeq))
-							 .append($(createButton({id:'',clazz:'',val:(createImg({img:'plus.jpg'}))}))
-									 .attr('style','background:white;')
-									 .attr('readonly','readonly')
-									 .on('click',function(){
-										 var countNumber = parseInt($(this).parent().find("input").attr("count")) + 1;
-										 $(this).parent().find("input").attr("count", countNumber);
-										 $(this).parent().find("input").attr("placeholder", countNumber);
-									})))
-						  .append($(createDiv({id:'',clazz:''}))
-							 .append($(createHTag({num:'5',val:'₩'+basketObj[i].total}))))
-						 .append($(createDiv({id:'',clazz:''}))
-							 .append($(createButton({id:'',clazz:'',val:'삭제'}))
-									 .attr('basketSeq',basketObj[i].basketSeq)
-								 .on('click',function(){
-									 var jason = {
-											 basketSeq : $(this).attr("basketSeq")
-									 }
-									$.ajax({
-										 url:context+'/basket/delete',
-										 method:'POST',
-										 data: JSON.stringify(jason),
-										 dataType:'json',
-										 contentType: 'application/json',
-									})
-									baskeUpdate();
-								 })
-								 .attr('style','background:black;color:white;')))).appendTo('#first_delete');
-			 };
-			 	
-			 
-		 });
-		 $.getJSON(context+'/basket/totalPrice',e=>{
-			 var basketObjTotal = e.basketTotalPrice;
-			 console.log(basketObjTotal);
-		$(createDiv({id:'modal-footer',clazz:'modal-footer'}))
-					 .append($(createDiv({id:'',clazz:'grid-container'}))
-						 .append($(createDiv({id:'',clazz:'grid-item'}))
-							 .append($(createHTag({num:'4',val:'총금액'}))))
-						 .append($(createDiv({id:'',clazz:'grid-item'}))
-							 .append($(createHTag({num:'4',val:'₩'+basketObjTotal[0].total}))))
-						 .append($(createDiv({id:'',clazz:'grid-item'}))
-							 .append($(createButton({id:'',clazz:'btn btn-default',val:'주문하기'}))
-								 .attr('total',basketObjTotal[0].total)	 
-								 .on('click',()=>{
-									 	var returnJsonData = [];
-									 	$(".basketInput").each(function (){
-									 		objData = {
-									 				"seq" : $(this).attr("seq"),
-									 				"count" : $(this).attr("count")
-									 		}
-									 		returnJsonData.push(objData);
-									 	});
-									 	console.log("returnJsonData :" ,returnJsonData);
-										 $.ajax({
-											 url:context+'/basket/update',
-											 method:'POST',
-											 data: JSON.stringify(returnJsonData),
-											 dataType:'json',
-											 contentType: 'application/json',
-										 }).done(function (data){
-											 console.log(data);
-											 
-										 });
-										 app.orders.onCreate();
-										})
-								 .attr('data-dismiss','modal')							
-								 .attr('style','background: black; color: white; width: 100px; height: 40px; font-weight: bold; border: solid 1px;')))
-						 .append($(createDiv({id:'',clazz:'grid-item'}))
-								 .append($(createButton({id:'',clazz:'btn btn-default',val:'취소하기'}))
-									 .attr('data-dismiss','modal')
-									 .attr('style','background: black; color: white; width: 100px; height: 40px; font-weight: bold; border: solid 1px;')))).appendTo('#second_delete');
-		 });
-		 
-	});
-	
-};
- 
+
  var customerLogin=x=>{
 	 x.preventDefault();
 	 console.log($('#input-login'));
@@ -2107,7 +2180,7 @@ var baskeUpdate=x=>{
 	 });
 	 
  };
-		 return{onCreate:onCreate,content:content,customerLogin:customerLogin,baskeUpdate:baskeUpdate}
+		 return{onCreate:onCreate}
 	 })();
 		 
 app.router = (()=>{
@@ -2118,4 +2191,3 @@ app.router = (()=>{
 	  };
 	  return {onCreate:onCreate};
 })();
-

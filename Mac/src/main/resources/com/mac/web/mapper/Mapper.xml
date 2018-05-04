@@ -79,6 +79,13 @@
  	 WHERE  i.item_seq = b.item_seq
        AND  b.custom_id = #{customid}
     </select>
+       <select id="searchChart" resultType="map" parameterType="hashMap">
+		SELECT 	count(*) count
+			  , sell_date as sellDate
+		 FROM sellcount
+		WHERE item_code=item_code
+	 GROUP BY sell_date,item_code,sell_date
+    </select>
     <select id="searchOrderBasket" resultType="map" parameterType="hashMap">
 	SELECT  item_name as itemName
    	  	  , pic_name as picName
