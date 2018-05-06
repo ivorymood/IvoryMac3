@@ -24,7 +24,7 @@ function Cart(x){
 }
 function Customer(x){
 	sessionStorage.setItem('customer', x);
-	alert('router customer 들어옴');
+	
 	return{
 		get: ()=>{return sessionStorage.getItem('customer');}
 	}

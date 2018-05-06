@@ -181,23 +181,23 @@ var createImg=x=>{
 	return '<img src="'+x.src+'" alt="'+x.alt+'" id="'+x.id+'" class="'+x.clazz+'" align="'+x.align+'" title="'+x.title+'">';
 }
 app.mainitem=(()=>{
-	var $content, context, image;
-	var onCreate =()=>{
+	var $content, context;
+	var onCreate =x=>{
 		$content = $('#content');
 		context = $.context();
-		setContentView();
+		setContentView(x);
 	};
-	var setContentView=()=>{
-		$content.empty();
-		
+	var setContentView=x=>{
 		alert('세션: '+sessionStorage.getItem('customer') );
+		alert(x.itemCode);
 		
+		$content.empty();
 		$content.html($(createDiv({id:'mainitem-container'})));
 		$('#mainitem-container')
 		.append($(createDiv({id:'item-div0'})))
 		.append($(createDiv({id:'item-div1'})))
 		;
-		
+	
 		$('#item-div0').attr('style','border-bottom: 1px solid lightgray; width:100%; height:61px; ')
 		.append($(createDiv({id:'',clazz:''})).attr('style','padding-left: 150px; padding-top: 20px;')
 				.append($(createHTag({num:'4', id:'bread-main1', val:'아이'})).attr('style', 'display:inline; '))

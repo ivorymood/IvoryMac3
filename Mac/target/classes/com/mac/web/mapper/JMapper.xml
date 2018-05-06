@@ -3,11 +3,11 @@
   PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.mac.web.mapper.JMapper">
-<resultMap type="java.util.HashMap" id="price">
-	<id property="total" column="total"/>
-	<result property="total" column="total"/>
+<resultMap type="java.util.HashMap" id="address">
+	<id property="rownum" column="rownum"/>
+	<result property="addr" column="addr"/>
 </resultMap>
-<resultMap type="com.mac.web.domain.Customer" id="customer">
+<resultMap type="java.util.HashMap" id="customer">
 	<id property="customId" column="custom_id"/>
 	<result property="customPass" column="custom_pass"/>
 	<result property="name" column="name"/>
@@ -18,55 +18,99 @@
 	<result property="gradeCode" column="grade_code"/>
 	<result property="consumption" column="consumption"/>
 </resultMap>
-<resultMap type="java.util.HashMap" id="basket">
+<resultMap type="java.util.HashMap" id="itemInfo">
 	<id property="rownum" column="rownum"/>
 	<result property="itemName" column="itemName"/>
+	<result property="commonName" column="commonName"/>
+	<result property="commonNameE" column="commonNameE"/>
+	<result property="textureExp" column="textureExp"/>
 	<result property="itemCount" column="itemCount"/>
 	<result property="price" column="price"/>
 	<result property="picName" column="picName"/>
 	<result property="itemCode" column="itemCode"/>
 	<result property="itemSeq" column="itemSeq"/>
 	<result property="colorExp" column="colorExp"/>
+	<result property="discountPrice" column="discountPrice"/>
+	<result property="total" column="total"/>
+	<result property="eachTotal" column="eachTotal"/>
+	<result property="discountPrice" column="discountPrice"/>
+	<result property="basketSeq" column="basketSeq"/>
+	
 </resultMap>
 
-    <select id="serachCustomerById" resultType="com.mac.web.domain.Customer" parameterType="com.mac.web.domain.Command">
-    SELECT *
-      FROM   customer 
-     WHERE   custom_id = #{col1}
-       AND   custom_pass = #{col2} 
-    
-    </select>
-    <select id="exist" resultType="int" parameterType="com.mac.web.domain.Command">
+<select  id="joinidSearch" resultType="int" parameterType="com.mac.web.domain.Command">
+ 		SELECT COUNT(*)
+ 		  FROM customer
+ 		 WHERE custom_id = #{col1}
+ 		   AND custom_id is not null 
+</select>
+<select id="exist" resultType="int" parameterType="com.mac.web.domain.Command">
+    SELECT count(*)
+      FROM ${type} 
+     WHERE ${col1} like #{data1}
+       AND ${col2} like #{data2} 
+</select>
+<select id="existIntData" resultType="int" parameterType="hashMap">
+    SELECT count(*)
+      FROM ${type}  
+     WHERE ${col1} like #{data1}
+       AND ${col2} like ${data2} 
+</select>
+<select id="selectItemStock" resultType="int" parameterType="com.mac.web.domain.Command">
+	SELECT item_stock as itemStock
+      FROM item 
+     WHERE ${col1} = ${data1} 
+</select>
+<select id="selectAddr" resultType="int" parameterType="com.mac.web.domain.Command">
     SELECT COUNT(*)
-      FROM customer 
+      FROM address 
      WHERE custom_id = #{col1}
-     AND   custom_pass = #{col2} 
-    </select>
-    
-	<select id="macBasketTotalPrice" resultMap="price" parameterType="hashMap">
-  	SELECT  sum(b.item_count*a.price) as total
-  	  FROM  basket b 
-  	  join  item i 
-  	    on  i.item_seq like b.item_seq 
-  	  join  customer c 
-        on  c.custom_id like b.custom_id
-      join  common_feature a
-	    on  a.item_code like i.item_code   
- 	 WHERE  i.item_seq = b.item_seq
-       AND  b.custom_id = #{customid}
-       AND  a.item_code = i.item_code
-    </select>
-    <!-- macDate에서 putBasket으로 바꿈 -->
-    <select id="putBasket" resultMap="basket" parameterType="hashMap">
+</select>
+
+
+<select id="selectMypage" resultMap="customer" parameterType="hashMap">
+ 	SELECT *
+ 	  FROM customer
+ 	 WHERE custom_id = #{customId}
+</select>  
+
+<select id="addrSearch" resultType="map" parameterType="hashMap" >
     SELECT a.*
 	FROM (SELECT @rownum := @rownum +1 As rownum
-		  		 , t.itemName
-        		 , t.colorExp
-     		     , t.itemSeq
-      		     , t.picName 
-     		     , t.itemCode
+		  		 , t.*
+     		FROM	(SELECT   addr
+				  	  FROM   address a 
+				      JOIN   customer c
+				        ON 	a.custom_id like c.custom_id
+				     WHERE   a.custom_id = #{col1}) t,
+					(select @rownum:=0) tmp) a
+</select>
+<select id="macBasketTotalPrice" resultMap="itemInfo" parameterType="hashMap">
+    SELECT a.*
+	FROM (SELECT @rownum := @rownum +1 As rownum
+		  		 , t.*
+     		FROM	(SELECT  sum((price-(a.price*(a.discount)))*b.item_Count) as total
+       				FROM  basket b
+			        join  item i
+			         on  i.item_seq like b.item_seq
+			        join  customer c
+			         on  c.custom_id like b.custom_id
+			        join  common_feature a
+			         on  a.item_code like i.item_code  
+			        WHERE  i.item_seq = b.item_seq
+			         AND  b.custom_id = #{customId}
+			         AND  a.item_code = i.item_code) t,
+					(select @rownum:=0) tmp) a
+
+</select>
+<select id="selectMainItems" resultMap="itemInfo" parameterType="hashMap">
+    SELECT a.*
+	FROM (SELECT @rownum := @rownum +1 As rownum
+		  		 , t.*
      		FROM	(SELECT  i.item_name as itemName
-          					, i.color_exp as colorExp
+     						, c.common_name as commonName
+     						, c.common_name_e as commonNameE
+          					, i.texture_exp as textureExp
           					, i.item_seq as itemSeq
           					, i.pic_name as picName 
           					, i.item_code as itemCode
@@ -74,80 +118,161 @@
       					join  common_feature c 
         				on  i.item_code like c.item_code) t,
 					(select @rownum:=0) tmp) a
-    <!-- SELECT  i.item_name as itemName
-          , i.color_exp as colorExp
-          , i.item_seq as itemSeq
-          , i.pic_name as picName 
-          , i.item_code as itemCode
-      FROM  item i 
-      join  common_feature c 
-        on  i.item_code like c.item_code -->
-    </select>
-     <select id="selectMypage" resultMap="customer" parameterType="hashMap">
- 	SELECT *
- 	  FROM customer
- 	 WHERE custom_id = #{customid}
-    </select>  
-     
-	<select id="macOrderBasket" resultMap="basket" parameterType="hashMap">
+
+</select>
+<select id="selectMypageItem" resultMap="itemInfo" parameterType="hashMap">
+	SELECT a.*
+	FROM (SELECT @rownum := @rownum +1 As rownum
+		  		 , t.*
+     		FROM	(SELECT  item_name as itemName
+				   	  	  , pic_name as picName
+				   	  	  , i.item_seq as itemSeq
+				   	  	  , a.item_code as itemCode
+				 		  , item_count as itemCount
+				 		  , price 
+				   	  	  , price-(a.price*(a.discount)) as discountPrice	  	  
+				   	  	  , (price-(a.price*(a.discount)))*b.item_Count as total
+				  	  FROM  basket b 
+				  	  join  item i 
+				  	    on  i.item_seq like b.item_seq 
+				      join  common_feature a
+					    on  a.item_code like i.item_code   
+				 	 WHERE  i.item_seq = b.item_seq
+				       AND  b.custom_id = #{customId}) t,
+					(select @rownum:=0) tmp) a
+	
+</select>   
+<select id="searchOrderBasket" resultMap="itemInfo" parameterType="hashMap">>
+	SELECT a.*
+	FROM (SELECT @rownum := @rownum +1 As rownum
+		  		 , t.*
+     		FROM	(SELECT  item_name as itemName
+				   	  	  , pic_name as picName
+				   	  	  , i.item_seq as itemSeq
+				   	  	  , a.item_code as itemCode
+				 		  , item_count as itemCount
+				 		  , price 
+				   	  	  , price-(a.price*(a.discount)) as discountPrice	  	  
+				   	  	  , (price-(a.price*(a.discount)))*b.item_Count as total
+				  	  FROM  basket b 
+				  	  join  item i 
+				  	    on  i.item_seq like b.item_seq 
+				      join  common_feature a
+					    on  a.item_code like i.item_code   
+				 	 WHERE  i.item_seq = b.item_seq
+				       AND  b.custom_id = #{customId}) t,
+					(select @rownum:=0) tmp) a
+</select>     
+<select id="selectBasket" resultMap="itemInfo" parameterType="hashMap">
  	SELECT a.*		
 	FROM (SELECT @rownum := @rownum +1 As rownum
-			, t.itemName
-			, t.itemCount
-			, t.price
-			, t.picName
-		FROM (SELECT item_name as itemName
- 		  			, item_count as itemCount
-   	  	  			, price
-   	  	  			, pic_name as picName
-			  FROM  basket b 
-			  join  item i 
-				on  i.item_seq like b.item_seq 
-			  join  customer c 
-				on  c.custom_id like b.custom_id
-			  join  common_feature a
-				on  a.item_code like i.item_code   
-			 WHERE  i.item_seq = b.item_seq
-			   AND  b.custom_id = #{customid}
-			   AND  a.item_code = i.item_code) t,
-	   (select @rownum:=0) tmp) a
- 	<!-- SELECT  item_name as itemName
- 		  , item_count as itemCount
-   	  	  , price
-   	  	  , pic_name as picName
-  	  FROM  basket b 
-  	  join  item i 
-  	    on  i.item_seq like b.item_seq 
-  	  join  customer c 
-        on  c.custom_id like b.custom_id
-      join  common_feature a
-	    on  a.item_code like i.item_code   
- 	 WHERE  i.item_seq = b.item_seq
-       AND  b.custom_id = #{customid}
-       AND  a.item_code = i.item_code -->
-    </select> 
+				, t.*
+			FROM (SELECT  i.item_name as itemName
+						, b.basket_seq as basketSeq
+              			, i.pic_name as picName
+              			, i.item_seq as itemSeq
+              			, c.item_code as itemCode
+             			, b.item_count as itemCount
+             			, c.price as price
+              			, c.price*(1-c.discount) as discountPrice
+       				FROM  basket b
+       				join  item i
+         			on    i.item_seq like b.item_seq
+     				join  common_feature c
+       	 			on     c.item_code like i.item_code  
+     				WHERE  i.item_seq = b.item_seq
+      				AND    b.custom_id = #{customId}) t,
+	   			(select @rownum:=0) tmp) a
+ 
+</select> 
      
-    <select id="selectBasket" resultType="int" parameterType="com.mac.web.domain.Command">
-    SELECT count(1)
-      FROM basket 
-     WHERE custom_id = #{col1}
-       AND item_seq  = #{col2}
-    </select>
-    <insert id="macBasket" parameterType="hashMap">
+
+<insert id="insertBasketNew" parameterType="hashMap">
         insert into basket(custom_id
                          , item_seq
                          , item_count
                          , item_code
-                          ) values(#{customid}
-                         , #{itemseq}
+                 ) values(#{customId}
+                         , ${itemSeq}
                          , 1
-                         , #{itemcode} 
+                         , (select item_code
+							from item
+							where item_seq like ${itemSeq})
                           )
-    </insert>
-    <update id="macBasketUpdate" parameterType="hashMap" >
+</insert>
+<insert id="basketAddr"  parameterType="hashMap">
+        INSERT INTO address(
+        				   custom_id
+                         , name
+                         , phone_num
+                         , addr
+                         , detail_addr
+                         , board
+                          ) values(
+                           #{customId}
+                         , #{customname}
+                         , #{phoneNum}
+                         , #{customaddr1}
+                         , #{detailAddr}
+                         , #{customtext}
+                          )
+</insert>
+<insert id="insertAddr" parameterType="hashMap" >
+    	INSERT INTO customer(
+			   		   custom_id
+                     , custom_pass
+                     , name
+                     , email
+                     , phone_num
+                     , profile
+                     , join_date
+                     , consumption
+                     , grade_code
+                      ) values (
+                       #{inputJoinId}
+                     , #{inputJoinPass}
+                     , #{inputJoinName}
+                     , #{inputJoinEmail}
+                     , #{inputJoinPhoneNum}
+                     , #{inputJoinMypageProfile}
+                     , now()
+                     , 0
+                     , 1
+                      )
+</insert>
+<insert id="insertOrder" parameterType="hashMap">
+	INSERT into order(custom_id, total_price)
+	VALUES( ${customId}, 
+			${totalPrice})
+</insert>
+<insert id="insertOrderedItems" parameterType="hashMap">
+	INSERT into ordered_items(item_seq, count, order_seq)
+	VALUES( ${itemSeq}, 
+			${count}, 
+			${orderSeq})
+</insert>
+
+<update id="updateBasketExist" parameterType="hashMap" >
     	UPDATE basket 
     	   SET item_count = item_count+1
-    	 WHERE custom_id = #{customid}
-    	   AND item_seq = #{itemseq}
-    </update>
+    	 WHERE custom_id = #{customId}
+    	   AND item_seq = ${itemSeq}
+</update>
+<update id="macBasketUpdateOrder" parameterType="hashMap" ><!-- 처리예정 -->
+    	UPDATE basket 
+    	   SET item_count = #{count}
+    	 WHERE item_seq = #{seq} 
+</update>
+
+<delete id="deleteBasketByBasketSeq" parameterType="hashMap">
+    		DELETE
+  			  FROM basket
+  			 WHERE basket_seq = #{basketSeq}
+</delete>
+<delete id="deleteBasketById" parameterType="hashMap">
+	DELETE
+	  FROM basket
+	 WHERE cutom_id like #{customId}
+</delete>
+
 </mapper>

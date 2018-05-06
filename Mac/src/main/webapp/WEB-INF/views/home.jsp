@@ -17,12 +17,12 @@
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/owl.carousel.min.js"></script>
     <script src="${context}/resources/js/jquery.mousewheel.min.js"></script>
+    <script src="${context}/resources/js/router.js"></script>
     <script src="${context}/resources/js/j_app.js"></script>
     <%-- <script src="${context}/resources/js/h_app.js"></script> --%>
-    <script src="${context}/resources/js/router.js"></script>
 </head>
 <body>
-<div id="wrapper">	
+<div id="header">	
 </div>
 <div id="content">	
 </div>
@@ -32,5 +32,4 @@
 </html>
 <script>
 app.init('${context}');
-
 </script>
