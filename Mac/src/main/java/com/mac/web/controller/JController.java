@@ -19,6 +19,7 @@ import com.mac.web.domain.Item;
 import com.mac.web.mapper.JMapper;
 import com.mac.web.service.ICountHashService;
 import com.mac.web.service.ICountService;
+import com.mac.web.service.IDeleteHashService;
 import com.mac.web.service.IGetHashService;
 import com.mac.web.service.IPostHashService;
 import com.mac.web.service.ITxService;
@@ -76,13 +77,12 @@ public class JController {
 				return jMapper.selectMypage(param);
 			}
 		}.execute((HashMap<?, ?>) param));
-		System.out.println("mypage 넘어온 값은" + map.get("mypage"));
 		return map;
 	}
 
 	@RequestMapping(value="/mainItems/")
 	public Map<?, ?> itemSearch() {
-		logger.info(":::::::::::mainItems {}", "ENTERED");//아직 화면구현 안한?
+		logger.info(":::::::::::mainItems {}", "ENTERED");
 		Map<String, Object> map = new HashMap<>();
 		map.put("mainItems", new IGetHashService() {
 
@@ -91,7 +91,6 @@ public class JController {
 				return jMapper.selectMainItems(param);
 			}
 		}.execute((HashMap<?, ?>) map));
-		System.out.println("search 넘어온 값은" + map.get("mainItems"));
 		return map;
 	}
 	
@@ -116,15 +115,14 @@ public class JController {
 		System.out.println(customId);
 		
 		param.put("customId", customId);
-		map.put("basketOrder", new IGetHashService() {
+		map.put("basket", new IGetHashService() {
 
 			@Override
 			public Object execute(HashMap<?, ?> param) {
 				return jMapper.selectBasket(param);
 			}
 		}.execute((HashMap<?, ?>) param));
-		System.out.println(map.get("basketOrder").toString());
-		System.out.println("basket/search 넘어온 값은" + map.get("basketOrder"));
+		System.out.println(map.get("basket").toString());
 		return map;
 	}
 	
@@ -138,15 +136,65 @@ public class JController {
 		map.put("basketTotalPrice", new IGetHashService() {
 			@Override
 			public Object execute(HashMap<?, ?> param) {
-				return jMapper.macBasketTotalPrice(param);
+				return jMapper.selectTotalPrice(param);
 			}
 		}.execute((HashMap<?, ?>) param));
 		System.out.println("basket/totalPrice 넘어온 값은" + map.get("basketTotalPrice"));
 		return map;
 	}
 	
+	@RequestMapping(value = "/putBasket", method = RequestMethod.POST)
+	public Map<?, ?> basketOrder(@RequestBody Map<String, Object> param) {
+		Map<String, Object> temp = new HashMap<>();
+		logger.info(":::::::::::putBasket {}", "ENTERED");
+		System.out.println("customId: " + param.get("customId"));
+		System.out.println("itemSeq: " + param.get("itemSeq"));
+	
+		
+		return tx.putBasket(param);
+	}
+
+	@RequestMapping(value="/basket/delete", method= RequestMethod.POST, consumes = "application/json")
+	public Map<?,?> basketdelete(@RequestBody Map<String, String> param) {
+		logger.info(":::::::::::/basket/delete {}", "ENTERED");
+		Map<String, Object> map = new HashMap<>();
+		System.out.println("basketSeq: "+param.get("basketSeq"));
+		new IDeleteHashService() {
+			
+			@Override
+			public void execute(HashMap<?, ?> param) {
+				jMapper.deleteBasketByBasketSeq(param);
+			}
+		}.execute((HashMap<?, ?>) param);
+		map.put("success", 1);
+		return map;
+	}
+	@RequestMapping(value="/basket/delete/{id}", method= RequestMethod.GET)
+	public Map<?,?> deleteBasketById(@PathVariable("id") String customId){
+		Map<String, Object> map = new HashMap<>();
+		Map<String, Object> param = new HashMap<>();
+		param.put("customId", customId);
+		new IDeleteHashService() {
+			
+			@Override
+			public void execute(HashMap<?, ?> param) {
+				jMapper.deleteBasketById(param);
+			}
+		}.execute((HashMap<?, ?>) param);
+		return map;
+	}
+
+	@RequestMapping(value = "/basket/update/asOrder", method = RequestMethod.POST, consumes = "application/json")
+	public Map<?,?> basketUpdate(@RequestBody List<Map<String, Object>> param) {
+		logger.info(":::::::::::basket/update {}", "ENTERED");
+		Map<String, Object> map = new HashMap<>();
+		tx.updateBasketAsOrder(param);
+		map.put("success", 1);
+		return map;
+	}
+
 	@RequestMapping(value="/order/search/{id}", method= RequestMethod.GET)
-	public Map<?, ?> orderSearch(@PathVariable("id") String customId) { // 아직 화면 구현 ㄴㄴ
+	public Map<?, ?> orderSearch(@PathVariable("id") String customId) { // 아직 화면 구현 ㄴㄴ?
 		logger.info(":::::::::::order/search/ {}", "ENTERED");
 		Map<String, Object> map = new HashMap<>();
 		Map<String, String> param = new HashMap<>();
@@ -156,129 +204,23 @@ public class JController {
 
 			@Override
 			public Object execute(HashMap<?, ?> param) {
-				return jMapper.searchOrderBasket(param);
+				return jMapper.selectOrderById(param);
 			}
 		}.execute((HashMap<?, ?>) param));
 		System.out.println("order/search 넘어온 값은 orderSearch" + map.get("orderSearch"));
 		return map;
 	}
-
-
-	@RequestMapping(value = "/putBasket/{id}/{itemSeq}", method = RequestMethod.GET)
-	public Map<?, ?> basketOrder(@PathVariable("id") String customId, @PathVariable("itemSeq") String itemSeq) {
+	
+	@RequestMapping(value="/make/order", method= RequestMethod.POST, consumes="application/json")
+	public Map<?,?> makeOrder(@RequestBody Map<String, Object> param){
+		logger.info(":::::::::::make/order {}", "ENTERED");
 		Map<String, Object> map = new HashMap<>();
-		Map<String, Object> param = new HashMap<>();
-		logger.info(":::::::::::putBasket {}", "ENTERED");
-		System.out.println("customId: " + customId);
-		System.out.println("itemSeq: " + itemSeq);
+		tx.makeOrder(param);
 		
-		param.put("type", "basket");
-		param.put("col1", "custom_id");
-		param.put("col2", "item_seq");
-		param.put("data1", customId);
-		param.put("data2", Integer.parseInt(itemSeq));
-		param.put("customId", customId);
-		param.put("itemSeq", Integer.parseInt(itemSeq));
-		
-		int flag = -1;
-		int stockCount = 0;
-		int count = 0;
-		
-		stockCount = new ICountService() {
-			//플래그
-			@Override
-			public int execute(Command cmd) {
-				cmd.setCol1("item_seq");
-				cmd.setData1(itemSeq);
-				return jMapper.selectItemStock(cmd);
-			}
-		}.execute(cmd);
-		System.out.println("stockCount: "+ stockCount);
-		
-		if(stockCount > 0) {
-			count = new ICountHashService() {
-				
-				@Override
-				public int execute(HashMap<?, ?> param) {
-					return jMapper.existIntData(param);
-				}
-			}.execute((HashMap<?, ?>) param);
-			
-			if (count > 0) {
-				System.out.println("if + count" + count);
-				flag = 1;
-				new IUpdateHashService() {
-					
-					@Override
-					public void execute(HashMap<?, ?> param) {
-						jMapper.updateBasketExist(param);
-					}
-				}.execute((HashMap<?, ?>) param);
-				
-			} else {
-				System.out.println("else + count" + count);
-				flag = 1;
-				new IPostHashService() {
-					
-					@Override
-					public void execute(HashMap<?, ?> param) {
-						jMapper.insertBasketNew(param);						
-					}
-				}.execute((HashMap<?, ?>) param);
-			}
-		}else {
-			flag = 0;
-		}
-		map.put("success", flag);
+		map.put("success", 1);
 		return map;
 	}
-
-	@RequestMapping(value = "/order/addr", method = RequestMethod.POST, consumes = "application/json")
-	public void orderAddr(@RequestBody Map<String, String> param) {
-		Map<String, Object> map = new HashMap<>();
-		logger.info(":::::::::::/order/addr {}", "ENTERED");
-		map.put("customId", param.get("customId"));
-		map.put("customname", param.get("customName"));
-		map.put("customaddr1", param.get("customAddr1"));
-		map.put("detailAddr",
-				param.get("customAddr2") + "-" + param.get("customAddr3") + "-" + param.get("customAddr4"));
-		System.out.println(map.put("detailAddr",
-				param.get("customAddr2") + "-" + param.get("customAddr3") + "-" + param.get("customAddr4")));
-		map.put("phoneNum",
-				param.get("customPhone") + "-" + param.get("customPhone1") + "-" + param.get("customPhone2"));
-		map.put("customtext", param.get("customText"));
-		new IGetHashService() {
-
-			@Override
-			public Integer execute(HashMap<?, ?> param) {
-
-				return jMapper.basketAddr(param);
-			}
-		}.execute((HashMap<?, ?>) map);
-	}
-
-	@RequestMapping(value="/basket/delete", method= RequestMethod.POST, consumes = "application/json")
-	public Map<?,?> basketdelete(@RequestBody Map<String, String> param) {
-		logger.info(":::::::::::/basket/delete {}", "ENTERED");
-		Map<String, Object> map = new HashMap<>();
-		System.out.println("basketSeq: "+param.get("basketSeq"));
-		new IGetHashService() {
-			
-			@Override
-			public Object execute(HashMap<?, ?> param) {
-				return jMapper.deleteBasketByBasketSeq(param);
-			}
-		}.execute((HashMap<?, ?>) param);
-		return map;
-	}
-
-	@RequestMapping(value = "/basket/update", method = RequestMethod.POST, consumes = "application/json")
-	public String basketUpdate(@RequestBody List<Map<String, Object>> param) {
-		logger.info(":::::::::::basket/update {}", "ENTERED");
-		tx.updateList(param);
-		return null;
-	}
-
+	
 	@RequestMapping(value = "/addr/search/{id}", method = RequestMethod.GET)
 	public Map<?, ?> addrSearch(@PathVariable("id") String customId) {
 		logger.info(":::::::::::addr/search/ {}", "ENTERED");
@@ -290,35 +232,57 @@ public class JController {
 
 			@Override
 			public int execute(Command cmd) {
-				return jMapper.selectAddr(cmd);
+				return jMapper.selectAddrExist(cmd);
 			}
 		}.execute(cmd);
-		System.out.println(count + "count의 값은");
-		map.put("success", count);
+		System.out.println("해당 id의 주소 count의 값은"+count);
+		map.put("exist", count);
 		return map;
-
 	}
 
-	@RequestMapping(value = "/customer/join", method = RequestMethod.POST, consumes = "application/json")
-	public void customerJoind(@RequestBody Map<String, String> param) {
-		logger.info(":::::::::::/customer/join/ {}", "ENTERED");
+	@RequestMapping(value = "/post/addr", method = RequestMethod.POST, consumes = "application/json")
+	public Map<?,?> orderAddr(@RequestBody Map<String, String> param) {
+		Map<String, Object> paramMap = new HashMap<>();
 		Map<String, Object> map = new HashMap<>();
-		map.put("inputJoinId", param.get("inputJoinId"));
-		map.put("inputJoinPass", param.get("inputJoinPass"));
-		map.put("inputJoinName", param.get("inputJoinName"));
-		map.put("inputJoinEmail", param.get("inputJoinEmail"));
-		map.put("inputJoinPhoneNum", param.get("optionjoin") + "-" + param.get("inputJoinPhoneNum1") + "-"
-				+ param.get("inputJoinPhoneNum2"));
-		map.put("inputJoinEmailCheck", param.get("inputJoinEmailCheck"));
-		map.put("inputJoinMypageProfile", param.get("inputJoinMypageProfile"));
-		new IGetHashService() {
-
+		logger.info(":::::::::::/post/addr {}", "ENTERED");
+		System.out.println(paramMap.get("addr"));
+		
+		new IPostHashService() {
+			
 			@Override
-			public Integer execute(HashMap<?, ?> param) {
-				return jMapper.insertAddr(param);
+			public void execute(HashMap<?, ?> param) {
+				// TODO Auto-generated method stub
+				jMapper.insertOrderAddr(param);
 			}
-		}.execute((HashMap<?, ?>) map);
-
+		}.execute((HashMap<?, ?>) paramMap);
+		map.put("success", 1);
+		return map;
+	}
+	
+	@RequestMapping(value = "/customer/join", method = RequestMethod.POST, consumes = "application/json")
+	public Map<?,?> joinCustomer(@RequestBody Map<String, String> param) {
+		logger.info(":::::::::::/customer/join/ {}", "ENTERED");
+		Map<String, String> paramMap = new HashMap<>();
+		Map<String, Object> map = new HashMap<>();
+		paramMap.put("inputJoinId", param.get("inputJoinId"));
+		paramMap.put("inputJoinPass", param.get("inputJoinPass"));
+		paramMap.put("inputJoinName", param.get("inputJoinName"));
+		paramMap.put("inputJoinEmail", param.get("inputJoinEmail"));
+		paramMap.put("inputJoinPhoneNum", param.get("optionjoin") + "-" + param.get("inputJoinPhoneNum1") + "-"
+				+ param.get("inputJoinPhoneNum2"));
+		paramMap.put("inputJoinEmailCheck", param.get("inputJoinEmailCheck"));
+		paramMap.put("inputJoinMypageProfile", param.get("inputJoinMypageProfile"));
+		new IPostHashService() {
+			
+			@Override
+			public void execute(HashMap<?, ?> param) {
+				// TODO Auto-generated method stub
+				jMapper.insertCustomer(param);
+				
+			}
+		}.execute((HashMap<?, ?>) paramMap);;
+		map.put("success", 1);
+		return map;
 	}
 
 	@RequestMapping(value = "/joinId/search/{id}", method = RequestMethod.GET)
@@ -331,7 +295,7 @@ public class JController {
 
 			@Override
 			public int execute(Command cmd) {
-				return jMapper.joinidSearch(cmd);
+				return jMapper.selectIdExist(cmd);
 			}
 		}.execute(cmd);
 		map.put("success", count);

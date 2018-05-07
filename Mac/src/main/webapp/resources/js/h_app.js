@@ -9,26 +9,7 @@ app = (()=>{
 	};
 	return {init: init};
 })();
-/*app.route=(()=>{
-	return {
-		init : x => 
-		{
-			sessionStorage.setItem('x', x);
-		}, 
-		$ : ()=>{
-			return sessionStorage.getItem('x');
-		},
-		$j : ()=>{
-			return sessionStorage.getItem('x')+'/resources/js';
-		},
-		$c : ()=>{
-			return sessionStorage.getItem('x')+'/resources/css';
-		},
-		$i : ()=>{
-			return sessionStorage.getItem('x')+'/resources/img';
-		}
-	};
-})();*/
+
 var createTabList=x=>{
     var tab = '<table id="'+x.id+'" class="'+x.clazz+'">'
     +'<thead><tr>'
@@ -204,32 +185,46 @@ app.mainitem=(()=>{
 				.append('&nbsp;')
 				.append($(createSpanCon('glyphicon-menu-right')))
 				.append('&nbsp;')
-				.append($(createHTag({num:'4', id:'bread-main1', val:'섀도우'})).attr('style', 'display:inline; font-size:18px; font-weight:500; font-height:1.1;'))
+				.append($(createHTag({num:'4', id:'bread-main1', val:'섀도우'}))
+						.attr('style', 'display:inline; font-size:18px; font-weight:500; font-height:1.1;'))
 		);
 		
 		$('#item-div1')
-		.append($(createDiv({id:'grid-container-catalog', clazz:'grid-container-catalog'})).attr('style', 'width: 1281px; padding-top:40px; padding-right:15px; padding-left: 15px; margin-left: 151px; margin-right: 151px;')	
-				.append($(createDiv({id:'grid-row-catalog1', clazz:'grid-row-catalog'})).attr('style', 'position: relative; height: 540px; margin-bottom: 20px;'))
-				.append($(createDiv({id:'grid-row-catalog2', clazz:'grid-row-catalog'})).attr('style', 'position: relative; height: 540px; margin-bottom: 20px;'))
-				.append($(createDiv({id:'grid-row-catalog3', clazz:'grid-row-catalog'})).attr('style', 'position: relative; height: 540px; margin-bottom: 20px;'))
+		.append($(createDiv({id:'grid-container-catalog', clazz:'grid-container-catalog'}))
+				.attr('style', 'width: 1281px; padding-top:40px; padding-right:15px; padding-left: 15px; margin-left: 151px; margin-right: 151px;')	
+				.append($(createDiv({id:'grid-row-catalog1', clazz:'grid-row-catalog'}))
+						.attr('style', 'position: relative; height: 540px; margin-bottom: 20px;'))
+				.append($(createDiv({id:'grid-row-catalog2', clazz:'grid-row-catalog'}))
+						.attr('style', 'position: relative; height: 540px; margin-bottom: 20px;'))
+				.append($(createDiv({id:'grid-row-catalog3', clazz:'grid-row-catalog'}))
+						.attr('style', 'position: relative; height: 540px; margin-bottom: 20px;'))
 		);
 		for(var i=1; i<4; i++){
 				
 				for(var j=0; j<4; j++){
 						if(j==i){
 								$('#grid-row-catalog'+i)
-								.append($(createDiv({id:'test', clazz:''})).attr('style', 'position: absolute; top: 0px; left: '+(312.75*i)+'px; width: 312.75px; padding-left: 10px; padding-right: 10px; margin-bottom: 45px; display: inline-block; ')	
-										.append($(createDiv({clazz:'grid-item-catalog'})).attr('style', 'padding-top: 15px; height: 479px; border-top:1px solid black; background-color: black;')
-												.append($(createDiv({id:''})).attr('style','margin-top:100px;')
-														.append($(createDiv({id:''})).attr('style','margin-bottom: 12px;')
-																.append($(createHTag({num:'3', val:'쉐이드별 섀도우 구매하기'})).attr('style','color: white; text-align: center;'))
-														).append($(createDiv({id:''})).attr('style','margin-bottom: 18px;')
+								.append($(createDiv({id:'test', clazz:''}))
+										.attr('style', 'position: absolute; top: 0px; left: '+(312.75*i)+'px; width: 312.75px; padding-left: 10px; padding-right: 10px; margin-bottom: 45px; display: inline-block; ')	
+										.append($(createDiv({clazz:'grid-item-catalog'}))
+												.attr('style', 'padding-top: 15px; height: 479px; border-top:1px solid black; background-color: black;')
+												.append($(createDiv({id:''}))
+														.attr('style','margin-top:100px;')
+														.append($(createDiv({id:''}))
+																.attr('style','margin-bottom: 12px;')
+																.append($(createHTag({num:'3', val:'쉐이드별 섀도우 구매하기'}))
+																		.attr('style','color: white; text-align: center;'))
+														).append($(createDiv({id:''}))
+																.attr('style','margin-bottom: 18px;')
 																.append($(createHTag({num:'4', val:'베이지+브라운'})).attr('style','color: white; text-align: center;'))
-														).append($(createDiv({id:''})).attr('style','margin-bottom: 18px;')
+														).append($(createDiv({id:''}))
+																.attr('style','margin-bottom: 18px;')
 																.append($(createHTag({num:'4', val:'블루+그린'})).attr('style','color: white; text-align: center;'))
-														).append($(createDiv({id:''})).attr('style','margin-bottom: 18px;')
+														).append($(createDiv({id:''}))
+																.attr('style','margin-bottom: 18px;')
 																.append($(createHTag({num:'4', val:'그레이+블랙'})).attr('style','color: white; text-align: center;'))
-														).append($(createDiv({id:''})).attr('style','margin-bottom: 18px;')
+														).append($(createDiv({id:''}))
+																.attr('style','margin-bottom: 18px;')
 																.append($(createHTag({num:'4', val:'오렌지+퍼플'})).attr('style','color: white; text-align: center;'))
 														)
 												)
@@ -238,8 +233,10 @@ app.mainitem=(()=>{
 								
 						}else{
 								$('#grid-row-catalog'+i)
-								.append($(createDiv({clazz:''})).attr('style', 'position: absolute; top: 0px; left:'+(312.75*j)+'px; width: 312.75px; padding-left: 10px; padding-right: 10px; margin-bottom: 45px; display: inline-block; vertical-align: super;')	
-										.append($(createDiv({clazz:'grid-item-catalog'})).attr('style', 'padding-top: 15px; height: 479px; border-top:1px solid #c7c7c7;')
+								.append($(createDiv({clazz:''}))
+										.attr('style', 'position: absolute; top: 0px; left:'+(312.75*j)+'px; width: 312.75px; padding-left: 10px; padding-right: 10px; margin-bottom: 45px; display: inline-block; vertical-align: super;')	
+										.append($(createDiv({clazz:'grid-item-catalog'}))
+												.attr('style', 'padding-top: 15px; height: 479px; border-top:1px solid #c7c7c7;')
 												.append($(createDiv({id:''}))
 														.append($(createDiv({id:''}))
 																.append($(createHTag({num:'4', val:'아이섀도우', clazz:'pnt'})).attr('style', 'margin:0;')
@@ -249,10 +246,12 @@ app.mainitem=(()=>{
 														).append($(createDiv({id:''}))
 																.append($(createPTag({val:'EYE SHADOW'})))
 														)
-												).append($(createDiv({id:''})).attr('style','margin-left: 50px; float: right;')
+												).append($(createDiv({id:''}))
+														.attr('style','margin-left: 50px; float: right;')
 														.append($(createDiv({id:''}))
 																.append($(createHTag({num:'4', val:'★★★★★'})))
-														).append($(createDiv({id:''})).attr('style','float: right;')
+														).append($(createDiv({id:''}))
+																.attr('style','float: right;')
 																.append($(createHTag({num:'4', val:'♡'})))
 														)
 												).append($(createDiv({id:''}))
@@ -260,11 +259,15 @@ app.mainitem=(()=>{
 																.on('click', ()=>{
 																	app.item.onCreate({itemSeq:'10', itemCode:'3000'});
 																}))
-												).append($(createDiv({id:''})).attr('style', 'border-top: 1px solid #c7c7c7;')
-														.append($(createDiv({id:''})).attr('style','display: inline-block;')
-																.append($(createHTag({num:'4', val:'₩nn,nnn'})).attr('style', 'margin-bottom: 0; margin-top: 16px;'))
+												).append($(createDiv({id:''}))
+														.attr('style', 'border-top: 1px solid #c7c7c7;')
+														.append($(createDiv({id:''}))
+																.attr('style','display: inline-block;')
+																.append($(createHTag({num:'4', val:'₩nn,nnn'}))
+																		.attr('style', 'margin-bottom: 0; margin-top: 16px;'))
 														).append($(createDiv({id:''})).attr('style', 'margin-top: 8.5px; display: inline-block; float: right;')
-																.append($(createButton({val:'장바구니 담기'})).attr('style','border: 0; margin: 0; paddig: 0; width:130px; height:25px; background-color: black; color: white; font-size: 15px;'))
+																.append($(createButton({val:'장바구니 담기'}))
+																		.attr('style','border: 0; margin: 0; paddig: 0; width:130px; height:25px; background-color: black; color: white; font-size: 15px;'))
 														)
 												)
 										)		
@@ -289,27 +292,37 @@ app.item=(()=>{
 		
 		alert(d.item.itemName);
 		
-		
 		$content.empty();
-		$content.html($(createDiv({id: 'item-container', clazz: 'h-item-container'})).attr('style', ''));
+		$content.html($(createDiv({id: 'item-container', clazz: 'h-item-container'}))
+				.attr('style', ''));
 		
 		$('#item-container')
-		.append($(createDiv({id:'item-div0', clazz:''})).attr('style', 'border-bottom: 1px solid lightgray; width:100%; height:61px; '))
-		.append($(createDiv({id:'item-div1', clazz:''})).attr('style', 'border-bottom: 1px solid lightgray; width:100%; height:804.4px; '))
-		.append($(createDiv({id:'item-div2', clazz:''})).attr('style', 'border-bottom: 1px solid lightgray; width:100%; '))
-		.append($(createDiv({id:'item-div3', clazz:''})).attr('style', 'border-bottom: 1px solid lightgray; width:100%; height:659px; '))
+		.append($(createDiv({id:'item-div0', clazz:''}))
+				.attr('style', 'border-bottom: 1px solid lightgray; width:100%; height:61px; '))
+		.append($(createDiv({id:'item-div1', clazz:''}))
+				.attr('style', 'border-bottom: 1px solid lightgray; width:100%; height:804.4px; '))
+		.append($(createDiv({id:'item-div2', clazz:''}))
+				.attr('style', 'border-bottom: 1px solid lightgray; width:100%; '))
+		.append($(createDiv({id:'item-div3', clazz:''}))
+				.attr('style', 'border-bottom: 1px solid lightgray; width:100%; height:659px; '))
 		;
 		
 		$('#item-div1')
-		.append($(createDiv({id:'item-div1-1', clazz:'col-md-6'})).attr('style', 'height: 100%; '))
-		.append($(createDiv({id:'item-div1-2', clazz:'col-md-6'})).attr('style', 'height: 100%; padding-left: 85px; padding-right: 0px;'))
+		.append($(createDiv({id:'item-div1-1', clazz:'col-md-6'}))
+				.attr('style', 'height: 100%; '))
+		.append($(createDiv({id:'item-div1-2', clazz:'col-md-6'}))
+				.attr('style', 'height: 100%; padding-left: 85px; padding-right: 0px;'))
 		;
 		
 		$('#item-div2')
-		.append($(createDiv({id:''})).attr('style', 'width: 1281px; height: 417.5px; margin-right: auto; margin-left: auto; margin-bottom: 25px')
-				.append($(createDiv({id:'item-div2-1', clazz:''})).attr('style', 'padding-top: 40px; padding-bottom: 36px; height: 138.5px'))
-				.append($(createDiv({id:'item-div2-2', clazz:''})).attr('style', 'height: 254px'))
-				.append($(createDiv({id:'item-div2-3', clazz:''})).attr('style', 'height: 25px; padding-top: 7px'))		
+		.append($(createDiv({id:''}))
+				.attr('style', 'width: 1281px; height: 417.5px; margin-right: auto; margin-left: auto; margin-bottom: 25px')
+				.append($(createDiv({id:'item-div2-1', clazz:''}))
+						.attr('style', 'padding-top: 40px; padding-bottom: 36px; height: 138.5px'))
+				.append($(createDiv({id:'item-div2-2', clazz:''}))
+						.attr('style', 'height: 254px'))
+				.append($(createDiv({id:'item-div2-3', clazz:''}))
+						.attr('style', 'height: 25px; padding-top: 7px'))		
 		)
 		;
 		
@@ -319,15 +332,20 @@ app.item=(()=>{
 		;
 		
 		$('#item-div1-2')
-		.append($(createDiv({id:'item-div1-2-1', clazz: 'col-md-6'})).attr('style', 'border-left: 1px solid lightgray; height: 100%; ' ))
-		.append($(createDiv({id:'item-div1-2-2', clazz: 'col-md-6'})).attr('style', 'height: 100%; padding: 0'))
+		.append($(createDiv({id:'item-div1-2-1', clazz: 'col-md-6'}))
+				.attr('style', 'border-left: 1px solid lightgray; height: 100%; ' ))
+		.append($(createDiv({id:'item-div1-2-2', clazz: 'col-md-6'}))
+				.attr('style', 'height: 100%; padding: 0'))
 		;
 		$('#item-div1-2-1')
-		.append($(createDiv({id:'item-div1-2-1-1', clazz:''})).attr('style', 'width:100%; height: 204.4px; padding-top: 5px; padding-bottom: 0px;'))
-		.append($(createDiv({id:'item-div1-2-1-2', clazz:''})).attr('style', 'width:100%; height: calc(100%-204.4px); padding-bottom: 5px;'))
+		.append($(createDiv({id:'item-div1-2-1-1', clazz:''}))
+				.attr('style', 'width:100%; height: 204.4px; padding-top: 5px; padding-bottom: 0px;'))
+		.append($(createDiv({id:'item-div1-2-1-2', clazz:''}))
+				.attr('style', 'width:100%; height: calc(100%-204.4px); padding-bottom: 5px;'))
 		;
 		$('#item-div1-2-2')
-		.append($(createDiv({id:'item-div1-2-2-1', clazz:''})).attr('style', 'height: 520px; padding:0px;'))
+		.append($(createDiv({id:'item-div1-2-2-1', clazz:''}))
+				.attr('style', 'height: 520px; padding:0px;'))
 		;
 		
 		$('#item-div1-2-1-2')
@@ -342,15 +360,18 @@ app.item=(()=>{
 		
 		$('#item-div0')
 		.append($(createDiv({id:'',clazz:''})).attr('style','padding-left: 150px; padding-top: 20px;')
-				.append($(createHTag({num:'4', id:'bread-main1', val: '아이'})).attr('style', 'display:inline; '))
+				.append($(createHTag({num:'4', id:'bread-main1', val: '아이'}))
+						.attr('style', 'display:inline; '))
 				.append('&nbsp;')
 				.append($(createSpanCon('glyphicon-menu-right')))
 				.append('&nbsp;')
-				.append($(createATagh({href:'#', id:'bread-main1', val:'섀도우'})).attr('style', 'display:inline; font-size:18px; font-weight:500; font-height:1.1;'))
+				.append($(createATagh({href:'#', id:'bread-main1', val:'섀도우'}))
+						.attr('style', 'display:inline; font-size:18px; font-weight:500; font-height:1.1;'))
 				.append('&nbsp;')
 				.append($(createSpanCon('glyphicon-menu-right')))
 				.append('&nbsp;')
-				.append($(createHTag({num:'4', id:'bread-detail', val: d.item.commonName})).attr('style', 'display:inline; '))
+				.append($(createHTag({num:'4', id:'bread-detail', val: d.item.commonName}))
+						.attr('style', 'display:inline; '))
 		);
 		
 		
@@ -359,8 +380,10 @@ app.item=(()=>{
 				.attr('style', 'float: right; margin-right: 5px; width: 651px; hieght: 609px;'));
 		$('#carousel-example-generic')
 		.append($(createOL({clazz:'carousel-indicators'}))
-				.append($(createLIC({clazz:'active', dtarget:'#carousel-example-generic', dslide:'0'})).attr('style', 'border: 0.5px solid lightgray'))
-				.append($(createLIC({dtarget:'#carousel-example-generic', dslide:'1'})).attr('style', 'border: 0.5px solid lightgray'))
+				.append($(createLIC({clazz:'active', dtarget:'#carousel-example-generic', dslide:'0'}))
+						.attr('style', 'border: 0.5px solid lightgray'))
+				.append($(createLIC({dtarget:'#carousel-example-generic', dslide:'1'}))
+						.attr('style', 'border: 0.5px solid lightgray'))
 		).append($(createDiv({clazz:'carousel-inner'}))
 				.append($(createDiv({clazz:'item active'}))
 						.append($(createImg({src:$.image()+'/zoom'+d.item.picName+'-1.jpg', alt:''}))))
@@ -377,49 +400,74 @@ app.item=(()=>{
 		.append($(createDiv({id:'div-item-name'})).attr('style','padding-bottom:5px')
 				.append($(createHTag({num:'3', id: 'common-name', clazz: '', val:d.item.commonName})))
 				.append($(createPTag({id: 'common-name-eng', clazz:'', val:'EYE SHADOW'}))))
-		.append($(createDiv({id: 'description', clazz:''})).attr('style', 'margin-bottom: 11px;')
+		.append($(createDiv({id: 'description', clazz:''}))
+				.attr('style', 'margin-bottom: 11px;')
 				.append($(createDiv({id:'des-1', clazz:''}))
-						.append($(createATag({id: 'commond-rec', clazz:'', val:'제품설명'}))).attr('style', 'margin-bottom: 5px;'))
+						.append($(createATag({id: 'commond-rec', clazz:'', val:'제품설명'})))
+						.attr('style', 'margin-bottom: 5px;'))
 				.append($(createDiv({id:'des-2'}))
-						.append($(createATag({id: 'common-rec', clazz:'', val:'사용 추천'}))).attr('style', 'margin-bottom: 5px;'))
+						.append($(createATag({id: 'common-rec', clazz:'', val:'사용 추천'})))
+						.attr('style', 'margin-bottom: 5px;'))
 				.append($(createDiv({id:'des-3'}))
-						.append($(createATag({id: 'detail-info', clazz:'', val:'상세 정보'}))).attr('style', 'margin-bottom: 5px;'))
+						.append($(createATag({id: 'detail-info', clazz:'', val:'상세 정보'})))
+						.attr('style', 'margin-bottom: 5px;'))
 				.append($(createDiv({id:'des-4'}))
-						.append($(createATag({id: 'ingredient', clazz:'', val:'성분'}))).attr('style', 'margin-bottom: 5px;'))
-		).append($(createHr({clazz:''})).attr('style','border: 0.5px solid lightgray; width: 100%; margin: 0 auto;'));
+						.append($(createATag({id: 'ingredient', clazz:'', val:'성분'})))
+						.attr('style', 'margin-bottom: 5px;'))
+		).append($(createHr({clazz:''}))
+				.attr('style','border: 0.5px solid lightgray; width: 100%; margin: 0 auto;'));
 	
 	
 		$('#item-div1-2-1-2-1')
-		.append($(createDiv({id:'', claxx:''})).attr('style', 'padding-top: 15px; margin-bottom: 15px')
-				.append($(createATag({id: 'item-name1', clazz:'', val: d.item.itemName})).attr('style', 'margin-bottom: 5px;'))
-				.append($(createSpanCon({con:'glyphicon-triangle-right'})).attr('style', 'display: inline; float: right;'))
-		).append($(createHr({clazz:''})).attr('style','border: 0.5px solid lightgray; width: 100%; margin: 0 auto;'))
+		.append($(createDiv({id:'', claxx:''}))
+				.attr('style', 'padding-top: 15px; margin-bottom: 15px')
+				.append($(createATag({id: 'item-name1', clazz:'', val: d.item.itemName}))
+						.attr('style', 'margin-bottom: 5px;'))
+				.append($(createSpanCon({con:'glyphicon-triangle-right'}))
+						.attr('style', 'display: inline; float: right;'))
+		).append($(createHr({clazz:''}))
+				.attr('style','border: 0.5px solid lightgray; width: 100%; margin: 0 auto;'))
 		;
 		
 		$('#item-div1-2-1-2-2')
-		.append($(createDiv({id:'', clazz:''})).attr('style', 'margin-top: 8px; margin-bottom: 5px;')
-				.append($(createHTag({num: '3', id: 'item-name2', clazz:'', val: d.item.itemName})).attr('style', 'display: inline;'))
+		.append($(createDiv({id:'', clazz:''}))
+				.attr('style', 'margin-top: 8px; margin-bottom: 5px;')
+				.append($(createHTag({num: '3', id: 'item-name2', clazz:'', val: d.item.itemName}))
+						.attr('style', 'display: inline;'))
 				
 		).append($(createDiv({id:'', clazz:''}))
-				.append($(createPTag({id: 'color-exp', clazz:'', val: d.item.colorExp})).attr('style', 'margin-bottom: 3px')))
+				.append($(createPTag({id: 'color-exp', clazz:'', val: d.item.colorExp}))
+						.attr('style', 'margin-bottom: 3px')))
 		.append($(createDiv({id:'', clazz:''}))
-				.append($(createPTag({id: 'texture-exp', clazz:'', val: d.item.textureExp})).attr('style', 'margin-bottom: 3px')))
-		.append($(createDiv({id:'', clazz:''})).attr('style', 'margin-top: 25px;')
-				.append($(createPTag({id: 'item-grade', clazz:'', val:'전체 평점'})).attr('style', 'margin-bottom: 3px')))
-		.append($(createDiv({id:'', clazz:''})).attr('style', 'margin-top: 5px; margin-bottom: 25px;')
-				.append($(createATag({id: 'item-grade', val:'nn개의 모든 상품평 읽기'})).attr('style', 'margin-bottom: 3px'))
+				.append($(createPTag({id: 'texture-exp', clazz:'', val: d.item.textureExp}))
+						.attr('style', 'margin-bottom: 3px')))
+		.append($(createDiv({id:'', clazz:''}))
+				.attr('style', 'margin-top: 25px;')
+				.append($(createPTag({id: 'item-grade', clazz:'', val:'전체 평점'}))
+						.attr('style', 'margin-bottom: 3px')))
+		.append($(createDiv({id:'', clazz:''}))
+				.attr('style', 'margin-top: 5px; margin-bottom: 25px;')
+				.append($(createATag({id: 'item-grade', val:'nn개의 모든 상품평 읽기'}))
+						.attr('style', 'margin-bottom: 3px'))
 				.append('&nbsp;&nbsp;&nbsp;')
-				.append($(createATag({id: 'item-grade', val:'상품평 쓰기'})).attr('style', 'margin-bottom: 3px')))	
-		.append($(createHr({clazz:''})).attr('style','border: 0.5px solid lightgray; width: 100%; margin: 0 auto;'))
+				.append($(createATag({id: 'item-grade', val:'상품평 쓰기'}))
+						.attr('style', 'margin-bottom: 3px')))	
+		.append($(createHr({clazz:''}))
+				.attr('style','border: 0.5px solid lightgray; width: 100%; margin: 0 auto;'))
 		;
 		
 		$('#item-div1-2-1-2-3')
 		.append($(createDiv({id:'', clazz:''}))
-				.append($(createPTag({id: 'weight', clazz:'', val: d.item.weight+'g'})).attr('style', 'display:inline;'))
-				.append($(createATag({id: 'share', val:'공유하기'})).attr('style', 'display:inline; float: right;')))
-		.append($(createDiv({id:'', clazz:''})).attr('style', 'margin-top: 25px;')
-				.append($(createHTag({num:'4', id:'price', clazz:'', val:'₩'+d.item.price})).attr('style', 'display:inline; '))
-				.append($(createSpanCon({con: 'glyphicon-heart-empty'})).attr('style', 'display:inline; float: right;')))
+				.append($(createPTag({id: 'weight', clazz:'', val: d.item.weight+'g'}))
+						.attr('style', 'display:inline;'))
+				.append($(createATag({id: 'share', val:'공유하기'}))
+						.attr('style', 'display:inline; float: right;')))
+		.append($(createDiv({id:'', clazz:''}))
+				.attr('style', 'margin-top: 25px;')
+				.append($(createHTag({num:'4', id:'price', clazz:'', val:'₩'+d.item.price}))
+						.attr('style', 'display:inline; '))
+				.append($(createSpanCon({con: 'glyphicon-heart-empty'}))
+						.attr('style', 'display:inline; float: right;')))
 		;
 		$('#item-div1-2-1-2-4')
 		.append($(createDiv({id:'', clazz:''})).attr('style', 'margin-top: 25px;')
@@ -463,6 +511,12 @@ app.item=(()=>{
 			    })
 			},
 			error: function(x,s,m){alert(m);}
+			
+			
+			success: x=>{
+				
+			},
+			error: function(x,s,m){alert(m);}
 		});*/
 		$('#item-div1-2-2-1').attr('style', 'height: 550px; padding: 0px;')
 		.append($(createDiv({id:''})).attr('style','height:30px;')
@@ -473,25 +527,42 @@ app.item=(()=>{
 		.append($(createDiv({id: '', clazz: 'owl-carousel----'})).attr('style', 'height: calc(100% - 60px);')
 				.append($(createForm({id:''}))
 						.append($(createDiv({id:'', clazz:'btn-group-vertical', role:'group'}))
-								.append($(createLabel({clazz:'btn', val:''})).attr('style', 'border: 0; margin: 0; paddig: 0; background-color: #F7D9CB; width: 349px; height: 60px;')
-										.append($(createInput({type:'radio', name: 'itemSeq', val:'10', checked:'checked'})).attr('position: fixed; opacity: 0;')))
-								.append($(createLabel({clazz:'btn', val:''})).attr('style', 'border: 0; margin: 0; paddig: 0; background-color: #DAA378; width: 349px; height: 60px;')
-										.append($(createInput({type:'radio', name: 'itemSeq', val:'11'})).attr('position: fixed; opacity: 0;')))		
-								.append($(createLabel({clazz:'btn', val:''})).attr('style', 'border: 0; margin: 0; paddig: 0; background-color: #FF9FA7; width: 349px; height: 60px;')
-										.append($(createInput({type:'radio', name: 'itemSeq', val:'12'})).attr('position: fixed; opacity: 0;')))
-								.append($(createLabel({clazz:'btn', val:''})).attr('style', 'border: 0; margin: 0; paddig: 0; background-color: #FFDCA5; width: 349px; height: 60px;')
-										.append($(createInput({type:'radio', name: 'itemSeq', val:'13'})).attr('position: fixed; opacity: 0;')))
-								.append($(createLabel({clazz:'btn', val:''})).attr('style', 'border: 0; margin: 0; paddig: 0; background-color: #A7624E; width: 349px; height: 60px;')
-										.append($(createInput({type:'radio', name: 'itemSeq', val:'14'})).attr('position: fixed; opacity: 0;')))
-								.append($(createLabel({clazz:'btn', val:''})).attr('style', 'border: 0; margin: 0; paddig: 0; background-color: #AC766A; width: 349px; height: 60px;')
-										.append($(createInput({type:'radio', name: 'itemSeq', val:'15'})).attr('position: fixed; opacity: 0;')))
-								.append($(createLabel({clazz:'btn', val:''})).attr('style', 'border: 0; margin: 0; paddig: 0; background-color: #F9EDE8; width: 349px; height: 60px;')
-										.append($(createInput({type:'radio', name: 'itemSeq', val:'16'})).attr('position: fixed; opacity: 0;')))
-								.append($(createLabel({clazz:'btn', val:''})).attr('style', 'border: 0; margin: 0; paddig: 0; background-color: #B7AFB3; width: 349px; height: 60px;')
-										.append($(createInput({type:'radio', name: 'itemSeq', val:'17'})).attr('position: fixed; opacity: 0;')))
+								.append($(createLabel({clazz:'btn', val:''}))
+										.attr('style', 'border: 0; margin: 0; paddig: 0; background-color: #F7D9CB; width: 349px; height: 60px;')
+										.append($(createInput({type:'radio', name: 'itemSeq', val:'10', checked:'checked'}))
+												.attr('position: fixed; opacity: 0;')))
+								.append($(createLabel({clazz:'btn', val:''}))
+										.attr('style', 'border: 0; margin: 0; paddig: 0; background-color: #DAA378; width: 349px; height: 60px;')
+										.append($(createInput({type:'radio', name: 'itemSeq', val:'11'}))
+												.attr('position: fixed; opacity: 0;')))		
+								.append($(createLabel({clazz:'btn', val:''}))
+										.attr('style', 'border: 0; margin: 0; paddig: 0; background-color: #FF9FA7; width: 349px; height: 60px;')
+										.append($(createInput({type:'radio', name: 'itemSeq', val:'12'}))
+												.attr('position: fixed; opacity: 0;')))
+								.append($(createLabel({clazz:'btn', val:''}))
+										.attr('style', 'border: 0; margin: 0; paddig: 0; background-color: #FFDCA5; width: 349px; height: 60px;')
+										.append($(createInput({type:'radio', name: 'itemSeq', val:'13'}))
+												.attr('position: fixed; opacity: 0;')))
+								.append($(createLabel({clazz:'btn', val:''}))
+										.attr('style', 'border: 0; margin: 0; paddig: 0; background-color: #A7624E; width: 349px; height: 60px;')
+										.append($(createInput({type:'radio', name: 'itemSeq', val:'14'}))
+												.attr('position: fixed; opacity: 0;')))
+								.append($(createLabel({clazz:'btn', val:''}))
+										.attr('style', 'border: 0; margin: 0; paddig: 0; background-color: #AC766A; width: 349px; height: 60px;')
+										.append($(createInput({type:'radio', name: 'itemSeq', val:'15'}))
+												.attr('position: fixed; opacity: 0;')))
+								.append($(createLabel({clazz:'btn', val:''}))
+										.attr('style', 'border: 0; margin: 0; paddig: 0; background-color: #F9EDE8; width: 349px; height: 60px;')
+										.append($(createInput({type:'radio', name: 'itemSeq', val:'16'}))
+												.attr('position: fixed; opacity: 0;')))
+								.append($(createLabel({clazz:'btn', val:''}))
+										.attr('style', 'border: 0; margin: 0; paddig: 0; background-color: #B7AFB3; width: 349px; height: 60px;')
+										.append($(createInput({type:'radio', name: 'itemSeq', val:'17'}))
+												.attr('position: fixed; opacity: 0;')))
 						)
 				)
-		).append($(createDiv({id:''})).attr('style','height:30px;')
+		).append($(createDiv({id:''}))
+				.attr('style','height:30px;')
 				.append($(createButton({type:'button', id:'scroll-down ', val: '∨'}))
 						.attr('style', 'color: white; text-align: center; background-color:black; width: 100%; height:100%; border-style: solid; border-color: white; border-width: 0; display: inline-block; cursor:point;'))
 				//.append($(createSpanCon({con:'glyphicon-chevron-down' })).attr('style', 'margin: 0 auto;'))	
@@ -504,10 +575,14 @@ app.item=(()=>{
 		
 		
 		$('#item-div2-1')
-		.append($(createDiv({id:''})).attr('style','display: table; margin-right: auto; margin-left: auto;')
-				.append($(createHTag({num: '2', id:'title-galary', clazz:'', val:'#MACCOSMETICS'})).attr('style', 'margin: 0')))
-		.append($(createDiv({id:''})).attr('style','display: table; margin-right: auto; margin-left: auto;')
-				.append($(createPTag({id:'subtitle-galary', clazz:'', val: '당신의 #MACCOSMETICS를 보여주세요'})).attr('style','margin-bottom:0')))				
+		.append($(createDiv({id:''}))
+				.attr('style','display: table; margin-right: auto; margin-left: auto;')
+				.append($(createHTag({num: '2', id:'title-galary', clazz:'', val:'#MACCOSMETICS'}))
+						.attr('style', 'margin: 0')))
+		.append($(createDiv({id:''}))
+				.attr('style','display: table; margin-right: auto; margin-left: auto;')
+				.append($(createPTag({id:'subtitle-galary', clazz:'', val: '당신의 #MACCOSMETICS를 보여주세요'}))
+						.attr('style','margin-bottom:0')))				
 		;
 
 		
@@ -517,27 +592,37 @@ app.item=(()=>{
 		
 		$('#item-div2-3')
 		.append($(createDiv({id:'',})).attr('style','padding-right: 25px')
-				.append($(createATag({id:'plus-pic', clazz:'', val:'사진 추가 '})).attr('style','display: inline; float: right;'))
+				.append($(createATag({id:'plus-pic', clazz:'', val:'사진 추가 '}))
+						.attr('style','display: inline; float: right;'))
 				.append('&nbsp;&nbsp;').attr('style','display: inline; float: right;')
-				.append($(createATag({id:'galary', clazz:'', val:'갤러리보기'})).attr('style','display: inline; float: right;'))
+				.append($(createATag({id:'galary', clazz:'', val:'갤러리보기'}))
+						.attr('style','display: inline; float: right;'))
 		);
 		$('#item-div3-1')
-		.append($(createDiv({id:''})).attr('style','display: table; margin-right: auto; margin-left: auto; height: 110px; margin-top: 4.5px; margin-bottom: 4.5px; padding-top: 40px; padding-top: 40px;')
-				.append($(createHTag({num:'2', clazz:'', val:'함께 쓰면 좋은 제품'})).attr('style', 'margin:0'))
+		.append($(createDiv({id:''}))
+				.attr('style','display: table; margin-right: auto; margin-left: auto; height: 110px; margin-top: 4.5px; margin-bottom: 4.5px; padding-top: 40px; padding-top: 40px;')
+				.append($(createHTag({num:'2', clazz:'', val:'함께 쓰면 좋은 제품'}))
+						.attr('style', 'margin:0'))
 				
 		);
-		$('#item-div3-2').attr('style','width: 1281px; margin-left: 151px; margin-right: 151px; height: 480px; margin-bottom: 15px;')
-		.append($(createDiv({clazz:'grid-container-catalog'})).attr('sytle', 'width:100%; margin: 0 auto;')	
-				.append($(createDiv({id:'grid-row-catalog', clazz:'grid-row-catalog'})).attr('style', 'position: relative; height: 540px; margin-bottom: 20px;')));
+		$('#item-div3-2')
+		.attr('style','width: 1281px; margin-left: 151px; margin-right: 151px; height: 480px; margin-bottom: 15px;')
+		.append($(createDiv({clazz:'grid-container-catalog'}))
+				.attr('sytle', 'width:100%; margin: 0 auto;')	
+				.append($(createDiv({id:'grid-row-catalog', clazz:'grid-row-catalog'}))
+						.attr('style', 'position: relative; height: 540px; margin-bottom: 20px;')));
 	
 	
 		for(var j=0; j<4; j++){
 				$('#grid-row-catalog')
-				.append($(createDiv({clazz:''})).attr('style', 'position: absolute; top: 0px; left:'+(312.75*j)+'px; width: 312.75px; padding-left: 10px; padding-right: 10px; margin-bottom: 45px; display: inline-block; vertical-align: super;')	
-						.append($(createDiv({clazz:'grid-item-catalog'})).attr('style', 'padding-top: 15px; height: 479px; border-top:1px solid #c7c7c7;')
+				.append($(createDiv({clazz:''}))
+						.attr('style', 'position: absolute; top: 0px; left:'+(312.75*j)+'px; width: 312.75px; padding-left: 10px; padding-right: 10px; margin-bottom: 45px; display: inline-block; vertical-align: super;')	
+						.append($(createDiv({clazz:'grid-item-catalog'}))
+								.attr('style', 'padding-top: 15px; height: 479px; border-top:1px solid #c7c7c7;')
 								.append($(createDiv({id:''}))
 										.append($(createDiv({id:''}))
-												.append($(createHTag({num:'4', val:'아이섀도우', clazz:'pnt'})).attr('style', 'margin:0;')
+												.append($(createHTag({num:'4', val:'아이섀도우', clazz:'pnt'}))
+														.attr('style', 'margin:0;')
 														.on('click', ()=>{
 															app.item.onCreate({itemSeq:'2', itemCode:'3000'});
 														}))
@@ -547,7 +632,8 @@ app.item=(()=>{
 								).append($(createDiv({id:''})).attr('style','margin-left: 50px; float: right;')
 										.append($(createDiv({id:''}))
 												.append($(createHTag({num:'4', val:'★★★★★'})))
-										).append($(createDiv({id:''})).attr('style','float: right;')
+										).append($(createDiv({id:''}))
+												.attr('style','float: right;')
 												.append($(createHTag({num:'4', val:'♡'})))
 										)
 								).append($(createDiv({id:''}))
@@ -556,10 +642,13 @@ app.item=(()=>{
 													app.item.onCreate({itemSeq:'2', itemCode:'3000'});
 												}))
 								).append($(createDiv({id:''})).attr('style', 'border-top: 1px solid #c7c7c7;')
-										.append($(createDiv({id:''})).attr('style','display: inline-block;')
+										.append($(createDiv({id:''}))
+												.attr('style','display: inline-block;')
 												.append($(createHTag({num:'4', val:'₩nn,nnn'})).attr('style', 'margin-bottom: 0; margin-top: 16px;'))
-										).append($(createDiv({id:''})).attr('style', 'margin-top: 8.5px; display: inline-block; float: right;')
-												.append($(createButton({val:'장바구니 담기'})).attr('style','border: 0; margin: 0; paddig: 0; width:130px; height:25px; background-color: black; color: white; font-size: 15px;'))
+										).append($(createDiv({id:''}))
+												.attr('style', 'margin-top: 8.5px; display: inline-block; float: right;')
+												.append($(createButton({val:'장바구니 담기'}))
+														.attr('style','border: 0; margin: 0; paddig: 0; width:130px; height:25px; background-color: black; color: white; font-size: 15px;'))
 										)
 								)
 						)		
