@@ -3,6 +3,22 @@
   PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.mac.web.mapper.Mapper">
+<resultMap type="java.util.HashMap" id="itemMap">
+	<id property="itemSeq" column="item_seq" />
+	<result property="itemName" column="item_name"/>
+	<result property="itemStock" column="item_stock"/>
+	<result property="colorExp" column="color_exp"/>
+	<result property="textureExp" column="texture_exp"/>
+	<result property="picName" column="pic_name"/>
+	<result property="itemCode" column="item_code"/>
+	<result property="commonName" column="common_name"/>
+	<result property="commonExp" column="common_exp"/>
+	<result property="price" column="price"/>
+	<result property="discount" column="discount"/>
+	<result property="detailInfo" column="detail_info"/>
+	<result property="ingredient" column="ingredient"/>
+	<result property="weight" column="weight"/>
+</resultMap>
  	<select  id="joinidSearch" resultType="int" parameterType="com.mac.web.domain.Command">
  		SELECT COUNT(*)
  		  FROM customer
@@ -80,9 +96,9 @@
        AND  b.custom_id = #{customid}
     </select>
        <select id="searchChart" resultType="map" parameterType="hashMap">
-		SELECT 	count(*) count
+		SELECT 	count
 			  , sell_date as sellDate
-		 FROM sellcount
+		 FROM chart
 		WHERE item_code=item_code
 	 GROUP BY sell_date,item_code,sell_date
     </select>
@@ -205,4 +221,28 @@
   			  FROM basket
   			 WHERE basket_seq = #{basketSeq}
     </delete>
+        <delete id="deleteBasketById" parameterType="hashMap">
+    		DELETE
+  			  FROM basket
+  			 WHERE custom_id = #{customid}
+    </delete>
+    <select id="findByItemCodenItemSeq" parameterType="hashMap" resultMap="itemMap">
+	select i.item_seq,
+		i.item_name,
+		i.item_stock,
+		i.color_exp,
+		i.texture_exp,
+		i.pic_name,
+		c.item_code,
+		c.common_name,
+		c.common_exp,
+		c.price,
+		c.discount,
+		c.detail_info,
+		c.ingredient,
+		c.weight
+	from item i, common_feature c
+	where i.item_seq like ${itemSeq}
+		and c.item_code like #{itemCode};
+</select>
 </mapper>

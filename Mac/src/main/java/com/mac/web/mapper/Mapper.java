@@ -32,4 +32,6 @@ public interface Mapper {
 	public List<?> macOrderBasket(HashMap<?, ?> param);
 	public List<?> searchOrderBasket(HashMap<?, ?> param);
 	public List<?> searchChart(HashMap<?, ?> param);
+	public void deleteBasketById(HashMap<?, ?> param);
+	public HashMap<?,?> findByItemCodenItemSeq(HashMap<?,?> param);
 }

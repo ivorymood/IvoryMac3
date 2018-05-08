@@ -12,3 +12,10 @@ function Router(x){
 	}
 	
 }
+function Customer(x){
+	sessionStorage.setItem('customer', x);
+	
+	return{
+		get: ()=>{return sessionStorage.getItem('customer');}
+	}
+}

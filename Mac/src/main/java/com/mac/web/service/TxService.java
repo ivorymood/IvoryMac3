@@ -43,5 +43,33 @@ public class TxService implements ITxService  {
 		}.execute((HashMap<?, ?>) map);
 		return null;
 	}
+	@Override @Transactional
+	public String executes(Map<String, String> param) {
+		System.out.println("이쪽으로 들어옴");
+		Map<String,Object> map = new HashMap<>();
+		 map.put("customid", param.get("customId"));
+         map.put("customname", param.get("customName"));
+         map.put("customaddr1", param.get("customAddr1"));
+         map.put("detailAddr", param.get("customAddr2")+"-"+param.get("customAddr3")+"-"+param.get("customAddr4"));
+         map.put("phoneNum", param.get("customPhone")+"-"+param.get("customPhone1")+"-"+param.get("customPhone2"));
+         map.put("customtext", param.get("customText"));
+         new IGetHashService() {
+				
+				@Override
+				public Integer execute(HashMap<?, ?> param) {
+					
+					return mapper.basketAddr(param);
+				}
+			}.execute((HashMap<?, ?>) map);
+		new IDeleteService() {
+			
+			@Override
+			public void execute(HashMap<?, ?> param) {
+				mapper.deleteBasketById(param);
+				
+			}
+		}.execute((HashMap<?, ?>) map);
+		return null;
+	}
 
 }

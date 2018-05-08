@@ -6,13 +6,11 @@ import java.util.Map;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-
 import org.springframework.web.bind.annotation.RestController;
 
 import com.mac.web.domain.Command;
@@ -20,16 +18,28 @@ import com.mac.web.domain.Item;
 import com.mac.web.mapper.Mapper;
 import com.mac.web.service.ICountService;
 import com.mac.web.service.IGetHashService;
-import com.mac.web.service.IGetService;
 import com.mac.web.service.ITxService;
 @RestController
 public class JController {
-
-    @Autowired Mapper mapper;
+	@Autowired Mapper mapper;
     @Autowired Command cmd;
     @Autowired Item item; 
     @Autowired ITxService tx;
-    
+    @RequestMapping(value="/hyunyu/item/{code1}/{code2}", method=RequestMethod.GET )
+	public Map<?,?> getItem(@PathVariable("code1") String itemSeq, @PathVariable("code2") String itemCode){
+		Map<String, Object> map = new HashMap<>();
+		Map<String, Object> param = new HashMap<>();
+		param.put("itemSeq", Integer.parseInt(itemSeq));
+		param.put("itemCode", itemCode);
+		map.put("item", new IGetHashService() {
+			
+			@Override
+			public Object execute(HashMap<?, ?> param) {
+				return mapper.findByItemCodenItemSeq(param);
+			}
+		}.execute((HashMap<?, ?>) param));
+		return map;
+	}
     @RequestMapping("/basket/delete")
     public String basketdelete(@RequestBody Map<String,String> param
     		, HttpServletRequest request) { 
@@ -37,7 +47,7 @@ public class JController {
     	 map.put("basketSeq", param.get("basketSeq"));
 		return tx.delete((HashMap<?, ?>) map);
     }
-	@RequestMapping(value="/basket/update",method=RequestMethod.POST,consumes="application/json")
+	@RequestMapping(value="/basket/update/{id}",method=RequestMethod.POST,consumes="application/json")
     public String basketUpdate(@RequestBody List<Map<String, Object>> param
     		, HttpServletRequest request) { 
 		return tx.execute(param);
@@ -78,21 +88,10 @@ public class JController {
                 return mapper.exist(cmd);
             }
         }.execute(cmd);
-        map.put("success", count);
         if(count==1) {  
-            map.put("customer", new IGetService() {
-                
-                @Override
-                public Object execute(Command cmd) {
-                    return mapper.serachCustomerById(cmd);
-                }
-            }.execute(cmd));            
-            HttpSession session = request.getSession();
-            session.setAttribute("name", param.get("customId"));
-            
-            System.out.println(session.getAttribute("name"));
+        	map.put("customId", param.get("customId"));
         }
-        
+        map.put("success", count);
         return map;
     }
     @RequestMapping(value="/customer/join/",method=RequestMethod.POST,consumes="application/json")
@@ -102,7 +101,8 @@ public class JController {
     	map.put("inputJoinPass", param.get("inputJoinPass"));
     	map.put("inputJoinName", param.get("inputJoinName"));
     	map.put("inputJoinEmail", param.get("inputJoinEmail"));
-    	map.put("inputJoinPhoneNum",param.get("optionjoin")+"-"+param.get("inputJoinPhoneNum1")+"-"+param.get("inputJoinPhoneNum2"));
+    	System.out.println(param.get("inputJoinPhoneNum")+"전화번호");
+    	map.put("inputJoinPhoneNum",param.get("inputJoinPhoneNum")+"-"+param.get("inputJoinPhoneNum1")+"-"+param.get("inputJoinPhoneNum2"));
     	map.put("inputJoinEmailCheck", param.get("inputJoinEmailCheck"));
     	map.put("inputJoinMypageProfile", param.get("inputJoinMypageProfile"));
     	new IGetHashService() {
@@ -131,11 +131,11 @@ public class JController {
         
     	return map;
     }
-    @RequestMapping("/mypage/")
-    public Map<?,?> mypage(HttpServletRequest request) {
+    @RequestMapping("/mypage/{id}")
+    public Map<?,?> mypage(@PathVariable("id") String customId) {
         Map<String,Object> map = new HashMap<>();
-        HttpSession session = request.getSession();
-        map.put("customid",session.getAttribute("name"));
+        System.out.println(customId);
+        map.put("customid", customId);
         map.put("mypage", new IGetHashService() {
             
             @Override
@@ -143,6 +143,14 @@ public class JController {
                 return mapper.selectMypage(param);
             }
         }.execute((HashMap<?, ?>) map));  
+        return map;
+    }
+    @RequestMapping("/search/addr/{id}")
+    public Map<?,?> findAddr(@PathVariable("id") String customId) {
+        Map<String,Object> map = new HashMap<>();
+        System.out.println(customId);
+        map.put("customid", customId);
+
         return map;
     }
     @RequestMapping("/search/")
@@ -158,12 +166,10 @@ public class JController {
         return map;
     }
 
-    @RequestMapping("/basket/search")
-    public Map<?,?> basketSearch(HttpServletRequest request) {
+    @RequestMapping("/basket/search/{id}")
+    public Map<?,?> basketSearch(@PathVariable("id") String customId) {
         Map<String,Object> map = new HashMap<>();
-        HttpSession session = request.getSession();
-       
-        map.put("customid",session.getAttribute("name"));
+        map.put("customid", customId);
         map.put("basketOrder", new IGetHashService() {
             
             @Override
@@ -173,12 +179,11 @@ public class JController {
         }.execute((HashMap<?, ?>) map));  
         return map;
     }
-    @RequestMapping("/order/search")
-    public Map<?,?> orderSearch(HttpServletRequest request) {
+    @RequestMapping("/order/search/{id}")
+    public Map<?,?> orderSearch(@PathVariable("id") String customId) {
+    	System.out.println("오더서치 들어옴");
         Map<String,Object> map = new HashMap<>();
-        HttpSession session = request.getSession();
-       
-        map.put("customid",session.getAttribute("name"));
+        map.put("customid", customId);
         map.put("orderSearch", new IGetHashService() {
             
             @Override
@@ -188,11 +193,10 @@ public class JController {
         }.execute((HashMap<?, ?>) map));  
         return map;
     }
-    @RequestMapping("/basket/totalPrice")
-    public Map<?,?> basketTotalPrice(HttpServletRequest request) {
+    @RequestMapping("/basket/totalPrice/{id}")
+    public Map<?,?> basketTotalPrice(@PathVariable("id") String customId) {
         Map<String,Object> map = new HashMap<>();
-        HttpSession session = request.getSession();
-        map.put("customid",session.getAttribute("name"));
+        map.put("customid", customId);
         map.put("basketTotalPrice", new IGetHashService() { 
             @Override
             public Object execute(HashMap<?, ?> param) {
@@ -201,15 +205,14 @@ public class JController {
         }.execute((HashMap<?, ?>) map));  
         return map;
     }
-    @RequestMapping(value="/basket/order",method=RequestMethod.POST,consumes="application/json")
+    @RequestMapping(value="/basket/order/{id}",method=RequestMethod.POST,consumes="application/json")
     public Map<?,?> basketOrder(@RequestBody Map<String, String> param
-            ,HttpServletRequest request) {
+            ,@PathVariable("id") String customId) {
         Map<String,Object> map = new HashMap<>();
-        HttpSession session = request.getSession();
-        map.put("customid",session.getAttribute("name"));
+        map.put("customid", customId);
         map.put("itemseq", param.get("itemseq"));
         map.put("itemcode", param.get("itemcode"));
-        cmd.setCol1((String) session.getAttribute("name"));
+        cmd.setCol1(param.get(customId));
         cmd.setCol2(param.get("itemseq"));
         int count = 0;
         count = new ICountService() {
@@ -242,7 +245,15 @@ public class JController {
         }
         return map;
     }
-       @RequestMapping(value="/order/addr",method=RequestMethod.POST,consumes="application/json")
+	@RequestMapping(value="/order/addr/",method=RequestMethod.POST,consumes="application/json")
+    public Map<?,?> orderAddr(@RequestBody Map<String, String> param) { 
+		System.out.println("orderaddr 컨트롤러 들어옴");
+		 Map<String,Object> map = new HashMap<>();
+		 tx.executes(param);
+		return map;
+    	} 
+    
+/*       @RequestMapping(value="/order/addr",method=RequestMethod.POST,consumes="application/json")
         public void orderAddr(@RequestBody Map<String, String> param
                 ,HttpServletRequest request) {
             Map<String,Object> map = new HashMap<>();
@@ -262,7 +273,7 @@ public class JController {
 					return mapper.basketAddr(param);
 				}
 			}.execute((HashMap<?, ?>) map);
-    }
+    }*/
        @RequestMapping(value="/chart/search")
        public Map<?,?> chartSearch(){
     	Map<String,Object> map = new HashMap<>();

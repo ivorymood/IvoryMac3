@@ -8,6 +8,7 @@ import org.springframework.stereotype.Component;
 @Component
 
 public interface ITxService {
+	public String executes(Map<String, String> param);
 	public String execute(List<Map<String, Object>> param);
 	public String delete(HashMap<?, ?> param);
 

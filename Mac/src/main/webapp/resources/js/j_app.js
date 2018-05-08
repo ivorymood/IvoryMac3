@@ -71,6 +71,9 @@ var createSelect=()=>{
 var createOption=x=>{
 	return '<option id="option-join">'+x.val+'</option>'
 }
+var createOptionJoin=x=>{
+	return '<option id="createOptionJoin">'+x.val+'</option>'
+}
 
 
 var createDiv=x=>{
@@ -221,7 +224,7 @@ app.basketUpdate=(()=>{
 			$('#div-modal-body').empty();
 			$('#div-modal-body').html($(createDiv({id:'first_delete',clazz:''})));
 			$('#modal-footer').html($(createDiv({id:'second_delete',clazz:''})))
-			$.getJSON(context+'/basket/search',e=>{
+			$.getJSON(context+'/basket/search/'+sessionStorage.getItem('customer'),e=>{
 				 var basketObj = e.basketOrder;
 				 console.log(e.basketOrder);
 				 for(var i =0 ;  i < basketObj.length ; i++){
@@ -272,7 +275,7 @@ app.basketUpdate=(()=>{
 												 basketSeq : $(this).attr("basketSeq")
 										 }
 										$.ajax({
-											 url:context+'/basket/delete',
+											 url:context+'/basket/delete/',
 											 method:'POST',
 											 data: JSON.stringify(jason),
 											 dataType:'json',
@@ -285,7 +288,7 @@ app.basketUpdate=(()=>{
 				 	
 				 
 			 });
-			 $.getJSON(context+'/basket/totalPrice',e=>{
+			 $.getJSON(context+'/basket/totalPrice/'+sessionStorage.getItem('customer'),e=>{
 				 var basketObjTotal = e.basketTotalPrice;
 				 console.log(basketObjTotal);
 			$(createDiv({id:'modal-footer',clazz:'modal-footer'}))
@@ -350,7 +353,6 @@ app.orders=(()=>{
 			 	$('#a-basket').remove();
 			 	$('#btn-login-default').remove();
 			 	$('#btn-admin').remove();
-			 	$('#btn-main-go').on('click',()=>{app.loginAfter.onCreate();})
 				$('#content').empty();
 				$('#content').html($(createDiv({id:'div-orders',clazz:''}))
 					.attr('style','height:1200px;'));
@@ -385,21 +387,19 @@ app.orders=(()=>{
 									.append($(createDiv({id:'',clazz:''}))
 										.attr('style','display: inline-block; margin-left: 80px;    padding: 10px;')
 										.append($(createHTag({num:'2',val:'총합계'}))))));
-					
-					 $.getJSON(context+'/order/search',e=>{
+					 $.getJSON(context+'/order/search/'+sessionStorage.getItem('customer'),e=>{
 						 var orderObj = e.orderSearch;
-						 console.log(e.basketOrder);
-						 for(var i =0 ;  i <= orderObj.length ; i++){
+						 console.log(e.orderSearch);
+						 for(var i =0 ;  i < orderObj.length ; i++){
 							if(i > orderObj.length){
 								return false;
 							}
-							console.log(orderObj[i]);
 							$("#div-order-float").append("<div class='row'></div>")
 									.append($(createDiv({id:'',clazz:''}))
 									.attr('style','float: left;    width: 1000px; margin-left: 30px;border-top: 1px solid #c7c7c7;')
 									.append($(createDiv({id:'',clazz:''}))
 											.attr('style','display: inline-block; float: left;')
-											.append($(createBasketImg({img:orderObj[i].picName+".jpg"}))))
+											.append($(createBasketImg({img:orderObj[i].picName+'.jpg'}))))
 										.append($(createDiv({id:'',clazz:''}))
 											.attr('style','display: inline-block; margin-left: 30px;width: 170px;')
 											.append($(createDiv({id:'',clazz:''}))
@@ -411,9 +411,9 @@ app.orders=(()=>{
 											.append($(createDiv({id:'',clazz:''}))
 												.append($(createHTag({num:'5',val:orderObj[i].itemName})))))
 											.append($(createDiv({id:'',clazz:''}))
-												.attr('style','display: inline-block;    margin-left: 115;')
-												.append($(createHTag({num:'5',val:'₩'+orderObj[i].price})))
-												.append($(createHTag({num:'5',val:'₩'+orderObj[i].discountPrice}))))
+												.attr('style','display: inline-block;    margin-left: 100px;')
+												.append($(createHTag({num:'5',val:'정상가:'+'₩'+orderObj[i].price})))
+												.append($(createHTag({num:'5',val:'할인가:'+'₩'+orderObj[i].discountPrice}))))
 											.append($(createDiv({id:'',clazz:''}))
 												.attr('style','display: inline-block;')
 												.append($(createDiv({id:'',clazz:''}))
@@ -467,7 +467,7 @@ app.orders=(()=>{
 										.append($(createDiv({id:'',clazz:''}))
 											.append($(createATag({id:'',clazz:'',val:'최대 구매수량 정책'}))))))));
 					
-				 $.getJSON(context+'/basket/totalPrice',e=>{
+				 $.getJSON(context+'/basket/totalPrice/'+sessionStorage.getItem('customer'),e=>{
 					 var basketObjTotal = e.basketTotalPrice;
 					 console.log(basketObjTotal);
 					$('#div-orders').append($(createDiv({id:'',clazz:''}))
@@ -513,6 +513,7 @@ app.orders=(()=>{
 																var addr = e.success;
 																console.log(e.success);
 																if(addr==1){
+																	app.cash.onCreate();
 																	alert('기본배송지가 있습니다');
 																}else{
 																    alert('배송지를 입력해주세요');
@@ -546,12 +547,45 @@ app.chart=(()=>{
 	     setContentView();
 	 };
 	 var setContentView=()=>{		
-			 $.getScript(view,()=>{ 
-				 alert('작동함');
-				 $('#content').empty();
+			 $.getScript(view,()=>{ 		
 				 $('#footer').attr('style','margin-top:100px;')
-				 $('#content').html($(createDiv({id:'chart_div',clazz:''}))
-					 .attr('style','width: 900px; height: 500px;'))
+			 $.getJSON(context+'/chart/search',e=>{
+					 google.charts.load('current', {'packages':['bar']});
+					 google.charts.setOnLoadCallback(drawChart);
+		    	  var chartObj = e.chart;
+		    	  console.log(chartObj);
+		    	  
+		      function drawChart() {
+    			  var data = google.visualization.arrayToDataTable([
+		          ['Year', '립스틱', '아이섀도우', '마스카라'],
+		          [chartObj[0].sellDate, chartObj[0].count, chartObj[1].count, chartObj[2].count],
+		          [chartObj[3].sellDate, chartObj[3].count, chartObj[4].count, chartObj[5].count],
+		          [chartObj[6].sellDate, chartObj[6].count, chartObj[7].count, chartObj[8].count],
+		          [chartObj[9].sellDate, chartObj[9].count, chartObj[10].count, chartObj[11].count],
+		        ]);
+		   
+		        var options = {
+		          chart: {
+		            title: '최근 4년간 통계',
+		            subtitle: 'Sales, Expenses, and Profit: 2015-2018',
+		          },
+		          bars: 'horizontal' // Required for Material Bar Charts.
+		        };
+
+		        var chart = new google.charts.Bar(document.getElementById('chart_div'));
+
+		        chart.draw(data, google.charts.Bar.convertOptions(options));
+		      }
+		      });
+				 $('#btn-mypage').on('click',()=>{
+					 app.mypage.onCreate();
+					 $('#btn-mypage').remove();
+					 $('#btn-logout').remove();
+					 $('#btn-basket').remove();
+				 })
+				 
+				 $('#content').append($(createDiv({id:'chart_div',clazz:''}))
+						 .attr('style','width: 900px; height: 500px;'))
 		
 			 });
 		 };
@@ -575,7 +609,7 @@ app.items=(()=>{
 				 $('#content').html($(createDiv({id:'',clazz:''}))
 					 .append($(createHTag({num:4,val:'아이 > 섀도우'}))
 						 .attr('style','margin-top: 30px; border-bottom: 1px solid #c7c7c7; margin-bottom: 20px; text-align: center')))
-				$('#content').html($(itemsCatallog()))
+				$('#content').append($(itemsCatallog()))
 		
 			 });
 		 };
@@ -594,27 +628,558 @@ app.loginAfter=(()=>{
 	 };
 	 var setContentView=()=>{	
 		 $.getScript(view,()=>{	
-			 alert('로그인 에프터 페이지 들어옴')
-			 $('#btn-join-default').remove();
-			 $('#btn-login-default').remove();
-			$('#container').append($(createDiv({id:'div-btn-main-page',clazz:''}))
-				 .attr('style','    display: inline;'));
-			$('#div-btn-main-page').html($(createButton({id:'btn-mypage',clazz:'btn btn-default dropdown-toggle',val:'마이페이지'}))
-				 .attr('style','margin-left: 10px; font-size:20px; width: 120px;background: black; border: black; color: white;')
-				 .on('click',()=>{
-					 app.mypage.onCreate();
-				 }));
-			$('#div-btn-main-page').append($(createButton({id:'btn-logout',clazz:'btn btn-default dropdown-toggle',val:'로그아웃'}))
+			 $('#wrapper').html($(createDiv({id:'container',clazz:''})));
+			 $('#content').html(app.mainItem.onCreate());
+			 $('#container').html($(createDiv({id : '',clazz : ''}))
+    		 .attr('style','background: black; width:100%; height:60px; padding: 15px;')
+    		 .append($(createDiv({id:'div-nav-0',clazz:''}))
+    				 .attr('style','display: inline-block;'))
+    		 .append($(createDiv({id:'div-nav',clazz:'dropdown'}))
+    				 .attr('style','display: inline-block;')	    			
+	 .append($(createButton({id:'btn-main-go',clazz:'btn btn-default dropdown-toggle',val:'M·A·C'}))
+     .attr('style','margin-left: 100px;font-size:20px; width: 120px;background: black; border: black; color: white;'))		 
+	 .append($(createButton({id:'',clazz:'btn btn-default dropdown-toggle',val:'신 제 품'}))
+	 .attr('style','font-size:20px;width: 120px;background: black; border: black; color: white;')
+	 .attr('data-toggle','dropdown'))
+			 .append($(createUL({id:'',clazz:'dropdown-menu'}))
+ 	.append($(createDiv({id:'',clazz:''}))
+		 			.attr('style','width: 1580px; padding:0; display: inline-block;')
+			.append($(createLI({id:'',clazz:'dropdown-submenu',val:''}))
+		.append($(createImg({img:'crush.jpg'})))
+		.append($(createImg({img:'crush2.jpg'})))
+		.append($(createImg({img:'crush3.jpg'})))
+		.append($(createImg({img:'crush4.jpg'})))
+		.append($(createImg({img:'crush5.jpg'})))
+				 			))
+		 		)
+    		 		)
+ 		.append($(createDiv({id:'div-nav2',clazz:'dropdown'}))
+			 .attr('style','display: inline-block;')
+			 .append($(createButton({id:'',clazz:'btn btn-default dropdown-toggle',val:'제 품'}))
+			 .attr('style','font-size:20px; width: 120px; background: black; border: black; color: white;')
+			 .attr('data-toggle','dropdown'))
+			 .append($(createUL({id:'',clazz:'dropdown-menu'}))
+			 .attr('style','height: 70px; width: 800px;')
+			 .append($(createDiv({id:'',clazz:''}))			
+			 .attr('style','width:800px; height: 50px; text-align: center; padding: 5px;')
+			 
+			 
+		 .append($(createDiv({id:'',clazz:''})).
+				attr('style','display: inline-block; padding: 5px;')
+				.append($(createLI({id:'',clazz:'dropdown-submenu',val:''}))
+		.append($(createDiv({id:'',clazz:''}))
+			.attr('style','display: inline-block;')
+			.attr('style','font-size: 15px; padding:5px;  margin-left: 30px;')
+		
+			.append($(createATag({id:'test',clazz:'',val:'트 랜 딩 나 우'}))
+				.hover(e=>{$('#j-ul-toggle').toggle('show')}, e=>{$('#j-ul-toggle').toggle('hide')})
+				.attr('tabindex','-1')
+				.attr('style','color:black; font-size:15px; font-weight: bold;'))
+			.append($(createUL({id:'j-ul-toggle',clazz:'dropdown-menu'}))
+				.attr('style','top:53px; text-align: center;')
+				.append($(createLI({id:'',clazz:'',val:''}))
+					.append($(createATag({id:'',clazz:'',val:'프레그런스 키트'}))
+							.on('click',e=>{
+								e.preventDefault();
+								$.getScript(hview,()=>{
+									app.mainitem.onCreate();
+								});
+							})
+					.attr('style','color:black; font-size:15px; font-weight: bold;')
+					.append('</br>'))
+				.append($(createLI({id:'',clazz:'',val:''}))
+					.append($(createATag({id:'',clazz:'',val:'레드의 정석'}))	
+					.attr('style','color:black; font-size:15px; font-weight: bold;')		
+					.append('</br>')))
+				.append($(createLI({id:'',clazz:'',val:''}))
+					.append($(createATag({id:'',clazz:'',val:'엔티크 로즈'}))
+					.attr('style','color:black; font-size:15px; font-weight: bold;')
+					.append('</br>')))
+				.append($(createLI({id:'',clazz:'',val:''}))
+					.append($(createATag({id:'',clazz:'',val:'맥프로 아이팔레트'}))
+					.attr('style','color:black; font-size:15px; font-weight: bold;')
+					.append('</br>')))
+				)))
+				
+				))
+				 
+		.append($(createDiv({id:'',clazz:''})).
+				attr('style','display: inline-block; padding: 5px;')
+				.append($(createLI({id:'',clazz:'dropdown-submenu',val:''}))
+		.append($(createDiv({id:'',clazz:''}))
+			.attr('style','display: inline-block;')
+			.attr('style','font-size: 15px; padding:5px;  margin-left: 30px;')
+		
+			.append($(createATag({id:'test',clazz:'',val:'메이크업'}))
+				.hover(e=>{$('#j-ul-toggle1').toggle('show')}, e=>{$('#j-ul-toggle1').toggle('hide')})
+				.attr('tabindex','-1')
+				.attr('style','color:black; font-size:15px; font-weight: bold;'))
+			.append($(createUL({id:'j-ul-toggle1',clazz:'dropdown-menu'}))
+				.attr('style','top:53px;')
+				.append($(createLI({id:'',clazz:'',val:''}))
+					.append($(createATag({id:'',clazz:'',val:'립스틱'}))
+							.on('click',e=>{
+								e.preventDefault();
+								$.getScript(hview,()=>{
+									app.mainitem.onCreate();
+								});
+							})
+							.attr('style','color:black; font-size:15px; font-weight: bold;')
+						.append('</br>'))
+					.append($(createATag({id:'',clazz:'',val:'아이섀도우'}))
+							.on('click',e=>{
+								e.preventDefault();
+								$.getScript(hview,()=>{
+									app.mainitem.onCreate();
+								});
+							})
+							.attr('style','color:black; font-size:15px; font-weight: bold;')
+					.append('</br>'))
+				.append($(createLI({id:'',clazz:'',val:''}))
+					.append($(createATag({id:'',clazz:'',val:'아이 팔레트+ 키트'}))
+							.attr('style','color:black; font-size:15px; font-weight: bold;')
+					.append('</br>')))
+				.append($(createLI({id:'',clazz:'',val:''}))
+					.append($(createATag({id:'',clazz:'',val:'라이너'}))
+							.attr('style','color:black; font-size:15px; font-weight: bold;')
+					.append('</br>')))
+				.append($(createLI({id:'',clazz:'',val:''}))
+					.append($(createATag({id:'',clazz:'',val:'마스카라'}))
+							.attr('style','color:black; font-size:15px; font-weight: bold;')
+					.append('</br>')))
+				.append($(createLI({id:'',clazz:'',val:''}))
+					.append($(createATag({id:'',clazz:'',val:'브로우'}))
+							.attr('style','color:black; font-size:15px; font-weight: bold;')
+					.append('</br>')))
+				.append($(createLI({id:'',clazz:'',val:''}))
+					.append($(createATag({id:'',clazz:'',val:'아이프라이머'}))
+							.attr('style','color:black; font-size:15px; font-weight: bold;')
+					.append('</br>')))
+				)))
+				
+				))
+				
+			.append($(createDiv({id:'',clazz:''})).
+				attr('style','display: inline-block; padding: 5px;')
+				.append($(createLI({id:'',clazz:'dropdown-submenu',val:''}))
+		.append($(createDiv({id:'',clazz:''}))
+			.attr('style','display: inline-block;')
+			.attr('style','font-size: 15px; padding:5px; margin-left: 30px;')
+			.append($(createATag({id:'test',clazz:'',val:'프라미어+스킨케어'}))
+				.hover(e=>{$('#j-ul-toggle2').toggle('show')}, e=>{$('#j-ul-toggle2').toggle('hide')})
+				.attr('tabindex','-1')
+				.attr('style','color:black; font-size:15px; font-weight: bold;'))
+			.append($(createUL({id:'j-ul-toggle2',clazz:'dropdown-menu'}))
+				.attr('style','top:53px;')
+				.append($(createLI({id:'',clazz:'',val:''}))
+					.append($(createATag({id:'',clazz:'',val:'프라이머'}))
+							.attr('style','color:black; font-size:15px; font-weight: bold;')
+					.append('</br>'))
+				.append($(createLI({id:'',clazz:'',val:''}))
+					.append($(createATag({id:'',clazz:'',val:'리무버'}))
+							.attr('style','color:black; font-size:15px; font-weight: bold;')
+					.append('</br>')))
+				.append($(createLI({id:'',clazz:'',val:''}))
+					.append($(createATag({id:'',clazz:'',val:'모이스처 라이저'}))
+							.attr('style','color:black; font-size:15px; font-weight: bold;')
+					.append('</br>')))
+				.append($(createLI({id:'',clazz:'',val:''}))
+					.append($(createATag({id:'',clazz:'',val:'BB+CC'}))
+							.attr('style','color:black; font-size:15px; font-weight: bold;')
+					.append('</br>')))
+				.append($(createLI({id:'',clazz:'',val:''}))
+					.append($(createATag({id:'',clazz:'',val:'여행용사이즈'}))
+							.attr('style','color:black; font-size:15px; font-weight: bold;')
+					.append('</br>')))
+				)))
+				))
+			.append($(createDiv({id:'',clazz:''})).
+				attr('style','display: inline-block; padding: 5px;')
+				.append($(createLI({id:'',clazz:'dropdown-submenu',val:''}))
+		.append($(createDiv({id:'',clazz:''}))
+			.attr('style','display: inline-block;')
+			.attr('style','font-size: 15px; padding:5px; margin-left: 30px;')
+			.append($(createATag({id:'test',clazz:'',val:'브러쉬+툴'}))
+				.hover(e=>{$('#j-ul-toggle3').toggle('show')}, e=>{$('#j-ul-toggle3').toggle('hide')})
+				.attr('tabindex','-1')
+				.attr('style','color:black; font-size:15px; font-weight: bold;'))
+			.append($(createUL({id:'j-ul-toggle3',clazz:'dropdown-menu'}))
+				.attr('style','top:53px;')
+				.append($(createLI({id:'',clazz:'',val:''}))
+					.append($(createATag({id:'',clazz:'',val:'브러쉬'}))
+							.attr('style','color:black; font-size:15px; font-weight: bold;')
+					.append('</br>'))
+				.append($(createLI({id:'',clazz:'',val:''}))
+					.append($(createATag({id:'',clazz:'',val:'아이 브러쉬'}))
+							.attr('style','color:black; font-size:15px; font-weight: bold;')
+					.append('</br>')))
+				.append($(createLI({id:'',clazz:'',val:''}))
+					.append($(createATag({id:'',clazz:'',val:'립 브러쉬'}))
+							.attr('style','color:black; font-size:15px; font-weight: bold;')
+					.append('</br>')))
+				.append($(createLI({id:'',clazz:'',val:''}))
+					.append($(createATag({id:'',clazz:'',val:'페이스 브러수;'}))
+							.attr('style','color:black; font-size:15px; font-weight: bold;')
+					.append('</br>')))
+				.append($(createLI({id:'',clazz:'',val:''}))
+					.append($(createATag({id:'',clazz:'',val:'모든 브러쉬'}))
+							.attr('style','color:black; font-size:15px; font-weight: bold;')
+					.append('</br>')))
+				)))
+				))
+			.append($(createDiv({id:'',clazz:''})).
+				attr('style','display: inline-block; padding: 5px;')
+				.append($(createLI({id:'',clazz:'dropdown-submenu',val:''}))
+		.append($(createDiv({id:'',clazz:''}))
+			.attr('style','display: inline-block;')
+			.attr('style','font-size: 15px; padding:5px; margin-left: 30px;')
+			.append($(createATag({id:'test',clazz:'',val:'향수'}))
+				.hover(e=>{$('#j-ul-toggle4').toggle('show')}, e=>{$('#j-ul-toggle4').toggle('hide')})
+				.attr('tabindex','-1')
+				.attr('style','color:black; font-size:15px; font-weight: bold;'))
+			.append($(createUL({id:'j-ul-toggle4',clazz:'dropdown-menu'}))
+				.attr('style','top:53px;')
+				.append($(createLI({id:'',clazz:'',val:''}))
+					.append($(createATag({id:'',clazz:'',val:'쉐이드센츠'}))
+							.attr('style','color:black; font-size:15px; font-weight: bold;')
+					.append('</br>'))
+				)))
+				))
+				
+				.append($(createDiv({id:'',clazz:''})).
+				attr('style','display: inline-block; padding: 5px;')
+				.append($(createLI({id:'',clazz:'dropdown-submenu',val:''}))
+		.append($(createDiv({id:'',clazz:''}))
+			.attr('style','display: inline-block;')
+			.attr('style','font-size: 15px; padding:5px; margin-left: 30px;')
+			.append($(createATag({id:'test',clazz:'',val:'주요 라인업'}))
+				.hover(e=>{$('#j-ul-toggle4').toggle('show')}, e=>{$('#j-ul-toggle4').toggle('hide')})
+				.attr('tabindex','-1')
+				.attr('style','color:black; font-size:15px; font-weight: bold;'))
+			.append($(createUL({id:'j-ul-toggle4',clazz:'dropdown-menu'}))
+				.attr('style','top:53px;')
+				.append($(createLI({id:'',clazz:'',val:''}))
+					.append($(createATag({id:'',clazz:'',val:'쉐이드센츠'}))
+							.attr('style','color:black; font-size:15px; font-weight: bold;')
+					.append('</br>'))
+				)))
+				))		
+		 )))
+		 	 .append($(createDiv({id:'div-nav3',clazz:''}))
+		 			.attr('style','display: inline-block; padding: 5px;')
+		 			 .append($(createButton({id:'',clazz:'btn btn-default dropdown-toggle',val:'굿 바 이 즈'}))
+		 			 .attr('style','font-size:20px; width: 120px;background: black; border: black; color: white;'))	
+		 	 	 
+			 .append($(createButton({id:'',clazz:'btn btn-default dropdown-toggle',val:'맥 셀 렉 트'}))
+					 .attr('style',' margin-left: 20px;font-size:20px; width: 120px;background: black; border: black; color: white;'))
+		 	 	 
+			 .append($(createButton({id:'',clazz:'btn btn-default dropdown-toggle',val:'매 장 안 내'}))
+					 .attr('style','margin-left: 10px; font-size:20px; width: 120px;background: black; border: black; color: white;'))
+			 	 
+			 .append($(createButton({id:'',clazz:'btn btn-default dropdown-toggle',val:'게 시 판'}))
+					 .attr('style','margin-left: 10px; font-size:20px; width: 120px;background: black; border: black; color: white;'))
+			 	 
+ 			 .append($(createButton({id:'btn-mypage-default',clazz:'btn btn-default dropdown-toggle',val:'마이페이지'}))
+ 					 .on('click',()=>{
+ 						alert('작동함');
+ 						app.mypage.onCreate();
+ 						$('#btn-mypage-default').remove();
+ 						$('#btn-basket').remove();
+ 						$('#btn-logout').remove();
+ 					 })
+ 					 .attr('style','margin-left: 10px; font-size:20px; width: 120px;background: black; border: black; color: white;'))));
+			 $('#div-nav3').append($(createButton({id:'btn-logout',clazz:'btn btn-default dropdown-toggle',val:'로그아웃'}))
 					 .attr('style','margin-left: 10px; font-size:20px; width: 120px;background: black; border: black; color: white;')
 					 .on('click',()=>{
-						 
-					 }));
-		
-		 
+						 sessionStorage.removeItem('customer');
+						 app.main.onCreate();
+					 }));	
 		 });
+		 
 	 };
 	 return{onCreate:onCreate}
 })()
+app.nav=(()=>{
+	var $wrapper,context,view,image;
+	var onCreate=()=>{
+		 $wrapper = $('#wrapper');
+		 $content = $('#content');
+		 context = $.context();
+		 image = $.image();
+	     view = $.javascript()+'/j_app.js';
+	     hview = $.javascript()+'/h_app.js';
+	     setContentView();
+	 };
+	 var setContentView=()=>{
+		 $.getScript(view,()=>{
+			 $('#wrapper').html($(createDiv({id:'container',clazz:''})));
+			 $('#container').html($(createDiv({id : '',clazz : ''}))
+    		 .attr('style','background: black; width:100%; height:60px; padding: 15px;')
+    		.append($(createDiv({id:'div-nav-0',clazz:''}))
+    				.attr('style','display: inline-block;'))
+    		 .append($(createDiv({id:'div-nav',clazz:'dropdown'}))
+    				 .attr('style','display: inline-block;')	    			
+	 .append($(createButton({id:'btn-main-go',clazz:'btn btn-default dropdown-toggle',val:'M·A·C'}))
+     .attr('style','margin-left: 100px;font-size:20px; width: 120px;background: black; border: black; color: white;'))		 
+	 .append($(createButton({id:'',clazz:'btn btn-default dropdown-toggle',val:'신 제 품'}))
+	 .attr('style','font-size:20px;width: 120px;background: black; border: black; color: white;')
+	 .attr('data-toggle','dropdown'))
+			 .append($(createUL({id:'',clazz:'dropdown-menu'}))
+ 	.append($(createDiv({id:'',clazz:''}))
+		 			.attr('style','width: 1580px; padding:0; display: inline-block;')
+			.append($(createLI({id:'',clazz:'dropdown-submenu',val:''}))
+		.append($(createImg({img:'crush.jpg'})))
+		.append($(createImg({img:'crush2.jpg'})))
+		.append($(createImg({img:'crush3.jpg'})))
+		.append($(createImg({img:'crush4.jpg'})))
+		.append($(createImg({img:'crush5.jpg'})))
+				 			))
+		 		)
+    		 		)
+ 		.append($(createDiv({id:'div-nav2',clazz:'dropdown'}))
+			 .attr('style','display: inline-block;')
+			 .append($(createButton({id:'',clazz:'btn btn-default dropdown-toggle',val:'제 품'}))
+			 .attr('style','font-size:20px; width: 120px; background: black; border: black; color: white;')
+			 .attr('data-toggle','dropdown'))
+			 .append($(createUL({id:'',clazz:'dropdown-menu'}))
+			 .attr('style','height: 70px; width: 800px;')
+			 .append($(createDiv({id:'',clazz:''}))			
+			 .attr('style','width:800px; height: 50px; text-align: center; padding: 5px;')
+			 
+			 
+		 .append($(createDiv({id:'',clazz:''})).
+				attr('style','display: inline-block; padding: 5px;')
+				.append($(createLI({id:'',clazz:'dropdown-submenu',val:''}))
+		.append($(createDiv({id:'',clazz:''}))
+			.attr('style','display: inline-block;')
+			.attr('style','font-size: 15px; padding:5px;  margin-left: 30px;')
+		
+			.append($(createATag({id:'test',clazz:'',val:'트 랜 딩 나 우'}))
+				.hover(e=>{$('#j-ul-toggle').toggle('show')}, e=>{$('#j-ul-toggle').toggle('hide')})
+				.attr('tabindex','-1')
+				.attr('style','color:black; font-size:15px; font-weight: bold;'))
+			.append($(createUL({id:'j-ul-toggle',clazz:'dropdown-menu'}))
+				.attr('style','top:53px;')
+				.append($(createLI({id:'',clazz:'',val:''}))
+					.append($(createATag({id:'',clazz:'',val:'프레그런스 키트'}))
+							.on('click',e=>{
+								e.preventDefault();
+								$.getScript(hview,()=>{
+									app.mainitem.onCreate();
+								});
+							})
+					.attr('style','color:black; font-size:15px; font-weight: bold;')
+					.append('</br>'))
+				.append($(createLI({id:'',clazz:'',val:''}))
+					.append($(createATag({id:'',clazz:'',val:'레드의 정석'}))
+					.attr('style','color:black; font-size:15px; font-weight: bold;')		
+					.append('</br>')))
+				.append($(createLI({id:'',clazz:'',val:''}))
+					.append($(createATag({id:'',clazz:'',val:'엔티크 로즈'}))
+					.attr('style','color:black; font-size:15px; font-weight: bold;')
+					.append('</br>')))
+				.append($(createLI({id:'',clazz:'',val:''}))
+					.append($(createATag({id:'',clazz:'',val:'맥프로 아이팔레트'}))
+					.attr('style','color:black; font-size:15px; font-weight: bold;')
+					.append('</br>')))
+				)))
+				
+				))
+				 
+		.append($(createDiv({id:'',clazz:''})).
+				attr('style','display: inline-block; padding: 5px;')
+				.append($(createLI({id:'',clazz:'dropdown-submenu',val:''}))
+		.append($(createDiv({id:'',clazz:''}))
+			.attr('style','display: inline-block;')
+			.attr('style','font-size: 15px; padding:5px;  margin-left: 30px;')
+		
+			.append($(createATag({id:'test',clazz:'',val:'메이크업'}))
+				.hover(e=>{$('#j-ul-toggle1').toggle('show')}, e=>{$('#j-ul-toggle1').toggle('hide')})
+				.attr('tabindex','-1')
+				.attr('style','color:black; font-size:15px; font-weight: bold;'))
+			.append($(createUL({id:'j-ul-toggle1',clazz:'dropdown-menu'}))
+				.attr('style','top:53px;')
+				.append($(createLI({id:'',clazz:'',val:''}))
+					.append($(createATag({id:'',clazz:'',val:'립스틱'}))
+							.on('click',e=>{
+								e.preventDefault();
+								$.getScript(hview,()=>{
+									app.mainitem.onCreate();
+								});
+							})
+							.attr('style','color:black; font-size:15px; font-weight: bold;')
+						.append('</br>'))
+					.append($(createATag({id:'',clazz:'',val:'아이섀도우'}))
+							.on('click',e=>{
+								e.preventDefault();
+								$.getScript(hview,()=>{
+									app.mainitem.onCreate();
+								});
+							})
+							.attr('style','color:black; font-size:15px; font-weight: bold;')
+					.append('</br>'))
+				.append($(createLI({id:'',clazz:'',val:''}))
+					.append($(createATag({id:'',clazz:'',val:'아이 팔레트+ 키트'}))
+							.attr('style','color:black; font-size:15px; font-weight: bold;')
+					.append('</br>')))
+				.append($(createLI({id:'',clazz:'',val:''}))
+					.append($(createATag({id:'',clazz:'',val:'라이너'}))
+							.attr('style','color:black; font-size:15px; font-weight: bold;')
+					.append('</br>')))
+				.append($(createLI({id:'',clazz:'',val:''}))
+					.append($(createATag({id:'',clazz:'',val:'마스카라'}))
+							.attr('style','color:black; font-size:15px; font-weight: bold;')
+					.append('</br>')))
+				.append($(createLI({id:'',clazz:'',val:''}))
+					.append($(createATag({id:'',clazz:'',val:'브로우'}))
+							.attr('style','color:black; font-size:15px; font-weight: bold;')
+					.append('</br>')))
+				.append($(createLI({id:'',clazz:'',val:''}))
+					.append($(createATag({id:'',clazz:'',val:'아이프라이머'}))
+							.attr('style','color:black; font-size:15px; font-weight: bold;')
+					.append('</br>')))
+				)))
+				
+				))
+				
+			.append($(createDiv({id:'',clazz:''})).
+				attr('style','display: inline-block; padding: 5px;')
+				.append($(createLI({id:'',clazz:'dropdown-submenu',val:''}))
+		.append($(createDiv({id:'',clazz:''}))
+			.attr('style','display: inline-block;')
+			.attr('style','font-size: 15px; padding:5px; margin-left: 30px;')
+			.append($(createATag({id:'test',clazz:'',val:'프라미어+스킨케어'}))
+				.hover(e=>{$('#j-ul-toggle2').toggle('show')}, e=>{$('#j-ul-toggle2').toggle('hide')})
+				.attr('tabindex','-1')
+				.attr('style','color:black; font-size:15px; font-weight: bold;'))
+			.append($(createUL({id:'j-ul-toggle2',clazz:'dropdown-menu'}))
+				.attr('style','top:53px;')
+				.append($(createLI({id:'',clazz:'',val:''}))
+					.append($(createATag({id:'',clazz:'',val:'프라이머'}))
+							.attr('style','color:black; font-size:15px; font-weight: bold;')
+					.append('</br>'))
+				.append($(createLI({id:'',clazz:'',val:''}))
+					.append($(createATag({id:'',clazz:'',val:'리무버'}))
+							.attr('style','color:black; font-size:15px; font-weight: bold;')
+					.append('</br>')))
+				.append($(createLI({id:'',clazz:'',val:''}))
+					.append($(createATag({id:'',clazz:'',val:'모이스처 라이저'}))
+							.attr('style','color:black; font-size:15px; font-weight: bold;')
+					.append('</br>')))
+				.append($(createLI({id:'',clazz:'',val:''}))
+					.append($(createATag({id:'',clazz:'',val:'BB+CC'}))
+							.attr('style','color:black; font-size:15px; font-weight: bold;')
+					.append('</br>')))
+				.append($(createLI({id:'',clazz:'',val:''}))
+					.append($(createATag({id:'',clazz:'',val:'여행용사이즈'}))
+							.attr('style','color:black; font-size:15px; font-weight: bold;')
+					.append('</br>')))
+				)))
+				))
+			.append($(createDiv({id:'',clazz:''})).
+				attr('style','display: inline-block; padding: 5px;')
+				.append($(createLI({id:'',clazz:'dropdown-submenu',val:''}))
+		.append($(createDiv({id:'',clazz:''}))
+			.attr('style','display: inline-block;')
+			.attr('style','font-size: 15px; padding:5px; margin-left: 30px;')
+			.append($(createATag({id:'test',clazz:'',val:'브러쉬+툴'}))
+				.hover(e=>{$('#j-ul-toggle3').toggle('show')}, e=>{$('#j-ul-toggle3').toggle('hide')})
+				.attr('tabindex','-1')
+				.attr('style','color:black; font-size:15px; font-weight: bold;'))
+			.append($(createUL({id:'j-ul-toggle3',clazz:'dropdown-menu'}))
+				.attr('style','top:53px;')
+				.append($(createLI({id:'',clazz:'',val:''}))
+					.append($(createATag({id:'',clazz:'',val:'브러쉬'}))
+							.attr('style','color:black; font-size:15px; font-weight: bold;')
+					.append('</br>'))
+				.append($(createLI({id:'',clazz:'',val:''}))
+					.append($(createATag({id:'',clazz:'',val:'아이 브러쉬'}))
+							.attr('style','color:black; font-size:15px; font-weight: bold;')
+					.append('</br>')))
+				.append($(createLI({id:'',clazz:'',val:''}))
+					.append($(createATag({id:'',clazz:'',val:'립 브러쉬'}))
+							.attr('style','color:black; font-size:15px; font-weight: bold;')
+					.append('</br>')))
+				.append($(createLI({id:'',clazz:'',val:''}))
+					.append($(createATag({id:'',clazz:'',val:'페이스 브러수;'}))
+							.attr('style','color:black; font-size:15px; font-weight: bold;')
+					.append('</br>')))
+				.append($(createLI({id:'',clazz:'',val:''}))
+					.append($(createATag({id:'',clazz:'',val:'모든 브러쉬'}))
+							.attr('style','color:black; font-size:15px; font-weight: bold;')
+					.append('</br>')))
+				)))
+				))
+			.append($(createDiv({id:'',clazz:''})).
+				attr('style','display: inline-block; padding: 5px;')
+				.append($(createLI({id:'',clazz:'dropdown-submenu',val:''}))
+		.append($(createDiv({id:'',clazz:''}))
+			.attr('style','display: inline-block;')
+			.attr('style','font-size: 15px; padding:5px; margin-left: 30px;')
+			.append($(createATag({id:'test',clazz:'',val:'향수'}))
+				.hover(e=>{$('#j-ul-toggle4').toggle('show')}, e=>{$('#j-ul-toggle4').toggle('hide')})
+				.attr('tabindex','-1')
+				.attr('style','color:black; font-size:15px; font-weight: bold;'))
+			.append($(createUL({id:'j-ul-toggle4',clazz:'dropdown-menu'}))
+				.attr('style','top:53px;')
+				.append($(createLI({id:'',clazz:'',val:''}))
+					.append($(createATag({id:'',clazz:'',val:'쉐이드센츠'}))
+							.attr('style','color:black; font-size:15px; font-weight: bold;')
+					.append('</br>'))
+				)))
+				))
+				
+				.append($(createDiv({id:'',clazz:''})).
+				attr('style','display: inline-block; padding: 5px;')
+				.append($(createLI({id:'',clazz:'dropdown-submenu',val:''}))
+		.append($(createDiv({id:'',clazz:''}))
+			.attr('style','display: inline-block;')
+			.attr('style','font-size: 15px; padding:5px; margin-left: 30px;')
+			.append($(createATag({id:'test',clazz:'',val:'주요 라인업'}))
+				.hover(e=>{$('#j-ul-toggle4').toggle('show')}, e=>{$('#j-ul-toggle4').toggle('hide')})
+				.attr('tabindex','-1')
+				.attr('style','color:black; font-size:15px; font-weight: bold;'))
+			.append($(createUL({id:'j-ul-toggle4',clazz:'dropdown-menu'}))
+				.attr('style','top:53px;')
+				.append($(createLI({id:'',clazz:'',val:''}))
+					.append($(createATag({id:'',clazz:'',val:'쉐이드센츠'}))
+							.attr('style','color:black; font-size:15px; font-weight: bold;')
+					.append('</br>'))
+				)))
+				))		
+		 )))
+		 	 .append($(createDiv({id:'div-nav3',clazz:''}))
+		 			.attr('style','display: inline-block; padding: 5px;')
+		 			 .append($(createButton({id:'',clazz:'btn btn-default dropdown-toggle',val:'굿 바 이 즈'}))
+		 			 .attr('style','font-size:20px; width: 120px;background: black; border: black; color: white;'))	
+		 	 	 
+			 .append($(createButton({id:'',clazz:'btn btn-default dropdown-toggle',val:'맥 셀 렉 트'}))
+					 .attr('style',' margin-left: 20px;font-size:20px; width: 120px;background: black; border: black; color: white;'))
+		 	 	 
+			 .append($(createButton({id:'',clazz:'btn btn-default dropdown-toggle',val:'매 장 안 내'}))
+					 .attr('style','margin-left: 10px; font-size:20px; width: 120px;background: black; border: black; color: white;'))
+			 	 
+			 .append($(createButton({id:'',clazz:'btn btn-default dropdown-toggle',val:'게 시 판'}))
+					 .attr('style','margin-left: 10px; font-size:20px; width: 120px;background: black; border: black; color: white;'))
+			 	 
+ 			 .append($(createButton({id:'btn-join-default',clazz:'btn btn-default dropdown-toggle',val:'회원가입'}))
+ 					 .on('click',()=>{
+ 						 alert('회원가입');
+ 						 app.join.onCreate();
+ 					 })
+ 					 .attr('style','margin-left: 10px; font-size:20px; width: 120px;background: black; border: black; color: white;'))
+			 	 
+			 .append($(createButton({id:'btn-login-default',clazz:'btn btn-default dropdown-toggle',val:'로 그 인'}))
+			 			.click(()=>{
+				 			alert('로그인');
+				 			app.login.onCreate();	
+				 			 })	 
+			 .attr('style','font-size:20px; width: 120px;background: black; border: black; color: white;'))))
+			 ;
+		 });
+	 }
+	 return{onCreate:onCreate}
+})();
 app.mypage=(()=>{
 	var $wrapper,context,view,image;
 	var onCreate=()=>{
@@ -628,31 +1193,36 @@ app.mypage=(()=>{
 	 };
 	 var setContentView=()=>{		
 			 $.getScript(view,()=>{ 
+				 $('#btn-main-go').remove();
 				 $('#div-btn-main-page').remove();
 				 $('#btn-login-default').remove();
 				 $('#btn-admin-default').remove();
 				 $('#btn-join-default').remove();
-				 $('#btn-main-go').on('click',()=>{app.loginAfter.onCreate();})
+				 $('#div-nav-0').append($(createButton({id:'btn-main-go',clazz:'btn btn-default dropdown-toggle',val:'M·A·C'}))
+			     .attr('style','margin-left: 100px;font-size:20px; width: 120px;background: black; border: black; color: white;'));
+				 $('#btn-main-go').on('click',()=>{
+					 app.loginAfter.onCreate();
+					 $('#btn-join-default').remove();
+					 $('#btn-login-default').remove();
+					 })
 				 $('#content').empty();
 				 $('#content').html($(createDiv({
 						id : 'div-my-page',
 						clazz : 'field-container field-container--grid'
 					})).attr('style','height:500px;'));
-				 $('#container').append($(createDiv({id:'div-btn-mypage',clazz:''}))
-						 .attr('style','    display: inline;'));
-				 $('#div-btn-mypage').html($(createButton({id:'btn-mypage',clazz:'btn btn-default dropdown-toggle',val:'마이페이지'}))
+				 $('#div-nav3').append($(createButton({id:'btn-mypage',clazz:'btn btn-default dropdown-toggle',val:'마이페이지'}))
 						 .attr('style','margin-left: 10px; font-size:20px; width: 120px;background: black; border: black; color: white;'));
-				 
-				 $('#container').append($(createDiv({id:'div-btn-basket',clazz:''}))
-						 .attr('style','    display: inline;'))
-				 $('#div-btn-basket').html($(createButton({id:'btn-basket',clazz:'btn btn-default dropdown-toggle',val:'장바구니'}))
+				
+				 $('#div-nav3').append($(createButton({id:'btn-basket',clazz:'btn btn-default dropdown-toggle',val:'장바구니'}))
 						 .attr('data-toggle','modal')
 						 .attr('data-target','#myModal')
 						 .attr('style','margin-left: 10px; font-size:20px; width: 120px;background: black; border: black; color: white;'));
-				 $('#container').append($(createDiv({id:'div-btn-logout',clazz:''}))
-						 .attr('style','    display: inline;'));
-				 $('#div-btn-logout').html($(createButton({id:'btn-logout',clazz:'btn btn-default dropdown-toggle',val:'로그아웃'}))
-						 .attr('style','margin-left: 10px; font-size:20px; width: 120px;background: black; border: black; color: white;'));
+				 $('#div-nav3').append($(createButton({id:'btn-logout',clazz:'btn btn-default dropdown-toggle',val:'로그아웃'}))
+						 .attr('style','margin-left: 10px; font-size:20px; width: 120px;background: black; border: black; color: white;')
+						 .on('click',()=>{
+							 sessionStorage.removeItem('customer');
+							 app.main.onCreate();
+						 }));
 				 $('#container').append($(createDiv({id:'div-modal',clazz:''})));
 				 $('#div-modal').html($(createDiv({id:'myModal',clazz:'modal fade'}))
 					 .attr('role','dialog')
@@ -667,7 +1237,7 @@ app.mypage=(()=>{
 										 .append($(createATag({id:'',clazz:'',val:'수정'}))))))
 								 .append($(createDiv({id:'div-modal-body',clazz:'modal-body'}))))));
 				 $content = $('#content');
-				 $.getJSON(context+'/mypage/',e=>{
+				 $.getJSON(context+'/mypage/'+sessionStorage.getItem('customer'),e=>{
 					 var mypageObj = e.mypage;
 					 $content.html(createDiv({id : 'mypage-div' , clazz : ''}));
 			    $('#mypage-div').append($(createDiv({id : '', clazz : 'navbar navbar-inverse'}))
@@ -703,6 +1273,10 @@ app.mypage=(()=>{
 		                                .append($(createLI({ id : '', clazz : '',val:''}))
 		                                        .attr('style', 'margin: 0 0 15px 0;')
 		                                        .append($(createHTag({num : '6', val : 'My M·A·C &nbsp;' + createATag({id : 'a-mypage-logout', href : '', val : '로그아웃'})}))
+		                                        		.on('click',()=>{
+		                                        			sessionStorage.removeItem('customer');
+		                                        			app.main.onCreate();
+		                                        		})
 		                                                .attr('style', 'font-weight: bold; margin: 0 0 15px 0; font-size: 14px;')
 		                                                )
 		                                        )
@@ -754,37 +1328,10 @@ app.mypage=(()=>{
                                         .append($(createLI({ id : '', clazz : '',val:''}))
 		                                        .attr('style', 'margin: 0 0 15px 0;')
 		                                        .append($(createATag({id : '', href : '', val : '판매 통계량'}))
-		                                        		.on('click',()=>{	                                        	
-		                                        			$.getJSON(context+'/chart/search',e=>{
-		                                        			      google.charts.load('current', {'packages':['bar']});
-		                                        			      google.charts.setOnLoadCallback(drawChart);
-		                                        			    	  var chartObj = e.chart;
-		                                        			    	  console.log(chartObj);
-		                                        			    	  
-		                                        			      function drawChart() {
-		   		                                        			  var data = google.visualization.arrayToDataTable([
-		                                        			          ['Year', '립스틱', '아이섀도우', '마스카라'],
-		                                        			          [chartObj[0].sellDate, chartObj[0].count, chartObj[1].count, chartObj[2].count],
-		                                        			          [chartObj[3].sellDate, chartObj[3].count, chartObj[4].count, chartObj[5].count],
-		                                        			          [chartObj[6].sellDate, chartObj[6].count, chartObj[7].count, chartObj[8].count],
-		                                        			          [chartObj[9].sellDate, chartObj[9].count, chartObj[10].count, chartObj[11].count],
-		                                        			        ]);
-		                                        			   
-		                                        			        var options = {
-		                                        			          chart: {
-		                                        			            title: 'Company Performance',
-		                                        			            subtitle: 'Sales, Expenses, and Profit: 2014-2017',
-		                                        			          },
-		                                        			          bars: 'horizontal' // Required for Material Bar Charts.
-		                                        			        };
-
-		                                        			        var chart = new google.charts.Bar(document.getElementById('chart_div'));
-
-		                                        			        chart.draw(data, google.charts.Bar.convertOptions(options));
-		                                        			      }
-		                                        			      });
-		                                        			      
+		                                        		.on('click',()=>{	                                        			                                        	   
 		                                        			      app.chart.onCreate();
+		                                        			      $('#content').empty();
+	
 		                                        		})
 		                                                .attr('style','color: #ffffff;')
 		                                                )
@@ -828,7 +1375,7 @@ app.mypage=(()=>{
 				 });
 				
 				 console.log("test!");
-				 $.getJSON(context+'/basket/search',e=>{
+				 $.getJSON(context+'/basket/search/'+sessionStorage.getItem('customer'),e=>{
 					 var basketObj = e.basketOrder;
 					 console.log(e.basketOrder);
 					 for(var i =0 ;  i < basketObj.length ; i++){
@@ -892,10 +1439,11 @@ app.mypage=(()=>{
 					 	
 					 
 				 });
-				 $.getJSON(context+'/basket/totalPrice',e=>{
+				 $('#modal-content').append($(createDiv({id:'aaaa',clazz:''})));
+				 $.getJSON(context+'/basket/totalPrice/'+sessionStorage.getItem('customer'),e=>{
 					 var basketObjTotal = e.basketTotalPrice;
 					 console.log(basketObjTotal);
-					$('#modal-content').append($(createDiv({id:'modal-footer',clazz:'modal-footer'}))
+					$('#aaaa').html($(createDiv({id:'modal-footer',clazz:'modal-footer'}))
 							 .append($(createDiv({id:'',clazz:'grid-container'}))
 								 .append($(createDiv({id:'',clazz:'grid-item'}))
 									 .append($(createHTag({num:'4',val:'총금액'}))))
@@ -915,7 +1463,7 @@ app.mypage=(()=>{
 											 	});
 											 	console.log("returnJsonData :" ,returnJsonData);
 												 $.ajax({
-													 url:context+'/basket/update',
+													 url:context+'/basket/update/'+sessionStorage.getItem('customer'),
 													 method:'POST',
 													 data: JSON.stringify(returnJsonData),
 													 dataType:'json',
@@ -954,6 +1502,7 @@ app.cash=(()=>{
 				 alert('작동함');
 				 $('#btn-main-go').on('click',()=>{app.loginAfter.onCreate();})
 				 $('#content').empty();
+				
 				 $('#content').html($(createDiv({id:'div_add',clazz:''}))
 					 .attr('style','height:1200px;')
 					 .append($(createDiv({id:'',clazz:''}))
@@ -1009,7 +1558,9 @@ app.cash=(()=>{
 								                }
 
 								             
-								                document.getElementById('input_addr_1').value = data.zonecode; //5자리 새우편번호 사용
+								                document.getElementById('input_addr_1').value = data.zonecode; // 5자리
+																												// 새우편번호
+																												// 사용
 								                document.getElementById('input_addr_2').value = fullRoadAddr;
 								                document.getElementById('input_addr_3').value = data.jibunAddress;
 
@@ -1046,12 +1597,19 @@ app.cash=(()=>{
 								.append($(createSpan({id:'',clazz:'',val:''}))
 									.append($(createDiv({id:'',clazz:''}))
 										.append($(createSelect({}))
-											.append($(createOption({val:'선택'})))
-											.append($(createOption({val:'010'})))
-											.append($(createOption({val:'011'})))
-											.append($(createOption({val:'016'})))
-											.append($(createOption({val:'017'})))
-											.append($(createOption({val:'019'}))))
+											.attr('id','phonNum')
+											.append($(createOption({val:'선택'}))
+												.attr('selected','selected'))
+											.append($(createOption({val:'010'}))
+												.attr('selected','selected'))
+											.append($(createOption({val:'011'}))
+												.attr('selected','selected'))
+											.append($(createOption({val:'016'}))
+												.attr('selected','selected'))
+											.append($(createOption({val:'017'}))
+												.attr('selected','selected'))
+											.append($(createOption({val:'019'}))
+												.attr('selected','selected')))
 									.append($(createDiv({id:'',clazz:''}))
 									.attr('style','margin-top: 15px; display: inline-block;')
 										.append($(createInput({id:'input_addr_phone1',val:'핸드폰번호',type:'text'}))
@@ -1072,31 +1630,37 @@ app.cash=(()=>{
 						.append($(createDiv({id:'',clazz:''}))
 							.append($(createDiv({id:'',clazz:''}))
 								.attr('style','margin-left: 600px;')
-								.append($(createInput({id:'',text:'',type:'summit'}))
-									.on('click',function(){
-										var jason={
-											customName:$('#input_addr_name').val(),
-											customAddr1:$('#input_addr_1').val(),
-											customAddr2:$('#input_addr_2').val(),
-											customAddr3:$('#input_addr_3').val(),
-											customAddr4:$('#input_addr_4').val(),
-											customPhone:$('#option-join').val(),
-											customPhone1:$('#input_addr_phone1').val(),
-											customPhone2:$('#input_addr_phone2').val(),
-											customText:$('#input_addr_text').val(),	
-										}
-										$.ajax({
-											url:context+'/order/addr',
-											method:'POST',
-											 data: JSON.stringify(jason),
-											 dataType:'json',
-											 contentType: 'application/json'
-										});
-										app.mypage.onCreate();
-									})	
+								.append($(createInput({id:'input_cash',text:'',type:'summit'}))
 									.attr('value','결제하기')
 									.attr('style','background: black; color: white; text-align: center; width: 200px;  height:60px;'))))));
-				 $.getJSON(context+'/basket/totalPrice',e=>{
+				 
+				 $('#input_cash').on('click',function(){
+					 var jason={
+							    customId: sessionStorage.getItem('customer'),
+								customName:$('#input_addr_name').val(),
+								customAddr1:$('#input_addr_1').val(),
+								customAddr2:$('#input_addr_2').val(),
+								customAddr3:$('#input_addr_3').val(),
+								customAddr4:$('#input_addr_4').val(),
+								customPhone:$('#phonNum').val(),
+								customPhone1:$('#input_addr_phone1').val(),
+								customPhone2:$('#input_addr_phone2').val(),
+								customText:$('#input_addr_text').val(),	
+							}
+							$.ajax({
+								url:context+'/order/addr/',
+								method:'POST',
+								 data: JSON.stringify(jason),
+								 dataType:'json',
+								 contentType: 'application/json'
+							});
+						$('#btn-logout').remove();
+						$('#btn-basket').remove();
+						$('#btn-mypage').remove();
+							app.mypage.onCreate();
+						
+				 });
+				 $.getJSON(context+'/basket/totalPrice/'+sessionStorage.getItem('customer'),e=>{
 					 var basketObjTotal = e.basketTotalPrice;
 					 console.log(basketObjTotal);			
 						$('#div_add').append($(createDiv({id:'',clazz:''}))
@@ -1179,7 +1743,443 @@ app.cash=(()=>{
 		 };
 		 return{onCreate:onCreate}
 	 })();
-
+app.mainItem=(()=>{
+	var $wrapper,context,view,image;
+	var onCreate=()=>{
+		 $wrapper = $('#wrapper');
+		 $content = $('#content');
+		 context = $.context();
+		 image = $.image();
+		 hview = $.javascript()+'/h_app.js';
+	     view = $.javascript()+'/j_app.js';
+	     setContentView();
+	 };
+	 var setContentView=()=>{		 
+			 $.getScript(view,()=>{
+				 $('#content').html($(createDiv({
+						id:'div-container',
+						clazz:'container-fluid'
+					})).attr('style','padding:0;'));
+					$('#div-container').append($(createDiv({id:'div-carousel',clazz:''})));
+					$('#div-container').append($(createDiv({id:'div-main-items-home',clazz:''})));
+					$('#div-container').append($(createDiv({id:'div-main-items-middle',clazz:''})));
+					$(createDiv({
+						id:'myCarousel',
+						clazz:'carousel slide'
+					})).attr('style','')
+					.attr('data-ride','carousel')
+					.appendTo('#div-carousel');
+					$(createDiv({
+						id:'div-inner',
+						clazz:'carousel-inner'
+					})).attr('style','max-height:500px;')
+					.appendTo('#myCarousel');
+					$(createDiv({
+						id:'div-item-active',
+						clazz:'item active'
+					})).appendTo('#div-inner');
+					$(createImg({
+						img:'m-item3.jpg'
+					})).attr('style','width:100%; height:100%;')
+					.appendTo('#div-item-active');
+					$(createDiv({
+						id:'div-item-active1',
+						clazz:'item'
+					})).appendTo('#div-inner');
+					$(createImg({
+						img:'m-item4.jpg'
+					})).attr('style','width:100%; height:100%;')
+					.appendTo('#div-item-active1');
+					$(createDiv({
+						id:'div-item-active2',
+						clazz:'item'
+					})).appendTo('#div-inner');
+					$(createImg({
+						img:'m-item5.jpg'
+					})).attr('style','width:100%; height:100%;')
+					.appendTo('#div-item-active2');
+					$('#div-inner')
+					.append($(createMainImg()));
+					var temp = ['Matte Lipstick','Retro Matte Lipstick','EYE SHADOW','Mineralize Blush']
+					$.getJSON(context+'/search/', d=>{
+						var mainObj = d.main;
+						for(var i =0 ;  i <= mainObj.length ; i++){
+							if(i > 3){
+								return false;
+							}
+							console.log(mainObj[i]);
+							$(createDiv({id:'',clazz:''}))
+							.attr('style','margin-top:30px;display: inline-block;margin-left: 50px;')
+							.append($(createDiv({id:'',clazz:''}))
+								.attr('style','display: inline-block;')
+								.append($(createDiv({id:'',clazz:''}))
+									.append($(createHTag({num:'5',val:d.main[i].itemName}))
+										.attr('id','HTag-main-korName-'+i)))
+								.append($(createDiv({id:'',clazz:''}))
+										.append($(createHTag({num:'5',val:temp[i]}))
+												.attr('id','HTag-main-engName-'+i)))
+								.append($(createDiv({id:'',clazz:''}))
+										.append($(createHTag({num:'5',val:d.main[i].colorExp}))
+											.attr('id','HTag-main-color-'+i)))
+								.append($(createDiv({id:'',clazz:''}))
+										.append($(createHTag({num:'5',val:''}))
+											.attr('id','HTag-main-colorEng-'+i))))
+						 	.append($(createDiv({id:'',clazz:''}))
+					 			.attr('style','display: inline-block; margin-left: 100px;')
+					 			.append($(createDiv({id:'',clazz:''}))
+				 						.append($(createHTag({num:'5',val:'★★★★★'}))))
+								.append($(createDiv({id:'',clazz:''}))
+										.append($(createHTag({num:'5',val:'♡'})))))
+					 		.append($(createDiv({id:'',clazz:''}))
+				 				.append($(createDiv({id:'',clazz:''}))
+				 						.append($(createImg({img:d.main[i].picName+'.jpg'})))))
+					 		.append($(createDiv({id:'',clazz:''}))
+				 				.attr('style','border-top: 1px solid #c7c7c7;')
+				 				.append($(createDiv({id:'',clazz:''}))
+				 						.attr('style','display: inline-block;margin-left: 10px; margin-top:10px;')
+			 							.append($(createHTag({num:'5',val:'₩ 30,000'}))
+		 									.attr('id','HTag-basket-'+i+'')))
+								.append($(createDiv({id:'',clazz:''}))
+										.attr('style','display: inline-block;margin-left: 90px;')
+										.append($(createButton({id:'btn-basket-'+i+'',clazz:'',val:'장바구니 담기'}))
+												.attr('colorexp',mainObj[i].colorExp)
+												.attr('itemname',mainObj[i].itemName)
+												.attr('picname',mainObj[i].picName)
+												.attr('itemseq',mainObj[i].itemSeq)
+												.attr('itemcode',mainObj[i].itemCode)
+												.on('click',function (){
+													
+													var jason = {
+															colorexp : $(this).attr("colorexp"),
+															itemname : $(this).attr("itemname"),
+															picname  : $(this).attr("picname"),
+															itemseq  : $(this).attr("itemseq"),
+															itemcode : $(this).attr("itemcode"),
+													
+													}
+													
+													$.ajax({
+														url:context+'/basket/order/'+sessionStorage.getItem('customer'),
+														method:'POST',
+														 data: JSON.stringify(jason),
+														 dataType:'json',
+														 contentType: 'application/json'
+														
+													})
+													console.log($(this));
+													console.log("colorExp: ",$(this).attr("colorexp"));
+													console.log("itemName: ",$(this).attr("itemname"));
+													console.log("picName: ",$(this).attr("picname"));
+													console.log("itemseq: ",$(this).attr("itemseq"));
+													console.log("itemcode: ",$(this).attr("itemcode"));
+													
+												})
+											.attr('style','color:white; background:black;'))))
+											.appendTo('#div-main-items-home');						
+						}
+					});
+			
+					
+					$(createATag({
+						id:'a-tabs-item1',
+						clazz:'order-grid-container2',
+						val:'<span style="margin-top:15px; padding:10px; height:35px; font-size:15px; background: black; color:white;" id="" class="glyphicon" aria-hidden="true">BEST SELLER</span>'
+					})).attr('style','padding:5px;')
+					.attr('style','margin-left:600px;')
+					.appendTo('#div-main-item-manu1')
+					.click(()=>{
+		 			alert('베스트셀러');
+		 			 });
+					$(createATag({
+						id:'a-tabs-item2',
+						clazz:'order-grid-container2',
+						val:'<span style="margin-top:15px; margin-left:5px; padding:10px; height:35px; font-size:15px; background: black; color:white;" id="" class="glyphicon" aria-hidden="true">PALET TES</span>'
+					})).attr('style','padding:5px;')
+					.appendTo('#div-main-item-manu1')
+					.click(()=>{
+		 			alert('PALETTES');
+		 			 });
+					$(createATag({
+						id:'a-tabs-item3',
+						clazz:'order-grid-container2',
+						val:'<span style="margin-top:15px; padding:10px; height:35px; font-size:15px; background: black; color:white;" id="" class="glyphicon" aria-hidden="true">HIT ITEM</span>'
+					})).attr('style','padding:5px;')
+					.appendTo('#div-main-item-manu1')
+					.click(()=>{
+			 			alert('HIT ITEM');
+			 			 });
+					$('#div-main-items-middle')
+					.append($(createDiv({
+						id:'div-main-itme-manu2',
+						clazz:''
+					})));
+					$(createHTag({
+						num:'2',
+						val:'한정 컬렉션'
+					}))
+					.attr('style','font-weight: bold; text-align: center;')
+					.appendTo('#div-main-itme-manu2');
+					$(createHTag({
+						num:'2',
+						val:'리미티드 아이템을 만나는 한정된 기회를 절대 놓치지 마세요!'
+					}))
+					.attr('style','font-size: 15px; text-align: center;')
+					.appendTo('#div-main-itme-manu2');
+					$('#div-main-items-middle').append($(createDiv({
+						id:'j-div-main-itme-manu3',
+						clazz:''
+					})));
+					$(createImg({
+						img:'mainitem4.jpg'
+					})).attr('style','margin-left:80px;')
+					.appendTo('#j-div-main-itme-manu3')
+					 .click(()=>{
+			 				alert('화면 작동함');
+					 });
+					$('#div-main-items-middle').append($(createDiv({
+						id:'j-div-main-itme-manu4',
+						clazz:''
+					})));
+					$(createHTag({
+						num:'2',
+						val:'공식몰 혜택'
+					}))
+					.attr('style','font-weight: bold; text-align: center;')
+					.appendTo('#j-div-main-itme-manu4');
+					$('#div-main-items-middle').append($(createDiv({
+						id:'j-div-main-itme-manu5',
+						clazz:''
+					})));
+					$(createImg({
+						img:'mainitem5.jpg'
+					})).attr('style','margin-left:80px;')
+					.appendTo('#j-div-main-itme-manu5')
+					 .click(()=>{
+			 				alert('화면 작동함');
+					 });
+					$('#div-main-items-middle').append($(createDiv({
+						id:'j-div-main-itme-manu6',
+						clazz:''
+					})));
+					$(createHTag({
+						num:'2',
+						val:'머스트 해브 아이템'
+					}))
+					.attr('style','font-weight: bold; text-align: center;')
+					.appendTo('#j-div-main-itme-manu6');
+					$('#div-main-items-middle').append($(createDiv({
+						id:'j-div-main-itme-manu7',
+						clazz:''
+					})));
+					$(createDiv({
+						id:'j-div-main-itme-manu8',
+						clazz:''
+					})).attr('style','margin-left:140px;').appendTo('#j-div-main-itme-manu7');
+					
+					$(createATag({
+						id:'j-a-mainitem6',
+						val:'<img style="height:48%;width: 22%;" src="'+$.image()+'/mainitem6.jpg">'
+					}))
+					.appendTo('#j-div-main-itme-manu8')
+					 .click(()=>{
+			 				alert('화면 작동함1');
+					 });
+					$(createATag({
+						id:'j-a-mainitem7',
+						val:'<img style="height:48%;width: 22%; " src="'+$.image()+'/mainitem7.jpg">'
+					}))
+					.appendTo('#j-div-main-itme-manu8')
+					 .click(()=>{
+			 				alert('화면 작동함2');
+					 });
+					 $(createATag({
+							id:'j-a-mainitem8',
+							val:'<img style="height:48%;width: 22%;" src="'+$.image()+'/mainitem8.jpg">'
+						}))
+						.appendTo('#j-div-main-itme-manu8')
+						 .click(()=>{
+				 				alert('화면 작동함3');
+						 });
+					$(createATag({
+						id:'j-a-mainitem9',
+						val:'<img style="height:48%;width: 22%;" src="'+$.image()+'/mainitem9.jpg">'
+					}))
+					.appendTo('#j-div-main-itme-manu8')
+					 .click(()=>{
+			 				alert('화면 작동함4');
+					 });
+					$('#footer').html($(createDiv({
+						id:'j-div-footer1',
+						clazz:''
+					})).attr('style','background: #292929; height:35%; margin-top:20px;'));
+					$(createDiv({
+						id:'j-div-footer2',
+						clazz:''
+					})).attr('style','background:black; height:15%;')
+					.appendTo('#footer');
+					$(createImg({
+						img:'mainitem10.jpg'
+					})).attr('style','width: 1400px;').appendTo('#j-div-footer2');
+					
+					$(createGridDiv4()).attr('style','margin: 0 auto;').appendTo('#j-div-footer1');
+					$(createGridDivContent({
+						val:'맥 스토어'
+					})).attr('style','color:white; margin-top: 8px;')
+					.attr('id','j-div-grid-1')
+					.appendTo('#div-order-grid4');
+					$(createGridDivRow2({
+						val1:(createATag({
+							id:'j-a-1-1',
+							val:'매장안내'				
+						})),
+						val2:(createATag({
+							id:'j-a-1-2',
+							val:'메이크업 서비스'				
+						})),
+						val3:'',
+						val4:'',
+						val5:'',
+						val6:'',
+						val7:'',
+					})).attr('style','margin-top:10px;')
+					.appendTo('#j-div-grid-1');
+					$('#j-a-1-1').attr('style','color:white');
+					$('#j-a-1-2').attr('style','color:white');
+					
+					$(createGridDivContent({
+						val:'고객관리지원팀'
+					})).attr('style','color:white; margin-top: 8px;')
+					.attr('id','j-div-grid-2')
+					.appendTo('#div-order-grid4');
+					$(createGridDivRow2({
+						val1:(createATag({
+							id:'j-a-2-1',
+							val:'Contact Us'				
+						})),
+						val2:(createATag({
+							id:'j-a-2-2',
+							val:'02-3440-2707'				
+						})),
+						val3:(createATag({
+							id:'j-a-2-3',
+							val:'FAQS'				
+						})),
+						val4:(createATag({
+							id:'j-a-2-4',
+							val:'배송정보'				
+						})),
+						val5:(createATag({
+							id:'j-a-2-5',
+							val:'반품 및 교환'				
+						})),
+						val6:'',
+						val7:'',
+					})).attr('style','margin-top:10px;')
+					.appendTo('#j-div-grid-2');
+					$('#j-a-2-1').attr('style','color:white');
+					$('#j-a-2-2').attr('style','color:white');
+					$('#j-a-2-3').attr('style','color:white');
+					$('#j-a-2-4').attr('style','color:white');
+					$('#j-a-2-5').attr('style','color:white');
+					
+					$(createGridDivContent({
+						val:'ABOUT US'
+					})).attr('style','color:white; margin-top: 8px;')
+					.attr('id','j-div-grid-3')
+					.appendTo('#div-order-grid4');
+					$(createGridDivRow2({
+						val1:(createATag({
+							id:'j-a-3-1',
+							val:'QUR STORY'				
+						})),
+						val2:(createATag({
+							id:'j-a-3-2',
+							val:'맥 에이즈 펀드'				
+						})),
+						val3:(createATag({
+							id:'j-a-3-3',
+							val:'맥 프로 맴버쉽'				
+						})),
+						val4:(createATag({
+							id:'j-a-3-4',
+							val:'나의 맥 셀렉트'				
+						})),
+						val5:(createATag({
+							id:'j-a-3-5',
+							val:'백 투 맥'				
+						})),
+						val6:(createATag({
+							id:'j-a-3-6',
+							val:'채용 정보'				
+						})),
+						val7:(createATag({
+							id:'j-a-3-7',
+							val:'ANIMAL TESTING'				
+						})),
+					})).attr('style','margin-top:10px;')
+					.appendTo('#j-div-grid-3');
+					$('#j-a-3-1').attr('style','color:white;');
+					$('#j-a-3-2').attr('style','color:white;');
+					$('#j-a-3-3').attr('style','color:white;');
+					$('#j-a-3-4').attr('style','color:white;');
+					$('#j-a-3-5').attr('style','color:white;');
+					$('#j-a-3-6').attr('style','color:white;');
+					$('#j-a-3-7').attr('style','color:white;');
+					
+					$(createGridDivContent({
+						val:'내 정보및 주문관리'
+					})).attr('style','color:white; margin-top: 8px;')
+					.attr('id','j-div-grid-4')
+					.appendTo('#div-order-grid4');
+					$(createGridDivRow2({
+						val1:(createATag({
+							id:'j-a-4-1',
+							val:'QUR STORY'				
+						})),
+						val2:(createATag({
+							id:'j-a-4-2',
+							val:'맥 에이즈 펀드'				
+						})),
+						val3:(createATag({
+							id:'j-a-4-3',
+							val:'맥 프로 맴버쉽'				
+						})),
+						val4:(createATag({
+							id:'j-a-4-4',
+							val:''				
+						})),
+						val5:(createATag({
+							id:'j-a-4-5',
+							val:''				
+						})),
+						val6:(createATag({
+							id:'j-a-4-6',
+							val:''				
+						})),
+						val7:(createATag({
+							id:'j-a-4-7',
+							val:''				
+						})),
+					})).attr('style','margin-top:10px;')
+					.appendTo('#j-div-grid-4');
+					$('#j-a-4-1').attr('style','color:white;');
+					$('#j-a-4-2').attr('style','color:white;');
+					$('#j-a-4-3').attr('style','color:white;');
+					
+					$(createGridDivContent({
+						val:''
+					})).attr('style','color:white')
+					.attr('id','j-div-grid-5')
+					.appendTo('#div-order-grid4');
+				
+				
+			 });
+		
+			
+		 };
+		
+		 return{onCreate:onCreate};
+})();
 app.main=(()=>{
 	var $wrapper,context,view,image;
 	var onCreate=()=>{
@@ -1193,693 +2193,9 @@ app.main=(()=>{
 	 };
 	 var setContentView=()=>{		 
 			 $.getScript(view,()=>{
-				 
-				 $('#wrapper').html($(createDiv({
-	    			 id : 'container',
-	    			 clazz : ''
-	    		 }))
-	    		 .attr('style','background: black; width:100%; height:60px; padding: 15px;')
-	    		 .append($(createDiv({id:'',clazz:'dropdown'}))
-	    				 .attr('style','display: inline-block;')	    			
-		 .append($(createButton({id:'btn-main-go',clazz:'btn btn-default dropdown-toggle',val:'M·A·C'}))
-	     .attr('style','margin-left: 100px;font-size:20px; width: 120px;background: black; border: black; color: white;'))		 
-		 .append($(createButton({id:'',clazz:'btn btn-default dropdown-toggle',val:'신 제 품'}))
-		 .attr('style','font-size:20px;width: 120px;background: black; border: black; color: white;')
-		 .attr('data-toggle','dropdown'))
-				 .append($(createUL({id:'',clazz:'dropdown-menu'}))
-	 	.append($(createDiv({id:'',clazz:''}))
-			 			.attr('style','width: 1580px; padding:0; display: inline-block;')
- 			.append($(createLI({id:'',clazz:'dropdown-submenu',val:''}))
-			.append($(createImg({img:'crush.jpg'})))
-			.append($(createImg({img:'crush2.jpg'})))
-			.append($(createImg({img:'crush3.jpg'})))
-			.append($(createImg({img:'crush4.jpg'})))
-			.append($(createImg({img:'crush5.jpg'})))
-					 			))
-			 		)
-	    		 		)
-	 		.append($(createDiv({id:'',clazz:'dropdown'}))
-				 .attr('style','display: inline-block;')
-				 .append($(createButton({id:'',clazz:'btn btn-default dropdown-toggle',val:'제 품'}))
-				 .attr('style','font-size:20px; width: 120px; background: black; border: black; color: white;')
-				 .attr('data-toggle','dropdown'))
-				 .append($(createUL({id:'',clazz:'dropdown-menu'}))
-				 .attr('style','height: 70px; width: 800px;')
-				 .append($(createDiv({id:'',clazz:''}))			
-				 .attr('style','width:800px; height: 50px; text-align: center; padding: 5px;')
-				 
-				 
-			 .append($(createDiv({id:'',clazz:''})).
-					attr('style','display: inline-block; padding: 5px;')
-					.append($(createLI({id:'',clazz:'dropdown-submenu',val:''}))
-			.append($(createDiv({id:'',clazz:''}))
-				.attr('style','display: inline-block;')
-				.attr('style','font-size: 15px; padding:5px;  margin-left: 30px;')
-			
-				.append($(createATag({id:'test',clazz:'',val:'트 랜 딩 나 우'}))
-					.hover(e=>{$('#j-ul-toggle').toggle('show')}, e=>{$('#j-ul-toggle').toggle('hide')})
-					.attr('tabindex','-1')
-					.attr('style','color:black; font-size:15px; font-weight: bold;'))
-				.append($(createUL({id:'j-ul-toggle',clazz:'dropdown-menu'}))
-					.attr('style','top:53px;')
-					.append($(createLI({id:'',clazz:'',val:''}))
-						.append($(createATag({id:'',clazz:'',val:'프레그런스 키트'}))
-								.on('click',e=>{
-									e.preventDefault();
-									$.getScript(hview,()=>{
-										app.mainitem.onCreate();
-									});
-								})
-						.attr('style','color:black; font-size:15px; font-weight: bold;')
-						.append('</br>'))
-					.append($(createLI({id:'',clazz:'',val:''}))
-						.append($(createATag({id:'',clazz:'',val:'레드의 정석'}))
-						.attr('style','color:black; font-size:15px; font-weight: bold;')		
-						.append('</br>')))
-					.append($(createLI({id:'',clazz:'',val:''}))
-						.append($(createATag({id:'',clazz:'',val:'엔티크 로즈'}))
-						.attr('style','color:black; font-size:15px; font-weight: bold;')
-						.append('</br>')))
-					.append($(createLI({id:'',clazz:'',val:''}))
-						.append($(createATag({id:'',clazz:'',val:'맥프로 아이팔레트'}))
-						.attr('style','color:black; font-size:15px; font-weight: bold;')
-						.append('</br>')))
-					)))
-					
-					))
-					 
-			.append($(createDiv({id:'',clazz:''})).
-					attr('style','display: inline-block; padding: 5px;')
-					.append($(createLI({id:'',clazz:'dropdown-submenu',val:''}))
-			.append($(createDiv({id:'',clazz:''}))
-				.attr('style','display: inline-block;')
-				.attr('style','font-size: 15px; padding:5px;  margin-left: 30px;')
-			
-				.append($(createATag({id:'test',clazz:'',val:'메이크업'}))
-					.hover(e=>{$('#j-ul-toggle1').toggle('show')}, e=>{$('#j-ul-toggle1').toggle('hide')})
-					.attr('tabindex','-1')
-					.attr('style','color:black; font-size:15px; font-weight: bold;'))
-				.append($(createUL({id:'j-ul-toggle1',clazz:'dropdown-menu'}))
-					.attr('style','top:53px;')
-					.append($(createLI({id:'',clazz:'',val:''}))
-						.append($(createATag({id:'',clazz:'',val:'립스틱'}))
-								.on('click',e=>{
-									e.preventDefault();
-									$.getScript(hview,()=>{
-										app.mainitem.onCreate();
-									});
-								})
-								.attr('style','color:black; font-size:15px; font-weight: bold;')
-							.append('</br>'))
-						.append($(createATag({id:'',clazz:'',val:'아이섀도우'}))
-								.on('click',e=>{
-									e.preventDefault();
-									$.getScript(hview,()=>{
-										app.mainitem.onCreate();
-									});
-								})
-								.attr('style','color:black; font-size:15px; font-weight: bold;')
-						.append('</br>'))
-					.append($(createLI({id:'',clazz:'',val:''}))
-						.append($(createATag({id:'',clazz:'',val:'아이 팔레트+ 키트'}))
-								.attr('style','color:black; font-size:15px; font-weight: bold;')
-						.append('</br>')))
-					.append($(createLI({id:'',clazz:'',val:''}))
-						.append($(createATag({id:'',clazz:'',val:'라이너'}))
-								.attr('style','color:black; font-size:15px; font-weight: bold;')
-						.append('</br>')))
-					.append($(createLI({id:'',clazz:'',val:''}))
-						.append($(createATag({id:'',clazz:'',val:'마스카라'}))
-								.attr('style','color:black; font-size:15px; font-weight: bold;')
-						.append('</br>')))
-					.append($(createLI({id:'',clazz:'',val:''}))
-						.append($(createATag({id:'',clazz:'',val:'브로우'}))
-								.attr('style','color:black; font-size:15px; font-weight: bold;')
-						.append('</br>')))
-					.append($(createLI({id:'',clazz:'',val:''}))
-						.append($(createATag({id:'',clazz:'',val:'아이프라이머'}))
-								.attr('style','color:black; font-size:15px; font-weight: bold;')
-						.append('</br>')))
-					)))
-					
-					))
-					
-				.append($(createDiv({id:'',clazz:''})).
-					attr('style','display: inline-block; padding: 5px;')
-					.append($(createLI({id:'',clazz:'dropdown-submenu',val:''}))
-			.append($(createDiv({id:'',clazz:''}))
-				.attr('style','display: inline-block;')
-				.attr('style','font-size: 15px; padding:5px; margin-left: 30px;')
-				.append($(createATag({id:'test',clazz:'',val:'프라미어+스킨케어'}))
-					.hover(e=>{$('#j-ul-toggle2').toggle('show')}, e=>{$('#j-ul-toggle2').toggle('hide')})
-					.attr('tabindex','-1')
-					.attr('style','color:black; font-size:15px; font-weight: bold;'))
-				.append($(createUL({id:'j-ul-toggle2',clazz:'dropdown-menu'}))
-					.attr('style','top:53px;')
-					.append($(createLI({id:'',clazz:'',val:''}))
-						.append($(createATag({id:'',clazz:'',val:'프라이머'}))
-								.attr('style','color:black; font-size:15px; font-weight: bold;')
-						.append('</br>'))
-					.append($(createLI({id:'',clazz:'',val:''}))
-						.append($(createATag({id:'',clazz:'',val:'리무버'}))
-								.attr('style','color:black; font-size:15px; font-weight: bold;')
-						.append('</br>')))
-					.append($(createLI({id:'',clazz:'',val:''}))
-						.append($(createATag({id:'',clazz:'',val:'모이스처 라이저'}))
-								.attr('style','color:black; font-size:15px; font-weight: bold;')
-						.append('</br>')))
-					.append($(createLI({id:'',clazz:'',val:''}))
-						.append($(createATag({id:'',clazz:'',val:'BB+CC'}))
-								.attr('style','color:black; font-size:15px; font-weight: bold;')
-						.append('</br>')))
-					.append($(createLI({id:'',clazz:'',val:''}))
-						.append($(createATag({id:'',clazz:'',val:'여행용사이즈'}))
-								.attr('style','color:black; font-size:15px; font-weight: bold;')
-						.append('</br>')))
-					)))
-					))
-				.append($(createDiv({id:'',clazz:''})).
-					attr('style','display: inline-block; padding: 5px;')
-					.append($(createLI({id:'',clazz:'dropdown-submenu',val:''}))
-			.append($(createDiv({id:'',clazz:''}))
-				.attr('style','display: inline-block;')
-				.attr('style','font-size: 15px; padding:5px; margin-left: 30px;')
-				.append($(createATag({id:'test',clazz:'',val:'브러쉬+툴'}))
-					.hover(e=>{$('#j-ul-toggle3').toggle('show')}, e=>{$('#j-ul-toggle3').toggle('hide')})
-					.attr('tabindex','-1')
-					.attr('style','color:black; font-size:15px; font-weight: bold;'))
-				.append($(createUL({id:'j-ul-toggle3',clazz:'dropdown-menu'}))
-					.attr('style','top:53px;')
-					.append($(createLI({id:'',clazz:'',val:''}))
-						.append($(createATag({id:'',clazz:'',val:'브러쉬'}))
-								.attr('style','color:black; font-size:15px; font-weight: bold;')
-						.append('</br>'))
-					.append($(createLI({id:'',clazz:'',val:''}))
-						.append($(createATag({id:'',clazz:'',val:'아이 브러쉬'}))
-								.attr('style','color:black; font-size:15px; font-weight: bold;')
-						.append('</br>')))
-					.append($(createLI({id:'',clazz:'',val:''}))
-						.append($(createATag({id:'',clazz:'',val:'립 브러쉬'}))
-								.attr('style','color:black; font-size:15px; font-weight: bold;')
-						.append('</br>')))
-					.append($(createLI({id:'',clazz:'',val:''}))
-						.append($(createATag({id:'',clazz:'',val:'페이스 브러수;'}))
-								.attr('style','color:black; font-size:15px; font-weight: bold;')
-						.append('</br>')))
-					.append($(createLI({id:'',clazz:'',val:''}))
-						.append($(createATag({id:'',clazz:'',val:'모든 브러쉬'}))
-								.attr('style','color:black; font-size:15px; font-weight: bold;')
-						.append('</br>')))
-					)))
-					))
-				.append($(createDiv({id:'',clazz:''})).
-					attr('style','display: inline-block; padding: 5px;')
-					.append($(createLI({id:'',clazz:'dropdown-submenu',val:''}))
-			.append($(createDiv({id:'',clazz:''}))
-				.attr('style','display: inline-block;')
-				.attr('style','font-size: 15px; padding:5px; margin-left: 30px;')
-				.append($(createATag({id:'test',clazz:'',val:'향수'}))
-					.hover(e=>{$('#j-ul-toggle4').toggle('show')}, e=>{$('#j-ul-toggle4').toggle('hide')})
-					.attr('tabindex','-1')
-					.attr('style','color:black; font-size:15px; font-weight: bold;'))
-				.append($(createUL({id:'j-ul-toggle4',clazz:'dropdown-menu'}))
-					.attr('style','top:53px;')
-					.append($(createLI({id:'',clazz:'',val:''}))
-						.append($(createATag({id:'',clazz:'',val:'쉐이드센츠'}))
-								.attr('style','color:black; font-size:15px; font-weight: bold;')
-						.append('</br>'))
-					)))
-					))
-					
-					.append($(createDiv({id:'',clazz:''})).
-					attr('style','display: inline-block; padding: 5px;')
-					.append($(createLI({id:'',clazz:'dropdown-submenu',val:''}))
-			.append($(createDiv({id:'',clazz:''}))
-				.attr('style','display: inline-block;')
-				.attr('style','font-size: 15px; padding:5px; margin-left: 30px;')
-				.append($(createATag({id:'test',clazz:'',val:'주요 라인업'}))
-					.hover(e=>{$('#j-ul-toggle4').toggle('show')}, e=>{$('#j-ul-toggle4').toggle('hide')})
-					.attr('tabindex','-1')
-					.attr('style','color:black; font-size:15px; font-weight: bold;'))
-				.append($(createUL({id:'j-ul-toggle4',clazz:'dropdown-menu'}))
-					.attr('style','top:53px;')
-					.append($(createLI({id:'',clazz:'',val:''}))
-						.append($(createATag({id:'',clazz:'',val:'쉐이드센츠'}))
-								.attr('style','color:black; font-size:15px; font-weight: bold;')
-						.append('</br>'))
-					)))
-					))		
-			 )))
-			 	 	 
-			 	 .append($(createButton({id:'',clazz:'btn btn-default dropdown-toggle',val:'굿 바 이 즈'}))
-			 			 .attr('style','font-size:20px; width: 120px;background: black; border: black; color: white;'))	
-			 	 	 
-				 .append($(createButton({id:'',clazz:'btn btn-default dropdown-toggle',val:'맥 셀 렉 트'}))
-						 .attr('style',' margin-left: 20px;font-size:20px; width: 120px;background: black; border: black; color: white;'))
-			 	 	 
-				 .append($(createButton({id:'',clazz:'btn btn-default dropdown-toggle',val:'매 장 안 내'}))
-						 .attr('style','margin-left: 10px; font-size:20px; width: 120px;background: black; border: black; color: white;'))
-				 	 
-				 .append($(createButton({id:'',clazz:'btn btn-default dropdown-toggle',val:'게 시 판'}))
-						 .attr('style','margin-left: 10px; font-size:20px; width: 120px;background: black; border: black; color: white;'))
-				 	 
-	 			 .append($(createButton({id:'btn-join-default',clazz:'btn btn-default dropdown-toggle',val:'회원가입'}))
-	 					 .on('click',()=>{
-	 						 alert('회원가입');
-	 						 app.join.onCreate();
-	 					 })
-	 					 .attr('style','margin-left: 10px; font-size:20px; width: 120px;background: black; border: black; color: white;'))
-				 	 
-				 .append($(createButton({id:'btn-login-default',clazz:'btn btn-default dropdown-toggle',val:'로 그 인'}))
-				 			.click(()=>{
-					 			alert('로그인');
-					 			app.login.onCreate();	
-					 			$('#content').empty();
-					 			
-					 			 })	 
-				 .attr('style','font-size:20px; width: 120px;background: black; border: black; color: white;')))
-				 ;
-				 
-				 $('#btn-main-go').on('click',()=>{
-					 alert('작동함');
-						app.main.onCreate();
-					});
-				 
-				$('#content').html($(createDiv({
-					id:'div-container',
-					clazz:'container-fluid'
-				})).attr('style','padding:0;'));
-				$('#div-container').append($(createDiv({id:'div-carousel',clazz:''})));
-				$('#div-container').append($(createDiv({id:'div-main-items-home',clazz:''})));
-				$('#div-container').append($(createDiv({id:'div-main-items-middle',clazz:''})));
-				$(createDiv({
-					id:'myCarousel',
-					clazz:'carousel slide'
-				})).attr('style','')
-				.attr('data-ride','carousel')
-				.appendTo('#div-carousel');
-				$(createDiv({
-					id:'div-inner',
-					clazz:'carousel-inner'
-				})).attr('style','max-height:500px;')
-				.appendTo('#myCarousel');
-				$(createDiv({
-					id:'div-item-active',
-					clazz:'item active'
-				})).appendTo('#div-inner');
-				$(createImg({
-					img:'m-item3.jpg'
-				})).attr('style','width:100%; height:100%;')
-				.appendTo('#div-item-active');
-				$(createDiv({
-					id:'div-item-active1',
-					clazz:'item'
-				})).appendTo('#div-inner');
-				$(createImg({
-					img:'m-item4.jpg'
-				})).attr('style','width:100%; height:100%;')
-				.appendTo('#div-item-active1');
-				$(createDiv({
-					id:'div-item-active2',
-					clazz:'item'
-				})).appendTo('#div-inner');
-				$(createImg({
-					img:'m-item5.jpg'
-				})).attr('style','width:100%; height:100%;')
-				.appendTo('#div-item-active2');
-				$('#div-inner')
-				.append($(createMainImg()));
-				var temp = ['Matte Lipstick','Retro Matte Lipstick','EYE SHADOW','Mineralize Blush']
-				$.getJSON(context+'/search/', d=>{
-					var mainObj = d.main;
-					for(var i =0 ;  i <= mainObj.length ; i++){
-						if(i > 3){
-							return false;
-						}
-						console.log(mainObj[i]);
-						$(createDiv({id:'',clazz:''}))
-						.attr('style','margin-top:30px;display: inline-block;margin-left: 50px;')
-						.append($(createDiv({id:'',clazz:''}))
-							.attr('style','display: inline-block;')
-							.append($(createDiv({id:'',clazz:''}))
-								.append($(createHTag({num:'5',val:d.main[i].itemName}))
-									.attr('id','HTag-main-korName-'+i)))
-							.append($(createDiv({id:'',clazz:''}))
-									.append($(createHTag({num:'5',val:temp[i]}))
-											.attr('id','HTag-main-engName-'+i)))
-							.append($(createDiv({id:'',clazz:''}))
-									.append($(createHTag({num:'5',val:d.main[i].colorExp}))
-										.attr('id','HTag-main-color-'+i)))
-							.append($(createDiv({id:'',clazz:''}))
-									.append($(createHTag({num:'5',val:''}))
-										.attr('id','HTag-main-colorEng-'+i))))
-					 	.append($(createDiv({id:'',clazz:''}))
-				 			.attr('style','display: inline-block; margin-left: 100px;')
-				 			.append($(createDiv({id:'',clazz:''}))
-			 						.append($(createHTag({num:'5',val:'★★★★★'}))))
-							.append($(createDiv({id:'',clazz:''}))
-									.append($(createHTag({num:'5',val:'♡'})))))
-				 		.append($(createDiv({id:'',clazz:''}))
-			 				.append($(createDiv({id:'',clazz:''}))
-			 						.append($(createImg({img:d.main[i].picName+'.jpg'})))))
-				 		.append($(createDiv({id:'',clazz:''}))
-			 				.attr('style','border-top: 1px solid #c7c7c7;')
-			 				.append($(createDiv({id:'',clazz:''}))
-			 						.attr('style','display: inline-block;margin-left: 10px; margin-top:10px;')
-		 							.append($(createHTag({num:'5',val:'₩ 30,000'}))
-	 									.attr('id','HTag-basket-'+i+'')))
-							.append($(createDiv({id:'',clazz:''}))
-									.attr('style','display: inline-block;margin-left: 90px;')
-									.append($(createButton({id:'btn-basket-'+i+'',clazz:'',val:'장바구니 담기'}))
-											.attr('colorexp',mainObj[i].colorExp)
-											.attr('itemname',mainObj[i].itemName)
-											.attr('picname',mainObj[i].picName)
-											.attr('itemseq',mainObj[i].itemSeq)
-											.attr('itemcode',mainObj[i].itemCode)
-											.on('click',function (){
-												
-												var jason = {
-														colorexp : $(this).attr("colorexp"),
-														itemname : $(this).attr("itemname"),
-														picname  : $(this).attr("picname"),
-														itemseq  : $(this).attr("itemseq"),
-														itemcode : $(this).attr("itemcode"),
-												
-												}
-												
-												$.ajax({
-													url:context+'/basket/order',
-													method:'POST',
-													 data: JSON.stringify(jason),
-													 dataType:'json',
-													 contentType: 'application/json'
-													
-												})
-												console.log($(this));
-												console.log("colorExp: ",$(this).attr("colorexp"));
-												console.log("itemName: ",$(this).attr("itemname"));
-												console.log("picName: ",$(this).attr("picname"));
-												console.log("itemseq: ",$(this).attr("itemseq"));
-												console.log("itemcode: ",$(this).attr("itemcode"));
-												
-											})
-										.attr('style','color:white; background:black;'))))
-										.appendTo('#div-main-items-home');						
-					}
-				});
-		
-				
-				$(createATag({
-					id:'a-tabs-item1',
-					clazz:'order-grid-container2',
-					val:'<span style="margin-top:15px; padding:10px; height:35px; font-size:15px; background: black; color:white;" id="" class="glyphicon" aria-hidden="true">BEST SELLER</span>'
-				})).attr('style','padding:5px;')
-				.attr('style','margin-left:600px;')
-				.appendTo('#div-main-item-manu1')
-				.click(()=>{
-	 			alert('베스트셀러');
-	 			 });
-				$(createATag({
-					id:'a-tabs-item2',
-					clazz:'order-grid-container2',
-					val:'<span style="margin-top:15px; margin-left:5px; padding:10px; height:35px; font-size:15px; background: black; color:white;" id="" class="glyphicon" aria-hidden="true">PALET TES</span>'
-				})).attr('style','padding:5px;')
-				.appendTo('#div-main-item-manu1')
-				.click(()=>{
-	 			alert('PALETTES');
-	 			 });
-				$(createATag({
-					id:'a-tabs-item3',
-					clazz:'order-grid-container2',
-					val:'<span style="margin-top:15px; padding:10px; height:35px; font-size:15px; background: black; color:white;" id="" class="glyphicon" aria-hidden="true">HIT ITEM</span>'
-				})).attr('style','padding:5px;')
-				.appendTo('#div-main-item-manu1')
-				.click(()=>{
-		 			alert('HIT ITEM');
-		 			 });
-				$('#div-main-items-middle')
-				.append($(createDiv({
-					id:'div-main-itme-manu2',
-					clazz:''
-				})));
-				$(createHTag({
-					num:'2',
-					val:'한정 컬렉션'
-				}))
-				.attr('style','font-weight: bold; text-align: center;')
-				.appendTo('#div-main-itme-manu2');
-				$(createHTag({
-					num:'2',
-					val:'리미티드 아이템을 만나는 한정된 기회를 절대 놓치지 마세요!'
-				}))
-				.attr('style','font-size: 15px; text-align: center;')
-				.appendTo('#div-main-itme-manu2');
-				$('#div-main-items-middle').append($(createDiv({
-					id:'j-div-main-itme-manu3',
-					clazz:''
-				})));
-				$(createImg({
-					img:'mainitem4.jpg'
-				})).attr('style','margin-left:80px;')
-				.appendTo('#j-div-main-itme-manu3')
-				 .click(()=>{
-		 				alert('화면 작동함');
-				 });
-				$('#div-main-items-middle').append($(createDiv({
-					id:'j-div-main-itme-manu4',
-					clazz:''
-				})));
-				$(createHTag({
-					num:'2',
-					val:'공식몰 혜택'
-				}))
-				.attr('style','font-weight: bold; text-align: center;')
-				.appendTo('#j-div-main-itme-manu4');
-				$('#div-main-items-middle').append($(createDiv({
-					id:'j-div-main-itme-manu5',
-					clazz:''
-				})));
-				$(createImg({
-					img:'mainitem5.jpg'
-				})).attr('style','margin-left:80px;')
-				.appendTo('#j-div-main-itme-manu5')
-				 .click(()=>{
-		 				alert('화면 작동함');
-				 });
-				$('#div-main-items-middle').append($(createDiv({
-					id:'j-div-main-itme-manu6',
-					clazz:''
-				})));
-				$(createHTag({
-					num:'2',
-					val:'머스트 해브 아이템'
-				}))
-				.attr('style','font-weight: bold; text-align: center;')
-				.appendTo('#j-div-main-itme-manu6');
-				$('#div-main-items-middle').append($(createDiv({
-					id:'j-div-main-itme-manu7',
-					clazz:''
-				})));
-				$(createDiv({
-					id:'j-div-main-itme-manu8',
-					clazz:''
-				})).attr('style','margin-left:140px;').appendTo('#j-div-main-itme-manu7');
-				
-				$(createATag({
-					id:'j-a-mainitem6',
-					val:'<img style="height:48%;width: 22%;" src="'+$.image()+'/mainitem6.jpg">'
-				}))
-				.appendTo('#j-div-main-itme-manu8')
-				 .click(()=>{
-		 				alert('화면 작동함1');
-				 });
-				$(createATag({
-					id:'j-a-mainitem7',
-					val:'<img style="height:48%;width: 22%; " src="'+$.image()+'/mainitem7.jpg">'
-				}))
-				.appendTo('#j-div-main-itme-manu8')
-				 .click(()=>{
-		 				alert('화면 작동함2');
-				 });
-				 $(createATag({
-						id:'j-a-mainitem8',
-						val:'<img style="height:48%;width: 22%;" src="'+$.image()+'/mainitem8.jpg">'
-					}))
-					.appendTo('#j-div-main-itme-manu8')
-					 .click(()=>{
-			 				alert('화면 작동함3');
-					 });
-				$(createATag({
-					id:'j-a-mainitem9',
-					val:'<img style="height:48%;width: 22%;" src="'+$.image()+'/mainitem9.jpg">'
-				}))
-				.appendTo('#j-div-main-itme-manu8')
-				 .click(()=>{
-		 				alert('화면 작동함4');
-				 });
-				$('#footer').html($(createDiv({
-					id:'j-div-footer1',
-					clazz:''
-				})).attr('style','background: #292929; height:35%; margin-top:20px;'));
-				$(createDiv({
-					id:'j-div-footer2',
-					clazz:''
-				})).attr('style','background:black; height:15%;')
-				.appendTo('#footer');
-				$(createImg({
-					img:'mainitem10.jpg'
-				})).attr('style','width: 1400px;').appendTo('#j-div-footer2');
-				
-				$(createGridDiv4()).attr('style','margin: 0 auto;').appendTo('#j-div-footer1');
-				$(createGridDivContent({
-					val:'맥 스토어'
-				})).attr('style','color:white; margin-top: 8px;')
-				.attr('id','j-div-grid-1')
-				.appendTo('#div-order-grid4');
-				$(createGridDivRow2({
-					val1:(createATag({
-						id:'j-a-1-1',
-						val:'매장안내'				
-					})),
-					val2:(createATag({
-						id:'j-a-1-2',
-						val:'메이크업 서비스'				
-					})),
-					val3:'',
-					val4:'',
-					val5:'',
-					val6:'',
-					val7:'',
-				})).attr('style','margin-top:10px;')
-				.appendTo('#j-div-grid-1');
-				$('#j-a-1-1').attr('style','color:white');
-				$('#j-a-1-2').attr('style','color:white');
-				
-				$(createGridDivContent({
-					val:'고객관리지원팀'
-				})).attr('style','color:white; margin-top: 8px;')
-				.attr('id','j-div-grid-2')
-				.appendTo('#div-order-grid4');
-				$(createGridDivRow2({
-					val1:(createATag({
-						id:'j-a-2-1',
-						val:'Contact Us'				
-					})),
-					val2:(createATag({
-						id:'j-a-2-2',
-						val:'02-3440-2707'				
-					})),
-					val3:(createATag({
-						id:'j-a-2-3',
-						val:'FAQS'				
-					})),
-					val4:(createATag({
-						id:'j-a-2-4',
-						val:'배송정보'				
-					})),
-					val5:(createATag({
-						id:'j-a-2-5',
-						val:'반품 및 교환'				
-					})),
-					val6:'',
-					val7:'',
-				})).attr('style','margin-top:10px;')
-				.appendTo('#j-div-grid-2');
-				$('#j-a-2-1').attr('style','color:white');
-				$('#j-a-2-2').attr('style','color:white');
-				$('#j-a-2-3').attr('style','color:white');
-				$('#j-a-2-4').attr('style','color:white');
-				$('#j-a-2-5').attr('style','color:white');
-				
-				$(createGridDivContent({
-					val:'ABOUT US'
-				})).attr('style','color:white; margin-top: 8px;')
-				.attr('id','j-div-grid-3')
-				.appendTo('#div-order-grid4');
-				$(createGridDivRow2({
-					val1:(createATag({
-						id:'j-a-3-1',
-						val:'QUR STORY'				
-					})),
-					val2:(createATag({
-						id:'j-a-3-2',
-						val:'맥 에이즈 펀드'				
-					})),
-					val3:(createATag({
-						id:'j-a-3-3',
-						val:'맥 프로 맴버쉽'				
-					})),
-					val4:(createATag({
-						id:'j-a-3-4',
-						val:'나의 맥 셀렉트'				
-					})),
-					val5:(createATag({
-						id:'j-a-3-5',
-						val:'백 투 맥'				
-					})),
-					val6:(createATag({
-						id:'j-a-3-6',
-						val:'채용 정보'				
-					})),
-					val7:(createATag({
-						id:'j-a-3-7',
-						val:'ANIMAL TESTING'				
-					})),
-				})).attr('style','margin-top:10px;')
-				.appendTo('#j-div-grid-3');
-				$('#j-a-3-1').attr('style','color:white;');
-				$('#j-a-3-2').attr('style','color:white;');
-				$('#j-a-3-3').attr('style','color:white;');
-				$('#j-a-3-4').attr('style','color:white;');
-				$('#j-a-3-5').attr('style','color:white;');
-				$('#j-a-3-6').attr('style','color:white;');
-				$('#j-a-3-7').attr('style','color:white;');
-				
-				$(createGridDivContent({
-					val:'내 정보및 주문관리'
-				})).attr('style','color:white; margin-top: 8px;')
-				.attr('id','j-div-grid-4')
-				.appendTo('#div-order-grid4');
-				$(createGridDivRow2({
-					val1:(createATag({
-						id:'j-a-4-1',
-						val:'QUR STORY'				
-					})),
-					val2:(createATag({
-						id:'j-a-4-2',
-						val:'맥 에이즈 펀드'				
-					})),
-					val3:(createATag({
-						id:'j-a-4-3',
-						val:'맥 프로 맴버쉽'				
-					})),
-					val4:(createATag({
-						id:'j-a-4-4',
-						val:''				
-					})),
-					val5:(createATag({
-						id:'j-a-4-5',
-						val:''				
-					})),
-					val6:(createATag({
-						id:'j-a-4-6',
-						val:''				
-					})),
-					val7:(createATag({
-						id:'j-a-4-7',
-						val:''				
-					})),
-				})).attr('style','margin-top:10px;')
-				.appendTo('#j-div-grid-4');
-				$('#j-a-4-1').attr('style','color:white;');
-				$('#j-a-4-2').attr('style','color:white;');
-				$('#j-a-4-3').attr('style','color:white;');
-				
-				$(createGridDivContent({
-					val:''
-				})).attr('style','color:white')
-				.attr('id','j-div-grid-5')
-				.appendTo('#div-order-grid4');
+				$('#wrapper').html(app.nav.onCreate());
+				$('#content').html(app.mainItem.onCreate());
+				var customId = sessionStorage.getItem("customer");
 				
 			 });
 		
@@ -1967,12 +2283,17 @@ app.join=(()=>{
 						.append($(createDiv({id:'',clazz:''}))
 							.attr('style','text-align:center;     padding: 10px;   display: inline-block;')
 							.append($(createSelect({}))
-								.attr('style','width: 140px; height:50px; ')
-								.append($(createOption({val:'선택'})))
-								.append($(createOption({val:'010'})))
-								.append($(createOption({val:'011'})))
-								.append($(createOption({val:'016'})))
-								.append($(createOption({val:'019'})))))
+								.attr('style','width: 140px; height:50px;')
+								.attr('id','multiple')
+								.append($(createOptionJoin({val:'010'})))
+								.append($(createOptionJoin({val:'011'}))
+										.attr('selected','selected'))
+								.append($(createOptionJoin({val:'016'}))
+										.attr('selected','selected'))
+								.append($(createOptionJoin({val:'019'}))
+										.attr('selected','selected'))
+								.append($(createOptionJoin({val:'선택'}))
+										.attr('selected','selected'))))
 						.append($(createDiv({id:'',clazz:''}))
 							.attr('style','text-align:center;     padding: 10px;   display: inline-block;')
 							.append($(createInput({id:'input_join_phoneNum1',val:'핸드폰번호',type:'text'}))
@@ -2015,7 +2336,8 @@ app.join=(()=>{
 										inputJoinPhoneNum2:$('#input_join_phoneNum2').val(),
 										inputJoinEmailCheck:$('#input_join_email_check').val(),
 										inputJoinMypageProfile:$('#input_join_myFile').val(),
-										optionjoin:$('#option-join').val()
+										inputJoinPhoneNum : $( "#multiple" ).val(),
+										
 								}
 								$.ajax({
 									url:context+'/customer/join/',
@@ -2025,8 +2347,9 @@ app.join=(()=>{
 									contentType:'application/json'
 									
 								});
-								alert('다시 로그인 해주시기 바랍니다')
 								app.main.onCreate();
+								alert('다시 로그인 해주시기 바랍니다');
+								
 							})
 							.attr('style','background:black;color:white; width:150px; height:50px;')))
 			
@@ -2054,11 +2377,13 @@ app.login=(()=>{
 	 var setContentView=()=>{
 		 $.getScript(view,()=>{
 			 $('#btn-login-default').remove();
-			 $('#footer').attr('style','    margin-top: 0px;')
-			 $('#container').append($(createButton({id:'btn-admin-default',clazz:'btn btn-default dropdown-toggle',val:'관리자'}))
-					 .attr('data-toggle','modal')
-					 .attr('data-target','#myModal')
-					 .attr('style','margin-left: 10px; font-size:20px; width: 120px;background: black; border: black; color: white;'));
+			 $('#btn-main-go').on('click',e=>{
+				 alert('작동해라')
+				 	app.main.onCreate();
+			 })
+			 $(createButton({id:'btn-admin-default',clazz:'btn btn-default dropdown-toggle',val:'관리자'}))
+					 .attr('style','margin-left: 10px; font-size:20px; width: 120px;background: black; border: black; color: white;').appendTo('#div-nav3');
+			 $('#footer').attr('style','margin-top: 0px;')
          });	 
 	 };
 	 var content=()=>{
@@ -2166,6 +2491,7 @@ app.login=(()=>{
 				console.log(x);
 				alert('로그인 성공 x='+x.success);
 				if(x.success==1){
+					sessionStorage.setItem('customer', x.customId);
 					app.mypage.onCreate();
 				}else{
 					alert('로그인 실패');
@@ -2175,7 +2501,6 @@ app.login=(()=>{
 				console.log(x);
 				console.log(h);
 				console.log(m);
-				//alert('로그인에서 에러발생 x= '+x+' ,h= '+h+' ,m= '+m);
 			}
 	 });
 	 
