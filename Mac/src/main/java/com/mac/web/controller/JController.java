@@ -17,13 +17,11 @@ import com.mac.web.domain.Command;
 import com.mac.web.domain.Customer;
 import com.mac.web.domain.Item;
 import com.mac.web.mapper.JMapper;
-import com.mac.web.service.ICountHashService;
 import com.mac.web.service.ICountService;
 import com.mac.web.service.IDeleteHashService;
 import com.mac.web.service.IGetHashService;
 import com.mac.web.service.IPostHashService;
 import com.mac.web.service.ITxService;
-import com.mac.web.service.IUpdateHashService;
 
 @RestController
 public class JController {

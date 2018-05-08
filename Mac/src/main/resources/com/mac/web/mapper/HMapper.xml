@@ -27,11 +27,60 @@
 	<result property="picName" column="pic_name"/>
 	<result property="itemCode" column="item_code"/>
 </resultMap>
+<resultMap type="java.util.HashMap" id="itemInfo">
+	<id property="rownum" column="rownum"/>
+	<result property="classCode" column="classCode"/>
+	<result property="className" column="className"/>
+	<result property="itemName" column="itemName"/>
+	<result property="commonName" column="commonName"/>
+	<result property="commonNameE" column="commonNameE"/>
+	<result property="textureExp" column="textureExp"/>
+	<result property="itemCount" column="itemCount"/>
+	<result property="price" column="price"/>
+	<result property="discount" column="discount"/>
+	<result property="picName" column="picName"/>
+	<result property="itemCode" column="itemCode"/>
+	<result property="itemSeq" column="itemSeq"/>
+	<result property="colorExp" column="colorExp"/>
+	<result property="discountPrice" column="discountPrice"/>
+	<result property="kindCount" column="kindCount"/>
+	<result property="total" column="total"/>
+	<result property="eachTotal" column="eachTotal"/>
+	<result property="basketSeq" column="basketSeq"/>
+	<result property="addrSeq" column="addrSeq"/>
+	<result property="orderSeq" column="orderSeq"/>
+	<result property="discountedTotal" column="discountedTotal"/>
+	<result property="discountAmount" column="discountAmount"/>
+</resultMap>
+<select id="selectSubMainItems" parameterType="hashMap" resultMap="itemInfo">
+select 
+	c.item_code as itemCode,
+	c.common_name commonName, 
+	c.common_name_e commonNameE, 
+	c.price *(1- c.discount) as discountPrice,
+	(select t.item_seq
+	from item t
+	where t.item_code like c.item_code
+	order by t.item_seq limit 1) itemSeq,
+	(select count(*)
+	from item i
+	where i.item_code like c.item_code) kindCount
+from common_feature c
+where c.class_code like #{classCode}
+</select>
+<select id="selectFirstItem" parameterType="hashMap" resultMap="itemInfo"><!-- 아직안씀 -->
+select item_seq as itemSeq
+from item
+where item_code like #{itemCode}
+order by itemSeq limit 1;
+
+</select>
 <select id="findByItemSeq" parameterType="hashMap" resultMap="test">
 	select * 
 	from item
 	where item_seq like ${itemSeq}; 
 </select>
+
 <select id="findByItemCodenItemSeq" parameterType="hashMap" resultMap="itemMap">
 	select i.item_seq,
 		i.item_name,

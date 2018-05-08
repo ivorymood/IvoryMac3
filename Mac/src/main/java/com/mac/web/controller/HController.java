@@ -17,17 +17,34 @@ import com.mac.web.service.IPostHashService;
 
 
 @RestController
-@RequestMapping(value="/hyunyu")
 public class HController {
 	private static final Logger logger = LoggerFactory.getLogger(HController.class);
 	@Autowired HMapper hMapper;
 	
-	
+	@RequestMapping(value="/subMainItems/{classCode}", method=RequestMethod.GET)
+	public Map<?,?> getSubMainItems(@PathVariable("classCode") String classCode){
+		logger.info("::::::::::::::::::::::::::::subMainItem {}", "ENTERED");
+		Map<String, Object> map = new HashMap<>();
+		HashMap<String, Object> param = new HashMap<>();
+		param.put("classCode", classCode);
+		map.put("subMainItems", new IGetHashService() {
+			
+			@Override
+			public Object execute(HashMap<?, ?> param) {
+				// TODO Auto-generated method stub
+				return hMapper.selectSubMainItems(param);
+			}
+		}.execute(param));
+		System.out.println(map.get("subMainItems"));
+		
+		
+		return map;
+	}
 	@RequestMapping(value="/item/{code1}/{code2}", method=RequestMethod.GET )
 	public Map<?,?> getItem(@PathVariable("code1") String itemSeq, @PathVariable("code2") String itemCode){
 		Map<String, Object> map = new HashMap<>();
 		Map<String, Object> param = new HashMap<>();
-		logger.info("getItem {}", "ENTERED");
+		logger.info("::::::::::::::::::::::::::::getItem {}", "ENTERED");
 		logger.info("itemSeq {}", itemSeq);
 		logger.info("itemCode {}", itemCode);
 		param.put("itemSeq", Integer.parseInt(itemSeq));
@@ -49,7 +66,7 @@ public class HController {
 	public  Map<?,?> pushItem(@PathVariable("code1") String itemSeq, @PathVariable("code2") String itemCode){
 		Map<String, Object> map = new HashMap<>();
 		Map<String, String> param = new HashMap<>();
-		logger.info("pushItem {}", "ENTERED");
+		logger.info("::::::::::::::::::::::::::::pushItem {}", "ENTERED");
 		logger.info("itemSeq {}", itemSeq);
 		logger.info("itemCode {}", itemCode);
 		

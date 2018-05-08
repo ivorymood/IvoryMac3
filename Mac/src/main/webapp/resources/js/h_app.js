@@ -114,43 +114,11 @@ var createDiv=x=>{
 var createOL=x=>{
 	return '<ol id="'+x.id+'" class="'+x.clazz+'"></ol>';
 }
-var createUL=x=>{
-	return '<ul id="'+x.id+'" class="'+x.clazz+'"></ul>';
-}
+
 var createLIC=x=>{
 	return '<li id="'+x.id+'" class="'+x.clazz+'" data-target="'+x.dtarget+'" data-slide-to="'+x.dslide+'" ></li>';
 }
-var createLIB=x=>{
-	return '<li id="'+x.id+'" class="'+x.clazz+'" aria-current="'+x.acurrent+'">'+x.val+'</li>';
-}
-var createLI=x=>{
-	return '<li id="'+x.id+'" class="'+x.clazz+'"></li>';
-}
-var createNav=x=>{
-	return '<nav id="'+x.id+'" class="'+x.clazz+'" aria-label="'+x.alabel+'" role="'+x.role+'"></nav>';
-}
-var createLabel=x=>{
-	return '<label id="'+x.id+'" class="'+x.clazz+'">'+x.val+'</label>';
-}
-var createATag=x=>{
-	return '<a id="'+x.id+'" href="#">'+x.val+'</a>';
-}
-var createATagh=x=>{
-	return '<a id="'+x.id+'" href="'+x.href+'">'+x.val+'</a>';
-}
-var createText=x=>{
-	return '<span id="'+x.id+'"></span>';
-}
-var createSpan=x=>{
-	return '<span id="'+x.id+'" class="'+x.clazz+'" >'+x.val+'</span>';
-}
-var createSpanCon=x=>{
-	return '<span class="glyphicon '+x+'" aria-hidden="true"></span>';
-}
-var createInput=x=>{
-	return $('<input type="'+x.type+'" id="'+x.id+'" name="'+x.name+'" value="'+x.val+'" class="'+x.clazz+'" '+x.checked 
-			+' placeholder="'+x.holder+'" autocomplete="off" >');
-}
+
 /*aria-describedby="basic-addon1"*/
 var createButton=x=>{
 	return '<button type="'+x.type+'" id="'+x.id+'" class="btn btn-'+x.clazz+'">'+x.val+'</button>';
@@ -159,18 +127,23 @@ var createForm =x=>{
 	return '<form id="'+x.id+'" class="'+x.clazz+'" action="'+x.action+'" method="'+x.method+'" role="'+x.role+'"></form>';
 }
 var createImg=x=>{
-	return '<img src="'+x.src+'" alt="'+x.alt+'" id="'+x.id+'" class="'+x.clazz+'" align="'+x.align+'" title="'+x.title+'">';
+	return '<img src="'+$.image()+'/'+x.img+'" alt="'+x.alt+'" id="'+x.id+'" class="'+x.clazz+'" align="'+x.align+'" title="'+x.title+'">';
 }
 app.mainitem=(()=>{
-	var $content, context;
+	var $content, context, jview;
 	var onCreate =x=>{
 		$content = $('#content');
-		context = $.context();
+		 context = $.context();
 		setContentView(x);
+		jview = context+'resources/js/j_app.js';
 	};
 	var setContentView=x=>{
+		$.getScript(jview, ()=>{
+			
+		});
+		
 		alert('세션: '+sessionStorage.getItem('customer') );
-		alert(x.itemCode);
+		alert(x.classCode);
 		
 		$content.empty();
 		$content.html($(createDiv({id:'mainitem-container'})));
@@ -181,7 +154,8 @@ app.mainitem=(()=>{
 	
 		$('#item-div0').attr('style','border-bottom: 1px solid lightgray; width:100%; height:61px; ')
 		.append($(createDiv({id:'',clazz:''})).attr('style','padding-left: 150px; padding-top: 20px;')
-				.append($(createHTag({num:'4', id:'bread-main1', val:'아이'})).attr('style', 'display:inline; '))
+				.append($(createHTag({num:'4', id:'bread-main1', val:'아이'}))
+						.attr('style', 'display:inline; '))
 				.append('&nbsp;')
 				.append($(createSpanCon('glyphicon-menu-right')))
 				.append('&nbsp;')
@@ -199,6 +173,67 @@ app.mainitem=(()=>{
 				.append($(createDiv({id:'grid-row-catalog3', clazz:'grid-row-catalog'}))
 						.attr('style', 'position: relative; height: 540px; margin-bottom: 20px;'))
 		);
+		
+		$.getJSON(context+'/subMainItems/'+x.classCode, d=>{
+			var subObject = d.subMainItems;
+			for(var i=0; i<subObject.length; i++){
+				if(i>subObject.length){
+					return false;
+				}
+				$('#grid-row-catalog1')
+				.append($(createDiv({id: '', clazz:''}))
+						.attr('style', 'position: absolute; top: 0px; left:'+(312.75*i)+'px; width: 312.75px; height: 495px; padding-left: 10px; padding-right: 10px; margin-bottom: 45px; display: inline-block; vertical-align: super;')	
+						.append($(createDiv({id: '', clazz:'grid-item-catalog'}))
+								.attr('style', 'padding-top: 15px; height: 479px; border-top:1px solid #c7c7c7; position: relative;')
+								.append($(createDiv({id: '', clazz: ''}))
+										.append($(createDiv({id:'', clazz: ''}))
+												.append($(createHTag({num:'4', val: subObject[i].commonName, clazz:'pnt'}))
+														.attr('style', 'margin:0;')
+														.attr('itemSeq', subObject[i].itemSeq)
+														.attr('itemCode', subObject[i].itemCode)
+														.on('click', function(){
+															app.item.onCreate({'itemSeq': $(this).attr("itemSeq"), 'itemCode': $(this).attr("itemCode")});
+														}))
+										).append($(createDiv({id:'', clazz: ''}))
+												.append($(createPTag({val: subObject[i].commonNameE})))
+										)
+								).append($(createDiv({id:'', clazz: ''}))
+										.attr('style','margin-left: 50px; float: right;')
+										.append($(createDiv({id:'', clazz: ''}))
+												.append($(createHTag({num:'4', val:'★★★★★'}))
+														.attr('style', 'margin-bottom: 0px; margin-top: 0px;'))
+										).append($(createDiv({id:'', clazz: ''}))
+												.attr('style','float: right;')
+												.append($(createHTag({num:'4', val:'♡'})))
+										)
+								).append($(createDiv({id:''}))
+										.append($(createImg({id:'', src:subObject[i].itemCode+'.JPG', alt:'EYE SHADOW', title:'EYE SHADOW', clazz:'pnt'}))
+												.attr('itemSeq', subObject[i].itemSeq)
+												.attr('itemCode', subObject[i].itemCode)
+												.on('click', function(){
+													alert('그림누름!');
+													app.item.onCreate({itemSeq: $(this).attr("itemSeq"), itemCode: $(this).attr("itemCode")});
+												}))
+								).append($(createDiv({id:''}))
+										.attr('style', 'border-top: 1px solid #c7c7c7; position: absolute; bottom: 5px;')
+										.append($(createDiv({id:''}))
+												.attr('style','display: inline-block;  width: 292.750px;')
+												.append($(createHTag({num:'4', val:'₩'+subObject[i].discountPrice}))
+														.attr('style', 'margin-bottom: 0; margin-top: 16px;'))
+										).append($(createDiv({id:''})).attr('style', 'margin-top: 8.5px; display: inline-block; float: right;')
+												.append($(createButton({val:'장바구니 담기'}))
+														.attr('style','border: 0; margin: 0; padding-top: 0; padding-bottom:0; width:130px; height:30px; background-color: black; color: white; font-size: 15px;'))
+										)
+								)
+						)		
+				);
+			};
+		});
+/*		
+		
+		
+		
+		
 		for(var i=1; i<4; i++){
 				
 				for(var j=0; j<4; j++){
@@ -216,16 +251,20 @@ app.mainitem=(()=>{
 																		.attr('style','color: white; text-align: center;'))
 														).append($(createDiv({id:''}))
 																.attr('style','margin-bottom: 18px;')
-																.append($(createHTag({num:'4', val:'베이지+브라운'})).attr('style','color: white; text-align: center;'))
+																.append($(createHTag({num:'4', val:'베이지+브라운'}))
+																		.attr('style','color: white; text-align: center;'))
 														).append($(createDiv({id:''}))
 																.attr('style','margin-bottom: 18px;')
-																.append($(createHTag({num:'4', val:'블루+그린'})).attr('style','color: white; text-align: center;'))
+																.append($(createHTag({num:'4', val:'블루+그린'}))
+																		.attr('style','color: white; text-align: center;'))
 														).append($(createDiv({id:''}))
 																.attr('style','margin-bottom: 18px;')
-																.append($(createHTag({num:'4', val:'그레이+블랙'})).attr('style','color: white; text-align: center;'))
+																.append($(createHTag({num:'4', val:'그레이+블랙'}))
+																		.attr('style','color: white; text-align: center;'))
 														).append($(createDiv({id:''}))
 																.attr('style','margin-bottom: 18px;')
-																.append($(createHTag({num:'4', val:'오렌지+퍼플'})).attr('style','color: white; text-align: center;'))
+																.append($(createHTag({num:'4', val:'오렌지+퍼플'}))
+																		.attr('style','color: white; text-align: center;'))
 														)
 												)
 										)		
@@ -239,7 +278,8 @@ app.mainitem=(()=>{
 												.attr('style', 'padding-top: 15px; height: 479px; border-top:1px solid #c7c7c7;')
 												.append($(createDiv({id:''}))
 														.append($(createDiv({id:''}))
-																.append($(createHTag({num:'4', val:'아이섀도우', clazz:'pnt'})).attr('style', 'margin:0;')
+																.append($(createHTag({num:'4', val:'아이섀도우', clazz:'pnt'}))
+																		.attr('style', 'margin:0;')
 																		.on('click', ()=>{
 																			app.item.onCreate({itemSeq:'10', itemCode:'3000'});
 																		}))
@@ -255,7 +295,7 @@ app.mainitem=(()=>{
 																.append($(createHTag({num:'4', val:'♡'})))
 														)
 												).append($(createDiv({id:''}))
-														.append($(createImg({src:$.image()+'/mainitem3.jpg', alt:'EYE SHADOW', title:'EYE SHADOW', clazz:'pnt'}))
+														.append($(createImg({id:'', src:mainitem3.jpg', alt:'EYE SHADOW', title:'EYE SHADOW', clazz:'pnt'}))
 																.on('click', ()=>{
 																	app.item.onCreate({itemSeq:'10', itemCode:'3000'});
 																}))
@@ -267,27 +307,29 @@ app.mainitem=(()=>{
 																		.attr('style', 'margin-bottom: 0; margin-top: 16px;'))
 														).append($(createDiv({id:''})).attr('style', 'margin-top: 8.5px; display: inline-block; float: right;')
 																.append($(createButton({val:'장바구니 담기'}))
-																		.attr('style','border: 0; margin: 0; paddig: 0; width:130px; height:25px; background-color: black; color: white; font-size: 15px;'))
+																		.attr('style','border: 0; margin: 0; paddig-top: 0; padding-bottom:0; width:130px; height:25px; background-color: black; color: white; font-size: 15px;'))
 														)
 												)
 										)		
 								);
 						};
 				};		
-		};		
+		};	*/	
 };
 	return {onCreate: onCreate};
 })();
 
 app.item=(()=>{
-	var $content, context, image;
+	var $content, context, image, jview;
 	var onCreate =x=>{
 		$content = $('#content');
-		context = $.context();
+		 context = $.context();
+		 jview = context+'resources/js/j_app.js';
 		setContentView(x);
 	};
 	var setContentView=x=>{
-		$.getJSON(context+'/hyunyu/item/'+x.itemSeq+'/'+x.itemCode, d=>{
+		alert(x.itemSeq);
+		$.getJSON(context+'/item/'+x.itemSeq+'/'+x.itemCode, d=>{
 			
 		
 		alert(d.item.itemName);
@@ -355,9 +397,6 @@ app.item=(()=>{
 		.append($(createDiv({id:'item-div1-2-1-2-4', clazz:''})))
 		;
 		
-		
-		
-		
 		$('#item-div0')
 		.append($(createDiv({id:'',clazz:''})).attr('style','padding-left: 150px; padding-top: 20px;')
 				.append($(createHTag({num:'4', id:'bread-main1', val: '아이'}))
@@ -365,7 +404,7 @@ app.item=(()=>{
 				.append('&nbsp;')
 				.append($(createSpanCon('glyphicon-menu-right')))
 				.append('&nbsp;')
-				.append($(createATagh({href:'#', id:'bread-main1', val:'섀도우'}))
+				.append($(createATag({id:'bread-main1', val:'섀도우'}))
 						.attr('style', 'display:inline; font-size:18px; font-weight:500; font-height:1.1;'))
 				.append('&nbsp;')
 				.append($(createSpanCon('glyphicon-menu-right')))
@@ -379,16 +418,16 @@ app.item=(()=>{
 		.append($(createDiv({id:'carousel-example-generic', clazz: 'carousel slide'}))
 				.attr('style', 'float: right; margin-right: 5px; width: 651px; hieght: 609px;'));
 		$('#carousel-example-generic')
-		.append($(createOL({clazz:'carousel-indicators'}))
+		.append($(createOL({id:'', clazz:'carousel-indicators'}))
 				.append($(createLIC({clazz:'active', dtarget:'#carousel-example-generic', dslide:'0'}))
 						.attr('style', 'border: 0.5px solid lightgray'))
 				.append($(createLIC({dtarget:'#carousel-example-generic', dslide:'1'}))
 						.attr('style', 'border: 0.5px solid lightgray'))
 		).append($(createDiv({clazz:'carousel-inner'}))
 				.append($(createDiv({clazz:'item active'}))
-						.append($(createImg({src:$.image()+'/zoom'+d.item.picName+'-1.jpg', alt:''}))))
+						.append($(createImg({id:'', src:d.item.picName+'1.JPG', alt:''}))))
 				.append($(createDiv({clazz:'item'}))
-						.append($(createImg({src:$.image()+'/zoom'+d.item.picName+'-2.jpg', alt:''}))))
+						.append($(createImg({id:'', src:d.item.picName+'2.JPG', alt:''}))))
 		);
 		$('.carousel').carousel({interval: false});
 	
@@ -475,7 +514,7 @@ app.item=(()=>{
 						.attr('style', 'color: white; text-align: center; background-color:black; width: 100%; height: 60px; line-height: 64px; border-style: solid; border-color: white; border-width: 0; display: inline-block; cursor:point;')
 						.on('click', e=>{
 							
-							$.getJSON(context+'/hyunyu/toBasket/'+d.item.itemSeq+'/'+d.item.itemCode, x=>{
+							$.getJSON(context+'/toBasket/'+d.item.itemSeq+'/'+d.item.itemCode, x=>{
 								if(x.flag=="success"){
 									
 									alert('d');
@@ -529,36 +568,37 @@ app.item=(()=>{
 						.append($(createDiv({id:'', clazz:'btn-group-vertical', role:'group'}))
 								.append($(createLabel({clazz:'btn', val:''}))
 										.attr('style', 'border: 0; margin: 0; paddig: 0; background-color: #F7D9CB; width: 349px; height: 60px;')
-										.append($(createInput({type:'radio', name: 'itemSeq', val:'10', checked:'checked'}))
-												.attr('position: fixed; opacity: 0;')))
+										.append($(createInput({type:'radio', name: 'itemSeq', val:'10'}))
+												.attr('style','position: fixed; opacity: 0;')))//스타일? 아니면 다시 제거
+												.attr('checked')
 								.append($(createLabel({clazz:'btn', val:''}))
 										.attr('style', 'border: 0; margin: 0; paddig: 0; background-color: #DAA378; width: 349px; height: 60px;')
 										.append($(createInput({type:'radio', name: 'itemSeq', val:'11'}))
-												.attr('position: fixed; opacity: 0;')))		
+												.attr('style','position: fixed; opacity: 0;')))		
 								.append($(createLabel({clazz:'btn', val:''}))
 										.attr('style', 'border: 0; margin: 0; paddig: 0; background-color: #FF9FA7; width: 349px; height: 60px;')
 										.append($(createInput({type:'radio', name: 'itemSeq', val:'12'}))
-												.attr('position: fixed; opacity: 0;')))
+												.attr('style','position: fixed; opacity: 0;')))
 								.append($(createLabel({clazz:'btn', val:''}))
 										.attr('style', 'border: 0; margin: 0; paddig: 0; background-color: #FFDCA5; width: 349px; height: 60px;')
 										.append($(createInput({type:'radio', name: 'itemSeq', val:'13'}))
-												.attr('position: fixed; opacity: 0;')))
+												.attr('style','position: fixed; opacity: 0;')))
 								.append($(createLabel({clazz:'btn', val:''}))
 										.attr('style', 'border: 0; margin: 0; paddig: 0; background-color: #A7624E; width: 349px; height: 60px;')
 										.append($(createInput({type:'radio', name: 'itemSeq', val:'14'}))
-												.attr('position: fixed; opacity: 0;')))
+												.attr('style','position: fixed; opacity: 0;')))
 								.append($(createLabel({clazz:'btn', val:''}))
 										.attr('style', 'border: 0; margin: 0; paddig: 0; background-color: #AC766A; width: 349px; height: 60px;')
 										.append($(createInput({type:'radio', name: 'itemSeq', val:'15'}))
-												.attr('position: fixed; opacity: 0;')))
+												.attr('style','position: fixed; opacity: 0;')))
 								.append($(createLabel({clazz:'btn', val:''}))
 										.attr('style', 'border: 0; margin: 0; paddig: 0; background-color: #F9EDE8; width: 349px; height: 60px;')
 										.append($(createInput({type:'radio', name: 'itemSeq', val:'16'}))
-												.attr('position: fixed; opacity: 0;')))
+												.attr('style','position: fixed; opacity: 0;')))
 								.append($(createLabel({clazz:'btn', val:''}))
 										.attr('style', 'border: 0; margin: 0; paddig: 0; background-color: #B7AFB3; width: 349px; height: 60px;')
 										.append($(createInput({type:'radio', name: 'itemSeq', val:'17'}))
-												.attr('position: fixed; opacity: 0;')))
+												.attr('style','position: fixed; opacity: 0;')))
 						)
 				)
 		).append($(createDiv({id:''}))
@@ -624,7 +664,7 @@ app.item=(()=>{
 												.append($(createHTag({num:'4', val:'아이섀도우', clazz:'pnt'}))
 														.attr('style', 'margin:0;')
 														.on('click', ()=>{
-															app.item.onCreate({itemSeq:'2', itemCode:'3000'});
+															app.item.onCreate({itemSeq:'2', itemCode:'3000'});//할일: 고쳐야함
 														}))
 										).append($(createDiv({id:''}))
 												.append($(createPTag({val:'EYE SHADOW'})))
@@ -637,7 +677,7 @@ app.item=(()=>{
 												.append($(createHTag({num:'4', val:'♡'})))
 										)
 								).append($(createDiv({id:''}))
-										.append($(createImg({src:$.image()+'/mainitem3.jpg', alt:'EYE SHADOW', title:'EYE SHADOW', clazz:'pnt'}))
+										.append($(createImg({id:'', src:'mainitem3.JPG', alt:'EYE SHADOW', title:'EYE SHADOW', clazz:'pnt'}))
 												.on('click', ()=>{
 													app.item.onCreate({itemSeq:'2', itemCode:'3000'});
 												}))
@@ -654,8 +694,6 @@ app.item=(()=>{
 						)		
 				);
 	};
-		
-		
 		
 		
 		});		//getjson

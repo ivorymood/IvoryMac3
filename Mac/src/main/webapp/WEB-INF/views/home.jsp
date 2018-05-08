@@ -23,8 +23,8 @@
     
     <script src="${context}/resources/js/jquery.mousewheel.min.js"></script>
     <script src="${context}/resources/js/router.js"></script>
-    <script src="${context}/resources/js/j_app.js"></script>
-    <%-- <script src="${context}/resources/js/h_app.js"></script> --%>
+    <script src="${context}/resources/js/j_app.js"></script> 
+  <%--   <script src="${context}/resources/js/test.js"></script> --%>
 </head>
 <body>
 <div id="header">	
