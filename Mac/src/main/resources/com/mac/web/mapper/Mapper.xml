@@ -21,26 +21,26 @@
 </resultMap>
  	<select  id="joinidSearch" resultType="int" parameterType="com.mac.web.domain.Command">
  		SELECT COUNT(*)
- 		  FROM customer
+ 		  FROM CUSTOMER
  		 WHERE custom_id = #{col1}
  		   AND custom_id is not null 
  	</select>
     <select id="serachCustomerById" resultType="com.mac.web.domain.Customer" parameterType="com.mac.web.domain.Command">
     SELECT *
-      FROM   customer 
+      FROM   CUSTOMER 
      WHERE   custom_id = #{col1}
        AND   custom_pass = #{col2} 
      	 
     </select>
     <select id="exist" resultType="int" parameterType="com.mac.web.domain.Command">
     SELECT COUNT(*)
-      FROM customer 
+      FROM CUSTOMER 
      WHERE custom_id = #{col1}
        AND custom_pass = #{col2} 
     </select>
         <select id="selectAddr" resultType="int" parameterType="com.mac.web.domain.Command">
     SELECT COUNT(*)
-      FROM address 
+      FROM ADDRESS
      WHERE custom_id = #{col1}
     </select>
     
@@ -48,12 +48,12 @@
   	SELECT  sum(a.price*b.item_count) as price 
 	  	  , sum((price-(a.price*(a.discount)))*b.item_Count) as total
 		  , sum(a.price*b.item_count*a.discount) as discount
-  	  FROM  basket b 
-  	  join  item i 
+  	  FROM  BASKET b 
+  	  join  ITEM i 
   	    on  i.item_seq like b.item_seq 
-  	  join  customer c 
+  	  join  CUSTOMER c 
         on  c.custom_id like b.custom_id
-      join  common_feature a
+      join  COMMON_FEATURE a
 	    on  a.item_code like i.item_code   
  	 WHERE  i.item_seq = b.item_seq
        AND  b.custom_id = #{customid}
@@ -66,13 +66,13 @@
           , i.item_seq as itemSeq
           , i.pic_name as picName 
           , i.item_code as itemCode
-      FROM  item i 
-      join  common_feature c 
+      FROM  ITEM i 
+      join  COMMON_FEATURE c 
         on  i.item_code like c.item_code
     </select>
      <select id="selectMypage" resultType="map" parameterType="hashMap">
  	SELECT *
- 	  FROM customer
+ 	  FROM CUSTOMER
  	 WHERE custom_id = #{customid}
     </select>  
      
@@ -87,10 +87,10 @@
    	  	  , price-(a.price*(a.discount)) as discountPrice	  	  
    	  	  , (price-(a.price*(a.discount)))*b.item_Count as total
    	  	  , i.texture_exp as textureExp
-  	  FROM  basket b 
-  	  join  item i 
+  	  FROM  BASKET b 
+  	  join  ITEM i 
   	    on  i.item_seq like b.item_seq 
-      join  common_feature a
+      join  COMMON_FEATURE a
 	    on  a.item_code like i.item_code   
  	 WHERE  i.item_seq = b.item_seq
        AND  b.custom_id = #{customid}
@@ -98,7 +98,7 @@
        <select id="searchChart" resultType="map" parameterType="hashMap">
 		SELECT 	count
 			  , sell_date as sellDate
-		 FROM chart
+		 FROM CHART
 		WHERE item_code=item_code
 	 GROUP BY sell_date,item_code,sell_date
     </select>
@@ -112,10 +112,10 @@
    	  	  , price-(a.price*(a.discount)) as discountPrice	  	  
    	  	  , (price-(a.price*(a.discount)))*b.item_Count as total
    	  	  , i.texture_exp as textureExp
-  	  FROM  basket b 
-  	  join  item i 
+  	  FROM  BASKET b 
+  	  join  ITEM i 
   	    on  i.item_seq like b.item_seq 
-      join  common_feature a
+      join  COMMON_FEATURE a
 	    on  a.item_code like i.item_code   
  	 WHERE  i.item_seq = b.item_seq
        AND  b.custom_id = #{customid}
@@ -131,10 +131,10 @@
    	  	  , price-(a.price*(a.discount)) as discountPrice	  	  
    	  	  , (price-(a.price*(a.discount)))*b.item_Count as total
    	  	  , i.texture_exp as textureExp
-  	  FROM  basket b 
-  	  join  item i 
+  	  FROM  BASKET b 
+  	  join  ITEM i 
   	    on  i.item_seq like b.item_seq 
-      join  common_feature a
+      join  COMMON_FEATURE a
 	    on  a.item_code like i.item_code   
  	 WHERE  i.item_seq = b.item_seq
        AND  b.custom_id = #{customid}
@@ -142,19 +142,19 @@
      
      <select id="selectBasket" resultType="int" parameterType="com.mac.web.domain.Command">
     SELECT count(1)
-      FROM basket 
+      FROM BASKET 
      WHERE custom_id = #{col1}
        AND item_seq  = #{col2}
     </select>
     <select id="addrSearch" resultType="map" parameterType="hashMap" >
     SELECT   addr
-  	  FROM   address a 
-      JOIN   customer c
+  	  FROM   ADDRESS a 
+      JOIN   CUSTOMER c
         ON 	a.custom_id like c.custom_id
      WHERE   a.custom_id = #{col1}
     </select>
     <insert id="macBasket" parameterType="hashMap">
-        insert into basket(
+        insert into BASKET(
         				   custom_id
                          , item_seq
                          , item_count
@@ -166,18 +166,18 @@
                           )
     </insert>
     <update id="macBasketUpdate" parameterType="hashMap" >
-    	UPDATE basket 
+    	UPDATE BASKET 
     	   SET item_count = item_count+1
     	 WHERE custom_id = #{customid}
     	   AND item_seq = #{itemseq}
     </update>
         <update id="macBasketUpdateOrder" parameterType="hashMap" >
-    	UPDATE basket 
+    	UPDATE BASKET 
     	   SET item_count = #{count}
     	 WHERE item_seq = #{seq} 
     </update>
 	<insert id="basketAddr"  parameterType="hashMap">
-        INSERT INTO address(
+        INSERT INTO ADDRESS(
         				   custom_id
                          , name
                          , phone_num
@@ -194,7 +194,7 @@
                           )
     </insert>
     <insert id="insertAddr" parameterType="hashMap" >
-    	INSERT INTO customer(
+    	INSERT INTO CUSTOMER(
 			   		   custom_id
                      , custom_pass
                      , name
@@ -216,14 +216,30 @@
                      , 1
                       )
     </insert>
+    <insert id="orderUpdate" parameterType="hashMap">
+    	INSERT 
+  	      INTO  ORDERS
+  	            (
+	            custom_id
+  	         ,  total_price
+	         ,  order_date	 	 	
+			    )
+	  VALUES
+	            (
+			    #{customid}
+			 ,  #{orderTotal}
+			 ,  now()	  
+		        )
+    
+    </insert>
     <delete id="deleteBasket" parameterType="hashMap">
     		DELETE
-  			  FROM basket
+  			  FROM BASKET
   			 WHERE basket_seq = #{basketSeq}
     </delete>
         <delete id="deleteBasketById" parameterType="hashMap">
     		DELETE
-  			  FROM basket
+  			  FROM BASKET
   			 WHERE custom_id = #{customid}
     </delete>
     <select id="findByItemCodenItemSeq" parameterType="hashMap" resultMap="itemMap">
@@ -241,7 +257,7 @@
 		c.detail_info,
 		c.ingredient,
 		c.weight
-	from item i, common_feature c
+	from ITEM i, COMMON_FEATURE c
 	where i.item_seq like ${itemSeq}
 		and c.item_code like #{itemCode};
 </select>

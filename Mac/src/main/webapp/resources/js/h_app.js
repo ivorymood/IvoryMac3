@@ -150,7 +150,6 @@ var createInput=x=>{
 	return $('<input type="'+x.type+'" id="'+x.id+'" name="'+x.name+'" value="'+x.val+'" class="'+x.clazz+'" '+x.checked 
 			+' placeholder="'+x.holder+'" autocomplete="off" >');
 }
-/*aria-describedby="basic-addon1"*/
 var createButton=x=>{
 	return '<button type="'+x.type+'" id="'+x.id+'" class="btn btn-'+x.clazz+'">'+x.val+'</button>';
 }
@@ -165,16 +164,19 @@ app.mainitem=(()=>{
 	var onCreate =x=>{
 		$content = $('#content');
 		context = $.context();
+		jview = $.javascript()+'/j_app.js';
+		hview = $.javascript()+'/h_app.js';
 		setContentView(x);
 	};
 	var setContentView=x=>{
+		$.getScript(jview, ()=>{
+			app.nav.onCreate();
+		});
 		$content.empty();
 		$content.html($(createDiv({id:'mainitem-container'})));
 		$('#mainitem-container')
 		.append($(createDiv({id:'item-div0'})))
-		.append($(createDiv({id:'item-div1'})))
-		;
-	
+		.append($(createDiv({id:'item-div1'})));
 		$('#item-div0').attr('style','border-bottom: 1px solid lightgray; width:100%; height:61px; ')
 		.append($(createDiv({id:'',clazz:''})).attr('style','padding-left: 150px; padding-top: 20px;')
 				.append($(createHTag({num:'4', id:'bread-main1', val:'아이'})).attr('style', 'display:inline; '))
@@ -235,7 +237,9 @@ app.mainitem=(()=>{
 												).append($(createDiv({id:''}))
 														.append($(createImg({src:$.image()+'/mainitem3.jpg', alt:'EYE SHADOW', title:'EYE SHADOW', clazz:'pnt'}))
 																.on('click', ()=>{
-																	app.item.onCreate({itemSeq:'10', itemCode:'3000'});
+																	$.getScript(hview,()=>{
+																		app.item.onCreate({itemSeq:'10', itemCode:'3000'});
+																	});					
 																}))
 												).append($(createDiv({id:''})).attr('style', 'border-top: 1px solid #c7c7c7;')
 														.append($(createDiv({id:''})).attr('style','display: inline-block;')
@@ -258,9 +262,12 @@ app.item=(()=>{
 	var onCreate =x=>{
 		$content = $('#content');
 		context = $.context();
+		hview = $.javascript()+'/h_app.js';
+		jview = $.javascript()+'/j_app.js';
 		setContentView(x);
 	};
 	var setContentView=x=>{
+	
 		$.getJSON(context+'/hyunyu/item/'+x.itemSeq+'/'+x.itemCode, d=>{
 		$content.empty();
 		$content.html($(createDiv({id: 'item-container', clazz: 'h-item-container'})).attr('style', ''));
@@ -444,11 +451,6 @@ app.item=(()=>{
 				.append($(createPTag({id:'subtitle-galary', clazz:'', val: '당신의 #MACCOSMETICS를 보여주세요'})).attr('style','margin-bottom:0')))				
 		;
 
-	/*	
-		$('#item-div2-2')
-		.load(context+'/galary');*/
-		
-		
 		$('#item-div2-3')
 		.append($(createDiv({id:'',})).attr('style','padding-right: 25px')
 				.append($(createATag({id:'plus-pic', clazz:'', val:'사진 추가 '})).attr('style','display: inline; float: right;'))
@@ -499,7 +501,6 @@ app.item=(()=>{
 						)		
 				);
 	};
-		
 		
 		
 		

@@ -1,0 +1,305 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.mac.web.mapper.AdminMapper">
+
+<resultMap type="com.mac.web.domain.Command" id="cmd">
+<id property="customId" column="custom_id"/>
+<result property="customPass" column="custom_pass"/>
+<result property="name" column="name"/>
+<result property="email" column="email"/>
+<result property="phoneNum" column="phone_num"/>
+<result property="profile" column="profile"/>
+<result property="joinDate" column="join_date"/>
+</resultMap> 
+
+<resultMap type="com.mac.web.domain.Customer" id="customer">
+<id property="customId" column="custom_id"/>
+<result property="customPass" column="custom_pass"/>
+<result property="name" column="name"/>
+<result property="email" column="email"/>
+<result property="phoneNum" column="phone_num"/>
+<result property="profile" column="profile"/>
+<result property="joinDate" column="join_date"/>
+</resultMap> 
+
+<resultMap type="com.mac.web.domain.Item" id="item">
+<id property="itemSeq" column="item_seq"/>
+<result property="itemName" column="item_name"/>
+<result property="itemStock" column="item_stock"/>
+<result property="colorExp" column="color_exp"/>
+<result property="textureExp" column="texture_exp"/>
+<result property="picName" column="pic_name"/>
+<result property="itemCode" column="item_code"/>
+</resultMap> 
+
+<!-- customergrade -->
+<resultMap type="com.mac.web.domain.CustomerGrade" id="customergrade">
+<id property="grade_code" column="gradeCode"/>
+<result property="grade_name" column="gradeName"/>
+<result property="accum_money" column="accumMoney"/>
+<result property="plus_discount" column="plusDiscount"/>
+</resultMap> 
+
+<select id="selectCount" parameterType="com.mac.web.domain.Command" resultType="int">
+SELECT count(*)
+  FROM CUSTOMER
+ WHERE 'admin' like #{customer.customId}
+       and  'admin' like #{customer.customPass}
+       or 'admin1' like #{customer.customId}
+       and  'admin1' like #{customer.customPass}
+       or 'admin2' like #{customer.customId}
+       and  'admin2' like #{customer.customPass}
+       or 'admin3' like #{customer.customId}
+       and  'admin3' like #{customer.customPass}
+       or 'admin4' like #{customer.customId}
+       and  'admin4' like #{customer.customPass}
+</select>
+<select id="selectById" parameterType="com.mac.web.domain.Command" resultType="com.mac.web.domain.Customer">
+select custom_id as customId,
+	   custom_pass as customPass,
+	   name,
+	   email,
+	   phone_num as phoneNum,
+	   profile,
+	   join_date as joinDate
+from CUSTOMER
+where custom_id like #{customer.customId}	      
+</select>
+
+<select id="selectAll" resultType="com.mac.web.domain.Customer" parameterType="hashMap">
+
+	<if test="gradeCode == 'all' ">
+		select A2.* 
+		from (select @rank:=@rank+1 no, A.* 
+		  	  from (select custom_id as customId,	   
+						   custom_pass as customPass,
+						   name,
+						   email,
+						   phone_num as phoneNum,
+						   profile,
+						   join_date as joinDate,
+						   consumption,
+						   grade_code as gradeCode
+				    from CUSTOMER) A, 
+				   (SELECT @rank := 0) R
+			 )A2
+		where no between #{startRow} and #{endRow}
+	</if>
+	<if test="gradeCode != 'all' ">
+		SELECT A3.*
+		FROM (select @rank:=@rank+1 no, A2.* 
+		      from (select  A.* 
+		  	        from(select custom_id as customId,	   
+						 		custom_pass as customPass,
+						 		name,
+						 		email,
+					     		phone_num as phoneNum,
+						 		profile,
+						 		join_date as joinDate,
+						 		consumption,
+						 		grade_code as gradeCode
+				         from CUSTOMER
+				         ) A    
+			       )A2, 
+			       (SELECT @rank := 0) R 
+		      where A2.gradeCode like #{gradeCode}
+		     ) A3
+	    where no BETWEEN #{startRow} and #{endRow};
+	</if>
+</select>
+
+<select id="selectTCount" resultType="int" parameterType="com.mac.web.domain.Command">
+	<if test="customer.gradeCode == 'all'">
+		select count(*)
+		from ${data1}
+	</if>
+
+	<if test="customer.gradeCode != 'all'">
+		select count(*)
+		from 
+			<if test="data1 == 'CUSTOMER'">
+				CUSTOMER
+				where grade_code like ${customer.gradeCode}			
+			</if>
+			<if test="data1 == 'ITEM'">
+				ITEM
+			</if>
+
+	</if>
+</select>
+
+<select id="selectListBy" resultType="com.mac.web.domain.Item" parameterType="hashMap">
+select A2.* 
+from(select @rank:=@rank+1 no, A.* 
+  	  from(select item_seq as itemSeq,	   
+				   item_name as itemName,
+				   item_stock as itemStock,
+				   color_exp as colorExp,
+				   texture_exp as textureExp,
+				   pic_name as picName,
+				   item_code as itemCode
+		   from ITEM) A, 
+		  (SELECT @rank := 0) R
+	 )A2
+where no between #{startRow} and #{endRow}
+</select>
+
+<delete id="removeItem" parameterType="com.mac.web.domain.Command">
+delete 
+from ITEM 
+where item_seq = #{item.itemSeq}
+</delete>
+
+<select id="selectByitemSeq" parameterType="com.mac.web.domain.Command" resultType="com.mac.web.domain.Item">
+select item_seq as itemSeq,
+	   item_name as itemName,  
+	   item_stock as itemStock,
+  	   color_exp as colorExp, 
+	   texture_exp as textureExp,  
+	   pic_name as picName,  
+	   item_code as itemCode 
+from ITEM
+where item_seq = #{item.itemSeq}
+</select>
+
+<update id="modifyItem" parameterType="com.mac.web.domain.Command">
+update ITEM 
+set item_name = #{item.itemName}, 
+	item_stock = #{item.itemStock},  
+    color_exp = #{item.colorExp}, 
+	texture_exp = #{item.textureExp}, 
+	pic_name = #{item.picName}
+where item_seq like #{item.itemSeq}
+</update>
+	
+<insert id="addItem" parameterType="com.mac.web.domain.Command">
+insert into ITEM(item_name,
+				 item_stock,
+				 color_exp,
+				 texture_exp, 
+				 pic_name, 
+				 item_code)
+values (#{item.itemName}, 
+        #{item.itemStock},
+        #{item.colorExp},
+        #{item.textureExp},
+        #{item.picName},
+        #{item.itemCode})
+</insert>	
+
+<insert id="addCustomer" parameterType="com.mac.web.domain.Command">
+insert into CUSTOMER(custom_id,
+					 custom_pass,
+					 name,
+					 email,
+					 phone_num,
+					 profile,
+					 join_date,
+					 consumption,
+					 grade_code)
+values(#{customer.customId}, 
+	   #{customer.customPass}, 
+	   #{customer.name}, 
+	   #{customer.email}, 
+	   #{customer.phoneNum}, 
+	   #{customer.profile}, 
+	   now(), 
+	   0, 
+	   1)
+</insert>
+
+<select id="selectAdmin" resultType="com.mac.web.domain.Customer">
+select custom_id as customId,	   
+	   custom_pass as customPass,
+	   name,
+	   email,
+	   phone_num as phoneNum,
+	   profile,
+	   join_date as joinDate,
+	   consumption,
+	   grade_code as gradeCode
+from CUSTOMER
+ where custom_id like 'admin%'
+</select>
+
+<select id="gradeCount" parameterType="string" resultType="int">
+select count(*)
+from CUSTOMER
+where grade_code like #{grade}
+</select>
+
+<select id="countSum" resultType="int">
+	select count(*)
+	from ITEM
+</select>
+<select id="countSearch" resultType="int">
+	select count(*)
+	from ITEM	
+</select>
+
+<select id="selectSearch" resultType="com.mac.web.domain.Item" parameterType="hashMap">
+<if test="title != 'all'">
+select A2.* 
+from(select @rank:=@rank+1 no, A.* 
+  	  from(select item_seq as itemSeq,	   
+				   item_name as itemName,
+				   item_stock as itemStock,
+				   color_exp as colorExp,
+				   texture_exp as textureExp,
+				   pic_name as picName,
+				   item_code as itemCode
+		   from ITEM
+		   where ${title} = #{content}
+		   ) A, 
+		  (SELECT @rank := 0) R
+	 )A2
+where no between #{startRow} and #{endRow}
+</if>
+<if test="title == 'all'">
+				select A2.* 
+		from(select @rank:=@rank+1 no, A.* 
+  	  	from(select item_seq as itemSeq,	   
+				   item_name as itemName,
+				   item_stock as itemStock,
+				   color_exp as colorExp,
+				   texture_exp as textureExp,
+				   pic_name as picName,
+				   item_code as itemCode
+		   from ITEM
+		   ) A, 
+		  (SELECT @rank := 0) R
+	 )A2
+where no between #{startRow} and #{endRow}
+</if>
+  
+</select>
+
+ <select id="selectSearchItem" resultType="int" parameterType="hashMap">
+	<if test = "title != 'all'">
+	select count(*)
+	from ITEM
+	where ${title} = #{content}
+	</if>
+<if test = "title == 'all'">
+	select count(*)
+	from ITEM
+</if> 
+</select>
+<select  id="selectTotalCount" resultType="int" parameterType="com.mac.web.domain.Command">
+<if test = "data1 == 'all'">
+	SELECT  COUNT(*)
+	  FROM  ITEM
+ </if>
+ <if test = "data1 != 'all'">
+ 	SELECT  COUNT(*)
+	  FROM  ITEM
+	  WHERE ${data1}=#{data2}
+ </if>
+</select>
+
+</mapper>
+
+
+

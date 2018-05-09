@@ -31,6 +31,8 @@ public class JController {
 		Map<String, Object> param = new HashMap<>();
 		param.put("itemSeq", Integer.parseInt(itemSeq));
 		param.put("itemCode", itemCode);
+		System.out.println(param.put("itemSeq", itemSeq));
+		System.out.println(param.put("itemCode", itemCode));
 		map.put("item", new IGetHashService() {
 			
 			@Override
@@ -252,28 +254,6 @@ public class JController {
 		 tx.executes(param);
 		return map;
     	} 
-    
-/*       @RequestMapping(value="/order/addr",method=RequestMethod.POST,consumes="application/json")
-        public void orderAddr(@RequestBody Map<String, String> param
-                ,HttpServletRequest request) {
-            Map<String,Object> map = new HashMap<>();
-            HttpSession session = request.getSession();
-            map.put("customid",session.getAttribute("name"));
-            map.put("customname", param.get("customName"));
-            map.put("customaddr1", param.get("customAddr1"));
-            map.put("detailAddr", param.get("customAddr2")+"-"+param.get("customAddr3")+"-"+param.get("customAddr4"));
-            System.out.println(map.put("detailAddr", param.get("customAddr2")+"-"+param.get("customAddr3")+"-"+param.get("customAddr4")));
-            map.put("phoneNum", param.get("customPhone")+"-"+param.get("customPhone1")+"-"+param.get("customPhone2"));
-            map.put("customtext", param.get("customText"));
-            new IGetHashService() {
-				
-				@Override
-				public Integer execute(HashMap<?, ?> param) {
-					
-					return mapper.basketAddr(param);
-				}
-			}.execute((HashMap<?, ?>) map);
-    }*/
        @RequestMapping(value="/chart/search")
        public Map<?,?> chartSearch(){
     	Map<String,Object> map = new HashMap<>();

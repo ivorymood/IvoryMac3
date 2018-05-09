@@ -1,4 +1,4 @@
-package com.mac.web.factory;
+package com.mac.web.common;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -21,12 +21,11 @@ public class ContextFactory {
 	                .getContextPath().toString()
 	                ;
 	 }
-	 
 	 public Path ptx() {
 		 logger.info("컨텍스팩토리 ptx(){}", "들어옴");
 		 path.setContext(path());
 		 path.setCss(path()+"/resources/css");
-		 path.setImage(path()+"/resources/image");
+		 path.setImg(path()+"/resources/img");
 		 path.setJs(path()+"/resources/js");
 		 return path;
 	 }

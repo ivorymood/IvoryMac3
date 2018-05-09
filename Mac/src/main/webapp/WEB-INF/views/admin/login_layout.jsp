@@ -1,6 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib uri="http://tiles.apache.org/tags-tiles" prefix="tiles" %>
-<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <!doctype html>
 <html lang="en">
 <head>
@@ -10,6 +9,45 @@
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 	<style>
+	/* welcome */	
+        .div-welcome-body{
+			/* border: 1px solid black; */
+			margin: 0 auto;
+			font-size: 40px;
+			text-align: center;
+			margin-top: 150px;
+			font-style: inherit;
+		}
+		.btn-welcome{
+			width: 70px;
+			height: 40px;
+			margin: 0 auto;
+			text-align: center;
+			margin-top: 100px;
+			margin-left: 756px;
+		}
+		
+		
+	/* welcomUpdate */
+		.div-welUpdate-body{
+			/* border: 1px solid black; */
+			margin: 0 auto;
+			font-size: 40px;
+			text-align: center;
+			margin-top: 150px;
+			font-style: inherit;
+		}
+		.btn-welUpdate{
+			width: 70px;
+			height: 40px;
+			margin: 0 auto;
+			text-align: center;
+			margin-top: 100px;
+			margin-left: 756px;
+		}
+		
+		
+	/* login */
 		#tab-login-title{
 			border: 1px solid gray; 
 			margin: 0 auto;
@@ -64,5 +102,12 @@
  	</section>
 
 </body>
-	
+	<script>
+		$('#btn-login').on('click',function(){
+			$('#form-login')
+			.attr('action','${path.context}/admin/signin')
+			.attr('method','post')
+			.submit();
+		});
+	</script>
 </html>

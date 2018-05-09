@@ -34,4 +34,5 @@ public interface Mapper {
 	public List<?> searchChart(HashMap<?, ?> param);
 	public void deleteBasketById(HashMap<?, ?> param);
 	public HashMap<?,?> findByItemCodenItemSeq(HashMap<?,?> param);
+	public void orderUpdate(HashMap<?, ?> param);
 }

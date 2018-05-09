@@ -45,8 +45,8 @@ public class TxService implements ITxService  {
 	}
 	@Override @Transactional
 	public String executes(Map<String, String> param) {
-		System.out.println("이쪽으로 들어옴");
 		Map<String,Object> map = new HashMap<>();
+		 map.put("orderTotal", param.get("orderTotal"));
 		 map.put("customid", param.get("customId"));
          map.put("customname", param.get("customName"));
          map.put("customaddr1", param.get("customAddr1"));
@@ -66,6 +66,14 @@ public class TxService implements ITxService  {
 			@Override
 			public void execute(HashMap<?, ?> param) {
 				mapper.deleteBasketById(param);
+				
+			}
+		}.execute((HashMap<?, ?>) map);
+		new IUpdateService() {
+			
+			@Override
+			public void execute(HashMap<?, ?> param) {
+				mapper.orderUpdate(param);
 				
 			}
 		}.execute((HashMap<?, ?>) map);

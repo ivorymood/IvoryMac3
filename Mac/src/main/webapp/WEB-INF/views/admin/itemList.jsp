@@ -1,124 +1,145 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ taglib uri="http://tiles.apache.org/tags-tiles" prefix="tiles" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
-<form action="">
   <div>
-  		<div class="div-itemList-title1"> || 관리자 페이지 > 상품 리스트</div>
-  	 </div>
-  	 <div>
-  		<div class="div-itemList-title2"> || 상품 리스트</div>
-  	 </div>  
-  	 <div class="div-itemList-total">
+  		<div class="div-itemList-title1"> || 관리자 페이지 > 상품 관리</div>
+  </div>
+  <div>
+  		<div class="div-itemList-title2"> || 목 록</div>
+  </div><br /><br />
+<form id="form_itemList" name="form_itemList">
+  <div class="div-itemList-total">
 	  <div class="div-itemList-up">
-	  	<div>
-	  		단일 검색 &nbsp;&nbsp; 
-	  		<select name="b-sel-itemList-oSearch" id="b-sel-itemList-oSearch" class="inp-itemList-glycal">
-	  			<option value="카테고리 선택">카테고리 선택</option>
-	  			<option value="아이">아이</option>
-	  			<option value="립">립</option>
-	  			<option value="페이스">페이스</option>
-	  			<option value="프라이머">프라이머</option>
-	  			<option value="스킨케어">스킨케어</option>
-	  			<option value="브러시">브러시</option>
-	  			<option value="툴">툴</option>
-	  			<option value="향수">향수</option>	
+	  	<div class="div-itemList-singleSearch">
+	  		<select  name="title" id="b-sel-itemList-oSearch" class="inp-itemList-glycal">
+	  			<option selected="selected"  value="all" >선택</option>
+	  			<option value="item_name">제품명</option>
+		  		<option value="item_stock">재고량</option>
+		  		<option value="texture_exp">질감 설명</option> 
 	  		</select> &nbsp;&nbsp;
-	  		<input type="text" placeholder="상품명을 입력하세요" class="inp-itemList-insItem"/>&nbsp; &nbsp;
-	  		<button>검색</button>
-	    </div>
-	    <div class="div-itemList-detailSearch">
-		    <div class="div-itemList-detail">상세 검색&nbsp;&nbsp;&nbsp;&nbsp;
-		    	<select name="b-sel-itemList-dSearch" id="b-sel-itemList-dSearch" class="inp-itemList-glycal">
-		  			<option value="카테고리 선택">카테고리 선택</option>
-		  			<option value="아이">아이</option>
-		  			<option value="립">립</option>
-		  			<option value="페이스">페이스</option>
-		  			<option value="프라이머">프라이머</option>
-		  			<option value="스킨케어">스킨케어</option>
-		  			<option value="브러시">브러시</option>
-		  			<option value="툴">툴</option>
-		  			<option value="향수">향수</option>	
-		  		</select> 
-		    </div>
-		    <div class="div-itemList-price">
-		    	<div> &nbsp;&nbsp;판매 가격</div>
-		    	<div >	
-		    		<input class="inp-itemList-price" type="text"/>&nbsp;원
-		    	</div>
-		    	<div>~</div>
-		    	<div>
-		    	  <input class="inp-itemList-price" type="text"/>&nbsp;원		    	
-		    	</div>
-		    </div>
-		    <div class="div-itemList-addDay">
-		      <div>상품 등록일</div>
-		      <div class="div-itemList-glyCal">
-		        <button class="btn-itemList-glyCal" type="submit"><i class="glyphicon glyphicon-calendar"></i></button>
-		      </div>
-		      <div>
-    	      	<input type="text" class="inp-itemList-glycal">
-		      </div>
-    	      <div>~&nbsp;&nbsp;</div>
-    	       <div class="div-itemList-glyCal">
-		        <button class="btn-itemList-glyCal" type="submit"><i class="glyphicon glyphicon-calendar"></i></button>
-		      </div>
-    	      <div>
-    	      	<input type="text" class="inp-itemList-glycal">
-    	      </div>	  
-		    </div>
-		    <div class="div-itemList-display">진열 여부 &nbsp;&nbsp;
-		    	<input type="checkbox" />진열 &nbsp;&nbsp;
-		    	<input type="checkbox" />품절 &nbsp;&nbsp;
-		    	<input type="checkbox" />숨김 
-		    </div>
-            <div></div>		  
-            <div>
-		    	<button id="b-btn-itemList-detSearClick" class="b-btn-itemList-detSearClick">검색</button>
-		    </div>
-		</div>		    
+	  		<input name="content" id="inp-itemList-title" type="text" placeholder="상품명을 입력하세요" class="inp-itemList-insItem"/>&nbsp; &nbsp;
+	  		<button onclick="testI(${map.startBlock})" id="btn-itemList-oneSearch" class="btn-itemList-oneSearch">검 색</button><br />
+	    </div>  
 	  </div> <br/><br/>
 	  <div>
-	  	총 등록 상품 : 0000개/ 검색된 상품: 0000개
+	  	총 등록 상품 : ${map.totalItem}개/ 검색된 상품: ${map.changetotalItem}개 <br />	
+
+                                                                                    
 	  </div>
 	  <div>
 	  	<div class="div-itemList-list">	
-	      <div class="div-itemList-listIn">
-	      	<div>선택</div>
-	      	<div>번호</div>
-	        <div>카테고리와 상품명</div>
-	      	<div>판매가격(적립금)</div>
-	        <div>진열상태</div>
-	      	<div>등록일</div>
-             <div>아이디</div>
-	      	<div>수정/삭제</div>
-	      </div>
-	      <div class="di-itemList-listContent">
-	      	<c:forEach begin="0" end="4" items="" step="1" var="loginUser" varStatus="i">
-	        	<div> <input type="checkbox"/> </div>
-	            <div>${loginUser.itemSeq}</div>
-	            <div>${loginUser.commonName}<br/> ${loginUser.itemName}</div>
-	            <div>${loginUser.price}<br/> ${loginUser.price}</div>
-	            <div>${loginUser.}</div>
-	            <div>${loginUser.joinDate}</div>
-                <div>${loginUser.admin2}</div>
-	            <div> <a href="#" id="b-a-itmeList-update">수정/삭제</a> </div>
-	        </c:forEach>
-	      </div>
-	  	</div>    
-	  </div>
-	  
-	  <div>
-	  	<div class="div-itemList-btn">
-	        <button>진열</button>&nbsp;
-	        <button>숨김</button>&nbsp;
-	        <button>품절</button>
-	    </div>
-	  </div>  
+	  		<div class="div-itemList-listIn">
+	  			<div>등록순서</div>
+	  			<div>제품명</div>
+	  			<div>재고량</div>
+	  			<div>색상 설명</div>
+	  			<div>질감 설명</div>
+	  			<div>사진 이름</div>
+	  			<div>상품 코드</div>
+	  			<div>수정/삭제</div>
+	  		</div>
+	  		<div class="div-itemList-listContent">
+	  			<c:forEach begin="0" end="${list.size()}" items="${list}" step="1" var="item" varStatus="i">
+	  				<div class="div-itemList-listContents">
+	  					<span>${item.itemSeq}</span>
+	  					<span>${item.itemName}</span>
+	  					<span>${item.itemStock}</span>
+	  					<span>${item.colorExp}</span>
+	  					<span>${item.textureExp}</span>
+	  					<span>${item.picName}</span>
+	  					<span>${item.itemCode}</span>
+	  					<span>
+	  						<a id="b-a-itmeList-update" onclick="testU(${item.itemSeq},${item.itemCode})">수정</a>
+	  						<a id="b-a-itemList-delete${i.index+1}" onclick="testD(${item.itemSeq},${map.pageNum})">/삭제</a>	
+	  					</span> 
+	  			    </div>
+	  			</c:forEach>
+	  		</div>
+	  	</div>     
 	</div>
-    <div class="b-div-itemList-page" id="b-div-itemList-page">1 &nbsp;  2 &nbsp; 3 &nbsp; 4 &nbsp; 5 
-     	<%-- <c:forEach begin="1" end="5" items="" step="" var="" varStatus="i">
-     		<span id="b-span-itemList-pagination">
-     			<a href="#">${i.index}</a>
-     		</span>
-     	</c:forEach> --%>
+    <div class="b-div-itemList-page" id="b-div-itemList-page">     
+  		<c:if test="${map.startBlock!=1}">
+   			<a style="margin-left: 7px;" onclick="testI(${map.startBlock-1})">&laquo;</a>  			
+  		</c:if>  
+  						
+   		<c:forEach begin="${map.startBlock}" end="${map.endBlock}" step="1" varStatus="i">
+   			<c:choose>
+   				<c:when test="${map.pageNum eq i.index}">
+   					<span class="active"  id="b-span-itemList-pagination">
+     					<a onclick="testI(${i.index})">${i.index}</a>
+     				</span>
+     			</c:when>
+     			<c:otherwise>
+     				 <span>
+                       <a class="a-itemList-pageNum" onclick="testI(${i.index})">${i.index}</a>
+                   </span>
+     			</c:otherwise>	
+   			</c:choose>	
+   		</c:forEach>
+   	
+		<c:if test="${map.endBlock!=map.totalPageCount}">
+			<a style="margin-left: 7px;" onclick="testI(${map.endBlock+1})" >&raquo;</a>
+		</c:if>
      </div>
-</form>
+   	<input type="hidden" name="pageNum" />
+   	<input type="hidden" name="itemSeq" />
+   	<input type="hidden" name="itemCode" />
+   	<input type="hidden" name="a" />
+   	<input type="hidden" name="b" />
+   </div> 
+ </form>         
+<script>
+
+ 	 function testI(y){    //페이지네이션 할때 쓰입니다.
+         alert('파라미터'+y);
+         	var form = document.form_itemList;
+    		form.pageNum.value = y;
+    		form.title.value = $('select[name=title]').val();
+    		form.content.value = $('#inp-itemList-title').val();
+    		alert(form.title.value)
+	    	alert(form.content.value)
+         alert('y='+form.pageNum.value);
+         $('#form_itemList')
+         .attr('action','${path.context}/admin/itemList')
+         .attr('method','post')
+         .submit(); 
+ 
+     } 
+ 	
+     function testU(x,z){
+    	 alert('x파라미터: '+ x + ' z파라미터: '+ z);
+    	 	var form = document.form_itemList;
+    	 	form.itemSeq.value = x;
+    	 	form.itemCode.value = z;
+    	 alert('form.itemSeq.value'+ form.itemSeq.value);
+    	 $('#form_itemList')
+    	 .attr('action','${path.context}/admin/update')
+         .attr('method','post')
+         .submit();
+     }
+     
+     function testD(i,k){
+    	 alert('x파라미터: '+ i + ' z파라미터: '+ k);
+    	 	var form = document.form_itemList;
+    	 	form.a.value = i;
+    	 	form.b.value = k;
+    	 alert('form.a.value: '+ form.a.value + ' form.b.value: '+ form.b.value);    	 	 	 	
+    	 $('#form_itemList')
+    	 .attr('action','${path.context}/admin/itemListDelete ')
+         .attr('method','post')
+         .submit();
+     }
+/*     $('#btn-itemList-oneSearch').on('click',function(){
+    	 alert('검색 클릭');
+    	 var form = document.form_itemList;
+
+    	  $('form_itemList')
+    	   .attr('action','${path.context}/admin/itemSearch')  
+    	  .attr('method','post')
+         .submit();      
+    	 console.log(conceptName);
+         alert(content);
+    	 alert(conceptName);
+     });  */ 
+</script>
+
