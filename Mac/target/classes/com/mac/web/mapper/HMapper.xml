@@ -53,20 +53,24 @@
 	<result property="discountAmount" column="discountAmount"/>
 </resultMap>
 <select id="selectSubMainItems" parameterType="hashMap" resultMap="itemInfo">
-select 
-	c.item_code as itemCode,
-	c.common_name commonName, 
-	c.common_name_e commonNameE, 
-	c.price *(1- c.discount) as discountPrice,
-	(select t.item_seq
-	from item t
-	where t.item_code like c.item_code
-	order by t.item_seq limit 1) itemSeq,
-	(select count(*)
-	from item i
-	where i.item_code like c.item_code) kindCount
+select tmp.*, 
+		i.pic_name as picName
+from item i, (select 
+			c.item_code as itemCode,
+			c.common_name as commonName, 
+			c.common_name_e as commonNameE,
+			c.price *(1- c.discount) as discountPrice,
+			(select t.item_seq
+			from item t
+			where t.item_code like c.item_code
+			order by t.item_seq limit 1) as itemSeq,
+			(select count(*)
+			from item i
+			where i.item_code like c.item_code) as kindCount
 from common_feature c
-where c.class_code like #{classCode}
+where c.class_code like #{classCode}) tmp
+where i.item_seq like tmp.itemSeq;
+
 </select>
 <select id="selectFirstItem" parameterType="hashMap" resultMap="itemInfo"><!-- 아직안씀 -->
 select item_seq as itemSeq

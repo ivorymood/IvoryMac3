@@ -1037,11 +1037,11 @@ app.navout=(()=>{
 								.append($(createDiv({id:'',clazz:''}))
 							 			.attr('style','width: 1580px; padding:0; display: inline-block;')
 							 			.append($(createLI({id:'',clazz:'dropdown-submenu',val:''}))
-							 					.append($(createImg({id:'', img:'crush.jpg'})))
-							 					.append($(createImg({id:'', img:'crush2.jpg'})))
-							 					.append($(createImg({id:'', img:'crush3.jpg'})))
-							 					.append($(createImg({id:'', img:'crush4.jpg'})))
-							 					.append($(createImg({id:'', img:'crush5.jpg'})))
+							 					.append($(createImg({id:'', clazz:'', img:'crush.jpg'})))
+							 					.append($(createImg({id:'', clazz:'', img:'crush2.jpg'})))
+							 					.append($(createImg({id:'', clazz:'', img:'crush3.jpg'})))
+							 					.append($(createImg({id:'', clazz:'', img:'crush4.jpg'})))
+							 					.append($(createImg({id:'', clazz:'', img:'crush5.jpg'})))
 									 	)
 							 	)
 					 	)
@@ -1309,7 +1309,7 @@ app.footer=(()=>{
 						.attr('style','margin: 0 auto;')))
 		.append($(createDiv({id:'j-div-footer2', clazz:''}))
 				.attr('style','background:black; height:15%;')
-				.append($(createImg({id:'', img:'mainitem10.jpg'}))
+				.append($(createImg({id:'', clazz:'',  img:'mainitem10.jpg'}))
 						.attr('style','width: 1400px;'))
 		);
 		
@@ -1449,6 +1449,11 @@ app.main=(()=>{
 				var customId = sessionStorage.getItem("customer");
 				//내용
 				//var temp = ['Matte Lipstick','Retro Matte Lipstick','EYE SHADOW','Mineralize Blush']
+				
+				
+				$('#div-main-items-home')
+				.attr('style', 'position: relative; height: 540px; margin-top: 20px; margin-bottom: 20px; width: 1281px; margin-right: 151px; margin-left: 151px; ');
+				
 				$.getJSON(context+'/mainItems/', d=>{
 					var mainObj = d.mainItems;
 					for(var i =0; i <= mainObj.length ; i++){
@@ -1456,86 +1461,108 @@ app.main=(()=>{
 							return false;
 						}
 						console.log(mainObj[i]);
-						$(createDiv({id:'',clazz:''}))
-						.attr('style','margin-top:30px;display: inline-block;margin-left: 50px;border-top: 1px solid #c7c7c7;')
-						.append($(createDiv({id:'',clazz:''}))
-								.attr('style','display: inline-block;')
-								.append($(createDiv({id:'',clazz:''}))
-										.append($(createHTag({num:'5',id: 'HTag-main-korName-'+i, val: mainObj[i].commonName})))
-								).append($(createDiv({id:'',clazz:''}))
-										.append($(createHTag({num:'5',id: 'HTag-main-engName-'+i, val:mainObj[i].commonNameE})))
-								)
-								.append($(createDiv({id:'',clazz:''}))
-										.append($(createHTag({num:'5',id: 'HTag-main-color-'+i, val: '색상: '+mainObj[i].itemName})))
-								).append($(createDiv({id:'',clazz:''}))
-										.append($(createHTag({num:'5',id: 'HTag-main-texture-'+i, val:'['+mainObj[i].textuerExp+']'})))
-						)).append($(createDiv({id:'',clazz:''}))
-					 			.attr('style','display: inline-block; margin-left: 100px;')
-					 			.append($(createDiv({id:'',clazz:''}))
-					 					.append($(createHTag({num:'5',id:'', val:'★★★★★'}))))
-					 			.append($(createDiv({id:'',clazz:''}))
-					 					.append($(createHTag({num:'5',id:'', val:'♡'}))))
-					 	).append($(createDiv({id:'',clazz:''}))
-					 			.append($(createDiv({id:'',clazz:''}))
-					 					.append($(createImg({id:'', img: mainObj[i].picName+'.jpg'}))))
-					 	).append($(createDiv({id:'',clazz:''}))
-				 				.attr('style','border-top: 1px solid #c7c7c7;')
-				 				.append($(createDiv({id:'',clazz:''}))
-				 						.attr('style','display: inline-block;margin-left: 10px; margin-top:10px;')
-				 						.append($(createHTag({num:'5',id:'HTag-basket-'+i, val:'₩'+mainObj[i].discountPrice})))
-				 				).append($(createDiv({id:'',clazz:''}))
-	 									.attr('style','display: inline-block;margin-left: 90px;')
-	 									.append($(createButton({id:'btn-basket-'+i+'',type:'button',clazz:'',val:'장바구니 담기'}))
-	 											.attr('style','color:white; background:black;')
-	 											.attr('common_name',mainObj[i].commonName)
-	 											.attr('item_name',mainObj[i].itemName)
-	 											.attr('item_seq',mainObj[i].itemSeq)
-	 											.attr('item_code',mainObj[i].itemCode)
-												.on('click',function (){
-													if(customId){
-														alert('customId 있음');
-														var jason = {
-																customId : customId,
-																commonName : $(this).attr("common_name"),
-																itemName : $(this).attr("item_name"),
-																itemSeq  : $(this).attr("item_seq"),
-																itemCode : $(this).attr("item_code")
-														}
-														$.ajax({
-															url:context+'/putBasket',
-															method:'POST',
-															data: JSON.stringify(jason),
-															dataType:'json',
-															contentType: 'application/json',
-															success: x=>{
-																alert('성공');
-																if(x.success==1){
-																	//할일: 장바구니 팝업하는것
-																	console.log($(this));
-																}else if(x.success==0){
-																	alert('해당 상품 재고가 없습니다');
-																}else{
-																	alert('장바구니 담기에 실패했습니다. 다시 시도해 주세요');
-																}
-															},
-															error: function(x,s,m){alert(m);}
-														})
-														
-														/**/
-													}else{
-														alert("로그인 후 다시 주문");	//할일: 팝업으로 만들기
-														
-													}
-												})
-										))
-				 		)
-				 		.appendTo('#div-main-items-home');						
+						
+						$('#div-main-items-home')
+						.append($(createDiv({id: '', clazz:''}))
+								.attr('style', 'position: absolute; top: 0px; left:'+(312.75*i)+'px; width: 312.75px; height: 495px; padding-left: 12px; padding-right: 12px; margin-bottom: 45px; display: inline-block; vertical-align: super;')	
+								.append($(createDiv({id: '', clazz:'grid-item-catalog'}))
+										.attr('style', 'padding-top: 15px; height: 479px; border-top:1px solid #c7c7c7; position: relative;')
+										.append($(createDiv({id: '', clazz: ''}))
+												.append($(createDiv({id:'', clazz: ''}))
+														.append($(createHTag({num:'4', val: mainObj[i].commonName, clazz:'pnt'}))
+																.attr('style', 'margin:0;')
+																.attr('itemSeq', mainObj[i].itemSeq)
+																.attr('itemCode', mainObj[i].itemCode)
+																.on('click', function(){
+																	app.item.onCreate({itemSeq: $(this).attr("itemSeq"), itemCode: $(this).attr("itemCode")});
+																}))
+												).append($(createDiv({id:'', clazz: ''}))
+														.append($(createPtag({val: mainObj[i].commonNameE}))
+																.attr('style', 'margin-bottom: 3px;'))
+												).append($(createDiv({id:'', clazz: ''}))
+														.append($(createPtag({val: '색상: '+mainObj[i].itemName}))
+																.attr('style','margin-bottom: 1px;'))
+												).append($(createDiv({id:'', clazz: ''}))
+														.append($(createPtag({val: '['+mainObj[i].textureExp+']'}))
+																.attr('style', 'margin-bottom: 0px;'))
+												)
+										).append($(createDiv({id:'', clazz: ''}))
+												.attr('style','margin-left: 50px; float: right;')
+												.append($(createDiv({id:'', clazz: ''}))
+														.append($(createHTag({num:'4', val:'★★★★★'}))
+																.attr('style', 'margin-bottom: 0px; margin-top: 0px;'))
+												).append($(createDiv({id:'', clazz: ''}))
+														.attr('style','float: right;')
+														.append($(createHTag({num:'4', val:'♡'})))
+												)
+										).append($(createDiv({id:''}))
+												.attr('style', 'height: 40%; width: 80%; position: absolute; top: 180px; left: 30px;')
+												.append($(createImg({id:'', img: mainObj[i].picName+'.jpg', alt:'EYE SHADOW', title:'EYE SHADOW', clazz:'pnt'}))
+														.attr('style', 'height: 100%; width: 100%; ')
+														.attr('itemSeq', mainObj[i].itemSeq)
+														.attr('itemCode', mainObj[i].itemCode)
+														.on('click', function(){
+															app.item.onCreate({itemSeq: $(this).attr("itemSeq"), itemCode: $(this).attr("itemCode")});
+														}))
+										).append($(createDiv({id:''}))
+												.attr('style', 'border-top: 1px solid #c7c7c7; position: absolute; bottom: 5px; width: 292.750px;')
+												.append($(createDiv({id:''}))
+														.attr('style','display: inline-block;  ')
+														.append($(createHTag({num:'4', val:'₩'+mainObj[i].discountPrice}))
+																.attr('style', 'margin-bottom: 0; margin-top: 16px;'))
+												).append($(createDiv({id:''})).attr('style', 'margin-top: 8.5px; display: inline-block; float: right;')
+														.append($(createButton({val:'장바구니 담기'}))
+																.attr('style','border: 0; margin: 0; padding-top: 0; padding-bottom:0; width:130px; height:30px; background-color: black; color: white; font-size: 15px;'))
+																.attr('common_name',mainObj[i].commonName)
+																.attr('item_name',mainObj[i].itemName)
+																.attr('item_seq',mainObj[i].itemSeq)
+																.attr('item_code',mainObj[i].itemCode)
+																.on('click',function (){
+																	if(customId){
+																		alert('customId 있음');
+																		var jason = {
+																				customId : customId,
+																				commonName : $(this).attr("common_name"),
+																				itemName : $(this).attr("item_name"),
+																				itemSeq  : $(this).attr("item_seq"),
+																				itemCode : $(this).attr("item_code")
+																		}
+																		$.ajax({
+																			url:context+'/putBasket',
+																			method:'POST',
+																			data: JSON.stringify(jason),
+																			dataType:'json',
+																			contentType: 'application/json',
+																			success: x=>{
+																				alert('성공');
+																				if(x.success==1){
+																					//할일: 장바구니 팝업하는것
+																					console.log($(this));
+																				}else if(x.success==0){
+																					alert('해당 상품 재고가 없습니다');
+																				}else{
+																					alert('장바구니 담기에 실패했습니다. 다시 시도해 주세요');
+																				}
+																			},
+																			error: function(x,s,m){alert(m);}
+																		})
+																	}else{
+																		alert("로그인 후 다시 주문");	//할일: 팝업으로 만들기
+																	}
+																})
+												)
+												
+												
+										)
+								)		
+						);
 					}
 				});
 				
 				//버튼 
 				$('#div-main-item-manu')
 				.append($(createDiv({id:'', clazz:''}))
+						.attr('style','text-align: center; margin-top: 15px;')
 						.append($(createATag({id:'a-tabs-item1', clazz:'', 
 									val:'<span id="main-item-span1" style="margin-top:15px; padding:10px; width: 139px; height:35px; font-size:15px; background: black; color:white;" class="glyphicon" aria-hidden="true">BEST SELLER</span>'
 								})).attr('style','padding:5px;')
@@ -1569,7 +1596,7 @@ app.main=(()=>{
 				.appendTo('#div-main-itme-manu2');
 				$('#div-main-items-middle')
 				.append($(createDiv({id:'j-div-main-itme-manu3',	clazz:''})));
-				$(createImg({id:'', img:'mainitem4.jpg'}))
+				$(createImg({id:'', clazz:'', img:'mainitem4.jpg'}))
 				.attr('style','margin-left:80px;')
 				.appendTo('#j-div-main-itme-manu3')
 				 .click(()=>{
@@ -1582,7 +1609,7 @@ app.main=(()=>{
 				.appendTo('#j-div-main-itme-manu4');
 				$('#div-main-items-middle')
 				.append($(createDiv({id:'j-div-main-itme-manu5',clazz:''})));
-				$(createImg({id:'', img:'mainitem5.jpg'}))
+				$(createImg({id:'', clazz:'', img:'mainitem5.jpg'}))
 				.attr('style','margin-left:80px;')
 				.appendTo('#j-div-main-itme-manu5')
 				 .click(()=>{
@@ -1599,22 +1626,36 @@ app.main=(()=>{
 				.attr('style','margin-left:140px;')
 				.appendTo('#j-div-main-itme-manu7');
 				
-				$(createATag({id:'j-a-mainitem6',val:'<img style="height:48%;width: 22%;" src="'+$.image()+'/mainitem6.jpg">'}))
+				/*var createImg=x=>{
+					return '<img src="'+$.image()+'/'+x.img+'" id="'+x.id+'" class="'+x.clazz+'" alt="'+x.alt+'" title="'+x.title+'">';
+				}*/
+				
+			/*	$('#j-div-main-itme-manu8')
+				.append($(createDiv({id:'', clazz:''}))
+						.append($(createImg({img : 'mainitem6.jpg', id:'', clazz:''})))
+						.on('click', ()=>{
+							alert('화면 작동함1111');
+						}));
+						
+						*createImg({id:'', img: mainObj[i].picName+'.jpg', alt:'EYE SHADOW', title:'EYE SHADOW', clazz:'pnt'})
+						*
+						*/
+				$(createATag({id:'j-a-mainitem6',val:'<img id="" style="height:48%;width: 22%;" src="'+$.image()+'/mainitem6.jpg">'}))//이미지 플래그
 				.appendTo('#j-div-main-itme-manu8')
 				.click(()=>{
 		 				alert('화면 작동함1');
 				});
-				$(createATag({id:'j-a-mainitem7',val:'<img style="height:48%;width: 22%; " src="'+$.image()+'/mainitem7.jpg">'}))
+				$(createATag({id:'j-a-mainitem7',val:'<img id="" style="height:48%;width: 22%; " src="'+$.image()+'/mainitem7.jpg">'}))
 				.appendTo('#j-div-main-itme-manu8')
 				.click(()=>{
 		 				alert('화면 작동함2');
 				});
-				$(createATag({id:'j-a-mainitem8',val:'<img style="height:48%;width: 22%;" src="'+$.image()+'/mainitem8.jpg">'}))
+				$(createATag({id:'j-a-mainitem8',val:'<img id="" style="height:48%;width: 22%;" src="'+$.image()+'/mainitem8.jpg">'}))
 				.appendTo('#j-div-main-itme-manu8')
 				.click(()=>{
 			 			alert('화면 작동함3');
 				});
-				$(createATag({id:'j-a-mainitem9',val:'<img style="height:48%;width: 22%;" src="'+$.image()+'/mainitem9.jpg">'}))
+				$(createATag({id:'j-a-mainitem9',val:'<img id="" style="height:48%;width: 22%;" src="'+$.image()+'/mainitem9.jpg">'}))
 				.appendTo('#j-div-main-itme-manu8')
 				.click(()=>{
 		 				alert('화면 작동함4');
@@ -1625,7 +1666,7 @@ app.main=(()=>{
 			
 		 };
 		
-		 return{onCreate:onCreate}
+		 return {onCreate:onCreate};
 	 })();
 app.join=(()=>{
 	var $header,context,view,image;
@@ -1772,7 +1813,7 @@ app.join=(()=>{
 							.attr('style','background:black;color:white; width:150px; height:50px;')))
 			
 	 };
-	 return{onCreate:onCreate}
+	 return {onCreate:onCreate};
 })();
 
 app.login=(()=>{
@@ -2104,25 +2145,63 @@ app.mainitem=(()=>{
 												.append($(createHTag({num:'4', val:'♡'})))
 										)
 								).append($(createDiv({id:''}))
-										.append($(createImg({id:'', img:subObject[i].itemCode+'.JPG', alt:'EYE SHADOW', title:'EYE SHADOW', clazz:'pnt'}))
+										.attr('style', 'height: 40%; width: 80%; position: absolute; top: 180px; left: 30px;')
+										.append($(createImg({id:'', img:subObject[i].picName+'.jpg', alt:'EYE SHADOW', title:'EYE SHADOW', clazz:'pnt'}))
+												.attr('style', 'height: 100%; width: 100%; ')
 												.attr('itemSeq', subObject[i].itemSeq)
 												.attr('itemCode', subObject[i].itemCode)
 												.on('click', function(){
-													alert('그림누름!');
 													app.item.onCreate({itemSeq: $(this).attr("itemSeq"), itemCode: $(this).attr("itemCode")});
 												}))
 								).append($(createDiv({id:''}))
-										.attr('style', 'border-top: 1px solid #c7c7c7; position: absolute; bottom: 5px;')
+										.attr('style', 'border-top: 1px solid #c7c7c7; position: absolute; bottom: 5px; width: 292.750px;')
 										.append($(createDiv({id:''}))
-												.attr('style','display: inline-block;  width: 292.750px;')
+												.attr('style','display: inline-block;  ')
 												.append($(createHTag({num:'4', val:'₩'+subObject[i].discountPrice}))
 														.attr('style', 'margin-bottom: 0; margin-top: 16px;'))
 										).append($(createDiv({id:''})).attr('style', 'margin-top: 8.5px; display: inline-block; float: right;')
 												.append($(createButton({val:'장바구니 담기'}))
 														.attr('style','border: 0; margin: 0; padding-top: 0; padding-bottom:0; width:130px; height:30px; background-color: black; color: white; font-size: 15px;'))
+														.attr('common_name',subObject[i].commonName)
+														.attr('item_name',subObject[i].itemName)
+														.attr('item_seq',subObject[i].itemSeq)
+														.attr('item_code',subObject[i].itemCode)
+														.on('click',function (){
+															if(customId){
+																alert('customId 있음');
+																var jason = {
+																		customId : customId,
+																		commonName : $(this).attr("common_name"),
+																		itemName : $(this).attr("item_name"),
+																		itemSeq  : $(this).attr("item_seq"),
+																		itemCode : $(this).attr("item_code")
+																}
+																$.ajax({
+																	url:context+'/putBasket',
+																	method:'POST',
+																	data: JSON.stringify(jason),
+																	dataType:'json',
+																	contentType: 'application/json',
+																	success: x=>{
+																		alert('성공');
+																		if(x.success==1){
+																			//할일: 장바구니 팝업하는것
+																			console.log($(this));
+																		}else if(x.success==0){
+																			alert('해당 상품 재고가 없습니다');
+																		}else{
+																			alert('장바구니 담기에 실패했습니다. 다시 시도해 주세요');
+																		}
+																	},
+																	error: function(x,s,m){alert(m);}
+																})
+															}else{
+																alert("로그인 후 다시 주문");	//할일: 팝업으로 만들기
+															}
+														})
 										)
-								)
-						)		
+								)		
+						)
 				);
 			};
 		});
@@ -2238,9 +2317,9 @@ app.item=(()=>{
 							.attr('style', 'border: 0.5px solid lightgray'))
 			).append($(createDiv({clazz:'carousel-inner'}))
 					.append($(createDiv({clazz:'item active'}))
-							.append($(createImg({id:'', img:d.item.picName+'1.JPG', alt:''}))))
+							.append($(createImg({id:'', img:d.item.picName+'.jpg', alt:''}))))
 					.append($(createDiv({clazz:'item'}))
-							.append($(createImg({id:'', img:d.item.picName+'2.JPG', alt:''}))))
+							.append($(createImg({id:'', img:d.item.picName+'.jpg', alt:''}))))
 			);
 			$('.carousel').carousel({interval: false});
 		
@@ -2485,7 +2564,7 @@ app.item=(()=>{
 												.append($(createHTag({num:'4', val:'♡'})))
 										)
 								).append($(createDiv({id:''}))
-										.append($(createImg({id:'', img:'mainitem3.JPG', alt:'EYE SHADOW', title:'EYE SHADOW', clazz:'pnt'}))
+										.append($(createImg({id:'', img:'mainitem3.jpg', alt:'EYE SHADOW', title:'EYE SHADOW', clazz:'pnt'}))
 												.on('click', ()=>{
 													app.item.onCreate({itemSeq:'2', itemCode:'3000'});
 												}))
@@ -2527,7 +2606,6 @@ app.item=(()=>{
 							.attr('style', 'display:inline; '))
 			);
 			
-			
 			$('#item-div1-1')
 			.append($(createDiv({id:'carousel-example-generic', clazz: 'carousel slide'}))
 					.attr('style', 'float: right; margin-right: 5px; width: 651px; hieght: 609px;'));
@@ -2539,9 +2617,9 @@ app.item=(()=>{
 							.attr('style', 'border: 0.5px solid lightgray'))
 			).append($(createDiv({clazz:'carousel-inner'}))
 					.append($(createDiv({clazz:'item active'}))
-							.append($(createImg({id:'', img:d.item.picName+'1.JPG', alt:''}))))
+							.append($(createImg({id:'', img:d.item.picName+'.jpg', alt:''}))))
 					.append($(createDiv({clazz:'item'}))
-							.append($(createImg({id:'', img:d.item.picName+'2.JPG', alt:''}))))
+							.append($(createImg({id:'', img:d.item.picName+'.jpg', alt:''}))))
 			);
 			$('.carousel').carousel({interval: false});
 		

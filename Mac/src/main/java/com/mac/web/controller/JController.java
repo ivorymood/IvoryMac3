@@ -89,6 +89,9 @@ public class JController {
 				return jMapper.selectMainItems(param);
 			}
 		}.execute((HashMap<?, ?>) map));
+		
+		System.out.println("mainitem");
+		System.out.println();
 		return map;
 	}
 	

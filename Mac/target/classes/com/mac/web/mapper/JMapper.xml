@@ -141,7 +141,8 @@ order by t.orderSeq desc limit 1;
           					, c.price*(1-c.discount) as discountPrice
       					FROM  item i 
       					join  common_feature c 
-        				on  i.item_code like c.item_code) t,
+        				on  i.item_code like c.item_code
+        				where i.item_code like '1000') t,
 					(select @rownum:=0) tmp) a
 
 </select>
