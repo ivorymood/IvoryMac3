@@ -13,13 +13,13 @@
 </head>
 <body>
 <div id="owl" class="owl-carousel owl-theme">
-    <div class="item"><img src="${context}/resources/img/galary1.JPG"></div>
-    <div class="item"><img src="${context}/resources/img/galary2.JPG"></div>
-    <div class="item"><img src="${context}/resources/img/galary3.JPG"></div>
-    <div class="item"><img src="${context}/resources/img/galary4.JPG"></div>
-    <div class="item"><img src="${context}/resources/img/galary5.JPG"></div>
-    <div class="item"><img src="${context}/resources/img/galary6.JPG"></div>
-    <div class="item"><img src="${context}/resources/img/galary7.JPG"></div>
+    <div class="item"><img src="${context}/resources/img/galary1.jpg"></div>
+    <div class="item"><img src="${context}/resources/img/galary2.jpg"></div>
+    <div class="item"><img src="${context}/resources/img/galary3.jpg"></div>
+    <div class="item"><img src="${context}/resources/img/galary4.jpg"></div>
+    <div class="item"><img src="${context}/resources/img/galary5.jpg"></div>
+    <div class="item"><img src="${context}/resources/img/galary6.jpg"></div>
+    <div class="item"><img src="${context}/resources/img/galary7.jpg"></div>
 </div>
 <script type="text/javascript">
 $(document).ready(function(){
