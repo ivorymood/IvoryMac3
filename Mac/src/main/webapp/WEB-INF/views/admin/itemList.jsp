@@ -23,7 +23,9 @@
 	  </div> <br/><br/>
 	  <div>
 	  	총 등록 상품 : ${map.totalItem}개/ 검색된 상품: ${map.changetotalItem}개 <br />	
-
+<%-- 	${map.nowPage}, ${map.pageNum}, ${map.pageSize}, ${map.blockSize} <br />
+    ${map.totalCount},  ${map.totalPageCount} <br />
+    ${map.startRow}, ${map.endRow}, ${map.startBlock}, ${map.endBlock} <br /> --%>
                                                                                     
 	  </div>
 	  <div>

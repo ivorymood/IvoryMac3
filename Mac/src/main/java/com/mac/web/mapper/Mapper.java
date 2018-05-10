@@ -30,9 +30,11 @@ public interface Mapper {
 	public List<?> macDate(HashMap<?, ?> param);
 	public int deleteBasket(HashMap<?, ?> param);
 	public List<?> macOrderBasket(HashMap<?, ?> param);
+	public List<?> mypageItem(HashMap<?, ?> param);
 	public List<?> searchOrderBasket(HashMap<?, ?> param);
 	public List<?> searchChart(HashMap<?, ?> param);
 	public void deleteBasketById(HashMap<?, ?> param);
+	public void deleteMypageById(HashMap<?, ?> param);
 	public HashMap<?,?> findByItemCodenItemSeq(HashMap<?,?> param);
 	public void orderUpdate(HashMap<?, ?> param);
 }

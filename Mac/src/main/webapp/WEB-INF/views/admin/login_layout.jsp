@@ -47,14 +47,21 @@
 		}
 		
 		
+		
+		
+		
+/* login (admin)*/	
+		
+		
+		
+		
+		
 	/* login */
 		#tab-login-title{
-			border: 1px solid gray; 
 			margin: 0 auto;
 			margin-top: 60px;
 		}
 		#td-login-title{
-			border: 1px solid gray;
 			font-size: 40px;
 		}
 		#tab-login{
@@ -91,6 +98,28 @@
 			font-size: 12px;
 			border: 1px solid gray; 
 		}
+	
+	.div-custMana-frame {
+	  display: grid;
+	  grid-template-columns: auto auto;
+	  padding: 10px;
+	  grid-gap: 10px;
+	  background-color: #7b7b82;
+	  height: 760px;
+	  width: 91%;
+	  margin: 0 auto;
+	  font-size: 17px;
+	}
+	.div-custMana-frame > div {
+	  background-color: rgb(222, 239, 239);
+	  border: 1px solid black;
+	  text-align: center; 
+	  height: 100%;
+	  line-height: 1.3;
+	} 
+	
+		
+	
 	</style>
 </head>
 <body>
@@ -102,12 +131,4 @@
  	</section>
 
 </body>
-	<script>
-		$('#btn-login').on('click',function(){
-			$('#form-login')
-			.attr('action','${path.context}/admin/signin')
-			.attr('method','post')
-			.submit();
-		});
-	</script>
 </html>

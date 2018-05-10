@@ -454,11 +454,27 @@ app.orders=(()=>{
 										.append($(createHTag({num:'2',val:'총합계'}))))));
 					 $.getJSON(context+'/order/search/'+sessionStorage.getItem('customer'),e=>{
 						 var orderObj = e.orderSearch;
+						 function addComma(num) {
+						        var len, point, str;
+						        num = num + "";
+						        point = num.length % 3;
+						        len = num.length;
+						        str = num.substring(0, point);
+						        while(point < len) {
+						            if(str != "") {
+						                str += ",";
+						            }
+						            str += num.substring(point, point +3);
+						            point += 3;
+						        }
+						        return str;
+						    }
 						 console.log(e.orderSearch);
 						 for(var i =0 ;  i < orderObj.length ; i++){
 							if(i > orderObj.length){
 								return false;
 							}
+
 							$("#div-order-float").append("<div class='row'></div>")
 									.append($(createDiv({id:'',clazz:''}))
 									.attr('style','float: left;    width: 1000px; margin-left: 30px;border-top: 1px solid #c7c7c7;')
@@ -477,8 +493,8 @@ app.orders=(()=>{
 												.append($(createHTag({num:'5',val:orderObj[i].itemName})))))
 											.append($(createDiv({id:'',clazz:''}))
 												.attr('style','display: inline-block;    margin-left: 100px;')
-												.append($(createHTag({num:'5',val:'정상가:'+'₩'+orderObj[i].price})))
-												.append($(createHTag({num:'5',val:'할인가:'+'₩'+orderObj[i].discountPrice}))))
+												.append($(createHTag({num:'5',val:'정상가:'+'₩'+addComma(orderObj[i].price)})))
+												.append($(createHTag({num:'5',val:'할인가:'+'₩'+addComma(orderObj[i].discountPrice)}))))
 											.append($(createDiv({id:'',clazz:''}))
 												.attr('style','display: inline-block;')
 												.append($(createDiv({id:'',clazz:''}))
@@ -488,28 +504,28 @@ app.orders=(()=>{
 												.attr('style','display: inline-block;margin-left: 40px;')
 												.append($(createDiv({id:'',clazz:''}))
 													.attr('style','margin-left: 80px;')
-													.append($(createHTag({num:'3',val:'₩'+orderObj[i].total}))))));
+													.append($(createHTag({num:'3',val:'₩'+addComma(orderObj[i].total)}))))));
 				
 						 }
 					 });
 					
 				$('#div-orders').append($(createDiv({id:'',clazz:''}))
-						.attr('style','float: right; margin-left: 100px;')
+						.attr('style','float: right; margin-left: 100px; text-align: center;')
 						.append($(createDiv({id:'',clazz:''}))
-								.attr('style','height: 50px; background: #f0f0f0;')
+								.attr('style','height: 50px; background: black; color:white;')
 								.append($(createHTag({num:'3',val:'위시 리스트'}))))
 							.append($(createDiv({id:'',clazz:''}))
-								.attr('style','height: 50px; background: #f0f0f0;')
+								.attr('style','height: 50px; background: black; color:white;')
 								.append($(createHTag({num:'3',val:'지난 구매내역'}))))
 							.append($(createDiv({id:'',clazz:''}))
-								.attr('style','background: #f0f0f0;')
+								.attr('style',' background: black; color:white;')
 								.append($(createDiv({id:'',clazz:''}))
-									.attr('style','height: 50px; background: #f0f0f0;')
+									.attr('style','height: 50px; ')
 									.append($(createHTag({num:'3',val:'쿠폰 코드 입력'}))))
 								.append($(createDiv({id:'',clazz:''}))
-									.attr('style','height: 50px; background: #f0f0f0;')
+									.attr('style','height: 50px; ')
 									.append($(createInput({id:'',val:'*주문당 하나의 쿠폰코드만 사용 가능합니다',type:'text'}))
-										.attr('style','width: 300px; height: 50px; background: #f0f0f0;')))
+										.attr('style','width: 300px; height: 50px; color:black')))
 								.append($(createDiv({id:'',clazz:''}))
 									.append(' <p style="color:red">*주문 코드는 1인 1회 적용되며 적용 주문건 </br>취소 후 쿠폰 코드 재적용이 불가 합니다</p>'))
 								.append($(createDiv({id:'',clazz:''}))
@@ -521,19 +537,38 @@ app.orders=(()=>{
 									.append($(createDiv({id:'',clazz:''}))
 										.append('<h3>도움이 필요 하세요?</h3>')
 										.append('p>고객 관리 지원팀(02-3440-2707)</p>')
-										.append($(createATag({id:'',clazz:'',val:'이메일 문의하기'}))))
+										.append($(createATag({id:'',clazz:'',val:'이메일 문의하기'}))
+											.attr('style','color:white')))
 									.append($(createDiv({id:'',clazz:''}))
 										.attr('style','margin-top:30px;')
 										.append($(createHTag({num:'3',val:'추가정보'})))
 										.append($(createDiv({id:'',clazz:''}))
-											.append($(createATag({id:'',clazz:'',val:'배송정보'}))))
+											.append($(createATag({id:'',clazz:'',val:'배송정보'}))
+												.attr('style','color:white')))
 										.append($(createDiv({id:'',clazz:''}))
-											.append($(createATag({id:'',clazz:'',val:'교환및 환불 정책'}))))
+											.append($(createATag({id:'',clazz:'',val:'교환및 환불 정책'}))
+												.attr('style','color:white')))
 										.append($(createDiv({id:'',clazz:''}))
-											.append($(createATag({id:'',clazz:'',val:'최대 구매수량 정책'}))))))));
+											.append($(createATag({id:'',clazz:'',val:'최대 구매수량 정책'}))
+												.attr('style','color:white')))))));
 					
 				 $.getJSON(context+'/basket/totalPrice/'+sessionStorage.getItem('customer'),e=>{
 					 var basketObjTotal = e.basketTotalPrice;
+					 function addComma(num) {
+					        var len, point, str;
+					        num = num + "";
+					        point = num.length % 3;
+					        len = num.length;
+					        str = num.substring(0, point);
+					        while(point < len) {
+					            if(str != "") {
+					                str += ",";
+					            }
+					            str += num.substring(point, point +3);
+					            point += 3;
+					        }
+					        return str;
+					    }
 					 console.log(basketObjTotal);
 					$('#div-orders').append($(createDiv({id:'',clazz:''}))
 						.attr('style','float: left; margin-left: 100px;')
@@ -547,7 +582,7 @@ app.orders=(()=>{
 												.append($(createHTag({num:'3',val:'합 계:'}))))
 											.append($(createDiv({id:'',clazz:''}))
 												.attr('style','margin-left: 350px; display: inline-block;')
-												.append($(createHTag({num:'3',val:'₩'+basketObjTotal[0].price})))))
+												.append($(createHTag({num:'3',val:'₩'+addComma(basketObjTotal[0].price)})))))
 										.append($(createDiv({id:'',clazz:''}))
 											.append($(createDiv({id:'',clazz:''}))
 												.attr('style','float: left; margin-left: 245px;')
@@ -561,14 +596,14 @@ app.orders=(()=>{
 												.append($(createHTag({num:'3',val:'할인금액'}))))
 											.append($(createDiv({id:'',clazz:''}))
 												.attr('style','margin-left: 323px; display: inline-block;')
-												.append($(createHTag({num:'3',val:'₩'+basketObjTotal[0].discount})))))
+												.append($(createHTag({num:'3',val:'₩'+addComma(basketObjTotal[0].discount)})))))
 										.append($(createDiv({id:'',clazz:''}))
 											.append($(createDiv({id:'',clazz:''}))
 												.attr('style','float: left; margin-left: 230px;')
-												.append($(createHTag({num:'2',val:'총 합 계'}))))
+												.append($(createHTag({num:'3',val:'총 합 계'}))))
 											.append($(createDiv({id:'',clazz:''}))
-												.attr('style','margin-left: 300px; display: inline-block;')
-												.append($(createHTag({num:'2',val:'₩'+basketObjTotal[0].total})))))
+												.attr('style','margin-left: 340px; display: inline-block;')
+												.append($(createHTag({num:'3',val:'₩'+addComma(basketObjTotal[0].total)})))))
 										.append($(createDiv({id:'',clazz:''}))
 											.append($(createDiv({id:'',clazz:''}))
 												.attr('style','text-align:  center; width: 150px;  background: black; height: 50px; margin: 0 auto; padding: 14px;')
@@ -929,16 +964,28 @@ app.loginAfter=(()=>{
 		 )))
 		 	 .append($(createDiv({id:'div-nav3',clazz:''}))
 		 			.attr('style','display: inline-block; padding: 5px;')
-		 			 .append($(createButton({id:'',clazz:'btn btn-default dropdown-toggle',val:'굿 바 이 즈'}))
+		 			 .append($(createButton({id:'btn_goodbye',clazz:'btn btn-default dropdown-toggle',val:'굿 바 이 즈'}))
+ 					 .attr('data-toggle','tooltip')
+		 			 .attr('title','지원하지 않는 기능입니다')
+		 			 .attr('data-placement','top')
 		 			 .attr('style','font-size:20px; width: 120px;background: black; border: black; color: white;'))	
 		 	 	 
-			 .append($(createButton({id:'',clazz:'btn btn-default dropdown-toggle',val:'맥 셀 렉 트'}))
+			 .append($(createButton({id:'btn_select',clazz:'btn btn-default dropdown-toggle',val:'맥 셀 렉 트'}))
+					 .attr('data-toggle','tooltip')
+		 			 .attr('title','지원하지 않는 기능입니다')
+		 			 .attr('data-placement','top')
 					 .attr('style',' margin-left: 20px;font-size:20px; width: 120px;background: black; border: black; color: white;'))
 		 	 	 
-			 .append($(createButton({id:'',clazz:'btn btn-default dropdown-toggle',val:'매 장 안 내'}))
+			 .append($(createButton({id:'btn_search',clazz:'btn btn-default dropdown-toggle',val:'매 장 안 내'}))
+					 .attr('data-toggle','tooltip')
+		 			 .attr('title','지원하지 않는 기능입니다')
+		 			 .attr('data-placement','top')
 					 .attr('style','margin-left: 10px; font-size:20px; width: 120px;background: black; border: black; color: white;'))
 			 	 
-			 .append($(createButton({id:'',clazz:'btn btn-default dropdown-toggle',val:'게 시 판'}))
+			 .append($(createButton({id:'btn_board',clazz:'btn btn-default dropdown-toggle',val:'게 시 판'}))
+					 .attr('data-toggle','tooltip')
+		 			 .attr('title','지원하지 않는 기능입니다')
+		 			 .attr('data-placement','top')
 					 .attr('style','margin-left: 10px; font-size:20px; width: 120px;background: black; border: black; color: white;'))
 			 	 
  			 .append($(createButton({id:'btn-mypage-default',clazz:'btn btn-default dropdown-toggle',val:'마이페이지'}))
@@ -947,6 +994,11 @@ app.loginAfter=(()=>{
  						$('#btn-mypage-default').remove();
  						$('#btn-basket').remove();
  						$('#btn-logout').remove();
+ 						$('#btn_select').remove();
+ 						$('#btn_search').remove();
+ 						$('#btn_board').remove();
+ 						$('#btn-write').remove();
+ 						$('#btn-write-search').remove();
  					 })
  					 .attr('style','margin-left: 10px; font-size:20px; width: 120px;background: black; border: black; color: white;'))));
 			 $('#div-nav3').append($(createButton({id:'btn-logout',clazz:'btn btn-default dropdown-toggle',val:'로그아웃'}))
@@ -954,12 +1006,53 @@ app.loginAfter=(()=>{
 					 .on('click',()=>{
 						 sessionStorage.removeItem('customer');
 						 app.main.onCreate();
-					 }));	
+					 }));
 		 });
 		 
 	 };
 	 return{onCreate:onCreate}
 })()
+app.map=(()=>{
+	var $wrapper,context,view,image;
+	var onCreate=()=>{
+		 $wrapper = $('#wrapper');
+		 $content = $('#content');
+		 context = $.context();
+		 image = $.image();
+	     view = $.javascript()+'/j_app.js';
+	     hview = $.javascript()+'/h_app.js';
+	     setContentView();
+	};
+	var setContentView=()=>{
+		$.getScript(view,()=>{
+			$('#content').empty();
+			$('#content').append($(createDiv({id:'map',clazz:''}))
+				.attr('style','margin-top:50px;'))
+			
+			$(document).ready(function(){
+				 var myLatLng = {lat: 37.4970720, lng: 127.0285780};
+
+			        var map = new google.maps.Map(document.getElementById('map'), {
+			          zoom: 15,
+			          center: myLatLng
+			        });
+
+			        var marker = new google.maps.Marker({
+			          position: myLatLng,
+			          map: map,
+			          title: 'Hello World!'
+			        });
+			})
+      function handleLocationError(browserHasGeolocation, infoWindow, pos) {
+        infoWindow.setPosition(pos);
+        infoWindow.setContent(browserHasGeolocation ?
+                              'Error: The Geolocation service failed.' :
+                              'Error: Your browser doesn\'t support geolocation.');
+      }
+			});
+	};
+	return{onCreate:onCreate}
+})();
 app.nav=(()=>{
 	var $wrapper,context,view,image;
 	var onCreate=()=>{
@@ -981,6 +1074,9 @@ app.nav=(()=>{
     		 .append($(createDiv({id:'div-nav',clazz:'dropdown'}))
     				 .attr('style','display: inline-block;')	    			
 	 .append($(createButton({id:'btn-main-go',clazz:'btn btn-default dropdown-toggle',val:'M·A·C'}))
+		 .on('click',()=>{
+			 app.main.onCreate();
+		 })
      .attr('style','margin-left: 100px;font-size:20px; width: 120px;background: black; border: black; color: white;'))		 
 	 .append($(createButton({id:'',clazz:'btn btn-default dropdown-toggle',val:'신 제 품'}))
 	 .attr('style','font-size:20px;width: 120px;background: black; border: black; color: white;')
@@ -1211,16 +1307,28 @@ app.nav=(()=>{
 		 )))
 		 	 .append($(createDiv({id:'div-nav3',clazz:''}))
 		 			.attr('style','display: inline-block; padding: 5px;')
-		 			 .append($(createButton({id:'',clazz:'btn btn-default dropdown-toggle',val:'굿 바 이 즈'}))
-		 			 .attr('style','font-size:20px; width: 120px;background: black; border: black; color: white;'))	
+		 			 .append($(createButton({id:'btn_goobye',clazz:'btn btn-secondary',val:'굿 바 이 즈'}))
+		 			 .attr('style','font-size:20px; width: 120px;background: black; border: black; color: white;')
+		 			 .attr('data-toggle','tooltip')
+		 			 .attr('title','지원하지 않는 기능입니다')
+		 			 .attr('data-placement','top'))	
 		 	 	 
-			 .append($(createButton({id:'',clazz:'btn btn-default dropdown-toggle',val:'맥 셀 렉 트'}))
+			 .append($(createButton({id:'btn_select',clazz:'btn btn-default dropdown-toggle',val:'맥 셀 렉 트'}))
+					 .attr('data-toggle','tooltip')
+		 			 .attr('title','지원하지 않는 기능입니다')
+		 			 .attr('data-placement','top')
 					 .attr('style',' margin-left: 20px;font-size:20px; width: 120px;background: black; border: black; color: white;'))
 		 	 	 
-			 .append($(createButton({id:'',clazz:'btn btn-default dropdown-toggle',val:'매 장 안 내'}))
+			 .append($(createButton({id:'btn_market',clazz:'btn btn-default dropdown-toggle',val:'매 장 안 내'}))
+					 .on('click',()=>{
+						 app.map.onCreate();
+					 })
 					 .attr('style','margin-left: 10px; font-size:20px; width: 120px;background: black; border: black; color: white;'))
 			 	 
-			 .append($(createButton({id:'',clazz:'btn btn-default dropdown-toggle',val:'게 시 판'}))
+			 .append($(createButton({id:'btn_board',clazz:'btn btn-default dropdown-toggle',val:'게 시 판'}))
+					 .attr('data-toggle','tooltip')
+		 			 .attr('title','지원하지 않는 기능입니다')
+		 			 .attr('data-placement','top')
 					 .attr('style','margin-left: 10px; font-size:20px; width: 120px;background: black; border: black; color: white;'))
 			 	 
  			 .append($(createButton({id:'btn-join-default',clazz:'btn btn-default dropdown-toggle',val:'회원가입'}))
@@ -1257,8 +1365,13 @@ app.mypage=(()=>{
 				 $('#btn-login-default').remove();
 				 $('#btn-admin-default').remove();
 				 $('#btn-join-default').remove();
+				 $('#btn_goobye').remove();
+				 $('#btn_select').remove();
+				 $('#btn_market').remove();
+				 $('#btn_board').remove();
+				 $('#btn_goodbye').remove();
 				 $('#div-nav-0').append($(createButton({id:'btn-main-go',clazz:'btn btn-default dropdown-toggle',val:'M·A·C'}))
-			     .attr('style','margin-left: 100px;font-size:20px; width: 120px;background: black; border: black; color: white;'));
+			     .attr('style','margin-left: 200px;font-size:20px; width: 120px;background: black; border: black; color: white;'));
 				 $('#btn-main-go').on('click',()=>{
 					 app.loginAfter.onCreate();
 					 $('#btn-join-default').remove();
@@ -1269,8 +1382,12 @@ app.mypage=(()=>{
 						id : 'div-my-page',
 						clazz : 'field-container field-container--grid'
 					})).attr('style','height:500px;'));
+				 $('#div-nav3').append($(createButton({id:'btn-write',clazz:'btn btn-default dropdown-toggle',val:'REVIEW 작성'}))
+						 .attr('style','margin-left: 10px; font-size:20px;background: black; border: black; color: white;'));
+				 $('#div-nav3').append($(createButton({id:'btn-write-search',clazz:'btn btn-default dropdown-toggle',val:'TOTAL REVIEW'}))
+						 .attr('style','margin-left: 30px; font-size:20px;background: black; border: black; color: white;'));
 				 $('#div-nav3').append($(createButton({id:'btn-mypage',clazz:'btn btn-default dropdown-toggle',val:'마이페이지'}))
-						 .attr('style','margin-left: 10px; font-size:20px; width: 120px;background: black; border: black; color: white;'));
+						 .attr('style','margin-left: 20px; font-size:20px; width: 120px;background: black; border: black; color: white;'));
 				
 				 $('#div-nav3').append($(createButton({id:'btn-basket',clazz:'btn btn-default dropdown-toggle',val:'장바구니'}))
 						 .attr('data-toggle','modal')
@@ -1307,22 +1424,18 @@ app.mypage=(()=>{
 		                .append($(createSection({id : '', clazz : 'navbar-header'}))
 		                    .attr('style', 'float: left; width: 25%; border-right: 1px solid #ffffff; min-height: 250px; padding: 15px; color: white;')
 		                    .append($(createDiv({id : '', clazz : ''}))
+		                    		.attr('style','text-align: center;')
 		                            .append($(createHTag({ num : '5', val :mypageObj[0].name+'님 환영합니다'}))
 		                                    .attr('style','font-family: Sans-Serif; font-weight: bold;')
 		                                    )
 		                            ).append($(createDiv({ id : 'profile-wrapper-div', clazz : 'account-nav'}))
-		                                    .attr('style', 'float: none;   margin-left: 40%;')
+		                                    .attr('style', 'float: none;   text-align: center;')
 		                                    .append($(createDiv({id : 'mypage-image-div', clazz : ''}))
-		                                            .append($(createImg1({id : '', alt : '' ,src:'data:image/png;base64,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'}))
+		                                            .append($(createImg({img:'profile1.jpg'}))
 		                                                    .attr('style', 'max-width: 125px;')
 		                                                    
 		                                                    )
 		                                            )
-		                                    .append($(createDiv({id : '', clazz : ''}))
-		                                            .append($(createATag({id : '', href : '', val : '사진 올리기'}))
-		                                                    .attr('style', 'color:#ffffff')
-		                                                    )
-		                                            )   
 		                                    )
 		                    )
 		                .append($(createSection({ id : 'navbar-header', clazz : ''}))
@@ -1331,7 +1444,7 @@ app.mypage=(()=>{
 		                                .attr('style', 'list-style: none; width: 48%; padding-left: 0; padding-right: 2%; color: #ffffff; float: left;')
 		                                .append($(createLI({ id : '', clazz : '',val:''}))
 		                                        .attr('style', 'margin: 0 0 15px 0;')
-		                                        .append($(createHTag({num : '6', val : 'My M·A·C &nbsp;' + createATag({id : 'a-mypage-logout', href : '', val : '로그아웃'})}))
+		                                        .append($(createHTag({num : '5', val : 'My M·A·C &nbsp;' + createATag({id : 'a-mypage-logout', href : '', val : '로그아웃'})}))
 		                                        		.on('click',()=>{
 		                                        			sessionStorage.removeItem('customer');
 		                                        			app.main.onCreate();
@@ -1339,51 +1452,34 @@ app.mypage=(()=>{
 		                                                .attr('style', 'font-weight: bold; margin: 0 0 15px 0; font-size: 14px;')
 		                                                )
 		                                        )
-		                                .append($(createLI({ id : '', clazz : '',val:''}))
-		                                        .attr('style', 'margin: 0 0 15px 0;')
-		                                        .append($(createATag({id : '', href : '', val : '마이페이지'}))
-		                                                .attr('style','color: #ffffff;')
-		                                                )
-		                                        )
-		                                .append($(createLI({ id : '', clazz : '',val:''}))
-		                                        .attr('style', 'margin: 0 0 15px 0;')
-		                                        .append($(createATag({id : '', href : '', val : '나의 맥 셀렉트'}))
-		                                                .attr('style','color: #ffffff;')
-		                                                )
-		                                        )
-		                                .append($(createLI({ id : '', clazz : '',val:''}))
-		                                        .attr('style', 'margin: 0 0 15px 0;')
-		                                        .append($(createATag({id : '', href : '', val : '내 정보 확인 및 수정'}))
-		                                                .attr('style','color: #ffffff;')
-		                                                )
-		                                        )
-		                                .append($(createLI({ id : '', clazz : '',val:''}))
-		                                        .attr('style', 'margin: 0 0 15px 0;')
-		                                        .append($(createATag({id : '', href : '', val : '주문 배송 조회'}))
-		                                                .attr('style','color: #ffffff;')
-		                                                )
-		                                        )
-		                                .append($(createLI({ id : '', clazz : '',val:''}))
-		                                        .attr('style', 'margin: 0 0 15px 0;')
-		                                        .append($(createATag({id : '', href : '', val : '배송지 리스트'}))
-		                                                .attr('style','color: #ffffff;')
-		                                                )
-		                                        )
+                                .append($(createLI({ id : '', clazz : '',val:''}))
+                                        .attr('style', 'margin: 0 0 15px 0;')
+                                        .append($(createHTag({num : '6', val : '이름 : '+mypageObj[0].name}))
+                                                .attr('style', 'font-weight: bold; margin: 0 0 15px 0; font-size: 18px;')
+                                                )
+                                                
+                                )
+                                .append($(createLI({ id : '', clazz : '',val:''}))
+                                        .attr('style', 'margin: 0 0 15px 0;')
+                                        .append($(createHTag({num : '6', val : 'ID : '+mypageObj[0].customId}))
+                                                .attr('style', 'font-weight: bold; margin: 0 0 15px 0; font-size: 18px;')
+                                                ) 
+                                        )
+                                .append($(createLI({ id : '', clazz : '',val:''}))
+                                        .attr('style', 'margin: 0 0 15px 0;')
+                                        .append($(createHTag({num : '6', val : 'EMAIL : '+mypageObj[0].email}))
+                                                .attr('style', 'font-weight: bold; margin: 0 0 15px 0; font-size: 18px;')
+                                                ) 
+                                        )
+                                .append($(createLI({ id : '', clazz : '',val:''}))
+                                        .attr('style', 'margin: 0 0 15px 0;')
+                                        .append($(createHTag({num : '6', val : 'PHONE_NUM : '+mypageObj[0].phoneNum}))
+                                                .attr('style', 'font-weight: bold; margin: 0 0 15px 0; font-size: 18px;')
+                                                ) 
+                                        ) 
 		                                )
 		                        .append($(createUL({id : '', clazz : '' }))
 		                                .attr('style', 'list-style: none; width: 48%; padding-left: 0; padding-right: 2%; color: #ffffff; float: left;')
-		                                .append($(createLI({ id : '', clazz : '',val:''}))
-		                                        .attr('style', 'margin: 0 0 15px 0;')
-		                                        .append($(createATag({id : '', href : '', val : '지난 구매 제품'}))
-		                                                .attr('style','color: #ffffff;')
-		                                                )
-		                                        )
-		                                .append($(createLI({ id : '', clazz : '',val:''}))
-		                                        .attr('style', 'margin: 0 0 15px 0;')
-		                                        .append($(createATag({id : '', href : '', val : '위시 리스트'}))
-		                                                .attr('style','color: #ffffff;')
-		                                                )
-		                                        )
                                         .append($(createLI({ id : '', clazz : '',val:''}))
 		                                        .attr('style', 'margin: 0 0 15px 0;')
 		                                        .append($(createATag({id : '', href : '', val : '판매 통계량'}))
@@ -1402,7 +1498,7 @@ app.mypage=(()=>{
 		                        .append($(createDiv({ id : '', clazz : ''}))
 		                                .append($(createDiv({ id : '', clazz : ''}))
 		                                        .append($(createDiv({id : '', clazz : ''}))
-		                                                .append($(createHTag({ num : '4', val : createATag({ id : '', href : '#', val : createSpan({ id : 'customer-grade-span', clazz : '', val : '베이직(SEDUCED)'})})}))
+		                                                .append($(createHTag({ num : '4', val : createATag({ id : '', href : '#', val : createSpan({ id : 'customer-grade-span', clazz : '', val :'회원등급 : '+ mypageObj[0].gradeName})})}))
 		                                                        )
 		                                                )
 		                                        )
@@ -1412,27 +1508,69 @@ app.mypage=(()=>{
 			            )
 		                $('#customer-grade-span').attr('style', 'color: #e95383; font-weight : bold;')
 		                $('#a-mypage-logout').attr('style', 'color: #ffffff;');
-				        $('#mypage-div').append($(createDiv({id : '', clazz : ''}))
-				                .append($(createDiv({id : '', clazz : ''}))
-				                        .append($(createDiv({id : '', clazz : ''}))
-				                                .attr('style', 'width:  100%; min-height: 200px;')
-				                                .append($(createDiv({id : '', clazz : ''}))
-				                                        .append($(createHTag({num : '3', val : '최근 주문 내역과 위시 리스트 '}))
-				                                                .attr('style', 'font-weight: bold; padding : 20px;')
-				                                                )
-				                                        )
-				                                .append($(createDiv({id : '', clazz : ''}))
-				                                        .attr('style', 'text-align : center; width : 100%; height : 30%;')
-				                                        .append('<p style="margin-top : 60px;" >최근 주문내역이나 위시 리스트가 없습니다.<p>')
-				                                        )
-				                                .append($(createDiv({id : '', clazz : 'text-center'}))
-				                                        .append(createButton({id : '', clazz : 'primary', val : '쇼핑하러 가기'}))
-				                                        )
-				                                )
-				                        )
-				                ) 
+			    		
+			    		$.getJSON(context+'/mypage/item/'+sessionStorage.getItem('customer'),e=>{
+			    			var mypageObj = e.mypageItem;
+			    			console.log(e.mypageItem);
+			    
+			    		    $('#mypage-div').append($(createDiv({id : '', clazz : ''}))
+					                .append($(createDiv({id : '', clazz : ''}))
+					                        .append($(createDiv({id : '', clazz : ''}))
+					                                .attr('style', 'width:  100%;')
+					                                .append($(createDiv({id : '', clazz : ''}))
+					                                        .append($(createHTag({num : '3', val : '최근 장바구니 내역 '}))
+					                                                .attr('style', 'font-weight: bold; padding : 20px;')
+					                                                )
+					                                        ))));
+			    		    $('#mypage-div').append($(createDiv({id:'mypage_item_list',clazz:''}))
+		    		    		.attr('style','text-align: center;'));
+			    			for(i=0; i<mypageObj.length; i++){
+			    				if(i>mypageObj.length){
+			    					return false;
+			    				}
+	    						$(createDiv({id:'',clazz:''}))
+    									.attr('style','    display: inline-block;')
+    									.append($(createImg({img:e.mypageItem[i].picName+'.jpg'}))
+									.attr('style','width: 250px;'))
+    							.append($(createDiv({id:'',clazz:''}))
+									.append($(createHTag({num:'5',val:e.mypageItem[i].itemName}))))
+								.append($(createDiv({id:'',clazz:''}))
+									.append($(createButton({id:'',clazz:'',val:'삭제'}))
+									    .attr('basketSeq',e.mypageItem[i].basketSeq)
+										.on('click',function(){
+											var jason = {
+													basketSeq : $(this).attr("basketSeq")
+											}
+											$.ajax({
+												url:context+'/mypage/delete/'+sessionStorage.getItem('customer'),
+												 method:'POST',
+												 data: JSON.stringify(jason),
+												 dataType:'json',
+												 contentType: 'application/json',
+											})
+											$('#btn-basket').remove();
+											$('#btn-mypage').remove();
+											$('#btn-logout').remove(); 
+											$('#btn_goodbye').remove(); 
+											$('#btn-write').remove(); 
+											$('#btn-write-search').remove(); 
+											app.mypage.onCreate();
+										})
+										.attr('style','background:black; color:white')))
+			    						.appendTo('#mypage_item_list');
+			    			
+			    			}
+			    		
+			    		
+			    		});
+				        $('#mypage-div').append($(createDiv({id : '', clazz : 'text-center'}))
+				        		.attr('style','    margin-top: 50px;')
+                                .append($(createButton({id : 'shop_go', clazz : 'primary', val : '쇼핑하러 가기'}))
+                                		.attr('style','text-align : center; width : 300px; height : 50px; color:white; background:black;')
+                                    	    .on('click',()=>{
+	                                        	app.loginAfter.onCreate();
+	                                        })))
 				 });
-				
 				 console.log("test!");
 				 $.getJSON(context+'/basket/search/'+sessionStorage.getItem('customer'),e=>{
 					 var basketObj = e.basketOrder;
@@ -1577,17 +1715,24 @@ app.cash=(()=>{
  							.append($(createHTag({num:'3',val:'배송지 주소'}))))
 						.append($(createDiv({id:'',clazz:''}))
 							.attr('style','margin-left: 130px; color: #b84947;')
-							.append($(createHTag({num:'4',val:'배송지 리스트에 고객님 주소가 없습니다. 주소를 입력해 주세요'}))))
+							.append($(createHTag({num:'4',val:'배송지 주소를 입력해 주세요.'})))
+							/*.append($(createHTag({num:'4',val:'기존 배송지를 원하는 경우 버튼을 클릭해주세요'})))
+							.append($(createATag({id:'',clazz:'',val:'클릭'}))
+								.attr('style','color')
+								.on('click',function(){
+									
+								}))*/)
 						.append($(createDiv({id:'',clazz:''}))
 							.attr('style','margin-top: 50px; margin-left: 130px;')
 							.append('<p>* 표시는 필수 입력 항목입니다</p>'))
 						.append($(createDiv({id:'',clazz:''}))
 							.attr('style','margin-top: 10px; margin-left: 130px;')
 							.append($(createInput({id:'input_addr_name',val:'*이름',type:'text'}))
+								.attr('value','장보고')
 								.attr('style','width: 700px; height: 50px;')))
 						.append($(createDiv({id:'',clazz:''}))
 							.attr('style','margin-top: 15px; margin-left: 130px;')
-							.append($(createInput({id:'input_addr_1',val:'동(읍/면)을 입력하세요',type:'text'}))
+							.append($(createInput({id:'input_addr_1',val:'동(읍/면)을 입력하세요',type:'text'}))		
 								.attr('style','width: 300px; height: 50px;'))
 							.append($(createDiv({id:'',clazz:''}))
 								.attr('style','display: inline-block;'))
@@ -1642,12 +1787,15 @@ app.cash=(()=>{
 						.append($(createDiv({id:'',clazz:''}))
 							.attr('style','margin-top: 15px; margin-left: 130px;')
 							.append($(createInput({id:'input_addr_2',val:'주소입력1',type:'text'}))
+								.attr('value','서울특별시')
 								.attr('style','width: 350px; height: 50px;'))
 							.append($(createInput({id:'input_addr_3',val:'주소입력2',type:'text'}))
+								.attr('value','마포구 신촌로 63')
 								.attr('style','width: 350px; height: 50px; margin-left:10px;'))
 							.append($(createDiv({id:'',clazz:''}))
 								.attr('style','margin-top: 15px;')
 								.append($(createInput({id:'input_addr_4',val:'상세주소',type:'text'}))
+									.attr('value','TURTLE')
 									.attr('style','width: 350px; height: 50px;'))))
 						.append($(createDiv({id:'',clazz:''}))
 							.attr('style','margin-left: 130px; height: 50px; margin-top: 10px;')
@@ -1671,10 +1819,12 @@ app.cash=(()=>{
 									.append($(createDiv({id:'',clazz:''}))
 									.attr('style','margin-top: 15px; display: inline-block;')
 										.append($(createInput({id:'input_addr_phone1',val:'핸드폰번호',type:'text'}))
+											.attr('value','1234')
 											.attr('style','width: 350px; height: 50px; margin-left:10px;'))))))
 							.append($(createDiv({id:'',clazz:''}))
 								.attr('style','margin-top: 10px;'))
 								.append($(createInput({id:'input_addr_phone2',val:'핸드폰번호',type:'text'}))
+									.attr('value','3456')
 									.attr('style','width: 350px; height: 50px;')))
 						.append($(createDiv({id:'',clazz:''}))
 							.attr('style','margin-top: 100px; margin-left: 130px;')
@@ -1682,6 +1832,7 @@ app.cash=(()=>{
 								.append($(createHTag({num:'3',val:'배송시 요청 사항'}))))
 							.append($(createDiv({id:'',clazz:''}))
 								.append($(createInput({id:'input_addr_text',val:'배송시 요청사항',type:'text'}))
+									.attr('value','빨리보내주세요')
 									.attr('style','width: 700px; height: 70px;')))
 							.append($(createDiv({id:'',clazz:''}))
 								.append('<p>배송정보</p>')))
@@ -1693,6 +1844,21 @@ app.cash=(()=>{
 									.attr('style','background: black; color: white; text-align: center; width: 200px;  height:60px;'))))));
 				
 				 $.getJSON(context+'/basket/totalPrice/'+sessionStorage.getItem('customer'),e=>{
+					 function addComma(num) {
+					        var len, point, str;
+					        num = num + "";
+					        point = num.length % 3;
+					        len = num.length;
+					        str = num.substring(0, point);
+					        while(point < len) {
+					            if(str != "") {
+					                str += ",";
+					            }
+					            str += num.substring(point, point +3);
+					            point += 3;
+					        }
+					        return str;
+					    }
 					 var basketObjTotal = e.basketTotalPrice;
 					 console.log(basketObjTotal);			
 						$('#div_add').append($(createDiv({id:'',clazz:''}))
@@ -1701,7 +1867,7 @@ app.cash=(()=>{
 								.append($(createHTag({num:'3',val:'고객 관리 지원팀'})))
 								.append('<p>맥 웹사이트 이용 중 문의 사항이 있으시면 고객관리 지원팀</br>(02-3440-2702)으로 연락 주시기 바랍니다</p>'))
 							.append($(createDiv({id:'',clazz:''}))
-								.attr('style','background: #f0f0f0; padding: 5px; margin-top: 15px;')
+								.attr('style','background: black; color:white; padding: 5px; margin-top: 15px;')
 								.append($(createDiv({id:'',clazz:''}))
 									.append($(createHTag({num:'3',val:'내 주문 요약'}))))
 								.append($(createDiv({id:'',clazz:''}))
@@ -1712,7 +1878,7 @@ app.cash=(()=>{
 										.append($(createHTag({num:'4',val:'합계'}))))
 									.append($(createDiv({id:'',clazz:''}))
 										.attr('style','display: inline-block; margin-left: 82px;')
-										.append($(createHTag({num:'4',val:'₩'+basketObjTotal[0].price})))))
+										.append($(createHTag({num:'4',val:'₩'+addComma(basketObjTotal[0].price)})))))
 							.append($(createDiv({id:'',clazz:''}))
 									.append($(createDiv({id:'',clazz:''}))
 										.attr('style','display: inline-block;')
@@ -1733,16 +1899,16 @@ app.cash=(()=>{
 										.append($(createHTag({num:'4',val:'할인금액'}))))
 									.append($(createDiv({id:'',clazz:''}))
 										.attr('style','display: inline-block; margin-left: 47px;')
-										.append($(createHTag({num:'4',val:'₩'+basketObjTotal[0].discount})))))
+										.append($(createHTag({num:'4',val:'₩'+addComma(basketObjTotal[0].discount)})))))
 								.append($(createDiv({id:'',clazz:''}))
 									.append($(createDiv({id:'',clazz:''}))
 										.attr('style','display: inline-block;')
 										.append($(createHTag({num:'4',val:'총 합계'}))))
 									.append($(createDiv({id:'',clazz:''}))
 										.attr('style','display: inline-block; margin-left: 60px;')
-										.append($(createHTag({num:'4',val:'₩'+basketObjTotal[0].total}))))))
+										.append($(createHTag({num:'4',val:'₩'+addComma(basketObjTotal[0].total)}))))))
 						.append($(createDiv({id:'',clazz:''}))
-								.attr('style','margin-top: 10px; background: #f0f0f0; padding: 5px;')
+								.attr('style','margin-top: 10px; background: black; color:white; padding: 5px;')
 								.append($(createDiv({id:'',clazz:''}))
 									.append($(createHTag({num:'3',val:'쿠폰 코드 입력'}))))
 								.append($(createDiv({id:'',clazz:''}))
@@ -1903,6 +2069,9 @@ app.mainItem=(()=>{
 								.append($(createDiv({id:'',clazz:''}))
 										.attr('style','display: inline-block;margin-left: 90px;')
 										.append($(createButton({id:'btn-basket-'+i+'',clazz:'',val:'장바구니 담기'}))
+												.attr('data-toggle','tooltip')
+									 			 .attr('title','수량및 확인은 마이페이지 장바구니 이벤트 클릭시 확인 가능합니다.')
+									 			 .attr('data-placement','top')
 												.attr('colorexp',mainObj[i].colorExp)
 												.attr('itemname',mainObj[i].itemName)
 												.attr('picname',mainObj[i].picName)
@@ -2497,13 +2666,15 @@ app.login=(()=>{
 				 id : 'input-login',
 				 val : '*예시:username@network.co.kr',
 				 type :'text'
-			 })).attr('style','height:60px; width:300px; margin-left:200px; border: 1px solid red;    font-size: 12px;')
+			 })).attr('value','jyk')
+			 .attr('style','height:60px; width:300px; margin-left:200px; border: 1px solid red;    font-size: 12px;')
 			 .appendTo('#div-input-bar');
 			 $(createInput({
 					id : 'input-pass',
 					 val : '*비밀번호(영문 대소문자, 숫자, 특수문자 혼합 8자 이상 조합)',
 					 type :'password'
-				})).attr('style','height:60px; width:300px; margin-left: 20px; border: 1px solid red;    font-size: 12px;')
+				})).attr('value','6')
+				.attr('style','height:60px; width:300px; margin-left: 20px; border: 1px solid red;    font-size: 12px;')
 				.appendTo('#div-input-bar');
 			 $('#div-input-bar')
 			 .append($(createDiv({

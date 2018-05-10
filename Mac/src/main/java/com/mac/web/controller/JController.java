@@ -17,6 +17,7 @@ import com.mac.web.domain.Command;
 import com.mac.web.domain.Item;
 import com.mac.web.mapper.Mapper;
 import com.mac.web.service.ICountService;
+import com.mac.web.service.IDeleteService;
 import com.mac.web.service.IGetHashService;
 import com.mac.web.service.ITxService;
 @RestController
@@ -48,6 +49,21 @@ public class JController {
     	 Map<String,Object> map = new HashMap<>();
     	 map.put("basketSeq", param.get("basketSeq"));
 		return tx.delete((HashMap<?, ?>) map);
+    }
+    @RequestMapping(value="/mypage/delete/{id}",method=RequestMethod.POST,consumes="application/json")
+    public void  mypageDelete(@RequestBody Map<String,String> param,@PathVariable("id") String customId) {
+    	Map<String,Object> map = new HashMap<>();
+    	map.put("customid", customId);
+    	map.put("basketSeq", param.get("basketSeq"));
+    	new IDeleteService() {
+			
+			@Override
+			public void execute(HashMap<?, ?> param) {
+				mapper.deleteMypageById(param);
+				
+			}
+		}.execute((HashMap<?, ?>) map);
+  
     }
 	@RequestMapping(value="/basket/update/{id}",method=RequestMethod.POST,consumes="application/json")
     public String basketUpdate(@RequestBody List<Map<String, Object>> param
@@ -177,6 +193,19 @@ public class JController {
             @Override
             public Object execute(HashMap<?, ?> param) {
                 return mapper.macOrderBasket(param);
+            }
+        }.execute((HashMap<?, ?>) map));  
+        return map;
+    }
+    @RequestMapping("/mypage/item/{id}")
+    public Map<?,?> myPageItem(@PathVariable("id") String customId) {
+        Map<String,Object> map = new HashMap<>();
+        map.put("customid", customId);
+        map.put("mypageItem", new IGetHashService() {
+            
+            @Override
+            public Object execute(HashMap<?, ?> param) {
+                return mapper.mypageItem(param);
             }
         }.execute((HashMap<?, ?>) map));  
         return map;

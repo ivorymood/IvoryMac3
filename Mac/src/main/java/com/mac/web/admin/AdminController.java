@@ -33,7 +33,6 @@ public class AdminController {
 	@Autowired Customer customer;
 	@Autowired AdminService adminService;
 	@Autowired Command cmd;
-
 	@Autowired ContextFactory context;
 	@Autowired Item item;
 	@Autowired CommonFeature commonFeature;
@@ -436,7 +435,6 @@ public class AdminController {
 		paramMap.put("endRow",String.valueOf(endRow));
 		paramMap.put("startBlock",String.valueOf(startBlock));
 		paramMap.put("endBlock",String.valueOf(endBlock));
-		
 		List<Item> list = adminService.findListBy(paramMap); 
 		model.addAttribute("map",paramMap);
 		model.addAttribute("list", list);

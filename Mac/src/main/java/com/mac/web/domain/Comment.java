@@ -12,9 +12,9 @@ public class Comment {
 private String commentSeq, 
 				title,
 				contents,
+				helpful,
 				writeDate,
 				branch, 
 				customId, 
 				itemSeq;
-private int helpful;
 }

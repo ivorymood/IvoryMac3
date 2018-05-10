@@ -183,8 +183,8 @@ app.mainitem=(()=>{
 				.append('&nbsp;')
 				.append($(createSpanCon('glyphicon-menu-right')))
 				.append('&nbsp;')
-				.append($(createHTag({num:'4', id:'bread-main1', val:'섀도우'})).attr('style', 'display:inline; font-size:18px; font-weight:500; font-height:1.1;'))
-		);
+				.append($(createHTag({num:'4', id:'bread-main1', val:'섀도우'})).attr('style', 'display:inline; font-size:18px; font-weight:500; font-height:1.1;'))	
+		);		
 		
 		$('#item-div1')
 		.append($(createDiv({id:'grid-container-catalog', clazz:'grid-container-catalog'})).attr('style', 'width: 1281px; padding-top:40px; padding-right:15px; padding-left: 15px; margin-left: 151px; margin-right: 151px;')	

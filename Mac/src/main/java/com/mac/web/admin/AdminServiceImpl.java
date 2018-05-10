@@ -2,12 +2,10 @@ package com.mac.web.admin;
 
 import java.util.List;
 import java.util.Map;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
 import com.mac.web.domain.Command;
 import com.mac.web.domain.Customer;
 import com.mac.web.domain.Item;
@@ -130,8 +128,7 @@ public class AdminServiceImpl implements AdminService {
 
 	@Override
 	public int totalCount(Command cmd) {
-		int z = adminMapper.selectTCount(cmd);
-		return z;
+		return adminMapper.selectTCount(cmd);
 	}
 
 	@Override

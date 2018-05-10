@@ -71,10 +71,39 @@
         on  i.item_code like c.item_code
     </select>
      <select id="selectMypage" resultType="map" parameterType="hashMap">
- 	SELECT *
- 	  FROM CUSTOMER
+ 	SELECT   c.name
+ 	      ,  c.custom_id as customId
+ 		  ,  c.phone_num as phoneNum
+ 		  ,  c.email  
+ 	      ,  g.grade_name as gradeName
+ 	  FROM CUSTOMER c
+ 	  join CUSTOMER_GRADE g
+ 	  on   c.grade_code like g.grade_code
  	 WHERE custom_id = #{customid}
     </select>  
+    
+    	<select id="mypageItem" resultType="map" parameterType="hashMap">
+	SELECT  item_name as itemName
+		  , basket_seq as basketSeq
+   	  	  , pic_name as picName
+   	  	  , i.item_seq as itemSeq
+   	  	  , a.item_code as itemCode
+ 		  , item_count as itemCount
+ 		  , price 
+   	  	  , price-(a.price*(a.discount)) as discountPrice	  	  
+   	  	  , (price-(a.price*(a.discount)))*b.item_Count as total
+   	  	  , i.texture_exp as textureExp
+   	  	 
+  	  FROM  BASKET b 
+  	  join  CUSTOMER c
+  	    on  c.custom_id like b.custom_id
+  	  join  ITEM i 
+  	    on  i.item_seq like b.item_seq 
+      join  COMMON_FEATURE a
+	    on  a.item_code like i.item_code 
+ 	 WHERE  i.item_seq = b.item_seq
+       AND  b.custom_id = #{customid}
+    </select>
      
 	<select id="macOrderBasket" resultType="map" parameterType="hashMap">
 	SELECT  item_name as itemName
@@ -131,6 +160,7 @@
    	  	  , price-(a.price*(a.discount)) as discountPrice	  	  
    	  	  , (price-(a.price*(a.discount)))*b.item_Count as total
    	  	  , i.texture_exp as textureExp
+   	  	  , b.basket_seq as basketSeq
   	  FROM  BASKET b 
   	  join  ITEM i 
   	    on  i.item_seq like b.item_seq 
@@ -241,6 +271,12 @@
     		DELETE
   			  FROM BASKET
   			 WHERE custom_id = #{customid}
+    </delete>
+    <delete id="deleteMypageById" parameterType="hashMap">
+  		DELETE
+		  FROM  BASKET 
+		 WHERE  custom_id = #{customid}
+		   AND  basket_seq = #{basketSeq}
     </delete>
     <select id="findByItemCodenItemSeq" parameterType="hashMap" resultMap="itemMap">
 	select i.item_seq,

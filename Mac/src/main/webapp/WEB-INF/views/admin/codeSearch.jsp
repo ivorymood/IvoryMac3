@@ -10,8 +10,8 @@
 	<div class="div-codeSearch-total">	
 		<div class="div-codeSearch-up">
 		  	<div class="div-codeSearch-singleSearch"> 
-		  		<input type="text" placeholder="코드명을 입력하세요" class="inp-codeSearch-insItem"/>&nbsp; &nbsp;
-		  		<button class="btn-codeSearch-oneSearch">검 색</button><br />
+		  		<input id="inp-codeSearch-code" name="inp-codeSearch-code" type="text" placeholder="코드명을 입력하세요" class="inp-codeSearch-insItem"/>&nbsp; &nbsp;
+		  		<button id="btn-codeSearch-oneSearch" class="btn-codeSearch-oneSearch">검 색</button><br />
 		    </div>	    
 		</div><br /><br /><br />
 		<div class="div-codeSearch-down">
@@ -76,33 +76,5 @@
          .attr('action','${path.context}/admin/codeSearch')
          .attr('method','post')
          .submit();
-     } 
-    
-/*      function testU(x,z){
-    	 alert('x파라미터: '+ x + ' z파라미터: '+ z);
-    	 	var form = document.form_codeSearch;
-    	 	form.itemSeq.value = x;
-    	 	form.itemCode.value = z;
-    	 alert('form.itemSeq.value'+ form.itemSeq.value);
-    	 $('#form_codeSearch')
-    	 .attr('action','${path.context}/admin/update')
-         .attr('method','post')
-         .submit();
-     }
-     
-     function testD(i,k){
-    	 alert('x파라미터: '+ i + ' z파라미터: '+ k);
-    	 	var form = document.form_codeSearch;
-    	 	form.a.value = i;
-    	 	form.b.value = k;
-    	 alert('form.a.value: '+ form.a.value + ' form.b.value: '+ form.b.value);    	 	 	 	
-    	 $('#form_codeSearch')
-    	 .attr('action','${path.context}/admin/codeSearchDelete ')
-         .attr('method','post')
-         .submit();
-     } */
-     
-     /* /admin/codeSearchDelete 
-     ${item.itemSeq},${map.pageNum}
-     */
+     }    
 </script>

@@ -16,7 +16,7 @@
 	  				<div class="div-listEmployee-up">
 	  					<img src="${path.img}/${customer.profile}" alt="" style="width: 250px; height: 250px;"/>
 	  				</div>	
-	  				<div class="div-listEmployee-down">${customer.name}</div>	
+	  				<div class="div-listEmployee-down">${customer.name},${customer.customId}</div>	
 	  			</div>
 		    </c:forEach>
   		</div>

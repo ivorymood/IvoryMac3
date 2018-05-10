@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.mac.web.mapper.BoardMapper">
+
+<resultMap type="com.mac.web.domain.Command" id="cmd">
+<id property="customId" column="custom_id"/>
+<result property="customPass" column="custom_pass"/>
+<result property="name" column="name"/>
+<result property="email" column="email"/>
+<result property="phoneNum" column="phone_num"/>
+<result property="profile" column="profile"/>
+<result property="joinDate" column="join_date"/>
+</resultMap> 
+
+<resultMap type="com.mac.web.domain.Comment" id="comment">
+<id property="commentSeq" column="comment_seq"/>
+<result property="title" column="title"/>
+<result property="contents" column="contents"/>
+<result property="helpful" column="helpful"/>
+<result property="writeDate" column="write_date"/>
+<result property="branch" column="branch"/>
+<result property="customId" column="custom_id"/>
+<result property="itemSeq" column="item_seq"/>
+</resultMap> 
+
+<select id="selectToCount" resultType="int">
+		select count(*)
+		from BOARD
+</select> 
+
+
+<select id="selectAll" resultType="com.mac.web.domain.Comment" parameterType="hashMap"> 
+	select A2.* 
+	from (select @rank:=@rank+1 no, A.* 
+	  	  from (select comment_seq as commentSeq,	   
+					   title,
+					   contents,
+					   helpful,
+					   write_date as writeDate,
+					   branch,
+					   custom_id as customId,
+					   item_seq as itemSeq
+			    from BOARD
+			    order by commentSeq desc
+			    LIMIT 18446744073709551615
+			    ) A, 
+			   (SELECT @rank := 0) R
+		 )A2
+	where no between #{startRow} and #{endRow} 
+</select>
+
+<insert id="insertBoard" parameterType="hashMap">
+insert into BOARD(title,
+					contents,
+					helpful,
+					write_date,
+					branch,
+					custom_id,
+					item_seq) 
+values(#{title}, 
+	   #{contents}, 
+	   #{helpful}, 
+	   now(),
+	   '강남',
+	   #{customId},
+	   '2')	   
+</insert>
+
+</mapper>
+
+
+

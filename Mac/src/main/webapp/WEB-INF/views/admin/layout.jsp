@@ -192,10 +192,10 @@
 	}
 	.div-custMana-listIn {
 		display: grid;
-        grid-template-columns: 19fr 12fr 12fr 10fr 12fr 13fr 20fr;
-        margin: 0 auto;
-        width: 100%;
-        height: 32px;
+	  	grid-template-columns: 19fr 12fr 12fr 10fr 12fr 13fr 20fr;
+		margin: 0 auto;
+		width: 100%;
+		height: 32px;
 	}
 	.div-custMana-listIn > div{
 		border: 1px solid black;
@@ -208,10 +208,10 @@
 	}
 	.div-custMana-listContents{
 		display: grid;
-        grid-template-columns: 19fr 12fr 12fr 10fr 12fr 13fr 20fr;
-        font-size: 18px;
-        text-align: center;
-        height: 32px;
+		grid-template-columns: 19fr 12fr 12fr 10fr 12fr 13fr 20fr;
+		font-size: 18px;
+		text-align: center;
+		height: 32px;
 	}
 	.div-custMana-listContents > span{
 		border: 1px solid black;
@@ -452,7 +452,7 @@
 		font-size: 18px;
 		text-align: center;
 	}
-	.div-itemList-listContents > span{
+	.div-itemList-listContents > span {
 		border: 1px solid black; 
 		height: 32px;
 		display: block;
@@ -902,6 +902,85 @@
 	
 	
 	
+	
+	
+/* board */	
+
+		#tab-list-title{
+			/* border: 1px solid gray; */
+			margin: 0 auto;
+			margin-top: 80px;
+		}
+		#tab-list{
+			/* border: 1px solid gray; */
+			margin: 0 auto;
+			margin-top: 80px;
+			width: 80%;
+		}
+		#tab-list tr{
+			/* border: 1px solid gray; */
+		}
+		#tab-list tr td{
+		    border: 1px solid gray;
+		   /*  width: 70px; */
+		}
+		.text-center{
+			text-align: center;
+		}
+		#inp-list{
+			width: 97%;
+		}
+		#btn-list-search{
+			/* border: 1px solid gray; */
+			margin: 0 auto;
+		}
+		#div-page{
+			margin: 0 auto;
+			width: 24%;
+		}
+		#span-list-pagination{
+			margin-left: 12%
+		}
+		.text-pagination{
+			margin-left: 10%;
+		} 
+		#tr-list-attribute{
+			margin-top: 30px;
+		}
+	
+	
+	
+/* write */	
+			#tab-write-title{
+			/* border: 1px solid gray; */
+			margin: 0 auto;
+			margin-top: 80px;
+		}
+		#tab-write{
+			/* border: 1px solid gray; */
+			margin: 0 auto;
+			margin-top: 80px;
+			width: 80%;
+		}
+		#tab-write tr{
+			/* border: 1px solid gray; */
+		}
+		#tab-write tr td{
+			/* border: 1px solid gray; */
+			width:20%;
+		}
+		#inp-write-content{
+			/* border: 1px solid gray; */
+			width: 100%;
+			height: 300px;
+		}
+		#inp-write-title{
+			/* border: 1px solid gray; */
+			width: 100%;
+		}
+		
+		
+		
   </style>
 
 </head>
@@ -909,7 +988,6 @@
 <body>
   <div class="div-custMana-frame">
 	  <div class="div-custMana-left">
-	  	 	<!--  <hr class="hr">  -->
 	  	 <div>관리자 페이지</div>
 	  	 	<hr class="hr">
 	  	 
