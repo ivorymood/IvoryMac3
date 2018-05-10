@@ -14,14 +14,15 @@
     padding-right: 17px; Increase/decrease this value for cross-browser compatibility
     box-sizing: content-box; So the width will be 100% + 17px
 } */
-
-/* .btn-before-tran{
-	transition-property: src, height;
-	
+/* 
+.img-after-hover{
+	display: none;
 }
 
-.btn-before-tran:hover {
-	height: 150px;
-	src: image+'/'+picString.substr(0, picString.length-1)+'2.jpg'
-	
+.img-before-hover: hover{
+	display: none;
+} */
+/* 
+.img-before-hover~.img-after-hover{
+	display: block;
 } */

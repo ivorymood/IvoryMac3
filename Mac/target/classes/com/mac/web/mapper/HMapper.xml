@@ -19,6 +19,13 @@
 	<result property="ingredient" column="ingredient"/>
 	<result property="weight" column="weight"/>
 </resultMap>
+<resultMap type="java.util.HashMap" id="tmpChart">
+	<id property="rownum" column="rownum"/>
+	<result property="chartSeq" column="chartSeq"/>
+	<result property="itemCode" column="itemCode"/>
+	<result property="count" column="count"/>
+	<result property="sellDate" column="sellDate"/>
+</resultMap>
 <resultMap type="java.util.HashMap" id="test">
 	<id property="itemSeq" column="item_seq" />
 	<result property="itemStock" column="item_stock"/>
@@ -31,81 +38,129 @@
 	<id property="rownum" column="rownum"/>
 	<result property="classCode" column="classCode"/>
 	<result property="className" column="className"/>
-	<result property="itemName" column="itemName"/>
+	<result property="itemCode" column="itemCode"/>
 	<result property="commonName" column="commonName"/>
 	<result property="commonNameE" column="commonNameE"/>
-	<result property="textureExp" column="textureExp"/>
-	<result property="itemCount" column="itemCount"/>
+	<result property="commonExp" column="commonExp"/>
 	<result property="price" column="price"/>
 	<result property="discount" column="discount"/>
-	<result property="picName" column="picName"/>
-	<result property="itemCode" column="itemCode"/>
-	<result property="itemSeq" column="itemSeq"/>
-	<result property="colorExp" column="colorExp"/>
 	<result property="discountPrice" column="discountPrice"/>
+	<result property="detailInfo" column="detailInfo"/>
+	<result property="ingredient" column="ingredient"/>
+	<result property="weight" column="weight"/>
+	<result property="itemSeq" column="itemSeq"/>
+	<result property="itemName" column="itemName"/>
+	<result property="itemStock" column="itemStock"/>
+	<result property="colorExp" column="colorExp"/>
+	<result property="textureExp" column="textureExp"/>
+	<result property="picName" column="picName"/>
+	<result property="orderSeq" column="orderSeq"/>
+	<result property="itemCount" column="itemCount"/>
 	<result property="kindCount" column="kindCount"/>
 	<result property="total" column="total"/>
 	<result property="eachTotal" column="eachTotal"/>
 	<result property="basketSeq" column="basketSeq"/>
 	<result property="addrSeq" column="addrSeq"/>
-	<result property="orderSeq" column="orderSeq"/>
 	<result property="discountedTotal" column="discountedTotal"/>
 	<result property="discountAmount" column="discountAmount"/>
 </resultMap>
 <select id="selectSubMainItems" parameterType="hashMap" resultMap="itemInfo">
-select tmp.*, 
-		i.pic_name as picName
-from item i, (select 
-			c.item_code as itemCode,
-			c.common_name as commonName, 
-			c.common_name_e as commonNameE,
-			c.price *(1- c.discount) as discountPrice,
-			(select t.item_seq
-			from item t
-			where t.item_code like c.item_code
-			order by t.item_seq limit 1) as itemSeq,
-			(select count(*)
-			from item i
-			where i.item_code like c.item_code) as kindCount
-from common_feature c
-where c.class_code like #{classCode}) tmp
-where i.item_seq like tmp.itemSeq;
+ SELECT a.*
+	FROM (SELECT @rownum := @rownum +1 as rownum
+		  		 , t.*
+     		FROM	(select tmp.*, 
+							i.pic_name as picName
+					from 	item i, (select 
+											c.item_code as itemCode,
+											c.common_name as commonName, 
+											c.common_name_e as commonNameE,
+											c.price *(1- c.discount) as discountPrice,
+											(select	t.item_seq
+											from 	item t
+											where 	t.item_code like c.item_code
+											order by t.item_seq limit 1) as itemSeq,
+											(select count(*)
+											from item i
+											where i.item_code like c.item_code) as kindCount
+									from 	common_feature c
+									where 	c.class_code like #{classCode}) tmp
+					where 	i.item_seq like tmp.itemSeq) t,
+					(select @rownum:=0) tmp) a
+
+
 
 </select>
 <select id="selectFirstItem" parameterType="hashMap" resultMap="itemInfo"><!-- 아직안씀 -->
-select item_seq as itemSeq
-from item
-where item_code like #{itemCode}
+select 	item_seq as itemSeq
+from 	item
+where	item_code like #{itemCode}
 order by itemSeq limit 1;
-
 </select>
 <select id="findByItemSeq" parameterType="hashMap" resultMap="test">
 	select * 
 	from item
 	where item_seq like ${itemSeq}; 
 </select>
-
-<select id="findByItemCodenItemSeq" parameterType="hashMap" resultMap="itemMap">
-	select i.item_seq,
-		i.item_name,
-		i.item_stock,
-		i.color_exp,
-		i.texture_exp,
-		i.pic_name,
-		c.item_code,
-		c.common_name,
-		c.common_exp,
-		c.price,
-		c.discount,
-		c.detail_info,
-		c.ingredient,
-		c.weight
-	from item i, common_feature c
-	where i.item_seq like ${itemSeq}
-		and c.item_code like #{itemCode};
+<select id="findByItemCodenItemSeq" parameterType="hashMap" resultMap="itemInfo">
+	select a.*
+	from (select @rownum := @rownum +1 as rownum
+		  		 , t.*
+     		from	(select i.item_seq as itemSeq,
+							i.item_name as itemName,
+							i.item_stock as itemStock,
+							i.color_exp as colorExp,
+							i.texture_exp as textureExp,
+							i.pic_name as picName,
+							c.item_code as itemCode,
+							c.common_name commonName,
+							c.common_exp as commonExp,
+							c.detail_info as detailInfo,
+							c.ingredient as ingredient,
+							c.weight as weight,
+							c.price *(1- c.discount) as discountPrice
+					from 	item i, common_feature c
+					where 	i.item_seq like ${itemSeq}
+					and 	c.item_code like #{itemCode}  ) t,
+					(select @rownum:=0) tmp) a
+		
+</select>
+<select id="getItemsByItemCode" parameterType="hashMap" resultMap="itemInfo">
+    SELECT a.*
+	FROM (SELECT @rownum := @rownum +1 as rownum
+		  		 , t.*
+     		FROM	(select item_seq as itemSeq,
+							item_name as itemName,
+							item_stock as itemStock,
+							color_exp as colorExp,
+							pic_name as picName,
+							texture_exp as textureExp,
+							item_code as itemCode
+					from 	item
+					where 	item_code like #{itemCode}) t,
+					(select @rownum:=0) tmp) a
+</select>
+<select id="selectChart" parameterType="hashMap" resultMap="tmpChart">
+	SELECT a.*
+	FROM (SELECT @rownum := @rownum +1 as rownum
+		  		 , t.*
+     		FROM	(select chart_seq as chartSeq,
+							item_code as itemCode,
+							count,
+							sell_date as sellDate 
+					from 	chart) t,
+					(select @rownum:=0) tmp) a
 </select>
 <insert id="insertBasket" parameterType="HashMap">
-	insert into basket(custom_id, item_seq, item_code, item_count)
-	values('kim', ${itemSeq}, #{itemCode}, 1);
+	insert into basket(custom_id, 
+						item_seq, 
+						item_code, 
+						item_count)
+				values('kim', 
+						${itemSeq}, 
+						#{itemCode}, 
+						1);
 </insert>
+
+
+
 </mapper>

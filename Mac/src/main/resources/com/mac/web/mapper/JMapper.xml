@@ -7,28 +7,32 @@
 	<id property="rownum" column="rownum"/>
 	<result property="addr" column="addr"/>
 </resultMap>
-<resultMap type="java.util.HashMap" id="customer">
-	<id property="customId" column="custom_id"/>
-	<result property="customPass" column="custom_pass"/>
+<resultMap type="java.util.HashMap" id="customerInfo">
+	<id property="rownum" column="rownum"/>
+	<result property="customId" column="customId"/>
+	<result property="customPass" column="customPass"/>
 	<result property="name" column="name"/>
 	<result property="email" column="email"/>
-	<result property="phoneNum" column="phone_num"/>
+	<result property="phoneNum" column="phoneNum"/>
 	<result property="profile" column="profile"/>
-	<result property="joinDate" column="join_date"/>
-	<result property="gradeCode" column="grade_code"/>
+	<result property="joinDate" column="joinDate"/>
+	<result property="gradeCode" column="gradeCode"/>
 	<result property="consumption" column="consumption"/>
+	<result property="gradeName" column="gradeName"/>
 </resultMap>
 <resultMap type="java.util.HashMap" id="itemInfo">
 	<id property="rownum" column="rownum"/>
-	<result property="itemName" column="itemName"/>
+	<result property="itemCode" column="itemCode"/>
 	<result property="commonName" column="commonName"/>
 	<result property="commonNameE" column="commonNameE"/>
+	<result property="commonExp" column="commonExp"/>
+	<result property="price" column="price"/>
+	<result property="itemSeq" column="itemSeq"/>
+	<result property="itemName" column="itemName"/>
+	<result property="itemStock" column="itemStock"/>
 	<result property="textureExp" column="textureExp"/>
 	<result property="itemCount" column="itemCount"/>
-	<result property="price" column="price"/>
 	<result property="picName" column="picName"/>
-	<result property="itemCode" column="itemCode"/>
-	<result property="itemSeq" column="itemSeq"/>
 	<result property="colorExp" column="colorExp"/>
 	<result property="discountPrice" column="discountPrice"/>
 	<result property="total" column="total"/>
@@ -69,16 +73,26 @@
      WHERE ${col1} = ${data1} 
 </select>
 <select id="selectAddrExist" resultType="int" parameterType="com.mac.web.domain.Command">
-    SELECT COUNT(*)
-      FROM address 
-     WHERE custom_id = #{col1}
+select count(*)
+from address
+where base is not null
+and custom_id like #{col1}
 </select>
 
-
-<select id="selectMypage" resultMap="customer" parameterType="hashMap">
- 	SELECT *
- 	  FROM customer
- 	 WHERE custom_id = #{customId}
+<select id="selectMypage" resultMap="customerInfo" parameterType="hashMap">
+ 	select c.custom_id as customId,
+		c.custom_pass as customPass,
+		c.name,
+		c.email,
+		c.phone_num as phoneNum,
+		c.profile,
+		c.join_date as joinDate,
+		c.consumption,
+		c.grade_code as gradeCode,
+		cg.grade_name as gradeName
+from customer c, customer_grade cg
+where c.grade_code like cg.grade_code
+and  c.custom_id = #{customId}
 </select>  
 <select id="selectAddrSeqById" resultMap="itemInfo" parameterType="hashMap" >
     SELECT a.*
@@ -96,7 +110,7 @@
 select t.addrSeq 
 from (SELECT addr_seq as addrSeq 
 	  FROM address
- 	 WHERE custom_id like #{cutomId}) t
+ 	 WHERE custom_id like #{customId}) t
 order by t.addrSeq desc limit 1;
 
 </select>
@@ -215,9 +229,18 @@ order by t.orderSeq desc limit 1;
 	   			(select @rownum:=0) tmp) a
  
 </select> 
-     
+<select id="checkItemStockBefore" resultMap="itemInfo" parameterType="HashMap">
+select item_seq as itemSeq,
+		item_name as itemName,
+		item_stock as itemStock
+		from item
+		where 0 >= item_stock-${itemCount} 
+		and item_seq like #{itemSeq}
+</select>
 
-<insert id="insertBasketNew" parameterType="hashMap">
+
+
+<insert id="insertBasketNew" parameterType="HashMap">
         insert into basket(custom_id
                          , item_seq
                          , item_count
@@ -230,7 +253,7 @@ order by t.orderSeq desc limit 1;
 							where item_seq like ${itemSeq})
                           )
 </insert>
-<insert id="insertOrderAddr"  parameterType="hashMap">
+<insert id="insertOrderAddr"  parameterType="HashMap">
         INSERT INTO address(
         				   custom_id
                          , name
@@ -248,7 +271,27 @@ order by t.orderSeq desc limit 1;
                           )
                          
 </insert>
-<insert id="insertCustomer" parameterType="hashMap" >
+<insert id="insertNewAddr" parameterType="HashMap">
+INSERT INTO address(
+        				   custom_id
+                         , name
+                         , phone_num
+                         , addr
+                         , zip_code
+                         , board
+                         , base
+                          ) values(
+                           #{customId}
+                         , #{name}
+                         , #{phoneNum}
+                         , #{addr}
+                         , #{zipCode}
+                         , #{board}
+                         ,'check'
+                          )
+
+</insert>
+<insert id="insertCustomer" parameterType="HashMap" >
     	INSERT INTO customer(
 			   		   custom_id
                      , custom_pass
@@ -267,34 +310,56 @@ order by t.orderSeq desc limit 1;
                      , now()
                       )
 </insert>
-<insert id="insertOrder" parameterType="hashMap">
+<insert id="insertOrder" parameterType="HashMap">
 
 insert into orders(custom_id, total_price, order_date, addr_seq)
 values(#{customId}, ${totalPrice}, now(), ${addrSeq})
 			
 </insert>
-<insert id="insertOrderedItems" parameterType="hashMap">
+<insert id="insertOrderedItems" parameterType="HashMap">
 	INSERT into ordered_items(item_seq, item_count, order_seq)
 	VALUES( ${itemSeq}, 
 			${itemCount}, 
 			${orderSeq})
 </insert>
 
-<update id="updateItemStock" parameterType="hashMap" >
+<update id="updateItemStock" parameterType="HashMap" >
     	UPDATE item 
     	   SET item_stock = item_stock-${itemCount}
     	 WHERE item_seq = ${itemSeq}
 </update>
-<update id="updateBasketExist" parameterType="hashMap" >
+<update id="updateBasketExist" parameterType="HashMap" >
     	UPDATE basket 
     	   SET item_count = item_count+1
     	 WHERE custom_id = #{customId}
     	   AND item_seq = ${itemSeq}
 </update>
-<update id="updateBasketAsOrder" parameterType="hashMap" ><!-- 처리예정 -->
+<update id="updateBasketAsOrder" parameterType="HashMap" ><!-- 처리예정 -->
     	UPDATE basket 
     	   SET item_count = #{itemCount}
     	 WHERE item_seq = #{itemSeq} 
+</update>
+<update id="updateGradeCodeById" parameterType="HashMap">
+update customer 
+set grade_code = (select grade_code
+					from (select grade_code, accum_money
+							from customer_grade
+							where accum_money >=(select rownum/(select count(*) from customer)
+												from (select 
+															@rownum := @rownum +1 as rownum,
+															custom_id ,
+															consumption
+														from customer,
+														(select @rownum:=0) tmp
+														order by consumption desc) t
+												where custom_id like #{customId})
+					order by accum_money limit 1) tt)
+where custom_id like #{customId}
+</update>
+<update id="updateConsumption" parameterType="HashMap">
+update customer
+set consumption = consumption + ${totalPrice}
+where custom_id like #{customId}
 </update>
 
 <delete id="deleteBasketByBasketSeq" parameterType="hashMap">

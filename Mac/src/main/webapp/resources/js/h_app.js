@@ -329,6 +329,9 @@ app.item=(()=>{
 	};
 	var setContentView=x=>{
 		alert(x.itemSeq);
+		
+		
+		
 		$.getJSON(context+'/item/'+x.itemSeq+'/'+x.itemCode, d=>{
 			
 		

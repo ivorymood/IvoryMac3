@@ -189,8 +189,7 @@ public class JController {
 	public Map<?,?> basketUpdate(@RequestBody List<Map<String, Object>> param) {
 		logger.info(":::::::::::basket/update {}", "ENTERED");
 		Map<String, Object> map = new HashMap<>();
-		tx.updateBasketAsOrder(param);
-		map.put("success", 1);
+		map.put("outOfStock", tx.updateBasketAsOrder(param));
 		return map;
 	}
 
@@ -236,8 +235,8 @@ public class JController {
 				return jMapper.selectAddrExist(cmd);
 			}
 		}.execute(cmd);
-		System.out.println("해당 id의 주소 count의 값은"+count);
-		map.put("exist", count);
+		System.out.println("해당 id의 기본 주소 count의 값은:  "+count);
+		map.put("baseAddr", count);
 		return map;
 	}
 

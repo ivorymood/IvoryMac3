@@ -7,6 +7,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
@@ -14,6 +15,8 @@ import org.springframework.web.bind.annotation.RestController;
 import com.mac.web.mapper.HMapper;
 import com.mac.web.service.IGetHashService;
 import com.mac.web.service.IPostHashService;
+
+import lombok.experimental.PackagePrivate;
 
 
 @RestController
@@ -35,21 +38,38 @@ public class HController {
 				return hMapper.selectSubMainItems(param);
 			}
 		}.execute(param));
-		System.out.println(map.get("subMainItems"));
+		System.out.println("subMainItems"+map.get("subMainItems"));
 		
 		
 		return map;
 	}
+	@RequestMapping(value = "/getAllItems/{itemCode}", method=RequestMethod.GET)
+	public Map<?,?> getItemsByItemCode (@PathVariable("itemCode") String itemCode){
+		Map<String, Object> map = new HashMap<>();
+		Map<String, String> param = new HashMap<>();
+		logger.info("::::::::::::::::::::::::::::getAllItems {}", "ENTERED");
+		param.put("itemCode", itemCode);
+		map.put("itemList", new IGetHashService() {
+			
+			@Override
+			public Object execute(HashMap<?, ?> param) {
+				// TODO Auto-generated method stub
+				return hMapper.getItemsByItemCode(param);
+			}
+		}.execute((HashMap<?, ?>) param));
+		System.out.println("getAllItems"+map.get("itemList"));
+		return map;
+	}
+	
 	@RequestMapping(value="/item/{code1}/{code2}", method=RequestMethod.GET )
 	public Map<?,?> getItem(@PathVariable("code1") String itemSeq, @PathVariable("code2") String itemCode){
 		Map<String, Object> map = new HashMap<>();
 		Map<String, Object> param = new HashMap<>();
 		logger.info("::::::::::::::::::::::::::::getItem {}", "ENTERED");
 		logger.info("itemSeq {}", itemSeq);
-		logger.info("itemCode {}", itemCode);
+		logger.info("???????????itemCode {}", itemCode);
 		param.put("itemSeq", Integer.parseInt(itemSeq));
 		param.put("itemCode", itemCode);
-		
 	
 		map.put("item", new IGetHashService() {
 			
@@ -62,7 +82,7 @@ public class HController {
 		System.out.println("map 결과: "+map);
 		return map;
 	}
-	@RequestMapping(value="/toBasket/{code1}/{code2}", method=RequestMethod.GET)
+	/*@RequestMapping(value="/toBasket/{code1}/{code2}", method=RequestMethod.GET)
 	public  Map<?,?> pushItem(@PathVariable("code1") String itemSeq, @PathVariable("code2") String itemCode){
 		Map<String, Object> map = new HashMap<>();
 		Map<String, String> param = new HashMap<>();
@@ -81,6 +101,24 @@ public class HController {
 			}
 		}.execute((HashMap<?, ?>) param);
 		map.put("flag", "success");
+		return map;
+	}*/
+	@RequestMapping(value="/chart/search", method=RequestMethod.GET)
+	public Map<?,?> getChart(){
+		logger.info("::::::::::::::::::::::::::::chart/search {}", "ENTERED");
+		Map<String, Object> map = new HashMap<>();
+		Map<String, String> param = new HashMap<>();
+		
+		map.put("chart", new IGetHashService() {
+			
+			@Override
+			public Object execute(HashMap<?, ?> param) {
+				// TODO Auto-generated method stub
+				return hMapper.selectChart(param);
+			}
+		}.execute((HashMap<?, ?>) param));
+		
+		
 		return map;
 	}
 	

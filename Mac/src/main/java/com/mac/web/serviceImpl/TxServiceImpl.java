@@ -18,31 +18,66 @@ public class TxServiceImpl implements ITxService {
 	@Autowired JMapper jMapper;
 	@Autowired Command cmd;
 	@Override @Transactional
-	public void updateBasketAsOrder(List<Map<String, Object>> param) {
+	public List<HashMap<String, Object>> updateBasketAsOrder(List<Map<String, Object>> param) {
 		System.out.println("----------------------------@Transactional    updateList");
-		for(Map<String,Object> p : param) {			 
+		List<HashMap<String, Object>> outOfStock = new ArrayList<>();
+		HashMap<String,Object> tmp = new HashMap<>();
+		for(Map<String,Object> p : param) {
 			p.get("itemSeq");
 		    p.get("itemCount");
-		    jMapper.updateBasketAsOrder(p);
+		    tmp = jMapper.checkItemStockBefore(p);
+		    if( tmp != null) {
+		    	outOfStock.add(tmp);
+		    }
 		}
+		System.out.println("outOfStock: "+outOfStock);
+		if(outOfStock.size()==0) {
+			for(Map<String,Object> p : param) {			 
+				p.get("itemSeq");
+			    p.get("itemCount");
+			    jMapper.updateBasketAsOrder(p);
+			}
+		}
+		
+		return outOfStock;
 	}
 	
 	@Override @Transactional
 	public void makeOrder(Map<String, Object> param) {
 		System.out.println("---------------------------------@Transactional    makeOrder");
-		int flag = (int) param.get("newAddr");
+		int baseAddr = Integer.parseInt((String) param.get("baseAddr")) ;
+		int tmpAddr = Integer.parseInt((String) param.get("tmpAddr")) ;
 		int addrSeq = 0;
 		HashMap<String, Object> temp = new HashMap<>();
 		HashMap<String, Object> paramMap = new HashMap<>();
 		
-		if(flag == 1) {
-			System.out.println("flag =1");
+		if(tmpAddr ==1) {
+			System.out.println("baseAddr: "+baseAddr+"    tmpAddr: 1~ ");
 			jMapper.insertOrderAddr(param);
 			addrSeq = jMapper.selectLastAddrSeq((HashMap<?, ?>) param);
 		}else {
-			System.out.println("flag !=1");
-			addrSeq = (int) jMapper.selectAddrSeqById((HashMap<?, ?>) param).get("addrSeq");
+			if(baseAddr ==0) {
+				System.out.println("baseAddr: 0    tmpAddr: 0 ");
+				jMapper.insertNewAddr(param);
+				addrSeq = jMapper.selectLastAddrSeq((HashMap<?, ?>) param);
+			}else {
+				System.out.println("baseAddr: 1    tmpAddr: 0 ");
+				addrSeq = (int) jMapper.selectAddrSeqById((HashMap<?, ?>) param).get("addrSeq");
+			}
 		}
+		
+		/*if(baseAddr ==0 & tmpAddr ==0) {
+			System.out.println("baseAddr: 0    tmpAddr: 0 ");
+			jMapper.insertNewAddr(param);
+			addrSeq = jMapper.selectLastAddrSeq((HashMap<?, ?>) param);
+		}else if(baseAddr ==0 &tmpAddr == 1) {
+			System.out.println("baseAddr: 0    tmpAddr: 1 ");
+			jMapper.insertOrderAddr(param);
+			addrSeq = jMapper.selectLastAddrSeq((HashMap<?, ?>) param);
+		}else if(baseAddr ==1 & tmpAddr ==0) {
+			System.out.println("baseAddr: 1    tmpAddr: 0 ");
+			addrSeq = (int) jMapper.selectAddrSeqById((HashMap<?, ?>) param).get("addrSeq");
+		}*/
 		paramMap.put("addrSeq", addrSeq);
 		paramMap.put("customId", param.get("customId"));
 		paramMap.put("totalPrice", jMapper.selectTotalPrice((HashMap<?, ?>) param).get("discountedTotal"));
@@ -63,6 +98,9 @@ public class TxServiceImpl implements ITxService {
 			jMapper.updateItemStock(temp);
 		}
 		
+		jMapper.updateConsumption(paramMap);
+		jMapper.updateGradeCodeById((HashMap<?, ?>) param);
+
 		jMapper.deleteBasketById(paramMap);
 	}
 
