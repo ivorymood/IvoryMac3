@@ -7,6 +7,7 @@ import org.springframework.stereotype.Component;
 import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
 
+import com.mac.web.domain.Customer;
 import com.mac.web.domain.Path;
 
 @Component
@@ -22,7 +23,6 @@ public class ContextFactory {
 	                ;
 	 }
 	 public Path ptx() {
-		 logger.info("컨텍스팩토리 ptx(){}", "들어옴");
 		 path.setContext(path());
 		 path.setCss(path()+"/resources/css");
 		 path.setImg(path()+"/resources/img");

@@ -24,11 +24,6 @@
 	</div>
 	<div style="height: 100px;">	
 	</div>
-	<div>
-		<button id="btn-login-board" style="margin-left: 500px">전체 상품 리뷰</button>
-		<button id="btn-login-write" style="margin-left: 100px">리뷰 작성</button>
-	</div>
-
 	<input type="hidden" name="nowPage" value="1" />
 	<input type="hidden" name="pageNum" value="1" />
 	<input type="hidden" name="blockSize" value="5" />

@@ -103,7 +103,6 @@
 </form>
 <script>
 	$(document).ready(function(){
-		alert('grade code :'+"${map.gradeCode}");
 	 	$('#b-sel-custMana-grade option').each(function(){
 	    if($(this).val()==="${map.gradeCode}"){
 	      $(this).prop("selected","selected");  
@@ -118,10 +117,8 @@
 		.submit();
 	}); 
  	function test(x){
- 		alert('파라미터'+x);
  		var form = document.form_custMana;
  		form.pageNum.value = x;
- 		alert('x='+form.pageNum.value);
  		$('#form_custMana')
  		.attr('action','${path.context}/admin/list')
 		.attr('method','post')

@@ -26,7 +26,7 @@
 		  					<span class="span-boardList">${comment.helpful}</span>
 		  					<span class="span-boardList">${comment.writeDate}</span>
 		  					<%-- <span class="span-boardList">${comment.branch}</span> --%>
-		  					<span class="span-boardList">${comment.customId}</span>
+		  					<span  class="span-boardList">${comment.customId}</span>
 		  					<%-- <span class="span-boardList">${comment.itemSeq}</span> --%>
 		  			    </div>
 		  			</c:forEach>
@@ -64,7 +64,9 @@
    	<input type="hidden" name="boardSeq" />
    	<input type="hidden" name="a" />
    	<input type="hidden" name="b" />
-
+   	<div style="text-align: center;'">
+   	<button style="background: black; color: white; width: 150px;" id="btn_main">메인이동</button>
+	</div>
  </form>         
 <script>
  	 function board(y){    //페이지네이션 할때 쓰입니다.
@@ -74,25 +76,16 @@
          alert('y='+form.pageNum.value);
          $('#form_board')
          .attr('action','${path.context}/board/boardList')
-         .attr('method','post')
+         .attr('method','GET')
          .submit(); 
      } 
  	
    
-/*      $('#btn-board-write').on('click', function(){
-			alert("글쓰기 클릭이벤트");
+     $('#btn_main').on('click', function(){
 			$('#form_board')
-			.attr('action','${path.context}/board/write')
-			.attr('method','post')
+			.attr('action','${path.context}/homeSecond/')
+			.attr('method','POST')
 			.submit();
-	 }); */
-
-  /* $('#btn-list-write').on('click', function(){
-			alert("글쓰기 클릭이벤트");
-			location.href="${path.context}/write";
 	 }); 
- */
-		
-
 </script>
 </html>

@@ -14,10 +14,10 @@
 		</form>
 	</body>
 <script>
-	$('#form-welUpdate')
+/* 	$('#form-welUpdate')
 		.attr('action','${path.context}/board/boardList')
-		.attr('method','post')
-		.submit(); 
+		.attr('method','GET')
+		.submit();  */
 	
 </script>
 </html>

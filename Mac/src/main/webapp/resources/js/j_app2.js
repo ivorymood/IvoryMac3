@@ -4,12 +4,11 @@ app = (()=>{
         $.getScript(x+'/resources/js/router.js',()=>{
             $.extend(new Router(x));
             app.route.init(x);
-            app.main.onCreate();
+            app.loginAfter.onCreate();
         })
     };
     return {init:init};
 })();
-//
 app.route = (()=>{
     return {
                 init : x => 
@@ -292,12 +291,12 @@ app.basketUpdate=(()=>{
 			$('#modal-footer').html($(createDiv({id:'second_delete',clazz:''})))
 			$.getJSON(context+'/basket/search/'+sessionStorage.getItem('customer'),e=>{
 				 var basketObj = e.basketOrder;
-	
+				 console.log(e.basketOrder);
 				 for(var i =0 ;  i < basketObj.length ; i++){
 						if(i > basketObj.length){
 							return false;
 						}
-
+						console.log(basketObj[i]);
 						$(createDiv({id:'',clazz:'grid-container'}))
 						 .append($(createDiv({id:'grid-item',clazz:'grid-item'}))
 								 .append($(createBasketImg({img:e.basketOrder[i].picName+'.jpg'}))))
@@ -311,7 +310,7 @@ app.basketUpdate=(()=>{
 										 .attr('style','background:white;')
 										 .attr('readonly','readonly')
 										 .on('click',function(){
-											
+											 console.log($(this).parent().find("input").attr("count"));
 											 var countNumber = parseInt($(this).parent().find("input").attr("count")) - 1 ;
 											 countNumber = countNumber < 0 ? 0 : countNumber; 
 											 $(this).parent().find("input").attr("count", countNumber);
@@ -356,7 +355,7 @@ app.basketUpdate=(()=>{
 			 });
 			 $.getJSON(context+'/basket/totalPrice/'+sessionStorage.getItem('customer'),e=>{
 				 var basketObjTotal = e.basketTotalPrice;
-
+				 console.log(basketObjTotal);
 			$(createDiv({id:'modal-footer',clazz:'modal-footer'}))
 						 .append($(createDiv({id:'',clazz:'grid-container'}))
 							 .append($(createDiv({id:'',clazz:'grid-item'}))
@@ -375,7 +374,7 @@ app.basketUpdate=(()=>{
 										 		}
 										 		returnJsonData.push(objData);
 										 	});
-										 	
+										 	console.log("returnJsonData :" ,returnJsonData);
 											 $.ajax({
 												 url:context+'/basket/update',
 												 method:'POST',
@@ -383,7 +382,7 @@ app.basketUpdate=(()=>{
 												 dataType:'json',
 												 contentType: 'application/json',
 											 }).done(function (data){
-									
+												 console.log(data);
 												 
 											 });
 											 app.orders.onCreate();
@@ -470,7 +469,7 @@ app.orders=(()=>{
 						        }
 						        return str;
 						    }
-						
+						 console.log(e.orderSearch);
 						 for(var i =0 ;  i < orderObj.length ; i++){
 							if(i > orderObj.length){
 								return false;
@@ -570,6 +569,7 @@ app.orders=(()=>{
 					        }
 					        return str;
 					    }
+					 console.log(basketObjTotal);
 					$('#div-orders').append($(createDiv({id:'',clazz:''}))
 						.attr('style','float: left; margin-left: 100px;')
 						.append($(createDiv({id:'',clazz:''}))
@@ -611,6 +611,7 @@ app.orders=(()=>{
 														.on('click',e=>{
 															$.getJSON(context+'/addr/search',e=>{
 																var addr = e.success;
+																console.log(e.success);
 																if(addr==1){
 																	app.cash.onCreate();
 																}else{
@@ -650,6 +651,7 @@ app.chart=(()=>{
 					 google.charts.load('current', {'packages':['bar']});
 					 google.charts.setOnLoadCallback(drawChart);
 		    	  var chartObj = e.chart;
+		    	  console.log(chartObj);
 		    	  
 		      function drawChart() {
     			  var data = google.visualization.arrayToDataTable([
@@ -1520,6 +1522,7 @@ app.mypage=(()=>{
 			    		
 			    		$.getJSON(context+'/mypage/item/'+sessionStorage.getItem('customer'),e=>{
 			    			var mypageObj = e.mypageItem;
+			    			console.log(e.mypageItem);
 			    
 			    		    $('#mypage-div').append($(createDiv({id : '', clazz : ''}))
 					                .append($(createDiv({id : '', clazz : ''}))
@@ -1579,12 +1582,15 @@ app.mypage=(()=>{
 	                                        	app.loginAfter.onCreate();
 	                                        })))
 				 });
+				 console.log("test!");
 				 $.getJSON(context+'/basket/search/'+sessionStorage.getItem('customer'),e=>{
 					 var basketObj = e.basketOrder;
+					 console.log(e.basketOrder);
 					 for(var i =0 ;  i < basketObj.length ; i++){
 							if(i > basketObj.length){
 								return false;
 							}
+							console.log(basketObj[i]);
 							$(createDiv({id:'',clazz:'grid-container'}))
 							 .append($(createDiv({id:'grid-item',clazz:'grid-item'}))
 									 .append($(createBasketImg({img:e.basketOrder[i].picName+'.jpg'}))))
@@ -1598,6 +1604,7 @@ app.mypage=(()=>{
 											 .attr('style','background:white;')
 											 .attr('readonly','readonly')
 											 .on('click',function(){
+												 console.log($(this).parent().find("input").attr("count"));
 												 var countNumber = parseInt($(this).parent().find("input").attr("count")) - 1 ;
 												 countNumber = countNumber < 0 ? 0 : countNumber; 
 												 $(this).parent().find("input").attr("count", countNumber);
@@ -1643,6 +1650,7 @@ app.mypage=(()=>{
 				 $('#modal-content').append($(createDiv({id:'aaaa',clazz:''})));
 				 $.getJSON(context+'/basket/totalPrice/'+sessionStorage.getItem('customer'),e=>{
 					 var basketObjTotal = e.basketTotalPrice;
+					 console.log(basketObjTotal);
 					$('#aaaa').html($(createDiv({id:'modal-footer',clazz:'modal-footer'}))
 							 .append($(createDiv({id:'',clazz:'grid-container'}))
 								 .append($(createDiv({id:'',clazz:'grid-item'}))
@@ -1661,6 +1669,7 @@ app.mypage=(()=>{
 											 		}
 											 		returnJsonData.push(objData);
 											 	});
+											 	console.log("returnJsonData :" ,returnJsonData);
 												 $.ajax({
 													 url:context+'/basket/update/'+sessionStorage.getItem('customer'),
 													 method:'POST',
@@ -1668,6 +1677,7 @@ app.mypage=(()=>{
 													 dataType:'json',
 													 contentType: 'application/json',
 												 }).done(function (data){
+													 console.log(data);
 													 
 												 });
 												 app.orders.onCreate();
@@ -1861,6 +1871,7 @@ app.cash=(()=>{
 					        return str;
 					    }
 					 var basketObjTotal = e.basketTotalPrice;
+					 console.log(basketObjTotal);			
 						$('#div_add').append($(createDiv({id:'',clazz:''}))
 							.attr('style','float: right; margin-right: 100px; ')
 							.append($(createDiv({id:'',clazz:''}))
@@ -1961,8 +1972,8 @@ app.cash=(()=>{
 								$('#btn-logout').remove();
 								$('#btn-basket').remove();
 								$('#btn-mypage').remove();
-								$('#btn-write-search').remove();
 								$('#btn-write').remove();
+								$('#btn-write-search').remove();
 									app.mypage.onCreate();
 								
 						 });
@@ -2036,6 +2047,7 @@ app.mainItem=(()=>{
 							if(i > 3){
 								return false;
 							}
+							console.log(mainObj[i]);
 							$(createDiv({id:'',clazz:''}))
 							.attr('style','margin-top:30px;display: inline-block;margin-left: 75px;')
 							.append($(createDiv({id:'',clazz:''}))
@@ -2097,6 +2109,12 @@ app.mainItem=(()=>{
 														 contentType: 'application/json'
 														
 													})
+													console.log($(this));
+													console.log("colorExp: ",$(this).attr("colorexp"));
+													console.log("itemName: ",$(this).attr("itemname"));
+													console.log("picName: ",$(this).attr("picname"));
+													console.log("itemseq: ",$(this).attr("itemseq"));
+													console.log("itemcode: ",$(this).attr("itemcode"));
 													
 												})
 											.attr('style','color:white; background:black;'))))
@@ -2466,6 +2484,7 @@ app.join=(()=>{
 										var jason = {
 											inputJoinId:$('#input_join_id').val()
 										}
+										console.log(jason);
 										$.ajax({
 											url:context+'/joinid/search',
 											method:'POST',
@@ -2473,6 +2492,7 @@ app.join=(()=>{
 											dataType:'json',
 											contentType:'application/json',
 											success:x=>{
+												console.log(x);
 												if(x.success==1){
 													alert('이미 중복된 아이디입니다 새로운 아이디를 입력하세요.')
 												}else{
@@ -2703,10 +2723,12 @@ app.login=(()=>{
 
  var customerLogin=x=>{
 	 x.preventDefault();
+	 console.log($('#input-login'));
 	 var jason={
 		 'customId':$('#input-login').val(),
 		 'customPass':$('#input-pass').val(),	 		
 	 }
+	 console.log(jason);
 	 $.ajax({
 		 url:context+'/customer/login',
 		 method:'POST',
@@ -2714,6 +2736,7 @@ app.login=(()=>{
 		 dataType:'json',
 		 contentType: 'application/json',
 			success: x=>{
+				console.log(x);
 				if(x.success==1){
 					sessionStorage.setItem('customer', x.customId);
 					app.mypage.onCreate();

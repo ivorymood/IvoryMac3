@@ -17,7 +17,6 @@ public class BoardServiceImpl implements BoardService {
 	
 	@Override
 	public void addBoard(Map<String,String> paramMap) {
-		logger.info("보더 서비스임플 도착 addBoard()=====================================");
 		boardMapper.insertBoard(paramMap);
 	}
 
@@ -47,7 +46,6 @@ public class BoardServiceImpl implements BoardService {
 
 	@Override
 	public List<Comment> findAll(Map<String, ?> map) {
-		logger.info("보더 서비스임플 findAll=============================");
 		List<Comment> t = boardMapper.selectAll(map); 
 		logger.info(" t는 {}", t);
 		return t;
@@ -63,7 +61,6 @@ public class BoardServiceImpl implements BoardService {
 	
 	@Override
 	public int totalCount() {
-		logger.info("보더 서비스임플 totalCount=============================");
 		return boardMapper.selectToCount();
 	}
 

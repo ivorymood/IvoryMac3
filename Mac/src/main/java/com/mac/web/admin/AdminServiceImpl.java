@@ -18,7 +18,6 @@ public class AdminServiceImpl implements AdminService {
 	
 	@Override
 	public List<Customer> list(Map<String,?> map) {
-		logger.info(":::어드민서비스:::list()======================================================");
 		return adminMapper.selectAll(map);
 	}
 
@@ -29,7 +28,6 @@ public class AdminServiceImpl implements AdminService {
 
 	@Override
 	public Customer findById(Command cmd) {
-		logger.info(":::어드민서비스:::findById()==========================");
 		Customer i = adminMapper.selectById(cmd);
 		return i;
 	}
@@ -71,7 +69,6 @@ public class AdminServiceImpl implements AdminService {
 
 	@Override
 	public void insertCustomer(Command cmd) {
-		logger.info("AdminServiceImpl insertCustomer()==================================");
 		adminMapper.addCustomer(cmd);
 	}
 
@@ -82,7 +79,6 @@ public class AdminServiceImpl implements AdminService {
 
 	@Override
 	public void insertItem(Command cmd) {
-		logger.info("AdminServiceImpl insertItem()==================================");
 		adminMapper.addItem(cmd);
 	}
 
@@ -108,14 +104,12 @@ public class AdminServiceImpl implements AdminService {
 
 	@Override
 	public void updateItem(Command cmd) {
-		logger.info("AdminServiceImpl updateItem()==================================");
 		adminMapper.modifyItem(cmd);;
 		
 	}
 
 	@Override
 	public boolean count(Command cmd) {
-		logger.info("AdminServiceImpl count()==================================");
 		boolean g = false;
 		int k = adminMapper.selectCount(cmd);
 		if(k!=0) {
@@ -176,21 +170,18 @@ public class AdminServiceImpl implements AdminService {
 
 	@Override
 	public List<Item> findListBy(Map<String, ?> map) {
-		logger.info(":::AdminServiceImpl:::findListBy()======================================================");
 		List<Item> findListBy = adminMapper.selectListBy(map);
 		return findListBy;
 	}
 
 	@Override
 	public Item findByItemSeq(Command cmd) {
-		logger.info(":::AdminServiceImpl:::findByItemSeq()======================================================");
 		Item k = adminMapper.selectByitemSeq(cmd);
 		return k;
 	}
 
 	@Override
 	public List<Customer> findAdmin() {
-		logger.info(":::AdminServiceImpl:::findAdmin()======================================================");
 		return adminMapper.selectAdmin();
 	}
 
@@ -201,7 +192,6 @@ public class AdminServiceImpl implements AdminService {
 
 	@Override
 	public int countTotal() {
-		logger.info(":::AdminServiceImpl:::countTotal()======================================================");
 		return adminMapper.countSum();
 	}
 
@@ -213,13 +203,11 @@ public class AdminServiceImpl implements AdminService {
 
 	@Override
 	public List<Item> findSearch(Map<String, ?> map) {
-		logger.info(":::AdminServiceImpl:::findSearch()======================================================");
 		return adminMapper.selectSearch(map);
 	}
 
 	@Override
 	public int searchItem(Map<String, ?> map) {
-		logger.info(":::AdminServiceImpl:::searchItem()======================================================");
 		return adminMapper.selectSearchItem(map);
 	}
 

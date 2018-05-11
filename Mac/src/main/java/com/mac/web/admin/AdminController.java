@@ -39,7 +39,7 @@ public class AdminController {
 	
 	@RequestMapping(value="/login",method=RequestMethod.GET)
 	public String loginForm(Model model) {
-		logger.info(":::어드민 컨트롤러::: loginForm() =================================");
+		
 		model.addAttribute("path", context.ptx());
 			return "login.login";
 		
@@ -53,7 +53,6 @@ public class AdminController {
 			@RequestParam("blockSize")String blockSize,
 			@RequestParam("pageSize")String pageSize,
 			RedirectAttributes redirectAttributes) {
-		logger.info(":::어드민컨트롤러:::login() =================================");
 		customer.setCustomId(customId);
 		customer.setCustomPass(customPass);
 		cmd.setCustomer(customer);
@@ -75,8 +74,6 @@ public class AdminController {
 						   @RequestParam(value="pageNum", required=false, defaultValue="1")String pno,
 						   @RequestParam(value="b-sel-custMana-grade" ,required=false, defaultValue="all")String gradeCode,
 						   @RequestParam(value="inp-custMana-startDay",required=false)String searchDay) {
-		logger.info(":::어드민컨트롤러:::custMana():::==================================");
-		logger.info(":::어드민컨트롤러:::custMana():::   pageNum은 {} ==================================", pno);
 		Map<String,?> map = RequestContextUtils.getInputFlashMap(request);
 		int pageNum = Integer.parseInt(pno);
 		int	blockSize = (map!=null)?Integer.parseInt(map.get("blockSize").toString()):5;
@@ -85,14 +82,13 @@ public class AdminController {
 		customer.setGradeCode(gradeCode);
 		cmd.setCustomer(customer);
 		cmd.setData1("CUSTOMER");
-		logger.info("##################gradeCode값은 {} ", cmd.getCustomer().getGradeCode());
 		int totalCount = adminService.totalCount(cmd);
 		int totalPageCount = adminService.totalPageCount(totalCount,blockSize);
 		int startRow = adminService.startRow(pageNum, pageSize);
 		int endRow = adminService.endRow(pageNum,pageSize, totalCount);
 		int startBlock = adminService.startBlock(pageNum,blockSize);
 		int endBlock = adminService.endBlock(pageNum,blockSize, totalPageCount);
-		System.out.println("###############날짜"+searchDay);
+		
 		Map<String,String> paramMap = new HashMap<>();
 		paramMap.put("blockSize",String.valueOf(blockSize));
 		paramMap.put("pageSize",String.valueOf(pageSize));
@@ -110,7 +106,7 @@ public class AdminController {
 		paramMap.put("silver",String.valueOf(adminService.countGrade("2")));
 		paramMap.put("gold",String.valueOf(adminService.countGrade("3")));
 		paramMap.put("diamond",String.valueOf(adminService.countGrade("4")));
-		logger.info("##### gradeCode는 {}", paramMap.get("gradeCode"));
+		
 		model.addAttribute("map",paramMap);
 		List<Customer> list = adminService.list(paramMap);
 		model.addAttribute("list", list);
@@ -139,7 +135,7 @@ public class AdminController {
 	
 	@RequestMapping(value="/addItem",method=RequestMethod.POST)
 	public String addItem(Model model) {
-		logger.info(":::어드민 컨트롤러::: addItem()===============================");
+		
 		return "addItem.admin";
 	}
 	
@@ -149,17 +145,15 @@ public class AdminController {
 						   @RequestParam(value="pageNum", required=false, defaultValue="1")String pno
 						  ,@RequestParam(value="title",required=false)String title
 						  ,@RequestParam(value="content",required=false)String content) {
-		logger.info("어드민 컨트롤러 itemList()===============================");	
+		
 		Map<String,String> paramMap = new HashMap<>();
-		System.out.println("title="+title);
-		System.out.println("content="+content);
+	
 		if(title==null||content==null) {
 			int pageNum = Integer.parseInt(pno);
 			Map<String,?> map = RequestContextUtils.getInputFlashMap(request);
 			int	blockSize = (map!=null)?Integer.parseInt(map.get("blockSize").toString()):5;
 			int	pageSize = (map!=null)?Integer.parseInt(map.get("pageSize").toString()):10;
 			int	nowPage = (map!=null)?Integer.parseInt(map.get("nowPage").toString()):1;
-			logger.info("pageNum은 {}", pageNum );
 			cmd.setData1("ITEM");
 			int totalCount = adminService.totalCount(cmd);
 			int totalPageCount = adminService.totalPageCount(totalCount,pageSize);
@@ -169,7 +163,7 @@ public class AdminController {
 			int endBlock = adminService.endBlock(pageNum,blockSize, totalPageCount);
 			int totalItem = adminService.countTotal();
 			int itemCount = adminService.searchCount();
-			System.out.println("갑을 입력하지 않았을때");
+		
 			paramMap.put("blockSize",String.valueOf(blockSize));
 			paramMap.put("pageSize",String.valueOf(pageSize));
 			paramMap.put("pageNum",String.valueOf(pageNum));
@@ -189,18 +183,15 @@ public class AdminController {
 			}else {
 			paramMap.put("title", title);
 			paramMap.put("content", content);
-			System.out.println("갑을 입력했을때");
 			cmd.setCol1("ITEM");
 			cmd.setData1(title);
 			cmd.setData2(content);
 			int totalCount = adminService.searchTotalCount(cmd);
-			System.out.println("totalCount"+totalCount);
 			int pageNum = Integer.parseInt(pno);
 			Map<String,?> map = RequestContextUtils.getInputFlashMap(request);
 			int	blockSize = (map!=null)?Integer.parseInt(map.get("blockSize").toString()):5;
 			int	pageSize = (map!=null)?Integer.parseInt(map.get("pageSize").toString()):10;
 			int	nowPage = (map!=null)?Integer.parseInt(map.get("nowPage").toString()):1;
-			logger.info("pageNum은 {}", pageNum );
 			int totalPageCount = adminService.totalPageCount(totalCount,pageSize);
 			int startRow = adminService.startRow(pageNum, pageSize);
 			int endRow = adminService.endRow(pageNum,pageSize, totalCount);
@@ -225,8 +216,6 @@ public class AdminController {
 			List<Item> list = adminService.findSearch(paramMap); 
 		    model.addAttribute("map",paramMap);
 			model.addAttribute("list", list);
-			System.out.println("title"+title);
-			System.out.println("content"+content);
 		}
 		return "itemList.admin";
 	}
@@ -236,8 +225,6 @@ public class AdminController {
 							 HttpServletRequest request,
 							 @RequestParam("a")String itemSeq,
 							 @RequestParam("b")int pageNum) {
-		logger.info(":::어드민 컨트롤러::: itemDelete()===============================");
-		logger.info("pageNum은 {}", pageNum);
 		item.setItemSeq(itemSeq);
 		cmd.setItem(item);
 		adminService.deleteItem(cmd);
@@ -245,7 +232,6 @@ public class AdminController {
 		int	blockSize = (map!=null)?Integer.parseInt(map.get("blockSize").toString()):5;
 		int	pageSize = (map!=null)?Integer.parseInt(map.get("pageSize").toString()):10;
 		int	nowPage = (map!=null)?Integer.parseInt(map.get("nowPage").toString()):1;
-		logger.info("################################## pageSize {} ",pageSize);
 		cmd.setData1("ITEM");
 		int totalCount = adminService.totalCount(cmd);
 		int totalPageCount = adminService.totalPageCount(totalCount,pageSize);
@@ -275,9 +261,6 @@ public class AdminController {
 						     HttpServletRequest request,
 						     @RequestParam("itemSeq")String itemSeq,
 						     @RequestParam("itemCode")String itemCode) {
-		logger.info("!!!!어드민 컨트롤러 updateItem()===============================");
-		logger.info("itemSeq는 {} ",itemSeq);
-		logger.info("itemCode는 {} ",itemCode);
 		Map<String,String> paramMap = new HashMap<>();
 		model.addAttribute("map",paramMap);
 		switch(itemCode) {
@@ -311,7 +294,6 @@ public class AdminController {
 							    @RequestParam("inp-itemUpdate-colorExp")String colorExp,
 							    @RequestParam("inp-itemUpdate-textureExp")String textureExp,
 							    @RequestParam("file")String picName) {
-		logger.info(":::어드민 컨트롤러::: addItemUpdate()===============================");
 		item.setItemName(itemName);
 		item.setItemStock(itemStock);
 		item.setColorExp(colorExp);
@@ -329,7 +311,6 @@ public class AdminController {
 			              @RequestParam("inp-addItem-itemStock")int itemStock,
 			              @RequestParam("inp-addItem-colorExp")String colorExp,
 			              @RequestParam("inp-addItem-textureExp")String textureExp)throws IllegalStateException, IOException{
-		logger.info(":::어드민 컨트롤러::: add()===============================");
 		String fileName=pxy.getFile().getOriginalFilename();
 		String path=ImageRepo.UPLOAD_PATH.toString()+fileName;
 		File files=new File(path);
@@ -348,13 +329,11 @@ public class AdminController {
 	
 	@RequestMapping(value="/custSearch",method=RequestMethod.POST)
 	public String custSearch(Model model) {
-		logger.info(":::어드민 컨트롤러::: custSearch()===============================");
 		return "custSearch.admin";
 	}
 							
 	@RequestMapping(value="/addEmployee",method=RequestMethod.POST)
 	public String joinE(){
-		logger.info(":::어드민 컨트롤러::: joinE()===============================");
 		return "joinE.admin";
 		
 	}
@@ -369,7 +348,6 @@ public class AdminController {
 			            @RequestParam("div-joinE-phone1")String phoneNum1,
 			            @RequestParam("inp-joinE-phone2")String phoneNum2,
 			            @RequestParam("inp-joinE-phone3")String phoneNum3)throws IllegalStateException, IOException{
-		logger.info(":::어드민 컨트롤러::: joinE()===============================");
 		String fileName=pxy.getFile().getOriginalFilename();
 		String path=ImageRepo.UPLOAD_PATH.toString()+fileName;
 		File files=new File(path);
@@ -388,16 +366,12 @@ public class AdminController {
 	
 	@RequestMapping(value="/listE",method=RequestMethod.POST)
 	public String listE(Model model){
-		logger.info(":::어드민 컨트롤러::: /listE()===============================");
 		List<Customer> adminList = adminService.findAdmin();
-		logger.info("관리자 리스트는 {} ", adminList);
 		int i = 0;
 		for(i=0; i<adminList.size(); i++) {
 			adminList.get(i).getName();
 			adminList.get(i).getCustomId();
 			adminList.get(i).getGradeCode();
-			logger.info("관리자의 정보 {} ", adminList.get(i).getProfile());
-			logger.info("관리자의 정보 {} ", adminList.get(i).toString());
 		}
 		model.addAttribute("adminList",adminList);
 		return "listEmployee.admin";
@@ -408,14 +382,11 @@ public class AdminController {
 	public String codeSearch(Model model,
 			   HttpServletRequest request,
 			   @RequestParam(value="pageNum", required=false, defaultValue="1")String pno) {
-		logger.info(":::어드민 컨트롤러::: /codeSearch()===============================");
-		logger.info(":::어드민컨트롤러:::codeSearch()::: pageNum은 {} ==================================", pno);
 		int pageNum = Integer.parseInt(pno);
 		Map<String,?> map = RequestContextUtils.getInputFlashMap(request);
 		int	blockSize = (map!=null)?Integer.parseInt(map.get("blockSize").toString()):5;
 		int	pageSize = (map!=null)?Integer.parseInt(map.get("pageSize").toString()):10;
 		int	nowPage = (map!=null)?Integer.parseInt(map.get("nowPage").toString()):1;
-		logger.info("pageNum은 {}", pageNum );
 		cmd.setData1("ITEM");
 		int totalCount = adminService.totalCount(cmd);
 		int totalPageCount = adminService.totalPageCount(totalCount,pageSize);

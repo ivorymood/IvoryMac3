@@ -68,10 +68,8 @@
 </form>
 <script>
  	 function testI(y){    //페이지네이션 할때 쓰입니다.
-         alert('파라미터'+y);
          	var form = document.form_codeSearch;
     		form.pageNum.value = y;
-         alert('y='+form.pageNum.value);
          $('#form_codeSearch')
          .attr('action','${path.context}/admin/codeSearch')
          .attr('method','post')

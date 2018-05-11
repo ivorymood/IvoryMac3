@@ -18,9 +18,10 @@ import com.mac.web.admin.AdminService;
 import com.mac.web.common.ContextFactory;
 import com.mac.web.domain.Command;
 import com.mac.web.domain.Comment;
+import com.mac.web.domain.Customer;
 import com.mac.web.domain.Path;
 
-@SessionAttributes("path")
+@SessionAttributes("path,user")
 @RequestMapping("/board")
 @Controller
 public class BoardController {
@@ -30,12 +31,13 @@ public class BoardController {
 	@Autowired Command cmd;
 	@Autowired ContextFactory context;
 	@Autowired BoardService boardService;
+	@Autowired Customer customer;
 	
-	@RequestMapping(value="/boardList",method=RequestMethod.POST)
+	
+	@RequestMapping(value="/boardList",method=RequestMethod.GET)
 	public String board(Model model,
 						HttpServletRequest request,
 						@RequestParam(value="pageNum", required=false, defaultValue="1")String pno) {
-		logger.info("보더 컨트롤러 board도착===========================");	
 		Map<String,String> paramMap = new HashMap<>();
 		int pageNum = Integer.parseInt(pno);
 		Map<String,?> map = RequestContextUtils.getInputFlashMap(request);
@@ -44,7 +46,6 @@ public class BoardController {
 		int	nowPage = (map!=null)?Integer.parseInt(map.get("nowPage").toString()):1;
 		
 		int totalCount = boardService.totalCount();
-		logger.info("게시판 글의 수는 {}", totalCount);
 		int totalPageCount = boardService.totalPageCount(totalCount,pageSize);
 		int startRow = boardService.startRow(pageNum, pageSize);
 		int endRow = boardService.endRow(pageNum,pageSize, totalCount);
@@ -59,32 +60,22 @@ public class BoardController {
 		paramMap.put("startRow",String.valueOf(startRow));
 		paramMap.put("endRow",String.valueOf(endRow));
 		paramMap.put("startBlock",String.valueOf(startBlock));
-		paramMap.put("endBlock",String.valueOf(endBlock));
-		
+		paramMap.put("endBlock",String.valueOf(endBlock));		
 		List<Comment> list = boardService.findAll(paramMap);
-		logger.info("게시판 리스트 값은 {}", list);
+	
+		model.addAttribute("path", context.ptx());
 		model.addAttribute("map", paramMap);	
 		model.addAttribute("list", list);	
 		return "board.board";
 	}
 	
-	@RequestMapping(value="/write",method=RequestMethod.POST)
-	public String write(Model model,
-						HttpServletRequest request
-						 ) {
-		return "write.board";	
-	}
-	
-	@RequestMapping(value="/writeList", method=RequestMethod.POST)
+	@RequestMapping(value="/write_exec", method=RequestMethod.POST)
 	public String writeList(Model model,
 							HttpServletRequest request,
 							@RequestParam("inp-write-title")String title,
 							@RequestParam("sel-write-good")String helpful2,
 							@RequestParam("inp-write-content")String contents,
 							@RequestParam("custom_id")String customId) {
-		logger.info("title은 {} ",title);
-		logger.info("helpful은 {} ",helpful2);
-		logger.info("contents은 {} ",contents);
 		String a = "";
 		int helpful = Integer.parseInt(helpful2);
 		switch (helpful) {
@@ -120,8 +111,7 @@ public class BoardController {
 		
 		model.addAttribute("map", paramMap);	
 		boardService.addBoard(paramMap);
-		logger.info("a {} ", a);
-		return "writeBoard.board";
+		return "redirect:/board/boardList";
 		
 	}
 	

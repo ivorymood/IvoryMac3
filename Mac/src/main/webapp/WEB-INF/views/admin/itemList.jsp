@@ -93,14 +93,10 @@
 <script>
 
  	 function testI(y){    //페이지네이션 할때 쓰입니다.
-         alert('파라미터'+y);
          	var form = document.form_itemList;
     		form.pageNum.value = y;
     		form.title.value = $('select[name=title]').val();
     		form.content.value = $('#inp-itemList-title').val();
-    		alert(form.title.value)
-	    	alert(form.content.value)
-         alert('y='+form.pageNum.value);
          $('#form_itemList')
          .attr('action','${path.context}/admin/itemList')
          .attr('method','post')
@@ -109,11 +105,9 @@
      } 
  	
      function testU(x,z){
-    	 alert('x파라미터: '+ x + ' z파라미터: '+ z);
     	 	var form = document.form_itemList;
     	 	form.itemSeq.value = x;
     	 	form.itemCode.value = z;
-    	 alert('form.itemSeq.value'+ form.itemSeq.value);
     	 $('#form_itemList')
     	 .attr('action','${path.context}/admin/update')
          .attr('method','post')
@@ -121,11 +115,9 @@
      }
      
      function testD(i,k){
-    	 alert('x파라미터: '+ i + ' z파라미터: '+ k);
     	 	var form = document.form_itemList;
     	 	form.a.value = i;
-    	 	form.b.value = k;
-    	 alert('form.a.value: '+ form.a.value + ' form.b.value: '+ form.b.value);    	 	 	 	
+    	 	form.b.value = k;  	 	 	 	
     	 $('#form_itemList')
     	 .attr('action','${path.context}/admin/itemListDelete ')
          .attr('method','post')
@@ -140,8 +132,6 @@
     	  .attr('method','post')
          .submit();      
     	 console.log(conceptName);
-         alert(content);
-    	 alert(conceptName);
      });  */ 
 </script>
 

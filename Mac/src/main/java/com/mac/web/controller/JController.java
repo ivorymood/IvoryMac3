@@ -32,8 +32,7 @@ public class JController {
 		Map<String, Object> param = new HashMap<>();
 		param.put("itemSeq", Integer.parseInt(itemSeq));
 		param.put("itemCode", itemCode);
-		System.out.println(param.put("itemSeq", itemSeq));
-		System.out.println(param.put("itemCode", itemCode));
+		
 		map.put("item", new IGetHashService() {
 			
 			@Override
@@ -75,7 +74,7 @@ public class JController {
         Map<String,Object> map = new HashMap<>();
         HttpSession session = request.getSession();
         cmd.setCol1((String) session.getAttribute("name"));
-        System.out.println(cmd.getCol1());
+       
         int count= 0;
         		count = new ICountService() {
 					
@@ -96,7 +95,7 @@ public class JController {
         cmd.setCol1(param.get("customId"));
         cmd.setCol2(param.get("customPass"));
         cmd.setData1(type);
-        System.out.println(cmd.getData1());
+       
         int count = 0;
         Map<String,Object> map = new HashMap<>();
         count = new ICountService() {
@@ -119,7 +118,7 @@ public class JController {
     	map.put("inputJoinPass", param.get("inputJoinPass"));
     	map.put("inputJoinName", param.get("inputJoinName"));
     	map.put("inputJoinEmail", param.get("inputJoinEmail"));
-    	System.out.println(param.get("inputJoinPhoneNum")+"전화번호");
+    	
     	map.put("inputJoinPhoneNum",param.get("inputJoinPhoneNum")+"-"+param.get("inputJoinPhoneNum1")+"-"+param.get("inputJoinPhoneNum2"));
     	map.put("inputJoinEmailCheck", param.get("inputJoinEmailCheck"));
     	map.put("inputJoinMypageProfile", param.get("inputJoinMypageProfile"));
@@ -145,14 +144,13 @@ public class JController {
             }
         }.execute(cmd);
         map.put("success", count);
-        System.out.println("/joinid/search에서 count값은="+count);
         
     	return map;
     }
     @RequestMapping("/mypage/{id}")
     public Map<?,?> mypage(@PathVariable("id") String customId) {
         Map<String,Object> map = new HashMap<>();
-        System.out.println(customId);
+       
         map.put("customid", customId);
         map.put("mypage", new IGetHashService() {
             
@@ -166,7 +164,6 @@ public class JController {
     @RequestMapping("/search/addr/{id}")
     public Map<?,?> findAddr(@PathVariable("id") String customId) {
         Map<String,Object> map = new HashMap<>();
-        System.out.println(customId);
         map.put("customid", customId);
 
         return map;
@@ -212,7 +209,7 @@ public class JController {
     }
     @RequestMapping("/order/search/{id}")
     public Map<?,?> orderSearch(@PathVariable("id") String customId) {
-    	System.out.println("오더서치 들어옴");
+    	
         Map<String,Object> map = new HashMap<>();
         map.put("customid", customId);
         map.put("orderSearch", new IGetHashService() {
@@ -255,7 +252,7 @@ public class JController {
         }.execute(cmd);
         map.put("success", count);
         if(count > 0   ) {
-            System.out.println("if+count"+count);
+           
             map.put("basket", new IGetHashService() {
             
                 @Override
@@ -264,7 +261,6 @@ public class JController {
                 }
             }.execute((HashMap<?, ?>) map));
         }else {
-        	 System.out.println("else+count"+count);
         	
             map.put("basket", new IGetHashService() {
                 
@@ -278,7 +274,8 @@ public class JController {
     }
 	@RequestMapping(value="/order/addr/",method=RequestMethod.POST,consumes="application/json")
     public Map<?,?> orderAddr(@RequestBody Map<String, String> param) { 
-		System.out.println("orderaddr 컨트롤러 들어옴");
+
+		
 		 Map<String,Object> map = new HashMap<>();
 		 tx.executes(param);
 		return map;
@@ -295,7 +292,7 @@ public class JController {
 		}.execute((HashMap<?, ?>) map));
 		
     	map.get("chart");
-    	System.out.println(map.get("chart"));
+
 		return map;
        }
         
