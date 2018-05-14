@@ -69,6 +69,7 @@
       FROM  ITEM i 
       join  COMMON_FEATURE c 
         on  i.item_code like c.item_code
+     order  by i.item_seq desc
     </select>
      <select id="selectMypage" resultType="map" parameterType="hashMap">
  	SELECT   c.name

@@ -47,7 +47,6 @@ public class BoardServiceImpl implements BoardService {
 	@Override
 	public List<Comment> findAll(Map<String, ?> map) {
 		List<Comment> t = boardMapper.selectAll(map); 
-		logger.info(" t는 {}", t);
 		return t;
 	}
 

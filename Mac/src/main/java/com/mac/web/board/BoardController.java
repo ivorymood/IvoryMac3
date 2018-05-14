@@ -74,8 +74,8 @@ public class BoardController {
 							HttpServletRequest request,
 							@RequestParam("inp-write-title")String title,
 							@RequestParam("sel-write-good")String helpful2,
-							@RequestParam("inp-write-content")String contents,
-							@RequestParam("custom_id")String customId) {
+							@RequestParam("inp-write-content")String contents/*,
+							@RequestParam("custom_id")String customId*/) {
 		String a = "";
 		int helpful = Integer.parseInt(helpful2);
 		switch (helpful) {
@@ -107,7 +107,7 @@ public class BoardController {
 		paramMap.put("title",String.valueOf(title));
 		paramMap.put("helpful",String.valueOf(a));
 		paramMap.put("contents",String.valueOf(contents));
-		paramMap.put("customId",String.valueOf(customId));
+		paramMap.put("customId",String.valueOf(customer.getCustomId()));
 		
 		model.addAttribute("map", paramMap);	
 		boardService.addBoard(paramMap);

@@ -82,7 +82,7 @@
 			
 		</div>
 	</div>
-	<input type="hidden" name="custom_id" value="kimjun" />
+	<!-- <input type="hidden" name="custom_id" value="kimjun" /> -->
 	<div class="div-writebtn-enter">
 	<div class="div-write-enter-btn">
 	 <button id="btn-write-enter" class="btn-write-enter">확인</button>
