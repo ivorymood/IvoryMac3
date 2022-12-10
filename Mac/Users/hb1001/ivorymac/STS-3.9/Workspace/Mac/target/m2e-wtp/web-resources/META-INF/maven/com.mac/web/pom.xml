@@ -9,7 +9,7 @@
 	<version>1.0.0-BUILD-SNAPSHOT</version>
 	<properties>
 		<java-version>1.8</java-version>
-		<springframework-version>4.3.0.RELEASE</springframework-version>
+		<springframework-version>6.0.0</springframework-version>
 		<aspectj-version>1.8.10</aspectj-version>
 		<slf4j-version>1.7.7</slf4j-version>
 		<lombok-version>1.16.8</lombok-version>
